@@ -1,0 +1,17 @@
+{
+  "name": "spotify-web-api-node",
+  "version": "0.0.0",
+  "homepage": "https://github.com/thelinmichael/spotify-web-api-node",
+  "description": "A Node.js wrapper for Spotify's new Web API",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Michael Thelin, José Manuel Perez Perez",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch": "~0.6",
+    "grunt-simple-mocha" : "0.4.x"
+  }
+}
