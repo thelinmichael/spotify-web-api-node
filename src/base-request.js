@@ -71,6 +71,17 @@ Request.prototype.addQueryParameters = function(queryParameters) {
   }
 };
 
+Request.prototype.addBodyParameters = function(bodyParameters) {
+  'use strict';
+  if (!this.bodyParameters) {
+    this.bodyParameters = bodyParameters;
+  } else {
+    for (var key in bodyParameters) {
+      this.bodyParameters[key] = bodyParameters[key];
+    }
+  }
+};
+
 var Builder = function() {
   'use strict';
   var host, port, scheme, queryParameters, bodyParameters, headers;

@@ -132,4 +132,39 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should retrieve an access token using the client credentials flow", function(done) {
+    var clientId = 'someClientId',
+        clientSecret = 'someClientSecret';
+
+    var api = new SpotifyWebApi();
+    api.clientCredentialsGrant(clientId, clientSecret)
+      .then(function(data) {
+        'Bearer'.should.equal(data['token-type']);
+        (3600).should.equal(data['expires-in']);
+        should.exist(data['access-token']);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it("should retrieve an access token using the authorization code flow", function(done) {
+    var clientId = 'someClientId',
+        clientSecret = 'someClientSecret',
+        code = "someReallyLongCode",
+        redirectUri = "http://such.host.wow/much-callback";
+
+    var api = new SpotifyWebApi();
+    api.authorizationCodeGrant(clientId, clientSecret, code, redirectUri)
+      .then(function(data) {
+        'Bearer'.should.equal(data['token-type']);
+        (3600).should.equal(data['expires-in']);
+        should.exist(data['access-token']);
+        should.exist(data['refresh-token']);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
 });

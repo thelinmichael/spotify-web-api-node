@@ -34,15 +34,29 @@ function SpotifyWebApi() {
       cb = options;
     }
     request.addQueryParameters(opt);
-    return _performGetRequest(request, cb);
+    return _performRequest(HttpManager.get, request, cb);
   }
 
-  function _performGetRequest(request, callback) {
+  function _addBodyParametersAndPerformPostRequest(request, options, callback) {
+    var opt = {};
+    var cb = null;
+
+    if (typeof options === 'object') {
+      opt = options;
+      cb = callback;
+    } else if (typeof options === 'function') {
+      cb = options;
+    }
+    request.addBodyParameters(opt);
+    return _performRequest(HttpManager.post, request, cb);
+  }
+
+  function _performRequest(method, request, callback) {
     var promiseFunction = function(resolve, reject) {
-      HttpManager.get(request, function(error, result) {
+      method(request, function(error, result) {
         if (error) {
           if (reject) {
-            reject(result);
+            reject(error);
           } else {
             callback(error, result);
           }
@@ -147,6 +161,37 @@ function SpotifyWebApi() {
       .build();
       return _addQueryParametersAndPerformGetRequest(request, options, callback);
   };
+
+  this.authClientCredentials = function(clientId, clientSecret, options, callback) {
+    var request = AuthenticationRequest.builder()
+      .withPath('/api/token')
+      .withBodyParameters({
+        'grant_type' : 'client_credentials'
+      })
+      .withHeaders({
+        'Authorization' : 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
+      })
+      .build();
+
+      return _addBodyParametersAndPerformPostRequest(request, options, callback);
+  };
+
+  this.authorizationCodeGrant = function(clientId, clientSecret, code, redirectUri, options, callback) {
+     var request = AuthenticationRequest.builder()
+      .withPath('/api/token')
+      .withBodyParameters({
+        'grant_type' : 'authorization_code',
+        'redirect_uri' : redirectUri,
+        'code' : code
+      })
+      .withHeaders({
+        'Authorization' : 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
+      })
+      .build();
+
+      return _addBodyParametersAndPerformPostRequest(request, options, callback);
+  };
+
 }
 
 module.exports = SpotifyWebApi;
