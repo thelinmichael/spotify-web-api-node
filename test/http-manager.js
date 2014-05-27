@@ -16,8 +16,8 @@ describe("Make requests", function() {
         })
         .build();
 
-    HttpManager.get(request, function(result, response) {
-      should.exist(response);
+    HttpManager.get(request, function(error, result) {
+      should.not.exist(error);
       should.exist(result);
       done();
     });

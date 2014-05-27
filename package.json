@@ -9,14 +9,16 @@
   },
   "author": "Michael Thelin, José Manuel Perez Perez",
   "license": "MIT",
-  "dependencies" : {
-    "restler" : "~3.2.0"
+  "dependencies": {
+    "restler": "~3.2.0",
+    "promise": "~5.0.0"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-watch": "~0.6",
-    "grunt-simple-mocha" : "0.4.x",
-    "should" : "~3.0",
-    "mocha" : "~1.0"
+    "grunt-simple-mocha": "0.4.x",
+    "should": "~3.0",
+    "mocha": "~1.0",
+    "sinon": "~1.10.0"
   }
 }

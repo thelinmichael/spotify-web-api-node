@@ -60,6 +60,17 @@ Request.prototype.getURI = function() {
   return uri;
 };
 
+Request.prototype.addQueryParameters = function(queryParameters) {
+  'use strict';
+  if (!this.queryParameters) {
+    this.queryParameters = queryParameters;
+  } else {
+    for (var key in queryParameters) {
+      this.queryParameters[key] = queryParameters[key];
+    }
+  }
+};
+
 var Builder = function() {
   'use strict';
   var host, port, scheme, queryParameters, bodyParameters, headers;

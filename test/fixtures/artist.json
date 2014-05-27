@@ -1,0 +1,47 @@
+{
+  "external_urls": {
+    "spotify": "https://open.spotify.com/artist/0LcJLqbBmaGUft1e9Mm8HV"
+  },
+  "genres": [
+    "Swedish Pop/Rock",
+    "Early Pop/Rock",
+    "Club/Dance",
+    "Synth Pop",
+    "Pop/Rock",
+    "Rock",
+    "Soft Rock",
+    "Dance-Pop",
+    "Contemporary Pop/Rock",
+    "Euro-Pop",
+    "Punk/New Wave",
+    "AM Pop"
+  ],
+  "href": "https://api.spotify.com/v1/artists/0LcJLqbBmaGUft1e9Mm8HV",
+  "id": "0LcJLqbBmaGUft1e9Mm8HV",
+  "images": [
+    {
+      "height": 934,
+      "url": "https://d3rt1990lpmkn.cloudfront.net/original/1ace43eddbf6010d417d53ce77b584bd6aa11428",
+      "width": 936
+    },
+    {
+      "height": 639,
+      "url": "https://d3rt1990lpmkn.cloudfront.net/original/c8bf08f8ffc0402b930154368258369612b67e88",
+      "width": 640
+    },
+    {
+      "height": 200,
+      "url": "https://d3rt1990lpmkn.cloudfront.net/original/2e4302151e258b731a731d909f148c99606a0e3c",
+      "width": 200
+    },
+    {
+      "height": 64,
+      "url": "https://d3rt1990lpmkn.cloudfront.net/original/7cccb8fe572f8d76e7d3e11e249688ed3c028aed",
+      "width": 64
+    }
+  ],
+  "name": "ABBA",
+  "popularity": 65,
+  "type": "artist",
+  "uri": "spotify:artist:0LcJLqbBmaGUft1e9Mm8HV"
+}

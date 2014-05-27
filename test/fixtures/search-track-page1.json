@@ -1,0 +1,2299 @@
+{
+  "href": "https://api.spotify.com/v1/tracks/search?query=gatan&offset=0&limit=20",
+  "items": [
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 195146,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100167"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/3q8WojYJVZsGClFGFBYdTc"
+      },
+      "href": "https://api.spotify.com/v1/tracks/3q8WojYJVZsGClFGFBYdTc",
+      "id": "3q8WojYJVZsGClFGFBYdTc",
+      "name": "Satan i gatan",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/e91ad6c6987da40df2c4b225759157f0416e66e5",
+      "track_number": 1,
+      "type": "track",
+      "uri": "spotify:track:3q8WojYJVZsGClFGFBYdTc"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 159093,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100341"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/2jEPQKvz7dh1pfpRyq6G1C"
+      },
+      "href": "https://api.spotify.com/v1/tracks/2jEPQKvz7dh1pfpRyq6G1C",
+      "id": "2jEPQKvz7dh1pfpRyq6G1C",
+      "name": "SnÃ¤lla bli min",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/7af74baccddd50b7860994d62907c3a107fdfc91",
+      "track_number": 8,
+      "type": "track",
+      "uri": "spotify:track:2jEPQKvz7dh1pfpRyq6G1C"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 212453,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100344"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/5MEuFY2DxrozPEgGpR8Fji"
+      },
+      "href": "https://api.spotify.com/v1/tracks/5MEuFY2DxrozPEgGpR8Fji",
+      "id": "5MEuFY2DxrozPEgGpR8Fji",
+      "name": "VÃ¤lkommen in",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/586182522dfc38c24a528ab37ac33522d3685761",
+      "track_number": 2,
+      "type": "track",
+      "uri": "spotify:track:5MEuFY2DxrozPEgGpR8Fji"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 201360,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100339"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/6CtVEyME2La34RATPuJcnx"
+      },
+      "href": "https://api.spotify.com/v1/tracks/6CtVEyME2La34RATPuJcnx",
+      "id": "6CtVEyME2La34RATPuJcnx",
+      "name": "Mitt hjÃ¤rta blÃ¶der",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/971e932fcafc00abd5ee3ee2c1a6acc04a880251",
+      "track_number": 4,
+      "type": "track",
+      "uri": "spotify:track:6CtVEyME2La34RATPuJcnx"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 201466,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100337"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/2GbyU3ZuI1gDuSCQJCXwe1"
+      },
+      "href": "https://api.spotify.com/v1/tracks/2GbyU3ZuI1gDuSCQJCXwe1",
+      "id": "2GbyU3ZuI1gDuSCQJCXwe1",
+      "name": "Inga klÃ¤der",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/b5cb8fb1bdd6cf05b2426bd6a0f36ec00abf0b9e",
+      "track_number": 6,
+      "type": "track",
+      "uri": "spotify:track:2GbyU3ZuI1gDuSCQJCXwe1"
+    },
+    {
+      "album": {
+        "album_type": "single",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/5CCjGmIH483h4J9UvME0eR"
+        },
+        "href": "https://api.spotify.com/v1/albums/5CCjGmIH483h4J9UvME0eR",
+        "id": "5CCjGmIH483h4J9UvME0eR",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/743f134a97aa904f90674be6f304db28c8be91f7",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/09ff1e1144cc297d42acaaa839e0ad422ba7abe5",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/66d320404c8f56bb7dd0c53da61f794a70a7e07c",
+            "width": 64
+          }
+        ],
+        "name": "Lyckliga gatan",
+        "type": "album",
+        "uri": "spotify:album:5CCjGmIH483h4J9UvME0eR"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/3Z6WVJzHQ12kzNjhzDkIYP"
+          },
+          "href": "https://api.spotify.com/v1/artists/3Z6WVJzHQ12kzNjhzDkIYP",
+          "id": "3Z6WVJzHQ12kzNjhzDkIYP",
+          "name": "Timo RÃ¤isÃ¤nen",
+          "type": "artist",
+          "uri": "spotify:artist:3Z6WVJzHQ12kzNjhzDkIYP"
+        }
+      ],
+      "available_markets": [
+        "AD",
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BG",
+        "BO",
+        "BR",
+        "CA",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MC",
+        "MT",
+        "MX",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW",
+        "UY"
+      ],
+      "disc_number": 1,
+      "duration_ms": 201653,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEWBD1300602"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/4fWtlkaM9bnRzbJkpBQ4fg"
+      },
+      "href": "https://api.spotify.com/v1/tracks/4fWtlkaM9bnRzbJkpBQ4fg",
+      "id": "4fWtlkaM9bnRzbJkpBQ4fg",
+      "name": "Lyckliga gatan - Radio Edit",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/2611c717b85bd118ca255c0bc2ca23c4cfec806c",
+      "track_number": 1,
+      "type": "track",
+      "uri": "spotify:track:4fWtlkaM9bnRzbJkpBQ4fg"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 202746,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100165"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/5M2y8QdDepGYMsWyxhoxQU"
+      },
+      "href": "https://api.spotify.com/v1/tracks/5M2y8QdDepGYMsWyxhoxQU",
+      "id": "5M2y8QdDepGYMsWyxhoxQU",
+      "name": "Jag kommer",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/39da3984022220bb8e996a419b909b8cbcabd385",
+      "track_number": 3,
+      "type": "track",
+      "uri": "spotify:track:5M2y8QdDepGYMsWyxhoxQU"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 240826,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100340"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/3jB5trbr0kQqQRkYr3M3u5"
+      },
+      "href": "https://api.spotify.com/v1/tracks/3jB5trbr0kQqQRkYr3M3u5",
+      "id": "3jB5trbr0kQqQRkYr3M3u5",
+      "name": "Sju sorger",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/5f5bc4f234f0b0caa6bb3c70ee777494b3e1d05c",
+      "track_number": 9,
+      "type": "track",
+      "uri": "spotify:track:3jB5trbr0kQqQRkYr3M3u5"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 237320,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100336"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/4AK85CoitZUXRKTCSw4xQE"
+      },
+      "href": "https://api.spotify.com/v1/tracks/4AK85CoitZUXRKTCSw4xQE",
+      "id": "4AK85CoitZUXRKTCSw4xQE",
+      "name": "Finns det en sÃ¥ finns det flera",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/21c1289f5250ac555213ca3d0858c81e7a112a7a",
+      "track_number": 10,
+      "type": "track",
+      "uri": "spotify:track:4AK85CoitZUXRKTCSw4xQE"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 156786,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100343"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/3woptHfuKkrFvTqmCS9Mn7"
+      },
+      "href": "https://api.spotify.com/v1/tracks/3woptHfuKkrFvTqmCS9Mn7",
+      "id": "3woptHfuKkrFvTqmCS9Mn7",
+      "name": "Vi kommer alltid ha Paris",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/586ce0383c3b046a710b555ca508280ea262e59b",
+      "track_number": 5,
+      "type": "track",
+      "uri": "spotify:track:3woptHfuKkrFvTqmCS9Mn7"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 209373,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100335"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/5y5tGEVkCJ5kfhmmidqeOO"
+      },
+      "href": "https://api.spotify.com/v1/tracks/5y5tGEVkCJ5kfhmmidqeOO",
+      "id": "5y5tGEVkCJ5kfhmmidqeOO",
+      "name": "Alla mina lÃ¥tar",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/1a3b63eea60aeaa4f6849f7d8a3fdcc4c315c053",
+      "track_number": 7,
+      "type": "track",
+      "uri": "spotify:track:5y5tGEVkCJ5kfhmmidqeOO"
+    },
+    {
+      "album": {
+        "album_type": "single",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/5CCjGmIH483h4J9UvME0eR"
+        },
+        "href": "https://api.spotify.com/v1/albums/5CCjGmIH483h4J9UvME0eR",
+        "id": "5CCjGmIH483h4J9UvME0eR",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/743f134a97aa904f90674be6f304db28c8be91f7",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/09ff1e1144cc297d42acaaa839e0ad422ba7abe5",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/66d320404c8f56bb7dd0c53da61f794a70a7e07c",
+            "width": 64
+          }
+        ],
+        "name": "Lyckliga gatan",
+        "type": "album",
+        "uri": "spotify:album:5CCjGmIH483h4J9UvME0eR"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/3Z6WVJzHQ12kzNjhzDkIYP"
+          },
+          "href": "https://api.spotify.com/v1/artists/3Z6WVJzHQ12kzNjhzDkIYP",
+          "id": "3Z6WVJzHQ12kzNjhzDkIYP",
+          "name": "Timo RÃ¤isÃ¤nen",
+          "type": "artist",
+          "uri": "spotify:artist:3Z6WVJzHQ12kzNjhzDkIYP"
+        }
+      ],
+      "available_markets": [
+        "AD",
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BG",
+        "BO",
+        "BR",
+        "CA",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MC",
+        "MT",
+        "MX",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW",
+        "UY"
+      ],
+      "disc_number": 1,
+      "duration_ms": 250706,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEWBD1300601"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/3od3TT0urEB8HMaFZhaEYW"
+      },
+      "href": "https://api.spotify.com/v1/tracks/3od3TT0urEB8HMaFZhaEYW",
+      "id": "3od3TT0urEB8HMaFZhaEYW",
+      "name": "Lyckliga gatan",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/58588a74fc52944216c92dc460409f651e5ab7a1",
+      "track_number": 2,
+      "type": "track",
+      "uri": "spotify:track:3od3TT0urEB8HMaFZhaEYW"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/7cRUwz9QTnGp3O24CUbBWR"
+        },
+        "href": "https://api.spotify.com/v1/albums/7cRUwz9QTnGp3O24CUbBWR",
+        "id": "7cRUwz9QTnGp3O24CUbBWR",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/97ff6e73fe88595f6ed0c2c6c33742033d5e2b2e",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/6f3c8351452c6c85fc7a05ff8cf873e7943519d7",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/2630281478b9c0106038c782d90bfd4586349537",
+            "width": 64
+          }
+        ],
+        "name": "Playlist",
+        "type": "album",
+        "uri": "spotify:album:7cRUwz9QTnGp3O24CUbBWR"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2piHSX9fKmsCD8tbfX1cJg"
+          },
+          "href": "https://api.spotify.com/v1/artists/2piHSX9fKmsCD8tbfX1cJg",
+          "id": "2piHSX9fKmsCD8tbfX1cJg",
+          "name": "Stress",
+          "type": "artist",
+          "uri": "spotify:artist:2piHSX9fKmsCD8tbfX1cJg"
+        },
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/58RMTlPJKbmpmVk1AmRK3h"
+          },
+          "href": "https://api.spotify.com/v1/artists/58RMTlPJKbmpmVk1AmRK3h",
+          "id": "58RMTlPJKbmpmVk1AmRK3h",
+          "name": "Abidaz",
+          "type": "artist",
+          "uri": "spotify:artist:58RMTlPJKbmpmVk1AmRK3h"
+        },
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/3Rdai85dloa4pkC3JVuKRW"
+          },
+          "href": "https://api.spotify.com/v1/artists/3Rdai85dloa4pkC3JVuKRW",
+          "id": "3Rdai85dloa4pkC3JVuKRW",
+          "name": "Hooks",
+          "type": "artist",
+          "uri": "spotify:artist:3Rdai85dloa4pkC3JVuKRW"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "BE",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GR",
+        "HK",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NL",
+        "NO",
+        "NZ",
+        "PH",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 168720,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100970"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/5GqZe05VEXpzmDrNTc8DDj"
+      },
+      "href": "https://api.spotify.com/v1/tracks/5GqZe05VEXpzmDrNTc8DDj",
+      "id": "5GqZe05VEXpzmDrNTc8DDj",
+      "name": "Gatan",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/d71d1e92346827807bab8979b62e054affa9f2a3",
+      "track_number": 2,
+      "type": "track",
+      "uri": "spotify:track:5GqZe05VEXpzmDrNTc8DDj"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 255133,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100342"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/10ZWJBj5Q1xqkMZw4hOeQj"
+      },
+      "href": "https://api.spotify.com/v1/tracks/10ZWJBj5Q1xqkMZw4hOeQj",
+      "id": "10ZWJBj5Q1xqkMZw4hOeQj",
+      "name": "Vad gÃ¶r vi ikvÃ¤ll",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/5da28efde1fe034aba999b204f87d0df2b0056ee",
+      "track_number": 12,
+      "type": "track",
+      "uri": "spotify:track:10ZWJBj5Q1xqkMZw4hOeQj"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/2fOs6I0CgvaZj9agU8EAlH"
+        },
+        "href": "https://api.spotify.com/v1/albums/2fOs6I0CgvaZj9agU8EAlH",
+        "id": "2fOs6I0CgvaZj9agU8EAlH",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/cad98ee963d47be0d1daad7038a1d783403d474c",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/eefdfc1e9043005b0e5a662faafb7bd879ca4c5d",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/863cea2cbe59afd1f5dedf1fc84cd48e40e3c363",
+            "width": 64
+          }
+        ],
+        "name": "Satan i gatan (Bonus Version)",
+        "type": "album",
+        "uri": "spotify:album:2fOs6I0CgvaZj9agU8EAlH"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/2OIWxN9xUhgUHkeUCWCaNs"
+          },
+          "href": "https://api.spotify.com/v1/artists/2OIWxN9xUhgUHkeUCWCaNs",
+          "id": "2OIWxN9xUhgUHkeUCWCaNs",
+          "name": "Veronica Maggio",
+          "type": "artist",
+          "uri": "spotify:artist:2OIWxN9xUhgUHkeUCWCaNs"
+        }
+      ],
+      "available_markets": [
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LT",
+        "LU",
+        "LV",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 69546,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEUM71100338"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/2M7n1hYkKiogvl5SSPx5Fp"
+      },
+      "href": "https://api.spotify.com/v1/tracks/2M7n1hYkKiogvl5SSPx5Fp",
+      "id": "2M7n1hYkKiogvl5SSPx5Fp",
+      "name": "LÃ¶rdagen den femtonde mars",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/6f42fc871e2de16cc516945330035865c54e3e3d",
+      "track_number": 11,
+      "type": "track",
+      "uri": "spotify:track:2M7n1hYkKiogvl5SSPx5Fp"
+    },
+    {
+      "album": {
+        "album_type": "single",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/38FYkaPius8Wt9iV1eeojZ"
+        },
+        "href": "https://api.spotify.com/v1/albums/38FYkaPius8Wt9iV1eeojZ",
+        "id": "38FYkaPius8Wt9iV1eeojZ",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/a1426b8b4ba635fafad8f9202572e8a742d3cfeb",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/c68e5b2855a9221bec65f749cca2858408077f49",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/488ce0dbd5ce569bc129900ef96540718246fc18",
+            "width": 64
+          }
+        ],
+        "name": "Tolkningarna",
+        "type": "album",
+        "uri": "spotify:album:38FYkaPius8Wt9iV1eeojZ"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/62QZPjYQMoo5g56FP9Webq"
+          },
+          "href": "https://api.spotify.com/v1/artists/62QZPjYQMoo5g56FP9Webq",
+          "id": "62QZPjYQMoo5g56FP9Webq",
+          "name": "Laleh",
+          "type": "artist",
+          "uri": "spotify:artist:62QZPjYQMoo5g56FP9Webq"
+        }
+      ],
+      "available_markets": [
+        "AD",
+        "AT",
+        "BE",
+        "BG",
+        "CH",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MC",
+        "MT",
+        "NL",
+        "NO",
+        "PL",
+        "PT",
+        "RO",
+        "SE",
+        "SI",
+        "SK",
+        "TR"
+      ],
+      "disc_number": 1,
+      "duration_ms": 172026,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEPQA1101257"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/38zrpSjlDXUv33vcF1MUPf"
+      },
+      "href": "https://api.spotify.com/v1/tracks/38zrpSjlDXUv33vcF1MUPf",
+      "id": "38zrpSjlDXUv33vcF1MUPf",
+      "name": "PÃ¥ gatan dÃ¤r jag bor",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/2f1709c3f64729c8a17155927735baceacf1958b",
+      "track_number": 1,
+      "type": "track",
+      "uri": "spotify:track:38zrpSjlDXUv33vcF1MUPf"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/5hohD1aliQAULZGK51FOMm"
+        },
+        "href": "https://api.spotify.com/v1/albums/5hohD1aliQAULZGK51FOMm",
+        "id": "5hohD1aliQAULZGK51FOMm",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/08f5e2822ec747b7f78458a6549c585d2230c159",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/e2776f50d395ca7d3a4d26bca1ea2cddd9096e20",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/1edc7711c64661bf717866eb9686297bd6d5ac12",
+            "width": 64
+          }
+        ],
+        "name": "Snackbar Blues",
+        "type": "album",
+        "uri": "spotify:album:5hohD1aliQAULZGK51FOMm"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/3wh2bJMFjWyZA6mHNVxkVa"
+          },
+          "href": "https://api.spotify.com/v1/artists/3wh2bJMFjWyZA6mHNVxkVa",
+          "id": "3wh2bJMFjWyZA6mHNVxkVa",
+          "name": "Nisse Hellberg",
+          "type": "artist",
+          "uri": "spotify:artist:3wh2bJMFjWyZA6mHNVxkVa"
+        }
+      ],
+      "available_markets": [
+        "AD",
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BG",
+        "BO",
+        "BR",
+        "CA",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MC",
+        "MT",
+        "MX",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW",
+        "US",
+        "UY"
+      ],
+      "disc_number": 1,
+      "duration_ms": 197360,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEACA0601208"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/3pEr1rOrfLha8gkEwpBbTS"
+      },
+      "href": "https://api.spotify.com/v1/tracks/3pEr1rOrfLha8gkEwpBbTS",
+      "id": "3pEr1rOrfLha8gkEwpBbTS",
+      "name": "Lyckliga gatan",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/8e4143a0e43703ceae435e0f41f6a2786250d187",
+      "track_number": 8,
+      "type": "track",
+      "uri": "spotify:track:3pEr1rOrfLha8gkEwpBbTS"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/3gT2XxigE6Vx9cVMM0m3G3"
+        },
+        "href": "https://api.spotify.com/v1/albums/3gT2XxigE6Vx9cVMM0m3G3",
+        "id": "3gT2XxigE6Vx9cVMM0m3G3",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/ba947fefae94a5d0a8680d99de2ecde29c3bcc04",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/fb98904e7cb0f8920ab91bcb57aa09dcf7cf794e",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/8de6c0fbe575f79e232536f60311d82923216283",
+            "width": 64
+          }
+        ],
+        "name": "UnderhÃ¥llningsmaskinen",
+        "type": "album",
+        "uri": "spotify:album:3gT2XxigE6Vx9cVMM0m3G3"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/6jMfbm9y64CESMB5wFtgZx"
+          },
+          "href": "https://api.spotify.com/v1/artists/6jMfbm9y64CESMB5wFtgZx",
+          "id": "6jMfbm9y64CESMB5wFtgZx",
+          "name": "Governor Andy",
+          "type": "artist",
+          "uri": "spotify:artist:6jMfbm9y64CESMB5wFtgZx"
+        }
+      ],
+      "available_markets": [
+        "AD",
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BG",
+        "BO",
+        "BR",
+        "CA",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MC",
+        "MT",
+        "MX",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW",
+        "US",
+        "UY"
+      ],
+      "disc_number": 1,
+      "duration_ms": 220480,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEXKB0700304"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/3qOCMkCrsQBczAvvuYoJG3"
+      },
+      "href": "https://api.spotify.com/v1/tracks/3qOCMkCrsQBczAvvuYoJG3",
+      "id": "3qOCMkCrsQBczAvvuYoJG3",
+      "name": "Lyckliga Gatan (med Loreen)",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/d8365069ae73214187e0c57773842e7078c572ed",
+      "track_number": 4,
+      "type": "track",
+      "uri": "spotify:track:3qOCMkCrsQBczAvvuYoJG3"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/78DiHcKu01sdNkrX8ipT2t"
+        },
+        "href": "https://api.spotify.com/v1/albums/78DiHcKu01sdNkrX8ipT2t",
+        "id": "78DiHcKu01sdNkrX8ipT2t",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/31c456d929910d51091c43c4eee88b97104dd876",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/1254a523f805d940514f6f54e3303b90201476d2",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/04979c2492b94f8d0c38ce5fe0014f06d3efcb4c",
+            "width": 64
+          }
+        ],
+        "name": "Boys II Men",
+        "type": "album",
+        "uri": "spotify:album:78DiHcKu01sdNkrX8ipT2t"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/6nDcZd5c9z3OS5hWvCsWBf"
+          },
+          "href": "https://api.spotify.com/v1/artists/6nDcZd5c9z3OS5hWvCsWBf",
+          "id": "6nDcZd5c9z3OS5hWvCsWBf",
+          "name": "Maskinen",
+          "type": "artist",
+          "uri": "spotify:artist:6nDcZd5c9z3OS5hWvCsWBf"
+        }
+      ],
+      "available_markets": [
+        "AD",
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BG",
+        "BO",
+        "BR",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MC",
+        "MT",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW"
+      ],
+      "disc_number": 1,
+      "duration_ms": 398960,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEVLE0901405"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/1qzDC1IRNnF8mXe846CUUP"
+      },
+      "href": "https://api.spotify.com/v1/tracks/1qzDC1IRNnF8mXe846CUUP",
+      "id": "1qzDC1IRNnF8mXe846CUUP",
+      "name": "Gatan Upp",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/bbf816d8dba92546b9fb6b50ed3ad3c0b4f5b31a",
+      "track_number": 5,
+      "type": "track",
+      "uri": "spotify:track:1qzDC1IRNnF8mXe846CUUP"
+    },
+    {
+      "album": {
+        "album_type": "album",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/7nF98uB6IS69BjKAmd8rtU"
+        },
+        "href": "https://api.spotify.com/v1/albums/7nF98uB6IS69BjKAmd8rtU",
+        "id": "7nF98uB6IS69BjKAmd8rtU",
+        "images": [
+          {
+            "height": 637,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/099dea86989a7c05a5c59d67a0b5fdc659dd5529",
+            "width": 640
+          },
+          {
+            "height": 299,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/bfdc8850ac2091cfc9b1e5c5eff1a7e4383d47db",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://d3rt1990lpmkn.cloudfront.net/original/39592b2203284e00e36eba8370d53c9497dc7fb6",
+            "width": 64
+          }
+        ],
+        "name": "Guldkorn",
+        "type": "album",
+        "uri": "spotify:album:7nF98uB6IS69BjKAmd8rtU"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/7JHMKzBLaE2q2gaZZsepqr"
+          },
+          "href": "https://api.spotify.com/v1/artists/7JHMKzBLaE2q2gaZZsepqr",
+          "id": "7JHMKzBLaE2q2gaZZsepqr",
+          "name": "Anna-Lena LÃ¶fgren",
+          "type": "artist",
+          "uri": "spotify:artist:7JHMKzBLaE2q2gaZZsepqr"
+        }
+      ],
+      "available_markets": [
+        "AD",
+        "AR",
+        "AT",
+        "AU",
+        "BE",
+        "BG",
+        "BO",
+        "BR",
+        "CA",
+        "CH",
+        "CL",
+        "CO",
+        "CR",
+        "CY",
+        "CZ",
+        "DE",
+        "DK",
+        "DO",
+        "EC",
+        "EE",
+        "ES",
+        "FI",
+        "FR",
+        "GB",
+        "GR",
+        "GT",
+        "HK",
+        "HN",
+        "HU",
+        "IE",
+        "IS",
+        "IT",
+        "LI",
+        "LT",
+        "LU",
+        "LV",
+        "MC",
+        "MT",
+        "MX",
+        "MY",
+        "NI",
+        "NL",
+        "NO",
+        "NZ",
+        "PA",
+        "PE",
+        "PH",
+        "PL",
+        "PT",
+        "PY",
+        "RO",
+        "SE",
+        "SG",
+        "SI",
+        "SK",
+        "SV",
+        "TR",
+        "TW",
+        "UY"
+      ],
+      "disc_number": 1,
+      "duration_ms": 215626,
+      "explicit": false,
+      "external_ids": {
+        "isrc": "SEPQB6710020"
+      },
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/6VKhjanHmI88gbeAJfGBns"
+      },
+      "href": "https://api.spotify.com/v1/tracks/6VKhjanHmI88gbeAJfGBns",
+      "id": "6VKhjanHmI88gbeAJfGBns",
+      "name": "Lyckliga gatan",
+      "popularity": 0,
+      "preview_url": "http://d318706lgtcm8e.cloudfront.net/mp3-preview/c0b277daf20e3bb24d5dd22c0f9f41571e27f578",
+      "track_number": 1,
+      "type": "track",
+      "uri": "spotify:track:6VKhjanHmI88gbeAJfGBns"
+    }
+  ],
+  "limit": 20,
+  "next": "https://api.spotify.com/v1/tracks/search?query=gatan&offset=20&limit=20",
+  "offset": 0,
+  "previous": null,
+  "total": 257
+}

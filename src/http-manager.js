@@ -11,7 +11,18 @@ HttpManager.get = function(request, callback) {
   }
 
   restler.get(request.getURI(), options)
-    .on('complete', callback);
+    .on('success', function(data, response) {
+      callback(null, data);
+    })
+    .on('fail', function(data, response) {
+      callback(data);
+    })
+    .on('error', function(err, response) {
+      callback(err);
+    })
+    .on('timeout', function(ms) {
+      callback(new Error('Timeout'));
+    });
 };
 
 module.exports = HttpManager;

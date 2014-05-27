@@ -1,0 +1,6 @@
+{
+  "error": {
+    "type": "not_found",
+    "description": "non existing id"
+  }
+}
