@@ -154,6 +154,62 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get top tracks for artist", function(done) {
+    var api = new SpotifyWebApi();
+    api.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB')
+      .then(function(data) {
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it("should get a user", function(done) {
+    var api = new SpotifyWebApi();
+    api.getUser('petteralexis')
+      .then(function(data) {
+        'spotify:user:petteralexis'.should.equal(data.uri);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it("should get the authenticated user's information", function(done) {
+    var api = new SpotifyWebApi();
+    api.getMe({ accessToken : 'someAccessToken' })
+      .then(function(data) {
+        'spotify:user:thelinmichael'.should.equal(data.uri);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it("should get the authenticated user's information with accesstoken set on the api object", function(done) {
+    var api = new SpotifyWebApi();
+    api.setAccessToken('someAccessToken');
+
+    api.getMe()
+      .then(function(data) {
+        'spotify:user:thelinmichael'.should.equal(data.uri);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it('should fail if no token is provided for a request that requires an access token', function(done) {
+    var api = new SpotifyWebApi();
+
+    api.getMe()
+      .then(function(data) {
+        done(new Error('Should have failed!'));
+      }, function(err) {
+        done();
+      });
+  });
+
   it("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
@@ -183,6 +239,20 @@ describe('Spotify Web API', function() {
         (3600).should.equal(data['expires-in']);
         should.exist(data['access-token']);
         should.exist(data['refresh-token']);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it('should refresh an access token', function(done) {
+    var clientId = 'someClientId';
+    var clientSecret = 'someClientSecret';
+    var refreshToken = 'someLongRefreshToken';
+
+    var api = new SpotifyWebApi();
+    api.refreshAccessToken(clientId, clientSecret, refreshToken)
+      .then(function(data) {
         done();
       }, function(err) {
         done(err);

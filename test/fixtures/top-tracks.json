@@ -1,0 +1,533 @@
+{
+  "tracks" : [ {
+    "album" : {
+      "album_type" : "album",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/5PfAboDCGnNBqBKnMyOLB7"
+      },
+      "href" : "https://api.spotify.com/v1/albums/5PfAboDCGnNBqBKnMyOLB7",
+      "id" : "5PfAboDCGnNBqBKnMyOLB7",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/5378f3bd9b45008835823972494400c50cac5543",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/4d4b67ab1448c80a0eb4dfe8387d0220a42852e3",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/c30526e719222e9f3b7e1954ca4ff1c158c4e48d",
+        "width" : 64
+      } ],
+      "name" : "Space Oddity [Space Oddity 40th Anniversary Edition]",
+      "type" : "album",
+      "uri" : "spotify:album:5PfAboDCGnNBqBKnMyOLB7"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 317026,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USJT10900021"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/3sb66av9ZpdI1JmPDHVa18"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/3sb66av9ZpdI1JmPDHVa18",
+    "id" : "3sb66av9ZpdI1JmPDHVa18",
+    "name" : "Space Oddity - 2009 Digital Remaster",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/aec426e12e30de94680aa1019ff5e11f1e6f5954",
+    "track_number" : 1,
+    "type" : "track",
+    "uri" : "spotify:track:3sb66av9ZpdI1JmPDHVa18"
+  }, {
+    "album" : {
+      "album_type" : "album",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/3lFioPGhn7x5Y3H3YbPV83"
+      },
+      "href" : "https://api.spotify.com/v1/albums/3lFioPGhn7x5Y3H3YbPV83",
+      "id" : "3lFioPGhn7x5Y3H3YbPV83",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/91a488f3f8e76ee4d7b0cf8167b50667ef24694c",
+        "width" : 638
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/e64ee3324ce175a7f93543ca74181a3eaabc358f",
+        "width" : 299
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/35872cfd26677eb82054ed0f0ca712eb1e5adf4b",
+        "width" : 64
+      } ],
+      "name" : "Heroes",
+      "type" : "album",
+      "uri" : "spotify:album:3lFioPGhn7x5Y3H3YbPV83"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 368373,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USJT19900130"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/5j6ZZwA9BnxZi5Bk0Ng4jB"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/5j6ZZwA9BnxZi5Bk0Ng4jB",
+    "id" : "5j6ZZwA9BnxZi5Bk0Ng4jB",
+    "name" : "Heroes - 1999 Digital Remaster",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/b4063566fbf2a8a938488de9912a6747df49630a",
+    "track_number" : 3,
+    "type" : "track",
+    "uri" : "spotify:track:5j6ZZwA9BnxZi5Bk0Ng4jB"
+  }, {
+    "album" : {
+      "album_type" : "album",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/37KYBt1Lzn4eJ4KoCFZcnR"
+      },
+      "href" : "https://api.spotify.com/v1/albums/37KYBt1Lzn4eJ4KoCFZcnR",
+      "id" : "37KYBt1Lzn4eJ4KoCFZcnR",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/7c9bf25d1fbcb299c738a220c218bcbcab413236",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/7616132ba1cf89c0c79cbb785d134b5d4363d1d1",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/a557f36799fda116ee995ab691b770f2a6e5aba9",
+        "width" : 64
+      } ],
+      "name" : "Let's Dance",
+      "type" : "album",
+      "uri" : "spotify:album:37KYBt1Lzn4eJ4KoCFZcnR"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 457133,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USJT19900185"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/0F0MA0ns8oXwGw66B2BSXm"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/0F0MA0ns8oXwGw66B2BSXm",
+    "id" : "0F0MA0ns8oXwGw66B2BSXm",
+    "name" : "Let's Dance - 1999 Digital Remaster",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/fe28213f07f5428d97dc1a09b01449797cb38d78",
+    "track_number" : 3,
+    "type" : "track",
+    "uri" : "spotify:track:0F0MA0ns8oXwGw66B2BSXm"
+  }, {
+    "album" : {
+      "album_type" : "single",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/5FDIw0ifQrQp63uhTelMVJ"
+      },
+      "href" : "https://api.spotify.com/v1/albums/5FDIw0ifQrQp63uhTelMVJ",
+      "id" : "5FDIw0ifQrQp63uhTelMVJ",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/628a8759edc202e6b0e54a64aa0a174e1a86c24c",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/d4ba89a1d19ad61071944ae32460757c4aba2c55",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/14c3c58cbb31a1c19776655ffc5e14ab83d35a19",
+        "width" : 64
+      } ],
+      "name" : "Let's Dance",
+      "type" : "album",
+      "uri" : "spotify:album:5FDIw0ifQrQp63uhTelMVJ"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 247600,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USJT10200038"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/4cVHMHgmWgudD399ZdhQ3L"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/4cVHMHgmWgudD399ZdhQ3L",
+    "id" : "4cVHMHgmWgudD399ZdhQ3L",
+    "name" : "Let's Dance - Single Version;2002 - Remaster",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/90e5577f977ebfc4faf36e9e92b410b9ed1e9d4e",
+    "track_number" : 1,
+    "type" : "track",
+    "uri" : "spotify:track:4cVHMHgmWgudD399ZdhQ3L"
+  }, {
+    "album" : {
+      "album_type" : "album",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/0vypdDHTQsoVmVu8OgXEly"
+      },
+      "href" : "https://api.spotify.com/v1/albums/0vypdDHTQsoVmVu8OgXEly",
+      "id" : "0vypdDHTQsoVmVu8OgXEly",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/6c8bf2d4494579714705d68d92819319e825c2ef",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/46073d980be731cdade0bbf6fb3e42ba8dde40d4",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/98d8ea500ea88031258f7ac393681a7715d74b7e",
+        "width" : 64
+      } ],
+      "name" : "Hunky Dory",
+      "type" : "album",
+      "uri" : "spotify:album:0vypdDHTQsoVmVu8OgXEly"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 229000,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USJT19900030"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/1C9NuEa1wOF15EOBuWaaxS"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/1C9NuEa1wOF15EOBuWaaxS",
+    "id" : "1C9NuEa1wOF15EOBuWaaxS",
+    "name" : "Life On Mars?",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/724ac949873e0decb5c01064bde434b793cdf31e",
+    "track_number" : 4,
+    "type" : "track",
+    "uri" : "spotify:track:1C9NuEa1wOF15EOBuWaaxS"
+  }, {
+    "album" : {
+      "album_type" : "album",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/37KYBt1Lzn4eJ4KoCFZcnR"
+      },
+      "href" : "https://api.spotify.com/v1/albums/37KYBt1Lzn4eJ4KoCFZcnR",
+      "id" : "37KYBt1Lzn4eJ4KoCFZcnR",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/7c9bf25d1fbcb299c738a220c218bcbcab413236",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/7616132ba1cf89c0c79cbb785d134b5d4363d1d1",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/a557f36799fda116ee995ab691b770f2a6e5aba9",
+        "width" : 64
+      } ],
+      "name" : "Let's Dance",
+      "type" : "album",
+      "uri" : "spotify:album:37KYBt1Lzn4eJ4KoCFZcnR"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 286466,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USJT19900183"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/7LyIoUsiMtelB1I0I4drEF"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/7LyIoUsiMtelB1I0I4drEF",
+    "id" : "7LyIoUsiMtelB1I0I4drEF",
+    "name" : "Modern Love - 1999 Digital Remaster",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/33d6c59a320b5396ecc8fd483ebe1bc9686542b1",
+    "track_number" : 1,
+    "type" : "track",
+    "uri" : "spotify:track:7LyIoUsiMtelB1I0I4drEF"
+  }, {
+    "album" : {
+      "album_type" : "album",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/0vypdDHTQsoVmVu8OgXEly"
+      },
+      "href" : "https://api.spotify.com/v1/albums/0vypdDHTQsoVmVu8OgXEly",
+      "id" : "0vypdDHTQsoVmVu8OgXEly",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/6c8bf2d4494579714705d68d92819319e825c2ef",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/46073d980be731cdade0bbf6fb3e42ba8dde40d4",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/98d8ea500ea88031258f7ac393681a7715d74b7e",
+        "width" : 64
+      } ],
+      "name" : "Hunky Dory",
+      "type" : "album",
+      "uri" : "spotify:album:0vypdDHTQsoVmVu8OgXEly"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 214493,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USJT19900027"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/1UBilOBSTjHxFBpsHNfykQ"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/1UBilOBSTjHxFBpsHNfykQ",
+    "id" : "1UBilOBSTjHxFBpsHNfykQ",
+    "name" : "Changes - 1999 Digital Remaster",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/5f73c757b2cd5eea93039da94243d8a54ed79e38",
+    "track_number" : 1,
+    "type" : "track",
+    "uri" : "spotify:track:1UBilOBSTjHxFBpsHNfykQ"
+  }, {
+    "album" : {
+      "album_type" : "album",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/2agWNCZl5Ts9W05mij8EPh"
+      },
+      "href" : "https://api.spotify.com/v1/albums/2agWNCZl5Ts9W05mij8EPh",
+      "id" : "2agWNCZl5Ts9W05mij8EPh",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/9289b38f1f745694bc6991fa45b7b80b5eb8627a",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/898e09cad6262e451f9ad13cbad554ce614e31e9",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/63aee5ac820dcf58f6b65e8ea4fbe8eb79c406e3",
+        "width" : 64
+      } ],
+      "name" : "The Next Day Extra",
+      "type" : "album",
+      "uri" : "spotify:album:2agWNCZl5Ts9W05mij8EPh"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 249213,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USRF31300005"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/6c8FKqalAk67uQ9nfSC0o8"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/6c8FKqalAk67uQ9nfSC0o8",
+    "id" : "6c8FKqalAk67uQ9nfSC0o8",
+    "name" : "Where Are We Now?",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/3fd84027d8be0c034fda84edea46ff4de48eb9fc",
+    "track_number" : 5,
+    "type" : "track",
+    "uri" : "spotify:track:6c8FKqalAk67uQ9nfSC0o8"
+  }, {
+    "album" : {
+      "album_type" : "album",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/0745mDdMqet9J5nO5x7IQS"
+      },
+      "href" : "https://api.spotify.com/v1/albums/0745mDdMqet9J5nO5x7IQS",
+      "id" : "0745mDdMqet9J5nO5x7IQS",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/2e270fba66caa86720fdc1ab59fb9a7bb4717e5c",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/45f499572ed94edaedef7062d8e6fb2a7316f763",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/008dcd1b69e41fdabadb35f610278b1ac3d7bb5f",
+        "width" : 64
+      } ],
+      "name" : "The Rise and Fall of Ziggy Stardust and the Spiders from Mars (Remastered)",
+      "type" : "album",
+      "uri" : "spotify:album:0745mDdMqet9J5nO5x7IQS"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 254295,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USJT11200004"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/5AIYDx0HUjra5Bn0vZtjmd"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/5AIYDx0HUjra5Bn0vZtjmd",
+    "id" : "5AIYDx0HUjra5Bn0vZtjmd",
+    "name" : "Starman - 2012 - Remaster",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/66d60d2b8da14ee33bf810b0ecb519c4150707cd",
+    "track_number" : 4,
+    "type" : "track",
+    "uri" : "spotify:track:5AIYDx0HUjra5Bn0vZtjmd"
+  }, {
+    "album" : {
+      "album_type" : "album",
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/album/0745mDdMqet9J5nO5x7IQS"
+      },
+      "href" : "https://api.spotify.com/v1/albums/0745mDdMqet9J5nO5x7IQS",
+      "id" : "0745mDdMqet9J5nO5x7IQS",
+      "images" : [ {
+        "height" : 640,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/2e270fba66caa86720fdc1ab59fb9a7bb4717e5c",
+        "width" : 640
+      }, {
+        "height" : 300,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/45f499572ed94edaedef7062d8e6fb2a7316f763",
+        "width" : 300
+      }, {
+        "height" : 64,
+        "url" : "https://d3rt1990lpmkn.cloudfront.net/original/008dcd1b69e41fdabadb35f610278b1ac3d7bb5f",
+        "width" : 64
+      } ],
+      "name" : "The Rise and Fall of Ziggy Stardust and the Spiders from Mars (Remastered)",
+      "type" : "album",
+      "uri" : "spotify:album:0745mDdMqet9J5nO5x7IQS"
+    },
+    "artists" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/0oSGxfWSnnOXhD2fKuz2Gy"
+      },
+      "href" : "https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy",
+      "id" : "0oSGxfWSnnOXhD2fKuz2Gy",
+      "name" : "David Bowie",
+      "type" : "artist",
+      "uri" : "spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy"
+    } ],
+    "available_markets" : [ "AD", "AR", "AT", "AU", "BE", "BG", "BO", "BR", "CA", "CH", "CL", "CO", "CR", "CY", "CZ", "DE", "DK", "DO", "EC", "EE", "ES", "FI", "FR", "GB", "GR", "GT", "HK", "HN", "HU", "IE", "IS", "IT", "LT", "LU", "LV", "MC", "MT", "MX", "MY", "NI", "NL", "NO", "NZ", "PA", "PE", "PH", "PL", "PT", "PY", "RO", "SE", "SG", "SI", "SK", "SV", "TR", "TW", "US", "UY" ],
+    "disc_number" : 1,
+    "duration_ms" : 193577,
+    "explicit" : false,
+    "external_ids" : {
+      "isrc" : "USJT11200009"
+    },
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/2h9h3uJyRAb54OyrQK33lA"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/2h9h3uJyRAb54OyrQK33lA",
+    "id" : "2h9h3uJyRAb54OyrQK33lA",
+    "name" : "Ziggy Stardust - 2012 - Remaster",
+    "popularity" : 0,
+    "preview_url" : "http://d318706lgtcm8e.cloudfront.net/mp3-preview/6df2bbf93253e2f63aee4484b091369c15fe1922",
+    "track_number" : 9,
+    "type" : "track",
+    "uri" : "spotify:track:2h9h3uJyRAb54OyrQK33lA"
+  } ]
+}

@@ -82,6 +82,17 @@ Request.prototype.addBodyParameters = function(bodyParameters) {
   }
 };
 
+Request.prototype.addHeaders = function(headers) {
+  'use strict';
+  if (!this.headers) {
+    this.headers = headers;
+  } else {
+    for (var key in headers) {
+      this.headers[key] = headers[key];
+    }
+  }
+};
+
 var Builder = function() {
   'use strict';
   var host, port, scheme, queryParameters, bodyParameters, headers;
