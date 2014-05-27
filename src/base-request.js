@@ -48,6 +48,18 @@ Request.prototype.getHeaders = function() {
   return this.headers;
 };
 
+Request.prototype.getURI = function() {
+  'use strict';
+  if (!this.scheme || !this.host || !this.port) {
+    throw new Error('Missing components necessary to construct URI');
+  }
+  var uri = this.scheme + '://' + this.host + ':' + this.port;
+  if (this.path) {
+    uri += this.path;
+  }
+  return uri;
+};
+
 var Builder = function() {
   'use strict';
   var host, port, scheme, queryParameters, bodyParameters, headers;

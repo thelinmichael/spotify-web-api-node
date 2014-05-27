@@ -74,4 +74,15 @@ describe("Create Requests", function() {
     request.getPath().should.equal("/v1/users/meriosweg");
   });
 
+  it("Should build URI", function() {
+    var request = Request.builder()
+      .withHost("such.api.wow")
+      .withScheme("https")
+      .withPort(1337)
+      .withPath("/v1/users/meriosweg")
+      .build();
+
+    request.getURI().should.equal("https://such.api.wow:1337/v1/users/meriosweg");
+  });
+
 });
