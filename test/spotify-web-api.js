@@ -143,6 +143,17 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get tracks from album", function(done) {
+    var api = new SpotifyWebApi();
+    api.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 })
+      .then(function(data) {
+        'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'.should.equal(data.href);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
   it("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
