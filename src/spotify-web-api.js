@@ -77,7 +77,7 @@ function SpotifyWebApi() {
 
   this.getTracks = function(ids, options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/tracks/')
+      .withPath('/v1/tracks')
       .withQueryParameters({
         'ids' : ids.join(',')
       })
@@ -85,6 +85,68 @@ function SpotifyWebApi() {
     return _addQueryParametersAndPerformGetRequest(request, options, callback);
   };
 
+  this.getAlbum = function(id, options, callback) {
+    var request = WebApiRequest.builder().withPath('/v1/albums/' + id).build();
+    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+  };
+
+  this.getAlbums = function(ids, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/albums')
+      .withQueryParameters({
+        'ids' : ids.join(',')
+      })
+      .build();
+    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+  };
+
+  this.getArtist = function(id, options, callback) {
+    var request = WebApiRequest.builder().withPath('/v1/artists/' + id).build();
+    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+  };
+
+  this.getArtists = function(ids, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/artists')
+      .withQueryParameters({
+        'ids' : ids.join(',')
+      })
+      .build();
+    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+  };
+
+  this.searchAlbums = function(query, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/search/')
+      .withQueryParameters({
+        type : 'album',
+        q : query
+      })
+      .build();
+      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+  };
+
+  this.searchArtists = function(query, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/search/')
+      .withQueryParameters({
+        type : 'artist',
+        q : query
+      })
+      .build();
+      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+  };
+
+  this.searchTracks = function(query, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/search/')
+      .withQueryParameters({
+        type : 'track',
+        q : query
+      })
+      .build();
+      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+  };
 }
 
 module.exports = SpotifyWebApi;
