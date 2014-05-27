@@ -162,6 +162,13 @@ function SpotifyWebApi() {
       return _addQueryParametersAndPerformGetRequest(request, options, callback);
   };
 
+  this.getArtistAlbums = function(id, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/artists/' + id + '/albums')
+      .build();
+      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+  };
+
   this.authClientCredentials = function(clientId, clientSecret, options, callback) {
     var request = AuthenticationRequest.builder()
       .withPath('/api/token')

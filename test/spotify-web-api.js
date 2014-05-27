@@ -132,6 +132,17 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get artists albums", function(done) {
+    var api = new SpotifyWebApi();
+    api.getArtistAlbums('0oSGxfWSnnOXhD2fKuz2Gy', { album_type : 'album', country : 'GB', limit : 2, offset : 2 })
+      .then(function(data) {
+        'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=2&limit=2&album_type=album'.should.equal(data.href);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
   it("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
