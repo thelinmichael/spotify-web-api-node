@@ -3,10 +3,10 @@ var AuthenticationRequest = require('./authentication-request'),
     HttpManager = require('./http-manager'),
     PromiseImpl = require('promise');
 
-function SpotifyWebApi() {
+function SpotifyWebApi(credentials) {
   'use strict';
 
-  var _accessToken = null;
+  var _credentials = credentials || {};
 
   function _addQueryParametersAndPerformGetRequest(request, options) {
     request.addQueryParameters(options);
@@ -20,8 +20,13 @@ function SpotifyWebApi() {
   }
 
   function _addQueryParameters(request, options) {
-    if (options) {
-      request.addQueryParameters(options);
+    if (!options) {
+      return;
+    }
+    for (var key in options) {
+      if (key !== 'credentials') {
+        request.addQueryParameter(key, options[key]);
+      }
     }
   }
 
@@ -47,7 +52,7 @@ function SpotifyWebApi() {
   }
 
   function _addAccessToken(request, options) {
-    var accessToken = _determineToken(options);
+    var accessToken = _determineCredentials('accessToken', options);
     if (accessToken) {
       request.addHeaders({
         'Authorization' : 'Bearer ' + accessToken
@@ -55,20 +60,30 @@ function SpotifyWebApi() {
     }
   }
 
-  function _determineToken(options) {
-    if (options && options.credentials && options.credentials.accessToken) {
-      return options.credentials.accessToken;
+  function _addBasicAuthorization(request, options) {
+    var clientId = _determineCredentials('clientId', options);
+    var clientSecret = _determineCredentials('clientSecret', options);
+    request.addHeaders({
+      'Authorization' : 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
+    });
+  }
+
+  function _determineCredentials(credential, options) {
+    if (options && options.credentials && options.credentials[credential]) {
+      return options.credentials[credential];
     } else {
-      return _accessToken;
+      return _credentials[credential];
     }
   }
 
-  this.resetAccessToken = function() {
-    _accessToken = null;
+  this.setCredentials = function(credentials) {
+    for (var key in credentials) {
+      _credentials[key] = credentials[key];
+    }
   };
 
-  this.setAccessToken = function(accessToken) {
-    _accessToken = accessToken;
+  this.getCredentials = function() {
+    return _credentials;
   };
 
   this.getTrack = function(id, options) {
@@ -268,16 +283,14 @@ function SpotifyWebApi() {
     return _performPostRequest(request, options);
   };
 
-  this.clientCredentialsGrant = function(clientId, clientSecret, options) {
+  this.clientCredentialsGrant = function(options) {
     var request = AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'client_credentials'
       })
-      .withHeaders({
-        'Authorization' : 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
-      })
       .build();
+      _addBasicAuthorization(request, options);
       _addBodyParameters(request, options);
       return _performPostRequest(request);
   };
@@ -299,7 +312,7 @@ function SpotifyWebApi() {
   };
 
   this.refreshAccessToken = function(clientId, clientSecret, refreshToken, options) {
-    var request =AuthenticationRequest.builder()
+    var request = AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'refresh_token',

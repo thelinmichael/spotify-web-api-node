@@ -32,6 +32,24 @@ describe('Spotify Web API', function() {
   afterEach(function () {
   });
 
+  it('should set clientId, clientSecret and redirectUri', function() {
+    var credentials = {
+      clientId : 'someClientId',
+      clientSecret : 'someClientSecret',
+      redirectUri : 'myRedirectUri',
+      accessToken :'mySuperNiceAccessToken',
+      refreshToken :'iCanEvenSaveMyAccessToken'
+    };
+
+    var api = new SpotifyWebApi(credentials);
+
+    api.getCredentials().clientId.should.equal(credentials.clientId);
+    api.getCredentials().clientSecret.should.equal(credentials.clientSecret);
+    api.getCredentials().redirectUri.should.equal(credentials.redirectUri);
+    api.getCredentials().accessToken.should.equal(credentials.accessToken);
+    api.getCredentials().refreshToken.should.equal(credentials.refreshToken);
+  });
+
   it("should retrieve track metadata", function(done) {
     var api = new SpotifyWebApi();
     api.getTrack('3Qm86XLflmIXVm1wcwkgDK')
@@ -127,6 +145,7 @@ describe('Spotify Web API', function() {
         'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'.should.equal(data.albums.href);
         done();
       }, function(err) {
+        console.log(err);
         done(err);
       });
   });
@@ -239,6 +258,25 @@ describe('Spotify Web API', function() {
       .then(function(data) {
         done();
       },function(err) {
+        done(err);
+      });
+  });
+
+  it.skip('should use accesstoken if supplied in options', function(done) {
+    var api = new SpotifyWebApi();
+
+    var clientId = 'fcecfc79122e4cd299473677a17cbd4d';
+    var clientSecret = 'someClientSecret';
+
+    api.clientCredentialsGrant(clientId, clientSecret)
+      .then(function(data) {
+        api.getArtist('1u7kkVrr14iBvrpYnZILJR', { 'credentials' : data['access_token'] })
+      })
+      .then(function(data) {
+        done();
+      })
+      .catch(function(err) {
+        console.log(err);
         done(err);
       });
   });

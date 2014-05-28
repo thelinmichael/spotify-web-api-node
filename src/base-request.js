@@ -62,24 +62,32 @@ Request.prototype.getURI = function() {
 
 Request.prototype.addQueryParameters = function(queryParameters) {
   'use strict';
-  if (!this.queryParameters) {
-    this.queryParameters = queryParameters;
-  } else {
-    for (var key in queryParameters) {
-      this.queryParameters[key] = queryParameters[key];
-    }
+  for (var key in queryParameters) {
+    this.addQueryParameter(key, queryParameters[key]);
   }
+};
+
+Request.prototype.addQueryParameter = function(key, value) {
+  'use strict';
+  if (!this.queryParameters) {
+    this.queryParameters = {};
+  }
+  this.queryParameters[key] = value;
 };
 
 Request.prototype.addBodyParameters = function(bodyParameters) {
   'use strict';
-  if (!this.bodyParameters) {
-    this.bodyParameters = bodyParameters;
-  } else {
-    for (var key in bodyParameters) {
-      this.bodyParameters[key] = bodyParameters[key];
-    }
+  for (var key in bodyParameters) {
+    this.addBodyParameter(key, bodyParameters[key]);
   }
+};
+
+Request.prototype.addBodyParameter = function(key, value) {
+  'use strict';
+  if (!this.bodyParameters) {
+    this.bodyParameters = {};
+  }
+  this.bodyParameters[key] = value;
 };
 
 Request.prototype.addHeaders = function(headers) {

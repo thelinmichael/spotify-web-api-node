@@ -58,7 +58,6 @@ var _makeRequest = function(method, options, uri, callback) {
 
 HttpManager.get = function(request, callback) {
   'use strict';
-
   var options = _getParametersFromRequest(request);
   var method = restler.get;
 
