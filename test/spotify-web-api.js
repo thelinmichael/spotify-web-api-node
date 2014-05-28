@@ -42,6 +42,27 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should fail for non existing track id", function(done) {
+    var api = new SpotifyWebApi();
+    api.getTrack('idontexist')
+      .then(function(data) {
+        done(new Error('Should have failed'));
+      }, function(err) {
+        'non existing id'.should.equal(err.error.description);
+        done();
+      });
+  });
+
+  it('should fail for empty track id', function(done) {
+    var api = new SpotifyWebApi();
+    api.getTrack()
+      .then(function(data) {
+        done(new Error('Should have failed'));
+      }, function(err) {;
+        done();
+      });
+  });
+
   it("should retrieve metadata for several tracks", function(done) {
     var api = new SpotifyWebApi();
     api.getTracks(['0eGsygTp906u18L0Oimnem', '1lDWb6b6ieDQ2xT7ewTC3G'])
