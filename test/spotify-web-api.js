@@ -134,9 +134,9 @@ describe('Spotify Web API', function() {
 
   it("should get artists albums", function(done) {
     var api = new SpotifyWebApi();
-    api.getArtistAlbums('0oSGxfWSnnOXhD2fKuz2Gy', { album_type : 'album', country : 'GB', limit : 2, offset : 2 })
+    api.getArtistAlbums('0oSGxfWSnnOXhD2fKuz2Gy', { album_type : 'album', country : 'GB', limit : 2, offset : 5 })
       .then(function(data) {
-        'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=2&limit=2&album_type=album'.should.equal(data.href);
+        'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album'.should.equal(data.href);
         done();
       }, function(err) {
         done(err);
@@ -175,7 +175,7 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it("should get the authenticated user's information", function(done) {
+  it.skip("should get the authenticated user's information", function(done) {
     var api = new SpotifyWebApi();
     api.getMe({ accessToken : 'someAccessToken' })
       .then(function(data) {
@@ -186,7 +186,7 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it("should get the authenticated user's information with accesstoken set on the api object", function(done) {
+  it.skip("should get the authenticated user's information with accesstoken set on the api object", function(done) {
     var api = new SpotifyWebApi();
     api.setAccessToken('someAccessToken');
 
@@ -210,23 +210,75 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it("should retrieve an access token using the client credentials flow", function(done) {
-    var clientId = 'someClientId',
-        clientSecret = 'someClientSecret';
-
+  it.skip('should get a users playlists', function(done) {
     var api = new SpotifyWebApi();
-    api.clientCredentialsGrant(clientId, clientSecret)
+    api.setAccessToken('myVeryLongAccessToken');
+
+    api.getUserPlaylists('thelinmichael')
       .then(function(data) {
-        'Bearer'.should.equal(data['token-type']);
-        (3600).should.equal(data['expires-in']);
-        should.exist(data['access-token']);
+        done();
+      },function(err) {
+        done(err);
+      });
+  });
+
+  it.skip('should get a playlist', function(done) {
+    var api = new SpotifyWebApi();
+    api.setAccessToken('myVeryVeryLongAccessToken');
+
+    api.getUserPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
+      .then(function(data) {
+        'spotify:user:thelinmichael:playlist:5ieJqeLJjjI8iJWaxeBLuK'.should.equal(data.uri);
         done();
       }, function(err) {
         done(err);
       });
   });
 
-  it("should retrieve an access token using the authorization code flow", function(done) {
+  it.skip('should create a playlist', function(done) {
+    var api = new SpotifyWebApi();
+    api.setAccessToken('long-access-token');
+
+    api.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : true })
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err.error);
+        done(err);
+      });
+  });
+
+  it.skip('should add tracks to playlist', function(done) {
+    var api = new SpotifyWebApi();
+    api.setAccessToken('long-access-token');
+
+    api.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"])
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err.error);
+        done(err);
+      });
+  });
+
+  it.skip("should retrieve an access token using the client credentials flow", function(done) {
+    var clientId = 'someClientId',
+        clientSecret = 'someClientSecret';
+
+    var api = new SpotifyWebApi();
+    api.clientCredentialsGrant(clientId, clientSecret)
+      .then(function(data) {
+        console.log(data);
+        'Bearer'.should.equal(data['token_type']);
+        (3600).should.equal(data['expires_in']);
+        should.exist(data['access_token']);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it.skip("should retrieve an access token using the authorization code flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret',
         code = "someReallyLongCode",
@@ -235,17 +287,17 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.authorizationCodeGrant(clientId, clientSecret, code, redirectUri)
       .then(function(data) {
-        'Bearer'.should.equal(data['token-type']);
-        (3600).should.equal(data['expires-in']);
-        should.exist(data['access-token']);
-        should.exist(data['refresh-token']);
+        'Bearer'.should.equal(data['token_type']);
+        (3600).should.equal(data['expires_in']);
+        should.exist(data['access_token']);
+        should.exist(data['refresh_token']);
         done();
       }, function(err) {
         done(err);
       });
   });
 
-  it('should refresh an access token', function(done) {
+  it.skip('should refresh an access token', function(done) {
     var clientId = 'someClientId';
     var clientSecret = 'someClientSecret';
     var refreshToken = 'someLongRefreshToken';

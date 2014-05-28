@@ -11,14 +11,16 @@ var _getParametersFromRequest = function(request) {
     options.query = request.getQueryParameters();
   }
 
-  if (request.getBodyParameters()) {
+  if (request.getHeaders() &&
+      request.getHeaders()['Content-Type'] === 'application/json') {
+    options.data = JSON.stringify(request.getBodyParameters());
+  } else if (request.getBodyParameters()) {
     options.data = request.getBodyParameters();
   }
 
   if (request.getHeaders()) {
     options.headers = request.getHeaders();
   }
-
   return options;
 };
 
@@ -30,16 +32,29 @@ var _makeRequest = function(method, options, uri, callback) {
       callback(null, data);
     })
     .on('fail', function(data, response) {
-      callback(data);
+      if (data) {
+        callback(data);
+      } else {
+        callback({
+          error : 'request failed (' + response.statusCode + ')'
+        });
+      }
     })
     .on('error', function(err, response) {
-      callback(err);
+      if (err) {
+        callback(err);
+      } else {
+        callback({
+          error : 'request error (' + response.statusCode + ')'
+        });
+      }
     })
     .on('timeout', function(ms) {
-      callback(new Error('Timeout'));
+      callback({
+        error : 'Request timed out (' + ms + ')'
+      });
     });
 };
-
 
 HttpManager.get = function(request, callback) {
   'use strict';

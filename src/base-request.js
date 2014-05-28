@@ -11,6 +11,7 @@ var Request = function(builder) {
   this.bodyParameters = builder.bodyParameters;
   this.headers = builder.headers;
   this.path = builder.path;
+  this.jsonBody = builder.jsonBody;
 };
 
 Request.prototype.getHost = function() {
@@ -41,6 +42,11 @@ Request.prototype.getQueryParameters = function() {
 Request.prototype.getBodyParameters = function() {
   'use strict';
   return this.bodyParameters;
+};
+
+Request.prototype.getJsonBody = function() {
+  'use strict';
+  return this.jsonBody;
 };
 
 Request.prototype.getHeaders = function() {
@@ -95,7 +101,7 @@ Request.prototype.addHeaders = function(headers) {
 
 var Builder = function() {
   'use strict';
-  var host, port, scheme, queryParameters, bodyParameters, headers;
+  var host, port, scheme, queryParameters, bodyParameters, headers, jsonBody;
 };
 
 Builder.prototype.withHost = function(host) {
@@ -131,6 +137,12 @@ Builder.prototype.withPath = function(path) {
 Builder.prototype.withBodyParameters = function(bodyParameters) {
   'use strict';
   this.bodyParameters = bodyParameters;
+  return this;
+};
+
+Builder.prototype.withJsonBody = function(json) {
+  'use strict';
+  this.jsonBody = json;
   return this;
 };
 

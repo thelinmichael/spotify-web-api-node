@@ -38,18 +38,34 @@ function SpotifyWebApi() {
     return _performRequest(HttpManager.get, request, cb);
   }
 
-  function _addBodyParametersAndPerformPostRequest(request, options, callback) {
-    var opt = {};
-    var cb = null;
-
+  function _addBodyParameters(request, options) {
     if (typeof options === 'object') {
-      opt = options;
+      request.addBodyParameters(options);
+    }
+  }
+
+  function _addQueryParameters(request, options) {
+    if (typeof options === 'object') {
+      request.addQueryParameters(options);
+    }
+  }
+
+  function _performPostRequest(request, options, callback) {
+    return _performRequest(HttpManager.post, request, _determineCallback(options, callback));
+  }
+
+  function _performGetRequest(request, options, callback) {
+    return _performRequest(HttpManager.get, request,  _determineCallback(options, callback));
+  }
+
+  function _determineCallback(options, callback) {
+    var cb;
+    if (typeof options === 'object') {
       cb = callback;
     } else if (typeof options === 'function') {
       cb = options;
     }
-    request.addBodyParameters(opt);
-    return _performRequest(HttpManager.post, request, cb);
+    return cb;
   }
 
   function _performRequest(method, request, callback) {
@@ -77,8 +93,8 @@ function SpotifyWebApi() {
     }
   }
 
-  function _addAccessToken(options, request) {
-    var accessToken = _determineToken();
+  function _addAccessToken(request, options) {
+    var accessToken = _determineToken(options);
     if (accessToken) {
       request.addHeaders({
         'Authorization' : 'Bearer ' + accessToken
@@ -112,8 +128,9 @@ function SpotifyWebApi() {
 
   this.getTrack = function(id, options, callback) {
     var request = WebApiRequest.builder().withPath('/v1/tracks/' + id).build();
-    _addAccessToken(options, request);
-    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+    _addAccessToken(request, options);
+    _addQueryParameters(request, options);
+    return _performGetRequest(request, options, callback);
   };
 
   this.getTracks = function(ids, options, callback) {
@@ -123,14 +140,16 @@ function SpotifyWebApi() {
         'ids' : ids.join(',')
       })
       .build();
-    _addAccessToken(options, request);
-    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+    _addAccessToken(request, options);
+    _addQueryParameters(request, options);
+    return _performGetRequest(request, options, callback);
   };
 
   this.getAlbum = function(id, options, callback) {
     var request = WebApiRequest.builder().withPath('/v1/albums/' + id).build();
-    _addAccessToken(options, request);
-    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+    _addAccessToken(request, options);
+    _addQueryParameters(request, options);
+    return _performGetRequest(request, options, callback);
   };
 
   this.getAlbums = function(ids, options, callback) {
@@ -141,14 +160,16 @@ function SpotifyWebApi() {
       })
       .build();
 
-    _addAccessToken(options, request);
-    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+    _addAccessToken(request, options);
+    _addQueryParameters(request, options);
+    return _performGetRequest(request, options, callback);
   };
 
   this.getArtist = function(id, options, callback) {
     var request = WebApiRequest.builder().withPath('/v1/artists/' + id).build();
-    _addAccessToken(options, request);
-    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+    _addAccessToken(request, options);
+    _addQueryParameters(request, options);
+    return _performGetRequest(request, options, callback);
   };
 
   this.getArtists = function(ids, options, callback) {
@@ -159,8 +180,9 @@ function SpotifyWebApi() {
       })
       .build();
 
-    _addAccessToken(options, request);
-    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+    _addAccessToken(request, options);
+    _addQueryParameters(request, options);
+    return _performGetRequest(request, options, callback);
   };
 
   this.searchAlbums = function(query, options, callback) {
@@ -172,8 +194,9 @@ function SpotifyWebApi() {
       })
       .build();
 
-      _addAccessToken(options, request);
-      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+      _addAccessToken(request, options);
+      _addQueryParameters(request, options);
+      return _performGetRequest(request, options, callback);
   };
 
   this.searchArtists = function(query, options, callback) {
@@ -185,8 +208,9 @@ function SpotifyWebApi() {
       })
       .build();
 
-      _addAccessToken(options, request);
-      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+      _addAccessToken(request, options);
+      _addQueryParameters(request, options);
+      return _performGetRequest(request, options, callback);
   };
 
   this.searchTracks = function(query, options, callback) {
@@ -198,8 +222,9 @@ function SpotifyWebApi() {
       })
       .build();
 
-      _addAccessToken(options, request);
-      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+      _addAccessToken(request, options);
+      _addQueryParameters(request, options);
+      return _performGetRequest(request, options, callback);
   };
 
   this.getArtistAlbums = function(id, options, callback) {
@@ -207,8 +232,9 @@ function SpotifyWebApi() {
       .withPath('/v1/artists/' + id + '/albums')
       .build();
 
-      _addAccessToken(options, request);
-      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+      _addAccessToken(request, options);
+      _addQueryParameters(request, options);
+      return _performGetRequest(request, options, callback);
   };
 
   this.getAlbumTracks = function(id, options, callback) {
@@ -216,8 +242,9 @@ function SpotifyWebApi() {
       .withPath('/v1/albums/' + id + '/tracks')
       .build();
 
-      _addAccessToken(options, request);
-      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+      _addAccessToken(request, options);
+      _addQueryParameters(request, options);
+      return _performGetRequest(request, options, callback);
   };
 
   this.getArtistTopTracks = function(id, country, options, callback) {
@@ -228,8 +255,9 @@ function SpotifyWebApi() {
       })
       .build();
 
-      _addAccessToken(options, request);
-      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+      _addAccessToken(request, options);
+      _addQueryParameters(request, options);
+      return _performGetRequest(request, options, callback);
   };
 
   this.getUser = function(id, options, callback) {
@@ -237,8 +265,9 @@ function SpotifyWebApi() {
       .withPath('/v1/users/' + id)
       .build();
 
-      _addAccessToken(options, request);
-      return _addQueryParametersAndPerformGetRequest(request, options, callback);
+      _addAccessToken(request, options);
+      _addQueryParameters(request, options);
+      return _performGetRequest(request, options, callback);
   };
 
   this.getMe = function(options, callback) {
@@ -246,11 +275,55 @@ function SpotifyWebApi() {
       .withPath('/v1/me')
       .build();
 
-    _addAccessToken(options, request);
-    return _addQueryParametersAndPerformGetRequest(request, options, callback);
+    _addAccessToken(request, options);
+    _addQueryParameters(request, options);
+    return _performGetRequest(request, options, callback);
   };
 
-  this.authClientCredentials = function(clientId, clientSecret, options, callback) {
+  this.getUserPlaylists = function(userId, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists')
+      .build();
+    _addAccessToken(request, options);
+    _addQueryParameters(request, options);
+    return _performGetRequest(request, options, callback);
+  };
+
+  this.getUserPlaylist = function(userId, playlistId, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists/' + playlistId)
+      .build();
+    _addAccessToken(request, options);
+    _addQueryParameters(request, options);
+    return _performGetRequest(request, options, callback);
+  };
+
+  this.createPlaylist = function(userId, name, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists/')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters({ 'name' : name })
+      .build();
+    _addAccessToken(request, options);
+    _addBodyParameters(request, options);
+    return _performPostRequest(request, options, callback);
+  };
+
+  /**
+   * TODO: No support for position just now.
+   */
+  this.addTracksToPlaylist = function(userId, playlistId, tracks, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters(tracks)
+      .build();
+    _addAccessToken(request, options);
+    _addQueryParameters(options);
+    return _performPostRequest(request, options, callback);
+  };
+
+  this.clientCredentialsGrant = function(clientId, clientSecret, options, callback) {
     var request = AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
@@ -260,8 +333,8 @@ function SpotifyWebApi() {
         'Authorization' : 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
       })
       .build();
-
-      return _addBodyParametersAndPerformPostRequest(request, options, callback);
+      _addBodyParameters(request, options);
+      return _performPostRequest(request, callback);
   };
 
   this.authorizationCodeGrant = function(clientId, clientSecret, code, redirectUri, options, callback) {
@@ -276,8 +349,8 @@ function SpotifyWebApi() {
         'Authorization' : 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
       })
       .build();
-
-      return _addBodyParametersAndPerformPostRequest(request, options, callback);
+      _addBodyParameters(request, options);
+      return _performPostRequest(request, callback);
   };
 
   this.refreshAccessToken = function(clientId, clientSecret, refreshToken, options, callback) {
@@ -292,7 +365,8 @@ function SpotifyWebApi() {
       })
       .build();
 
-      return _addBodyParametersAndPerformPostRequest(request, options, callback);
+      _addBodyParameters(request, options);
+      return _performPostRequest(request, options, callback);
   };
 
 }
