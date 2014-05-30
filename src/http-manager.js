@@ -26,7 +26,6 @@ var _getParametersFromRequest = function(request) {
 
 var _makeRequest = function(method, options, uri, callback) {
   'use strict';
-
   method(uri, options)
     .on('success', function(data, response) {
       callback(null, data);

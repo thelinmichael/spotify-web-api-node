@@ -346,7 +346,6 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.clientCredentialsGrant(clientId, clientSecret)
       .then(function(data) {
-        console.log(data);
         'Bearer'.should.equal(data['token_type']);
         (3600).should.equal(data['expires_in']);
         should.exist(data['access_token']);
@@ -357,13 +356,15 @@ describe('Spotify Web API', function() {
   });
 
   it.skip("should retrieve an access token using the authorization code flow", function(done) {
-    var clientId = 'someClientId',
-        clientSecret = 'someClientSecret',
-        code = "someReallyLongCode",
-        redirectUri = "http://such.host.wow/much-callback";
+    var credentials = {
+      clientId : 'someClientId',
+      clientSecret : 'someClientSecret',
+      code : 'omeCode',
+      redirectUri : 'http://www.michaelthelin.se/test-callback'
+    };
 
     var api = new SpotifyWebApi();
-    api.authorizationCodeGrant(clientId, clientSecret, code, redirectUri)
+    api.authorizationCodeGrant({ credentials : credentials })
       .then(function(data) {
         'Bearer'.should.equal(data['token_type']);
         (3600).should.equal(data['expires_in']);
@@ -371,6 +372,7 @@ describe('Spotify Web API', function() {
         should.exist(data['refresh_token']);
         done();
       }, function(err) {
+        console.log(err);
         done(err);
       });
   });
@@ -389,7 +391,7 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it.only('should create authorization URL', function() {
+  it('should create authorization URL', function() {
     var scopes = ['user-read-private', 'user-read-email'],
         redirectUri = 'https://example.com/callback',
         clientId = '5fe01282e44241328a84e7c5cc169165',
@@ -403,7 +405,6 @@ describe('Spotify Web API', function() {
         redirectUri : redirectUri
       }
     });
-
     'https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'.should.equal(authorizeURL);
   });
 

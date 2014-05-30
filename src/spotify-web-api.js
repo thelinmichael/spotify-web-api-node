@@ -15,7 +15,11 @@ function SpotifyWebApi(credentials) {
 
   function _addBodyParameters(request, options) {
     if (options) {
-      request.addBodyParameters(options);
+      for (var key in options) {
+        if (key !== 'credentials') {
+          request.addBodyParameter(key, options[key]);
+        }
+      }
     }
   }
 
@@ -270,7 +274,7 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
-   * TODO: No support for position just now.
+   * TODO: Add position.
    */
   this.addTracksToPlaylist = function(userId, playlistId, tracks, options) {
     var request = WebApiRequest.builder()
@@ -295,19 +299,16 @@ function SpotifyWebApi(credentials) {
       return _performPostRequest(request);
   };
 
-  this.authorizationCodeGrant = function(clientId, clientSecret, code, redirectUri, options) {
+  this.authorizationCodeGrant = function(options) {
      var request = AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'authorization_code',
-        'redirect_uri' : redirectUri,
-        'code' : code
-      })
-      .withHeaders({
-        'Authorization' : 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
+        'redirect_uri' : _determineCredentials('redirectUri', options),
+        'code' : _determineCredentials('code', options),
       })
       .build();
-      _addBodyParameters(request, options);
+      _addBasicAuthorization(request, options);
       return _performPostRequest(request);
   };
 
@@ -318,11 +319,9 @@ function SpotifyWebApi(credentials) {
         'grant_type' : 'refresh_token',
         'refresh_token' : refreshToken
       })
-      .withHeaders({
-        'Authorization' : 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
-      })
       .build();
 
+      _addBasicAuthorization(request, options);
       _addBodyParameters(request, options);
       return _performPostRequest(request, options);
   };
