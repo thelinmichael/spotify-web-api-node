@@ -327,6 +327,22 @@ function SpotifyWebApi(credentials) {
       return _performPostRequest(request, options);
   };
 
+  this.createAuthorizeURL = function(scopes, state, options) {
+    var request = AuthenticationRequest.builder()
+      .withPath('/authorize')
+      .withQueryParameters({
+        'client_id' : _determineCredentials('clientId', options),
+        'response_type' : 'code',
+        'redirect_uri' : _determineCredentials('redirectUri', options),
+        'scope' : scopes.join('%20'),
+        'state' : state
+      })
+      .build();
+
+      _addQueryParameters(request, options);
+      return request.getURL();
+  };
+
 }
 
 module.exports = SpotifyWebApi;

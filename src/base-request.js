@@ -60,6 +60,16 @@ Request.prototype.getURI = function() {
   return uri;
 };
 
+Request.prototype.getURL = function() {
+  'use strict';
+  var uri = this.getURI();
+  if (this.getQueryParameters()) {
+    return uri + this.getQueryParameterString(this.getQueryParameters());
+  } else {
+    return uri;
+  }
+};
+
 Request.prototype.addQueryParameters = function(queryParameters) {
   'use strict';
   for (var key in queryParameters) {
@@ -99,6 +109,27 @@ Request.prototype.addHeaders = function(headers) {
       this.headers[key] = headers[key];
     }
   }
+};
+
+Request.prototype.getQueryParameterString = function() {
+  'use strict';
+  var queryParameters = this.getQueryParameters();
+  if (!queryParameters) {
+    return;
+  }
+  var queryParameterString = '?';
+  var first = true;
+  for (var key in queryParameters) {
+    if (queryParameters.hasOwnProperty(key)) {
+      if (!first) {
+        queryParameterString += '&';
+      } else {
+        first = false;
+      }
+      queryParameterString += key + '=' + queryParameters[key];
+    }
+  }
+  return queryParameterString;
 };
 
 var Builder = function() {

@@ -389,4 +389,24 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it.only('should create authorization URL', function() {
+    var scopes = ['user-read-private', 'user-read-email'],
+        redirectUri = 'https://example.com/callback',
+        clientId = '5fe01282e44241328a84e7c5cc169165',
+        state = 'some-state-of-my-choice';
+
+    var api = new SpotifyWebApi();
+
+    var authorizeURL = api.createAuthorizeURL(scopes, state, {
+      credentials : {
+        clientId : clientId,
+        redirectUri : redirectUri
+      }
+    });
+
+    'https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'.should.equal(authorizeURL);
+  });
+
+
+
 });
