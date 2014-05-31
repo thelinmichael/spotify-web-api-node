@@ -90,6 +90,91 @@ function SpotifyWebApi(credentials) {
     return _credentials;
   };
 
+  this.resetCredentials = function() {
+    _credentials = null;
+  };
+
+  this.setClientId = function(clientId) {
+    _setCredential('clientId', clientId);
+  };
+
+  this.setClientSecret = function(clientSecret) {
+    _setCredential('clientSecret', clientSecret);
+  };
+
+  this.setCode = function(code) {
+    _setCredential('code', code);
+  };
+
+  this.setAccessToken = function(accessToken) {
+    _setCredential('accessToken', accessToken);
+  };
+
+  this.setRefreshToken = function(refreshToken) {
+    _setCredential('refreshToken', refreshToken);
+  };
+
+  this.getClientId = function() {
+    return _getCredential('clientId');
+  };
+
+  this.getClientSecret = function() {
+    return _getCredential('clientSecret');
+  };
+
+  this.getCode = function() {
+    return _getCredential('code');
+  };
+
+  this.getAccessToken = function() {
+    return _getCredential('accessToken');
+  };
+
+  this.getRefreshToken = function() {
+    return _getCredential('refreshToken');
+  };
+
+  this.resetClientId = function() {
+    _resetCredential('clientId');
+  };
+
+  this.resetClientSecret = function() {
+    _resetCredential('clientSecret');
+  };
+
+  this.resetCode = function() {
+    _resetCredential('code');
+  };
+
+  this.resetAccessToken = function() {
+    _resetCredential('accessToken');
+  };
+
+  this.resetRefreshToken = function() {
+    _resetCredential('refreshToken');
+  };
+
+  function _setCredential(credentialKey, value) {
+    _credentials = _credentials || {};
+    _credentials[credentialKey] = value;
+  }
+
+  function _getCredential(credentialKey) {
+    if (!_credentials) {
+      return;
+    } else {
+      return _credentials[credentialKey];
+    }
+  }
+
+  function _resetCredential(credentialKey) {
+    if (!_credentials) {
+      return;
+    } else {
+      _credentials[credentialKey] = null;
+    }
+  }
+
   this.getTrack = function(id, options) {
     var request = WebApiRequest.builder().withPath('/v1/tracks/' + id).build();
     _addAccessToken(request, options);
