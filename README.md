@@ -372,3 +372,9 @@ spotifyApi.searchTracks('artist:Love', {
   limit: 10
 });
 ```
+
+## Future development
+
+- Optional caching
+- Allowing insert position parameter when adding tracks
+- Increased test coverage
