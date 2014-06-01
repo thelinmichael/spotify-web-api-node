@@ -32,6 +32,8 @@ This project depends on [restler](https://github.com/danwrong/restler) to make H
 
 First, instantiate the wrapper.
 ```javascript
+var SpotifyWebApi = require('spotify-web-api-node');
+
 var spotifyApi = new SpotifyWebApi();
 ```
 
@@ -40,7 +42,7 @@ If you've got an access token and want to use it for all calls, simply use the a
 spotifyApi.setAccessToken('<your_access_token>');
 ```
 
-Lastly, use the wrapper's helper methods to make the request to Spotify's Web API. The wrapper uses promises, so you need to provide a success callback as well as an error callback. 
+Lastly, use the wrapper's helper methods to make the request to Spotify's Web API. The wrapper uses promises, so you need to provide a success callback as well as an error callback.
 ```javascript
 // Get Elvis' albums
 spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
@@ -66,6 +68,10 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', {limit: 10, offset: 20})
 ### More examples
 
 ```javascript
+var SpotifyWebApi = require('spotify-web-api-node');
+
+var spotifyApi = new SpotifyWebApi();
+
 // Get multiple albums
 spotifyApi.getAlbums(['5U4W9E5WsYb2jUQWePT8Xm', '3KyVcddATClQKIdtaap4bV'])
   .then(function(data) {
@@ -209,7 +215,7 @@ The first thing you need to do is to [create an application](https://developer.s
 
 #### Authorization code flow
 
-With the application created and its redirect URI set, the only thing necessary for the application to retrieve an authorization code is the user's permission. Please see Spotify's [Using Scopes section](https://developer.spotify.com/spotify-web-api/using-scopes/) for a list of possible scopes, and which permissions they give to the application. 
+With the application created and its redirect URI set, the only thing necessary for the application to retrieve an authorization code is the user's permission. Please see Spotify's [Using Scopes section](https://developer.spotify.com/spotify-web-api/using-scopes/) for a list of possible scopes, and which permissions they give to the application.
 
 Generating the authorization URL can be done using the wrapper.
 ```javascript
@@ -220,7 +226,7 @@ var scopes = ['user-read-private', 'user-read-email'],
 
 // Setting credentials can be done in the wrapper's constructor, or using the API object's setters.
 var spotifyApi = new SpotifyWebApi({
-  redirectUri : redirectUri
+  redirectUri : redirectUri,
   clientId : clientId
 });
 
@@ -250,7 +256,7 @@ spotifyApi.authorizationCodeGrant({ credentials : credentials })
     console.log('The token expires in ' + data['expires_in']);
     console.log('The access token is ' + data['access_token']);
     console.log('The refresh token is ' + data['refresh_token']);
-    
+
     // Set the access token on the API object to use it in later calls
     spotifyApi.setAccessToken(data['access_token']);
     spotifyApi.setRefreshToken(data['refresh_token']);
@@ -290,7 +296,7 @@ spotifyApi.clientCredentialsGrant()
   .then(function(data) {
     console.log('The access token expires in ' + data['expires_in']);
     console.log('The access token is ' + data['access_token']);
-    
+
     // Save the access token so that it's used in future calls
     spotifyApi.setAccessToken(data['access_token']);
   }, function(err) {
