@@ -1,13 +1,10 @@
 {
   "name": "spotify-web-api-node",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/thelinmichael/spotify-web-api-node",
-  "description": "A Node.js wrapper for Spotify's new Web API",
+  "description": "A Node.js wrapper for Spotify's Web API",
   "main": "index.js",
-  "scripts": {
-    "test": "test"
-  },
-  "author": "Michael Thelin, José Manuel Perez Perez",
+  "author": "Michael Thelin",
   "license": "MIT",
   "dependencies": {
     "restler": "~3.2.0",
