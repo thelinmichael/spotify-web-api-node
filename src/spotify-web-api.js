@@ -114,6 +114,14 @@ function SpotifyWebApi(credentials) {
     _setCredential('refreshToken', refreshToken);
   };
 
+  this.setRedirectURI = function(redirectUri) {
+    _setCredential('redirectUri', redirectUri);
+  };
+
+  this.getRedirectURI = function() {
+    return _getCredential('redirectUri');
+  };
+
   this.getClientId = function() {
     return _getCredential('clientId');
   };
@@ -152,6 +160,10 @@ function SpotifyWebApi(credentials) {
 
   this.resetRefreshToken = function() {
     _resetCredential('refreshToken');
+  };
+
+  this.resetRedirectURI = function() {
+    _resetCredential('redirectUri');
   };
 
   function _setCredential(credentialKey, value) {
