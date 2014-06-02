@@ -237,21 +237,19 @@ var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
 console.log(authorizeURL);
 ```
 
-The code that's returned as a query parameter to the redirect URI is used in the call to get the access token and fresh token. 
 ```javascript
 var credentials = {
   clientId : 'someClientId',
   clientSecret : 'someClientSecret',
-  code : 'someCode',
   redirectUri : 'http://www.michaelthelin.se/test-callback'
 };
 
-var spotifyApi = new SpotifyWebApi();
+var spotifyApi = new SpotifyWebApi(credentials);
 
-// Supplying the credentials directly to the method will not save them in the API object, but 
-// only be used for this call. If credentials were already set on the API object, the credentials
-// used as parameters here would take precedent.
-spotifyApi.authorizationCodeGrant({ credentials : credentials })
+// The code that's returned as a query parameter to the redirect URI
+var code = 'MQCbtKe23z7YzzS44KzZzZgjQa621hgSzHN';
+
+spotifyApi.authorizationCodeGrant(code)
   .then(function(data) {
     console.log('The token expires in ' + data['expires_in']);
     console.log('The access token is ' + data['access_token']);
@@ -269,7 +267,7 @@ Since the access token was set on the api object in the previous success callbac
 
 ```javascript
 // clientId, clientSecret and refreshToken has been set on the api object previous to this call.
-spotifyApi.refreshAccessToken(clientId, clientSecret, refreshToken)
+spotifyApi.refreshAccessToken()
   .then(function(data) {
     console.log('The access token has been refreshed!');
   }, function(err) {
@@ -279,7 +277,7 @@ spotifyApi.refreshAccessToken(clientId, clientSecret, refreshToken)
 
 #### Client Credential flow
 
-The Client Credential flow doesn't require the user to give permissions, so it's suitable for requests where the application just needs to authenticate itself. This is the case with for example retrieving a playlist. However, note that the access token cannot be refreshed, and that it isn't connected to a specific user. 
+The Client Credential flow doesn't require the user to give permissions, so it's suitable for requests where the application just needs to authenticate itself. This is the case with for example retrieving a playlist. However, note that the access token cannot be refreshed, and that it isn't connected to a specific user.
 
 ```javascript
 var clientId = 'someClientId',
@@ -306,19 +304,17 @@ spotifyApi.clientCredentialsGrant()
 
 #### Setting credentials
 
-Credentials are client ID, client secret, authorization code, redirect URI, access token and refresh token. Since they're  used in different requests and not always required, it's not necessary to set all of them at once.
+Credentials are either set when constructing the API object or set after the object has been created using setters. They can be set all at once or one at a time.
 
-Setting credentials can be done in three places; As an argument to the API object's constructor, using one of the setter methods, or as argument when making a request. The first two will simply save the credential on the API object and use it when necessary. The last will only use the credential when making the request, and take precedent over credentials that may be set on the API object. This is to enable applications to be able to simply switch between access tokens.
-
+Using setters, getters and resetters.
 ```javascript
-// Use setters to set all credentials
+// Use setters to set all credentials one by one
 var spotifyApi = new SpotifyWebApi();
 spotifyApi.setAccessToken('myAccessToken');
 spotifyApi.setRefreshToken('myRefreshToken');
 spotifyApi.setRedirectURI('http://www.example.com/test-callback');
 spotifyApi.setClientId('myOwnClientId');
 spotifyApi.setClientSecret('someSuperSecretString');
-spotifyApi.setCode('retrievedFromUser');
 
 // Set all credentials at the same time
 spotifyApi.setCredentials({
@@ -326,17 +322,15 @@ spotifyApi.setCredentials({
   'refreshToken' : 'myRefreshToken',
   'redirectUri' : 'http://www.example.com/test-callback',
   'clientId ' : 'myClientId',
-  'clientSecret' : 'myClientSecret',
-  'code' : 'retrievedFromUser'
+  'clientSecret' : 'myClientSecret'
 });
 
-// Get the credentials
+// Get the credentials one by one
 console.log('The access token is ' + spotifyApi.getAccessToken());
 console.log('The refresh token is ' + spotifyApi.getRefreshToken());
 console.log('The redirectURI is ' + spotifyApi.getRedirectURI());
 console.log('The client ID is ' + spotifyApi.getClientId());
 console.log('The client secret is ' + spotifyApi.getClientSecret());
-console.log('The code is ' + spotifyApi.getCode());
 
 // Get all credentials
 console.log('The credentials are ' + spotifyApi.getCredentials());
@@ -353,24 +347,37 @@ spotifyApi.resetCode();
 spotifyApi.resetCredentials();
 ```
 
+Using the constructor.
 ```javascript
-// Set the credentials on the constructor
+// Set necessary parts of the credentials on the constructor
 var spotifyApi = new SpotifyWebApi({
   clientId : 'myClientId',
   clientSecret : 'myClientSecret'
 });
+
+// Get an access token and 'save' it using a setter
+spotifyApi.clientCredentialsGrant()
+  .then(function(data) {
+    console.log('The access token is ' + data['access_token']);
+    spotifyApi.setAccessToken(data['access_token']);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
 ```
 
 ```javascript
 // Set the credentials when making the request
-var spotifyApi = new SpotifyWebApi();
-
-spotifyApi.searchTracks('artist:Love', {
-  credentials : {
-    accessToken : 'myAccessToken'
-  },
-  limit: 10
+var spotifyApi = new SpotifyWebApi({
+  accessToken : 'njd9wng4d0ycwnn3g4d1jm30yig4d27iom5lg4d3'
 });
+
+// Do search using the access token
+spotifyApi.searchTracks('artist:Love')
+  .then(function(data) {
+    console.log(data);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
 ```
 
 ## Future development

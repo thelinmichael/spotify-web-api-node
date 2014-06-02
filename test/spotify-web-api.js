@@ -171,6 +171,7 @@ describe('Spotify Web API', function() {
 
   it("should get top tracks for artist", function(done) {
     var api = new SpotifyWebApi();
+
     api.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB')
       .then(function(data) {
         done();
@@ -181,6 +182,7 @@ describe('Spotify Web API', function() {
 
   it("should get a user", function(done) {
     var api = new SpotifyWebApi();
+
     api.getUser('petteralexis')
       .then(function(data) {
         'spotify:user:petteralexis'.should.equal(data.uri);
@@ -191,8 +193,11 @@ describe('Spotify Web API', function() {
   });
 
   it.skip("should get the authenticated user's information", function(done) {
-    var api = new SpotifyWebApi();
-    api.getMe({ accessToken : 'someAccessToken' })
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.getMe()
       .then(function(data) {
         'spotify:user:thelinmichael'.should.equal(data.uri);
         done();
@@ -233,69 +238,6 @@ describe('Spotify Web API', function() {
       .then(function(data) {
         done();
       },function(err) {
-        done(err);
-      });
-  });
-
-  it.skip('should use accesstoken if supplied in options', function(done) {
-    var api = new SpotifyWebApi();
-
-    var clientId = 'someClientId';
-    var clientSecret = 'someClientSecret';
-
-    api.clientCredentialsGrant({ credentials : { clientId : clientId, clientSecret : clientSecret } })
-      .then(function(data) {
-        'Bearer'.should.equal(data['token_type']);
-        (3600).should.equal(data['expires_in']);
-        should.exist(data['access_token']);
-
-        api.getArtist('1u7kkVrr14iBvrpYnZILJR', { 'credentials' : data['access_token'] })
-      })
-      .then(function(data) {
-        done();
-      })
-      .catch(function(err) {
-        console.log(err);
-        done(err);
-      });
-  });
-
-  it.skip('should use credentials if already set on the api object when retrieving a token', function(done) {
-    var clientId = 'clientId';
-    var clientSecret = 'clientSecret';
-
-    var api = new SpotifyWebApi({
-      clientId : clientId,
-      clientSecret : clientSecret
-    });
-
-    api.clientCredentialsGrant()
-      .then(function(data) {
-        'Bearer'.should.equal(data['token_type']);
-        (3600).should.equal(data['expires_in']);
-        should.exist(data['access_token']);
-        done();
-      }, function(err) {
-        console.log(err);
-        done(err);
-      });
-  });
-
-  it.skip('should use credentials from both arguments and those set on the api object when receiving a token', function(done) {
-    var clientSecret = 'someClientSecret';
-
-    var api = new SpotifyWebApi({
-      clientSecret : clientSecret
-    });
-
-    api.clientCredentialsGrant({ credentials : { clientId : 'someClientId' } })
-      .then(function(data) {
-        'Bearer'.should.equal(data['token_type']);
-        (3600).should.equal(data['expires_in']);
-        should.exist(data['access_token']);
-        done();
-      }, function(err) {
-        console.log(err);
         done(err);
       });
   });
@@ -343,8 +285,12 @@ describe('Spotify Web API', function() {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
 
-    var api = new SpotifyWebApi();
-    api.clientCredentialsGrant(clientId, clientSecret)
+    var api = new SpotifyWebApi({
+      clientId : clientId,
+      clientSecret : clientSecret
+    });
+
+    api.clientCredentialsGrant()
       .then(function(data) {
         'Bearer'.should.equal(data['token_type']);
         (3600).should.equal(data['expires_in']);
@@ -359,12 +305,12 @@ describe('Spotify Web API', function() {
     var credentials = {
       clientId : 'someClientId',
       clientSecret : 'someClientSecret',
-      code : 'omeCode',
       redirectUri : 'http://www.michaelthelin.se/test-callback'
     };
 
-    var api = new SpotifyWebApi();
-    api.authorizationCodeGrant({ credentials : credentials })
+    var api = new SpotifyWebApi(credentials);
+
+    api.authorizationCodeGrant('mySuperLongCode')
       .then(function(data) {
         'Bearer'.should.equal(data['token_type']);
         (3600).should.equal(data['expires_in']);
@@ -382,8 +328,12 @@ describe('Spotify Web API', function() {
     var clientSecret = 'someClientSecret';
     var refreshToken = 'someLongRefreshToken';
 
-    var api = new SpotifyWebApi();
-    api.refreshAccessToken(clientId, clientSecret, refreshToken)
+    var api = new SpotifyWebApi({
+      clientId : clientId,
+      clientSecret : clientSecret,
+      refreshToken : refreshToken
+    });
+    api.refreshAccessToken()
       .then(function(data) {
         done();
       }, function(err) {
@@ -397,28 +347,25 @@ describe('Spotify Web API', function() {
         clientId = '5fe01282e44241328a84e7c5cc169165',
         state = 'some-state-of-my-choice';
 
-    var api = new SpotifyWebApi();
-
-    var authorizeURL = api.createAuthorizeURL(scopes, state, {
-      credentials : {
+    var api = new SpotifyWebApi({
         clientId : clientId,
         redirectUri : redirectUri
-      }
     });
+
+    var authorizeURL = api.createAuthorizeURL(scopes, state);
     'https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'.should.equal(authorizeURL);
   });
 
   it('should set, get and reset credentials successfully', function() {
-    var api = new SpotifyWebApi({ clientId : 'myClientId' });
+    var api = new SpotifyWebApi({
+      clientId : 'myClientId'
+    });
 
     api.getClientId().should.equal('myClientId');
-
     api.resetClientId();
-
     should.not.exist(api.getClientId());
 
     api.setClientId('woopwoop');
-
     api.getClientId().should.equal('woopwoop');
   });
 

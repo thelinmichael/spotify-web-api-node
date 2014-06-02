@@ -8,11 +8,6 @@ function SpotifyWebApi(credentials) {
 
   var _credentials = credentials || {};
 
-  function _addQueryParametersAndPerformGetRequest(request, options) {
-    request.addQueryParameters(options);
-    return _performRequest(HttpManager.get, request);
-  }
-
   function _addBodyParameters(request, options) {
     if (options) {
       for (var key in options) {
@@ -34,14 +29,6 @@ function SpotifyWebApi(credentials) {
     }
   }
 
-  function _performPostRequest(request, options) {
-    return _performRequest(HttpManager.post, request);
-  }
-
-  function _performGetRequest(request, options) {
-    return _performRequest(HttpManager.get, request);
-  }
-
   function _performRequest(method, request) {
     var promiseFunction = function(resolve, reject) {
       method(request, function(error, result) {
@@ -55,28 +42,11 @@ function SpotifyWebApi(credentials) {
     return new PromiseImpl(promiseFunction);
   }
 
-  function _addAccessToken(request, options) {
-    var accessToken = _determineCredentials('accessToken', options);
+  function _addAccessToken(request, accessToken) {
     if (accessToken) {
       request.addHeaders({
         'Authorization' : 'Bearer ' + accessToken
       });
-    }
-  }
-
-  function _addBasicAuthorization(request, options) {
-    var clientId = _determineCredentials('clientId', options);
-    var clientSecret = _determineCredentials('clientSecret', options);
-    request.addHeaders({
-      'Authorization' : 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
-    });
-  }
-
-  function _determineCredentials(credential, options) {
-    if (options && options.credentials && options.credentials[credential]) {
-      return options.credentials[credential];
-    } else {
-      return _credentials[credential];
     }
   }
 
@@ -100,10 +70,6 @@ function SpotifyWebApi(credentials) {
 
   this.setClientSecret = function(clientSecret) {
     _setCredential('clientSecret', clientSecret);
-  };
-
-  this.setCode = function(code) {
-    _setCredential('code', code);
   };
 
   this.setAccessToken = function(accessToken) {
@@ -130,10 +96,6 @@ function SpotifyWebApi(credentials) {
     return _getCredential('clientSecret');
   };
 
-  this.getCode = function() {
-    return _getCredential('code');
-  };
-
   this.getAccessToken = function() {
     return _getCredential('accessToken');
   };
@@ -148,10 +110,6 @@ function SpotifyWebApi(credentials) {
 
   this.resetClientSecret = function() {
     _resetCredential('clientSecret');
-  };
-
-  this.resetCode = function() {
-    _resetCredential('code');
   };
 
   this.resetAccessToken = function() {
@@ -187,65 +145,118 @@ function SpotifyWebApi(credentials) {
     }
   }
 
-  this.getTrack = function(id, options) {
-    var request = WebApiRequest.builder().withPath('/v1/tracks/' + id).build();
-    _addAccessToken(request, options);
-    _addQueryParameters(request, options);
-    return _performGetRequest(request, options);
+  /**
+   * Look up a track.
+   * @param {string} trackId The track's ID.
+   * @example getTrack('3Qm86XLflmIXVm1wcwkgDK').then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing information
+   *          about the track.
+   */
+  this.getTrack = function(trackId) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/tracks/' + trackId)
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
-  this.getTracks = function(ids, options) {
+  /**
+   * Look up several tracks.
+   * @param {string[]} trackIds The ID's of the artists.
+   * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing information
+   *          about the artists.
+   */
+  this.getTracks = function(trackIds) {
     var request = WebApiRequest.builder()
       .withPath('/v1/tracks')
       .withQueryParameters({
-        'ids' : ids.join(',')
+        'ids' : trackIds.join(',')
       })
       .build();
-    _addAccessToken(request, options);
-    _addQueryParameters(request, options);
-    return _performGetRequest(request, options);
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
-  this.getAlbum = function(id, options) {
-    var request = WebApiRequest.builder().withPath('/v1/albums/' + id).build();
-    _addAccessToken(request, options);
-    _addQueryParameters(request, options);
-    return _performGetRequest(request, options);
+  /**
+   * Look up an album.
+   * @param {string} albumId The album's ID.
+   * @example getAlbum('0sNOF9WDwhWunNAHPD3Baj').then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing information
+   *          about the album.
+   */
+  this.getAlbum = function(albumId) {
+    var request = WebApiRequest.builder().withPath('/v1/albums/' + albumId).build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
-  this.getAlbums = function(ids, options) {
+  /**
+   * Look up several albums.
+   * @param {string[]} artistIds The ID's of the artists.
+   * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing information
+   *          about the artists.
+   */
+  this.getAlbums = function(albumIds) {
     var request = WebApiRequest.builder()
       .withPath('/v1/albums')
       .withQueryParameters({
-        'ids' : ids.join(',')
+        'ids' : albumIds.join(',')
       })
       .build();
 
-    _addAccessToken(request, options);
-    _addQueryParameters(request, options);
-    return _performGetRequest(request, options);
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
-  this.getArtist = function(id, options) {
-    var request = WebApiRequest.builder().withPath('/v1/artists/' + id).build();
-    _addAccessToken(request, options);
-    _addQueryParameters(request, options);
-    return _performGetRequest(request, options);
+  /**
+   * Look up an artist.
+   * @param {string} artistId The artist's ID.
+   * @example api.getArtist('1u7kkVrr14iBvrpYnZILJR').then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing information
+   *          about the artist.
+   */
+  this.getArtist = function(artistId) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/artists/' + artistId)
+      .build();
+
+    _addAccessToken(request);
+    return _performRequest(HttpManager.get, request);
   };
 
-  this.getArtists = function(ids, options) {
+  /**
+   * Look up several artists.
+   * @param {string[]} artistIds The ID's of the artists.
+   * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing information
+   *          about the artists.
+   */
+  this.getArtists = function(artistIds) {
     var request = WebApiRequest.builder()
       .withPath('/v1/artists')
       .withQueryParameters({
-        'ids' : ids.join(',')
+        'ids' : artistIds.join(',')
       })
       .build();
 
-    _addAccessToken(request, options);
-    _addQueryParameters(request, options);
-    return _performGetRequest(request, options);
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
+  /**
+   * Search for an album.
+   * @param {string} query The search query.
+   * @param {Object} [options] The possible options, e.g. limit, offset.
+   * @example searchArtists('David Bowie', { limit : 5, offset : 1 }).then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing the
+   *          search results. The result is paginated. If the promise is rejected,
+   *          it contains an error object.
+   */
   this.searchAlbums = function(query, options) {
     var request = WebApiRequest.builder()
       .withPath('/v1/search/')
@@ -255,11 +266,20 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      _addAccessToken(request, options);
+      _addAccessToken(request, this.getAccessToken());
       _addQueryParameters(request, options);
-      return _performGetRequest(request, options);
+      return _performRequest(HttpManager.get, request);
   };
 
+  /**
+   * Search for an artist.
+   * @param {string} query The search query.
+   * @param {Object} [options] The possible options, e.g. limit, offset.
+   * @example searchArtists('David Bowie', { limit : 5, offset : 1 }).then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing the
+   *          search results. The result is paginated. If the promise is rejected,
+   *          it contains an error object.
+   */
   this.searchArtists = function(query, options) {
     var request = WebApiRequest.builder()
       .withPath('/v1/search/')
@@ -269,11 +289,20 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      _addAccessToken(request, options);
+      _addAccessToken(request, this.getAccessToken());
       _addQueryParameters(request, options);
-      return _performGetRequest(request, options);
+      return _performRequest(HttpManager.get, request);
   };
 
+  /**
+   * Search for a track.
+   * @param {string} query The search query.
+   * @param {Object} [options] The possible options, e.g. limit, offset.
+   * @example searchTracks('Mr. Brightside', { limit : 3, offset : 2 }).then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing the
+   *          search results. The result is paginated. If the promise is rejected,
+   *          it contains an error object.
+   */
   this.searchTracks = function(query, options) {
     var request = WebApiRequest.builder()
       .withPath('/v1/search/')
@@ -283,159 +312,262 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      _addAccessToken(request, options);
+      _addAccessToken(request, this.getAccessToken());
       _addQueryParameters(request, options);
-      return _performGetRequest(request, options);
+      return _performRequest(HttpManager.get, request);
   };
 
-  this.getArtistAlbums = function(id, options) {
+  /**
+   * Get an artist's albums.
+   * @param {string} artistId The artist's ID.
+   * @options {Object} [options] The possible options, e.g. limit, offset.
+   * @example getArtistAlbums('0oSGxfWSnnOXhD2fKuz2Gy', { album_type : 'album', country : 'GB', limit : 2, offset : 5 }).then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing the albums
+   *          for the given artist. The result is paginated. If the promise is rejected,
+   *          it contains an error object.
+   */
+  this.getArtistAlbums = function(artistId, options) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/artists/' + id + '/albums')
+      .withPath('/v1/artists/' + artistId + '/albums')
       .build();
 
-      _addAccessToken(request, options);
+      _addAccessToken(request, this.getAccessToken());
       _addQueryParameters(request, options);
-      return _performGetRequest(request, options);
+      return _performRequest(HttpManager.get, request);
   };
 
-  this.getAlbumTracks = function(id, options) {
+  /**
+   * Get the tracks of an album.
+   * @param albumId the album's ID.
+   * @options {Object} [options] The possible options, e.g. limit.
+   * @example getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 }).then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing the
+   *                    tracks in the album. The result is paginated. If the promise is rejected.
+   *                    it contains an error object.
+   */
+  this.getAlbumTracks = function(albumId, options) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/albums/' + id + '/tracks')
+      .withPath('/v1/albums/' + albumId + '/tracks')
       .build();
 
-      _addAccessToken(request, options);
+      _addAccessToken(request, this.getAccessToken());
       _addQueryParameters(request, options);
-      return _performGetRequest(request, options);
+      return _performRequest(HttpManager.get, request);
   };
 
-  this.getArtistTopTracks = function(id, country, options) {
+  /**
+   * Get an artist's top tracks.
+   * @param {string} artistId The artist's ID.
+   * @param {string} country The country/territory where the tracks are most popular. (format: ISO 3166-1 alpha-2)
+   * @example getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB').then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing the
+   *          artist's top tracks in the given country. If the promise is rejected,
+   *          it contains an error object.
+   */
+  this.getArtistTopTracks = function(artistId, country) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/artists/' + id + '/top-tracks')
+      .withPath('/v1/artists/' + artistId + '/top-tracks')
       .withQueryParameters({
         'country' : country
       })
       .build();
 
-      _addAccessToken(request, options);
-      _addQueryParameters(request, options);
-      return _performGetRequest(request, options);
+      _addAccessToken(request, this.getAccessToken());
+      return _performRequest(HttpManager.get, request);
   };
 
-  this.getUser = function(id, options) {
+  /**
+   * Get information about a user.
+   * @param userId The user ID.
+   * @example getUser('thelinmichael').then(...)
+   * @returns {Promise} A promise that if successful, resolves to an object
+   *          containing information about the user. If the promise is
+   *          rejected, it contains an error object.
+   */
+  this.getUser = function(userId) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + id)
+      .withPath('/v1/users/' + userId)
       .build();
 
-      _addAccessToken(request, options);
-      _addQueryParameters(request, options);
-      return _performGetRequest(request, options);
+      _addAccessToken(request, this.getAccessToken());
+      return _performRequest(HttpManager.get, request);
   };
 
-  this.getMe = function(options) {
+  /**
+   * Get information about the user that has signed in (the current user).
+   * @example getMe().then(...)
+   * @returns {Promise} A promise that if successful, resolves to an object
+   *          containing information about the user. The amount of information
+   *          depends on the permissions given by the user. If the promise is
+   *          rejected, it contains an error object.
+   */
+  this.getMe = function() {
     var request = WebApiRequest.builder()
       .withPath('/v1/me')
       .build();
 
-    _addAccessToken(request, options);
-    _addQueryParameters(request, options);
-    return _performGetRequest(request, options);
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
-  this.getUserPlaylists = function(userId, options) {
+  /**
+   * Get a user's playlists.
+   * @param {string} userId The user ID.
+   * @example getUserPlaylists('thelinmichael').then(...)
+   * @returns {Promise} A promise that if successful, resolves to an object containing
+   *          the a list of playlists. If rejected, it contains an error object.
+   */
+  this.getUserPlaylists = function(userId) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + userId + '/playlists')
       .build();
-    _addAccessToken(request, options);
-    _addQueryParameters(request, options);
-    return _performGetRequest(request, options);
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
+  /**
+   * Get a playlist.
+   * @param {string} userId The playlist's owner's user ID.
+   * @param {string} playlistId The playlist's ID.
+   * @param {Object} [options] The options supplied to this request.
+   * @example getUserPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK').then(...)
+   * @returns {Promise} A promise that if successful, resolves to an object containing
+   *          the playlist. If rejected, it contains an error object.
+   */
   this.getUserPlaylist = function(userId, playlistId, options) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + userId + '/playlists/' + playlistId)
       .build();
-    _addAccessToken(request, options);
-    _addQueryParameters(request, options);
-    return _performGetRequest(request, options);
-  };
 
-  this.createPlaylist = function(userId, name, options) {
-    var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/')
-      .withHeaders({ 'Content-Type' : 'application/json' })
-      .withBodyParameters({ 'name' : name })
-      .build();
-    _addAccessToken(request, options);
-    _addBodyParameters(request, options);
-    return _performPostRequest(request, options);
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
-   * TODO: Add position.
+   * Create a playlist.
+   * @param {string} userId The playlist's owner's user ID.
+   * @param {string} playlistName The name of the playlist.
+   * @example createPlaylist('thelinmichael', 'My cool playlist!').then(...)
+   * @returns {Promise} A promise that if successful, resolves to an object containing information about the
+   *          created playlist. If rejected, it contains an error object.
    */
-  this.addTracksToPlaylist = function(userId, playlistId, tracks, options) {
+  this.createPlaylist = function(userId, playlistName) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists/')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters({ 'name' : playlistName })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.post, request);
+  };
+
+  /**
+   * Add tracks to a playlist.
+   * @todo: Add position.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {string[]} tracks ID's of the tracks to add to the playlist.
+   * @example addTracksToPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK',
+              '["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"]').then(...)
+   * @returns {Promise} A promise that if successful, simply resolves to an empty object. If rejected,
+   * it contains an error object.
+   */
+  this.addTracksToPlaylist = function(userId, playlistId, tracks) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(tracks)
       .build();
-    _addAccessToken(request, options);
-    _addQueryParameters(options);
-    return _performPostRequest(request, options);
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.post, request);
   };
 
-  this.clientCredentialsGrant = function(options) {
+  /**
+   * Request an access token using the Client Credentials flow.
+   * Requires that client ID and client secret has been set previous to the call.
+   * @returns {Promise} A promise that if successful, resolves into an object containing the access token,
+   *          token type and time to expiration. If rejected, it contains an error object.
+   */
+  this.clientCredentialsGrant = function() {
     var request = AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'client_credentials'
       })
+      .withHeaders({
+        Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
+      })
       .build();
-      _addBasicAuthorization(request, options);
-      _addBodyParameters(request, options);
-      return _performPostRequest(request);
+
+      return _performRequest(HttpManager.post, request);
   };
 
-  this.authorizationCodeGrant = function(options) {
+  /**
+   * Request an access token using the Authorization Code flow.
+   * Requires that client ID, client secret, and redirect URI has been set previous to the call.
+   * @param {string} code The authorization code returned in the callback in the Authorization Code flow.
+   * @returns {Promise} A promise that if successful, resolves into an object containing the access token,
+   *          refresh token, token type and time to expiration. If rejected, it contains an error object.
+   */
+  this.authorizationCodeGrant = function(code) {
      var request = AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'authorization_code',
-        'redirect_uri' : _determineCredentials('redirectUri', options),
-        'code' : _determineCredentials('code', options),
+        'redirect_uri' : this.getRedirectURI(),
+        'code' : code
+      })
+      .withHeaders({
+        Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
       })
       .build();
-      _addBasicAuthorization(request, options);
-      return _performPostRequest(request);
+
+      return _performRequest(HttpManager.post, request);
   };
 
-  this.refreshAccessToken = function(clientId, clientSecret, refreshToken, options) {
+  /**
+   * Refresh the access token given that it hasn't expired.
+   * Requires that client ID, client secret and refresh token has been set previous to the call.
+   * @returns {Promise} A promise that if successful, resolves to an object containing the
+   *          access token, time to expiration and token type. If rejected, it contains an error object.
+   */
+  this.refreshAccessToken = function() {
     var request = AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'refresh_token',
-        'refresh_token' : refreshToken
+        'refresh_token' : this.getRefreshToken()
+      })
+      .withHeaders({
+        Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
       })
       .build();
 
-      _addBasicAuthorization(request, options);
-      _addBodyParameters(request, options);
-      return _performPostRequest(request, options);
+      return _performRequest(HttpManager.post, request);
   };
 
-  this.createAuthorizeURL = function(scopes, state, options) {
+  /**
+   * Retrieve a URL where the user can give the application permissions.
+   * @param {string} scopes The scopes corresponding to the permissions the application needs.
+   * @param {string} state A parameter that you can use to maintain a value between the request and the callback to redirect_uri.It is useful to prevent CSRF exploits.
+   * @returns {string} The URL where the user can give application permissions.
+   */
+  this.createAuthorizeURL = function(scopes, state) {
     var request = AuthenticationRequest.builder()
       .withPath('/authorize')
       .withQueryParameters({
-        'client_id' : _determineCredentials('clientId', options),
+        'client_id' : this.getClientId(),
         'response_type' : 'code',
-        'redirect_uri' : _determineCredentials('redirectUri', options),
+        'redirect_uri' : this.getRedirectURI(),
         'scope' : scopes.join('%20'),
         'state' : state
       })
       .build();
 
-      _addQueryParameters(request, options);
       return request.getURL();
   };
 
