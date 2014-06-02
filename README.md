@@ -22,7 +22,6 @@ Even though authentication isn't always necessary, it always gives benefits such
 
 This project depends on [restler](https://github.com/danwrong/restler) to make HTTP requests, and [promise](https://github.com/then/promise) as its [Promises/A+](http://promises-aplus.github.io/promises-spec/) implementation.
 
-
 ## Installation
 
     $ npm install spotify-web-api-node --save
@@ -66,6 +65,8 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', {limit: 10, offset: 20})
 ```
 
 ### More examples
+
+Below are examples for all helper functions. Longer examples can be found in the [examples folder](examples/).
 
 ```javascript
 var SpotifyWebApi = require('spotify-web-api-node');
