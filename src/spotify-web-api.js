@@ -431,11 +431,11 @@ function SpotifyWebApi(credentials) {
    * @param {string} userId The playlist's owner's user ID.
    * @param {string} playlistId The playlist's ID.
    * @param {Object} [options] The options supplied to this request.
-   * @example getUserPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK').then(...)
+   * @example getPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK').then(...)
    * @returns {Promise} A promise that if successful, resolves to an object containing
    *          the playlist. If rejected, it contains an error object.
    */
-  this.getUserPlaylist = function(userId, playlistId, options) {
+  this.getPlaylist = function(userId, playlistId, options) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + userId + '/playlists/' + playlistId)
       .build();

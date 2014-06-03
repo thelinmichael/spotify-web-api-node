@@ -146,7 +146,7 @@ spotifyApi.getMe()
   });
 
 // Get a playlist
-spotifyApi.getUserPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
+spotifyApi.getPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
   .then(function(data) {
     console.log('Some information about this playlist', data);
   }, function(err) {

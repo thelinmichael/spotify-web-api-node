@@ -246,7 +246,7 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.setAccessToken('myVeryVeryLongAccessToken');
 
-    api.getUserPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
+    api.getPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
       .then(function(data) {
         'spotify:user:thelinmichael:playlist:5ieJqeLJjjI8iJWaxeBLuK'.should.equal(data.uri);
         done();
