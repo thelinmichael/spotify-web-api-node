@@ -15,6 +15,6 @@
     "grunt-contrib-watch": "~0.6",
     "grunt-simple-mocha": "0.4.x",
     "should": "~3.0",
-    "mocha": "~1.0"
+    "mocha": "~1.20.0"
   }
 }
