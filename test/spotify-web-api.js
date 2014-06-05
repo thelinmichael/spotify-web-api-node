@@ -385,4 +385,21 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it.skip('should get tracks in a playlist with fields option', function(done) {
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+    api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'fields' : 'items' })
+      .then(function(data) {
+        should.exist(data.items);
+        should.not.exist(data.href);
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+  });
+
 });
