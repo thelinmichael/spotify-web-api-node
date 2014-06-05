@@ -369,4 +369,20 @@ describe('Spotify Web API', function() {
     api.getClientId().should.equal('woopwoop');
   });
 
+  it.skip('should get tracks in a playlist', function(done) {
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+    api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn')
+      .then(function(data) {
+        'https://api.spotify.com/v1/users/thelinmichael/playlists/3ktAYNcRHpazJ9qecm3ptn/tracks'.should.equal(data.href);
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+  });
+
 });

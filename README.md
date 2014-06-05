@@ -381,6 +381,22 @@ spotifyApi.searchTracks('artist:Love')
   });
 ```
 
+```javascript
+// Set the credentials when making the request
+var spotifyApi = new SpotifyWebApi({
+  accessToken : 'njd9wng4d0ycwnn3g4d1jm30yig4d27iom5lg4d3'
+});
+
+// Do search using the access token
+api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn')
+  .then(function(data) {
+    console.log('The playlist contains these tracks', data);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+```
+
+
 ## Future development
 
 - Optional caching

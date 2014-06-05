@@ -446,6 +446,22 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
+   * Get tracks in a playlist.
+   * @param {string} userId THe playlist's owner's user ID.
+   * @param {string} playlistId The playlist's ID.
+   * @example getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn').then(...)
+   * @returns {Promise} A promise that if successful, resolves to an object that containing
+   * the tracks in the playlist. If rejected, it contains an error object.
+   */
+   this.getPlaylistTracks = function(userId, playlistId) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
+      .build();
+     _addAccessToken(request, this.getAccessToken());
+     return _performRequest(HttpManager.get, request);
+   };
+
+  /**
    * Create a playlist.
    * @param {string} userId The playlist's owner's user ID.
    * @param {string} playlistName The name of the playlist.
