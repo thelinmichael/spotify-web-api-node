@@ -507,10 +507,11 @@ function SpotifyWebApi(credentials) {
   /**
    * Request an access token using the Client Credentials flow.
    * Requires that client ID and client secret has been set previous to the call.
+   * @
    * @returns {Promise} A promise that if successful, resolves into an object containing the access token,
    *          token type and time to expiration. If rejected, it contains an error object.
    */
-  this.clientCredentialsGrant = function() {
+  this.clientCredentialsGrant = function(options) {
     var request = AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
@@ -521,6 +522,7 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
+      _addBodyParameters(request, options);
       return _performRequest(HttpManager.post, request);
   };
 

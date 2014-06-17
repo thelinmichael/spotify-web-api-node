@@ -301,6 +301,31 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it.skip("should retrieve an access token with scopes", function(done) {
+    var clientId = 'fcecfc79122e4cd299473677a17cbd4d',
+        clientSecret = 'f6338737c9bb4bc9a71924cb2940adss';
+
+    var api = new SpotifyWebApi({
+      clientId : clientId,
+      clientSecret : clientSecret
+    });
+
+    var scopes = ['playlist-read'];
+
+    api.clientCredentialsGrant({
+      'scope' : scopes
+    })
+    .then(function(data) {
+        console.log(data);
+        'Bearer'.should.equal(data['token_type']);
+        (3600).should.equal(data['expires_in']);
+        should.exist(data['access_token']);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
   it.skip("should retrieve an access token using the authorization code flow", function(done) {
     var credentials = {
       clientId : 'someClientId',

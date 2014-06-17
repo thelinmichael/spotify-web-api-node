@@ -11,10 +11,12 @@
     "promise": "~5.0.0"
   },
   "devDependencies": {
+    "xunit-file" : "0.0.5",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-watch": "~0.6",
     "grunt-simple-mocha": "0.4.x",
     "should": "~3.0",
-    "mocha": "~1.20.0"
+    "mocha": "~1.20.1",
+    "mocha-geckoboard-reporter" : "*"
   }
 }
