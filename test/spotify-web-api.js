@@ -41,7 +41,7 @@ describe('Spotify Web API', function() {
       .then(function(data) {
         done(new Error('Should have failed'));
       }, function(err) {
-        'non existing id'.should.equal(err.error.description);
+        'non existing id'.should.equal(err.error.message);
         done();
       });
   });
