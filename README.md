@@ -165,7 +165,7 @@ spotifyApi.getUserPlaylists('thelinmichael')
     console.log('Something went wrong!', err);
   });
 
-// Add tracks to a playlist
+// Create a playlist
 spotifyApi.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : true })
   .then(function(data) {
     console.log('Created playlist!');
@@ -173,7 +173,7 @@ spotifyApi.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : true
     console.log('Something went wrong!', err);
   });
 
-// Create a playlist
+// Add tracks to a playlist
 spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"])
   .then(function(data) {
     console.log('Added tracks to playlist!');
@@ -181,6 +181,16 @@ spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spot
     console.log('Something went wrong!', err);
   });
 
+// Add tracks to a specific position in a playlist
+spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"],
+  {
+    position : 5
+  })
+  .then(function(data) {
+    console.log('Added tracks to playlist!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
 ```
 
 ### Nesting calls
@@ -408,5 +418,4 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'fields' : 'i
 ## Future development
 
 - Optional caching
-- Allowing insert position parameter when adding tracks
 - Increased test coverage

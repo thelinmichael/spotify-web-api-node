@@ -488,18 +488,20 @@ function SpotifyWebApi(credentials) {
    * @param {string} userId The playlist's owner's user ID
    * @param {string} playlistId The playlist's ID
    * @param {string[]} tracks ID's of the tracks to add to the playlist.
+   * @param {Object} [options] Options, position being the one one.
    * @example addTracksToPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK',
               '["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"]').then(...)
    * @returns {Promise} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object.
    */
-  this.addTracksToPlaylist = function(userId, playlistId, tracks) {
+  this.addTracksToPlaylist = function(userId, playlistId, tracks, options) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(tracks)
       .build();
 
+    _addQueryParameters(request, options);
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.post, request);
   };

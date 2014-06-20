@@ -281,6 +281,22 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it.skip('should add tracks to playlist with specified index', function(done) {
+    var api = new SpotifyWebApi();
+    api.setAccessToken('<insert valid access token>');
+
+    api.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"],
+      {
+        position : 10
+      })
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err.error);
+        done(err);
+      });
+  });
+
   it.skip("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
