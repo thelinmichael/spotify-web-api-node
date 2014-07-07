@@ -1,15 +1,16 @@
 Spotify Web API Node
 ==================
 
-This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). It includes helper functions to do:
+This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). It includes helper functions to do the following:
 
-- Lookup of albums, artists, tracks, users and playlists
-- Lookup of albums for a specific artist
-- Lookup of top tracks for a specific artist
+- Get albums, artists, tracks, users and playlists
+- Get albums for a specific artist
+- Get an artist's top tracks
+- Get artists similar to a given artist
 - Search albums, artists and tracks
-- Lookup a user's playlists (currently non-collaborative)
-- Playlist creation
-- Adding tracks to a playlist
+- Get a user's playlists (currently non-collaborative)
+- Create playlists
+- Add tracks to a playlist
 
 Some methods require authentication, which can be done using these flows:
 
@@ -131,6 +132,30 @@ spotifyApi.searchTracks('artist:Love')
     console.log('Search tracks by "Love" in the artist name', data);
   }, function(err) {
     console.log('Something went wrong!', err);
+  });
+
+// Get tracks in an album
+spotifyApi.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 })
+  .then(function(data) {
+    console.log(data);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Get an artist's top tracks
+spotifyApi.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB')
+  .then(function(data) {
+    console.log(data);
+    }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Get artists related to an artist
+spotifyApi.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
+  .then(function(data) {
+    console.log(data);
+  }, function(err) {
+    done(err);
   });
 
 // Get a user
@@ -413,6 +438,12 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'fields' : 'i
     console.log('Something went wrong!', err);
   });
 ```
+
+## Change log
+
+#### 0.0.9
+
+- Add [Related artists](https://developer.spotify.com/web-api/get-related-artists/) endpoint
 
 
 ## Future development

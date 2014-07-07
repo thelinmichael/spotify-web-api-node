@@ -377,6 +377,22 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
+   * Get related artists.
+   * @param {string} artistId The artist's ID.
+   * @example getArtistRelatedArtists('0oSGxfWSnnOXhD2fKuz2Gy').then(...)
+   * @returns {Promise} A promise that if successful, returns an object containing the
+   *          related artists. If the promise is rejected, it contains an error object.
+   */
+  this.getArtistRelatedArtists = function(artistId) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/artists/' + artistId + '/related-artists')
+      .build();
+
+      _addAccessToken(request, this.getAccessToken());
+      return _performRequest(HttpManager.get, request);
+  };
+
+  /**
    * Get information about a user.
    * @param userId The user ID.
    * @example getUser('thelinmichael').then(...)

@@ -180,6 +180,18 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get similar artists", function(done) {
+    var api = new SpotifyWebApi();
+
+    api.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
+      .then(function(data) {
+        should.exist(data.artists);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
   it("should get a user", function(done) {
     var api = new SpotifyWebApi();
 
