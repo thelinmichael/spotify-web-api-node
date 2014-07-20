@@ -589,7 +589,7 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Retrieve a URL where the user can give the application permissions.
-   * @param {string} scopes The scopes corresponding to the permissions the application needs.
+   * @param {string[]} scopes The scopes corresponding to the permissions the application needs.
    * @param {string} state A parameter that you can use to maintain a value between the request and the callback to redirect_uri.It is useful to prevent CSRF exploits.
    * @returns {string} The URL where the user can give application permissions.
    */
