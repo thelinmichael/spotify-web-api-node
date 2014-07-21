@@ -6,7 +6,7 @@ var SpotifyWebApi = require("../");
  * Since authorization is required, this example retrieves an access token using the Authorization Code Grant flow,
  * documented here: https://developer.spotify.com/spotify-web-api/authorization-guide/#authorization_code_flow
  *
- * Codes are given for a set of scopes. For this example, the scopes are playlist-modify.
+ * Codes are given for a set of scopes. For this example, the scopes are playlist-modify-public.
  * Scopes are documented here:
  * https://developer.spotify.com/spotify-web-api/using-scopes/
  */
