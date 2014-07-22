@@ -1,6 +1,6 @@
 {
   "name": "spotify-web-api-node",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "homepage": "https://github.com/thelinmichael/spotify-web-api-node",
   "description": "A Node.js wrapper for Spotify's Web API",
   "main": "src/spotify-web-api.js",
@@ -16,7 +16,6 @@
     "grunt-contrib-watch": "~0.6",
     "grunt-simple-mocha": "0.4.x",
     "should": "~3.0",
-    "mocha": "~1.20.1",
-    "mocha-geckoboard-reporter" : "*"
+    "mocha": "~1.20.1"
   }
 }
