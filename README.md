@@ -441,6 +441,11 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'fields' : 'i
 
 ## Change log
 
+#### 0.0.10
+
+- Add Your Music Endpoints (add tracks, remove tracks, contains tracks, get tracks)
+- Documentation updates (change scope name of playlist-modify to playlist-modify-public, and a fix to a parameter type). Thanks [JMPerez](https://github.com/JMPerez) and [matiassingers](https://github.com/matiassingers).
+
 #### 0.0.9
 
 - Add [Related artists](https://developer.spotify.com/web-api/get-related-artists/) endpoint
