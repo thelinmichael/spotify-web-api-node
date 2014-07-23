@@ -625,8 +625,9 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.
-   * @param {string[]} ids The track IDs
-   * @returns {boolean[]} Returns an array of booleans. The order of the returned array's elements correspond to the track ID in the request.
+   * @param {string[]} trackIds The track IDs
+   * @returns {} Returns a promise that if successful, resolves into an array of booleans. The order 
+   * of the returned array's elements correspond to the track ID in the request.
    * The boolean value of true indiciates that the track is part of the user's library, otherwise false.
    */   
    this.containsMySavedTracks = function(trackIds) {
@@ -640,6 +641,11 @@ function SpotifyWebApi(credentials) {
      return _performRequest(HttpManager.get, request);
   };
 
+  /**
+   * Remove a track from the authenticated user's Your Music library.
+   * @param {string[]} trackIds The track IDs
+   * @returns {Promise} Returns a promise that if successfull returns null, otherwise an error.
+   */
   this.removeFromMySavedTracks = function(trackIds) {
     var request = WebApiRequest.builder()
     .withPath('/v1/me/tracks')
@@ -650,6 +656,20 @@ function SpotifyWebApi(credentials) {
     return _performRequest(HttpManager.del, request);
   };
 
+   /**
+   * Remove a track from the authenticated user's Your Music library.
+   * @param {string[]} trackIds The track IDs
+   * @returns {Promise} Returns a promise that if successfull returns null, otherwise an error.
+   */
+  this.addToMySavedTracks = function(trackIds) {
+    var request = WebApiRequest.builder()
+    .withPath('/v1/me/tracks')
+    .withHeaders({ 'Content-Type' : 'application/json' })
+    .withBodyParameters(trackIds)
+    .build();
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.put, request);
+  };
 }
 
 module.exports = SpotifyWebApi;

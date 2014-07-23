@@ -81,4 +81,13 @@ HttpManager.del = function(request, callback) {
   _makeRequest(method, options, request.getURI(), callback);
 };
 
+HttpManager.put = function(request, callback) {
+  'use strict';
+
+  var options = _getParametersFromRequest(request);
+  var method = restler.put;
+
+  _makeRequest(method, options, request.getURI(), callback);
+};
+
 module.exports = HttpManager;

@@ -455,6 +455,7 @@ describe('Spotify Web API', function() {
       });
   });
 
+  /* Run this test with a valid access token with the user-library-read scope */
   it.skip('should get tracks in the users library', function(done) {
     var accessToken = 'myAccessToken';
 
@@ -474,6 +475,7 @@ describe('Spotify Web API', function() {
     });
   });
 
+  /* Run this test with a valid access token with the user-library-read scope */
   it.skip('should determine if a track is in the users library', function(done) {
     var accessToken = 'myAccessToken';
 
@@ -492,6 +494,7 @@ describe('Spotify Web API', function() {
     });
   });
 
+  /* Run this test with a valid access token with the user-library-modify scope */
   it.skip('should remove tracks in the users library', function(done) {
     var accessToken = 'myAccessToken';
 
@@ -509,10 +512,21 @@ describe('Spotify Web API', function() {
 
   });
 
-  /* TODO: addToMySavedTracks */
+  /* Run this test with a valid access token with the user-library-modify scope */
   it.skip('should add tracks to the users library', function(done) {
+    var accessToken = 'myAccessToken';
 
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
+    .then(function(data) {
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
   });
-
 
 });
