@@ -455,7 +455,7 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it.only('should get tracks in the users library', function(done) {
+  it.skip('should get tracks in the users library', function(done) {
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -474,7 +474,7 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it('should determine if a track is in the users library', function(done) {
+  it.skip('should determine if a track is in the users library', function(done) {
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -492,8 +492,21 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it.only('should remove tracks in the users library', function(done) {
-    /* TODO: removeFromMySavedTracks */
+  it.skip('should remove tracks in the users library', function(done) {
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.removeFromMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
+    .then(function(data) {
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+
   });
 
   /* TODO: addToMySavedTracks */

@@ -629,15 +629,25 @@ function SpotifyWebApi(credentials) {
    * @returns {boolean[]} Returns an array of booleans. The order of the returned array's elements correspond to the track ID in the request.
    * The boolean value of true indiciates that the track is part of the user's library, otherwise false.
    */   
-   this.containsMySavedTracks = function(ids) {
+   this.containsMySavedTracks = function(trackIds) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/tracks/contains')
       .withQueryParameters({
-        'ids' : ids.join(',')
+        'ids' : trackIds.join(',')
       })
       .build();
      _addAccessToken(request, this.getAccessToken());
      return _performRequest(HttpManager.get, request);
+  };
+
+  this.removeFromMySavedTracks = function(trackIds) {
+    var request = WebApiRequest.builder()
+    .withPath('/v1/me/tracks')
+    .withHeaders({ 'Content-Type' : 'application/json' })
+    .withBodyParameters(trackIds)
+    .build();
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.del, request);
   };
 
 }
