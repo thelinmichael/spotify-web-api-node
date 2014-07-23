@@ -455,4 +455,51 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it.only('should get tracks in the users library', function(done) {
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+    api.getMySavedTracks({
+      limit : 2,
+      offset: 1 
+    })
+    .then(function(data) {
+      data.href.should.equal("https://api.spotify.com/v1/me/tracks?offset=1&limit=2");
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+  });
+
+  it('should determine if a track is in the users library', function(done) {
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+    api.containsMySavedTracks(["5ybJm6GczjQOgTqmJ0BomP"])
+    .then(function(data) {
+      Object.prototype.toString.call(data).should.equal('[object Array]');
+      data.length.should.equal(1);
+      data[0].should.equal(false);
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+  });
+
+  it.only('should remove tracks in the users library', function(done) {
+    /* TODO: removeFromMySavedTracks */
+  });
+
+  /* TODO: addToMySavedTracks */
+  it.skip('should add tracks to the users library', function(done) {
+
+  });
+
+
 });
