@@ -276,6 +276,7 @@ api.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
     console.log('Something went wrong!', err);
   });
 });
+```
 
 ### Nesting calls
 ```javascript
