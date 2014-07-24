@@ -160,7 +160,9 @@ spotifyApi.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
     done(err);
   });
 
-#### User methods
+/*
+ * User methods
+ */
 
 // Get a user
 spotifyApi.getUser('petteralexis')
@@ -178,7 +180,9 @@ spotifyApi.getMe()
     console.log('Something went wrong!', err);
   });
 
-#### Playlist methods
+/*
+ * Playlist methods
+ */
 
 // Get a playlist
 spotifyApi.getPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
@@ -222,9 +226,10 @@ spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spot
   }, function(err) {
     console.log('Something went wrong!', err);
   });
-```
 
-#### Your Music library methods
+/*
+ * Your Music library methods
+ */
 
 // Get tracks in the signed in user's Your Music library
 spotifyApi.getMySavedTracks({
