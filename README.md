@@ -11,6 +11,8 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 - Get a user's playlists (currently non-collaborative)
 - Create playlists
 - Add tracks to a playlist
+- Add, remove, and get tracks that are in the signed in user's Your Music library
+- Check if a track is in the signed in user's Your Music library
 
 Some methods require authentication, which can be done using these flows:
 
@@ -158,6 +160,8 @@ spotifyApi.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
     done(err);
   });
 
+#### User methods
+
 // Get a user
 spotifyApi.getUser('petteralexis')
   .then(function(data) {
@@ -173,6 +177,8 @@ spotifyApi.getMe()
   }, function(err) {
     console.log('Something went wrong!', err);
   });
+
+#### Playlist methods
 
 // Get a playlist
 spotifyApi.getPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
@@ -217,6 +223,54 @@ spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spot
     console.log('Something went wrong!', err);
   });
 ```
+
+#### Your Music library methods
+
+// Get tracks in the signed in user's Your Music library
+spotifyApi.getMySavedTracks({
+    limit : 2,
+    offset: 1 
+  })
+  .then(function(data) {
+    console.log('Done!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+
+// Check if tracks are in the signed in user's Your Music library
+spotifyApi.containsMySavedTracks(["5ybJm6GczjQOgTqmJ0BomP"])
+  .then(function(data) {
+
+    // An array is returned, where the first element corresponds to the first track ID in the query
+    var trackIsInYourMusic = data[0];
+
+    if (trackIsInYourMusic) {
+      console.log('Track was found in the user\'s Your Music library');
+    } else {
+      console.log('Track was not found.');
+    }
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Remove tracks from the signed in user's Your Music library
+spotifyApi.removeFromMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
+  .then(function(data) {
+    console.log('Removed!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+});
+
+// Add tracks to the signed in user's Your Music library
+api.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
+  .then(function(data) {
+    console.log('Added track!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+});
 
 ### Nesting calls
 ```javascript
