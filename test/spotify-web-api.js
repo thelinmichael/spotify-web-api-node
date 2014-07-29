@@ -280,6 +280,21 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it.skip('should change playlist details', function(done) {
+    var api = new SpotifyWebApi();
+    api.setAccessToken('long-access-token');
+
+    api.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', {
+      name: 'This is a new name for my Cool Playlist, and will become private',
+      'public' : false
+    }).then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err.error);
+        done(err);
+      });
+  });
+
   it.skip('should add tracks to playlist', function(done) {
     var api = new SpotifyWebApi();
     api.setAccessToken('long-access-token');
@@ -453,80 +468,6 @@ describe('Spotify Web API', function() {
         console.log(err);
         done(err);
       });
-  });
-
-  /* Run this test with a valid access token with the user-library-read scope */
-  it.skip('should get tracks in the users library', function(done) {
-    var accessToken = 'myAccessToken';
-
-    var api = new SpotifyWebApi({
-      accessToken : accessToken
-    });
-    api.getMySavedTracks({
-      limit : 2,
-      offset: 1 
-    })
-    .then(function(data) {
-      data.href.should.equal("https://api.spotify.com/v1/me/tracks?offset=1&limit=2");
-      done();
-    }, function(err) {
-      console.log(err);
-      done(err);
-    });
-  });
-
-  /* Run this test with a valid access token with the user-library-read scope */
-  it.skip('should determine if a track is in the users library', function(done) {
-    var accessToken = 'myAccessToken';
-
-    var api = new SpotifyWebApi({
-      accessToken : accessToken
-    });
-    api.containsMySavedTracks(["5ybJm6GczjQOgTqmJ0BomP"])
-    .then(function(data) {
-      Object.prototype.toString.call(data).should.equal('[object Array]');
-      data.length.should.equal(1);
-      data[0].should.equal(false);
-      done();
-    }, function(err) {
-      console.log(err);
-      done(err);
-    });
-  });
-
-  /* Run this test with a valid access token with the user-library-modify scope */
-  it.skip('should remove tracks in the users library', function(done) {
-    var accessToken = 'myAccessToken';
-
-    var api = new SpotifyWebApi({
-      accessToken : accessToken
-    });
-
-    api.removeFromMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
-    .then(function(data) {
-      done();
-    }, function(err) {
-      console.log(err);
-      done(err);
-    });
-
-  });
-
-  /* Run this test with a valid access token with the user-library-modify scope */
-  it.skip('should add tracks to the users library', function(done) {
-    var accessToken = 'myAccessToken';
-
-    var api = new SpotifyWebApi({
-      accessToken : accessToken
-    });
-
-    api.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
-    .then(function(data) {
-      done();
-    }, function(err) {
-      console.log(err);
-      done(err);
-    });
   });
 
 });
