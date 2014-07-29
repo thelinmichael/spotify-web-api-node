@@ -280,6 +280,21 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it.skip('should change playlist details', function(done) {
+    var api = new SpotifyWebApi();
+    api.setAccessToken('long-access-token');
+
+    api.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', {
+      name: 'This is a new name for my Cool Playlist, and will become private',
+      'public' : false
+    }).then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err.error);
+        done(err);
+      });
+  });
+
   it.skip('should add tracks to playlist', function(done) {
     var api = new SpotifyWebApi();
     api.setAccessToken('long-access-token');
@@ -464,7 +479,7 @@ describe('Spotify Web API', function() {
     });
     api.getMySavedTracks({
       limit : 2,
-      offset: 1 
+      offset: 1
     })
     .then(function(data) {
       data.href.should.equal("https://api.spotify.com/v1/me/tracks?offset=1&limit=2");

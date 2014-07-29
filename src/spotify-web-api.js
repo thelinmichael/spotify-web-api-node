@@ -499,6 +499,26 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
+   * Change playlist details.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {Object} [options] The possible options, e.g. name, public.
+   * @example changePlaylistDetails('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK', {name: 'New name', public: true}).then(...)
+   * @returns {Promise} A promise that if successful, simply resolves to an empty object. If rejected,
+   * it contains an error object.
+   */
+  this.changePlaylistDetails = function(userId, playlistId, options) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters(options)
+      .build();
+
+      _addAccessToken(request, this.getAccessToken());
+      return _performRequest(HttpManager.put, request);
+  };
+
+  /**
    * Add tracks to a playlist.
    * @todo: Add position.
    * @param {string} userId The playlist's owner's user ID
@@ -626,10 +646,10 @@ function SpotifyWebApi(credentials) {
   /**
    * Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.
    * @param {string[]} trackIds The track IDs
-   * @returns {} Returns a promise that if successful, resolves into an array of booleans. The order 
+   * @returns {} Returns a promise that if successful, resolves into an array of booleans. The order
    * of the returned array's elements correspond to the track ID in the request.
    * The boolean value of true indiciates that the track is part of the user's library, otherwise false.
-   */   
+   */
    this.containsMySavedTracks = function(trackIds) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/tracks/contains')
