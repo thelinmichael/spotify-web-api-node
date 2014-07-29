@@ -11,6 +11,7 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 - Get a user's playlists (currently non-collaborative)
 - Create playlists
 - Add tracks to a playlist
+- Change playlist details
 - Add, remove, and get tracks that are in the signed in user's Your Music library
 - Check if a track is in the signed in user's Your Music library
 
@@ -227,6 +228,17 @@ spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spot
     console.log('Something went wrong!', err);
   });
 
+// Change playlist details
+spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', 
+  {
+    name: 'This is a new name for my Cool Playlist, and will become private',
+    'public' : false
+  }).then(function(data) {
+     console.log('Playlist is now private!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
 /*
  * Your Music library methods
  */
@@ -276,6 +288,7 @@ api.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
     console.log('Something went wrong!', err);
   });
 });
+
 ```
 
 ### Nesting calls
@@ -501,9 +514,13 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'fields' : 'i
 
 ## Change log
 
+#### 0.0.11
+
+- Add Change Playlist details endpoint (change published status and name). Gracias [JMPerez](https://github.com/JMPerez).
+
 #### 0.0.10
 
-- Add Your Music Endpoints (add tracks, remove tracks, contains tracks, get tracks)
+- Add Your Music Endpoints (add tracks, remove tracks, contains tracks, get tracks).
 - Documentation updates (change scope name of playlist-modify to playlist-modify-public, and a fix to a parameter type). Thanks [JMPerez](https://github.com/JMPerez) and [matiassingers](https://github.com/matiassingers).
 
 #### 0.0.9
