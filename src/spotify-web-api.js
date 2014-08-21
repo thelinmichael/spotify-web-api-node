@@ -509,7 +509,7 @@ function SpotifyWebApi(credentials) {
    */
   this.changePlaylistDetails = function(userId, playlistId, options) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
+      .withPath('/v1/users/' + userId + '/playlists/' + playlistId)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(options)
       .build();
