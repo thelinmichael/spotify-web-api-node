@@ -471,10 +471,11 @@ function SpotifyWebApi(credentials) {
    * the tracks in the playlist. If rejected, it contains an error object.
    */
    this.getPlaylistTracks = function(userId, playlistId, options) {
-    var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
-      .withQueryParameters(options)
-      .build();
+    var request = WebApiRequest.builder().
+      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withQueryParameters(options).
+      build();
+
      _addAccessToken(request, this.getAccessToken());
      return _performRequest(HttpManager.get, request);
    };
@@ -520,7 +521,6 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Add tracks to a playlist.
-   * @todo: Add position.
    * @param {string} userId The playlist's owner's user ID
    * @param {string} playlistId The playlist's ID
    * @param {string[]} tracks ID's of the tracks to add to the playlist.
@@ -540,6 +540,29 @@ function SpotifyWebApi(credentials) {
     _addQueryParameters(request, options);
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.post, request);
+  };
+
+  /**
+   * Remove tracks from a playlist.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {Object[]} tracks An array of objects containing a property called uri with the track URI (String), and
+   * a an optional property called positions (int[]).
+   * @param {Object} options Options, snapshot_id being the only one.
+   */
+  this.removeTracksFromPlaylist = function(userId, playlistId, tracks, options) {
+    console.log(tracks);
+    var request = WebApiRequest.builder().
+    withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+    withHeaders({ 'Content-Type' : 'application/json' }).
+    withBodyParameters({
+      'tracks': tracks
+    }).
+    build();
+
+    _addBodyParameters(request, options);
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.del, request);
   };
 
   /**
