@@ -3,15 +3,27 @@ Spotify Web API Node
 
 This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). It includes helper functions to do the following:
 
-- Get albums, artists, tracks, users and playlists
-- Get albums for a specific artist
-- Get an artist's top tracks
-- Get artists similar to a given artist
-- Search albums, artists and tracks
-- Get a user's playlists (currently non-collaborative)
+#### Music metadata
+- Albums, artists, and tracks
+- Albums for a specific artist
+- Top tracks for a specific artist
+- Artists similar to a specific artist
+
+#### Profiles
+- User's emails, product type, display name, image
+
+#### Search
+- Albums, artists, and tracks
+
+#### Playlists
+- Get a user's playlists
 - Create playlists
-- Add tracks to a playlist
 - Change playlist details
+- Add tracks to a playlist
+- Remove tracks from a playlist
+- Replace tracks in a playlist
+
+#### Your Music library
 - Add, remove, and get tracks that are in the signed in user's Your Music library
 - Check if a track is in the signed in user's Your Music library
 
@@ -514,9 +526,15 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'fields' : 'i
 
 ## Change log
 
+#### 1.0.0
+
+- Add **Replace tracks in a Playlist** endpoint
+- Add **Remove tracks in a Playlist** endpoint
+- Return errors as Error objects instead of unparsed JSON. Thanks [niftylettuce](https://github.com/niftylettuce).
+
 #### 0.0.11
 
-- Add Change Playlist details endpoint (change published status and name). Gracias [JMPerez](https://github.com/JMPerez).
+- Add **Change Playlist details** endpoint (change published status and name). Gracias [JMPerez](https://github.com/JMPerez).
 
 #### 0.0.10
 
