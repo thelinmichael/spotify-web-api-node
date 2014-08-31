@@ -581,7 +581,7 @@ function SpotifyWebApi(credentials) {
 
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.put, request);
-  }
+  };
 
   /**
    * Request an access token using the Client Credentials flow.

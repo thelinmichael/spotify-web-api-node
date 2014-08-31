@@ -24,34 +24,46 @@ var _getParametersFromRequest = function(request) {
   return options;
 };
 
+var _getErrorObject = function(defaultMessage, err) {
+  'use strict';
+  try {
+    var errorJSON = JSON.parse(err);
+    var errorObject;
+    if (typeof errorJSON.error === 'object' && typeof errorJSON.error.message === 'string') {
+      errorObject = new Error(errorJSON.error.message);
+    } else {
+      errorObject = new Error(defaultMessage + '. JSON has unexpected format ' + errorJSON);
+    }
+    return errorObject;
+  } catch (e) {
+    return new Error(defaultMessage + '. Failed to parse response: ' + err);  
+  }
+};
+
 var _makeRequest = function(method, options, uri, callback) {
   'use strict';
   method(uri, options)
     .on('success', function(data, response) {
       callback(null, data);
     })
-    .on('fail', function(data, response) {
-      if (data) {
-        callback(data);
+    .on('fail', function(err, response) {
+      if (err) {
+        var errorObject = _getErrorObject('Request failed', err);
+        callback(errorObject);
       } else {
-        callback({
-          error : 'request failed (' + response.statusCode + ')'
-        });
+        callback(new Error('Request failed'));
       }
     })
     .on('error', function(err, response) {
       if (err) {
-        callback(err);
+        var errorObject = _getErrorObject('Request error', err);
+        callback(errorObject);
       } else {
-        callback({
-          error : 'request error (' + response.statusCode + ')'
-        });
+        callback(new Error('Request error'));
       }
     })
     .on('timeout', function(ms) {
-      callback({
-        error : 'Request timed out (' + ms + ')'
-      });
+      callback(new Error('Request timed out (' + ms + ')'));
     });
 };
 

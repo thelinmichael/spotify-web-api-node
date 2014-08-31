@@ -35,13 +35,13 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it("should fail for non existing track id", function(done) {
+  it.skip("should fail for non existing track id", function(done) {
     var api = new SpotifyWebApi();
     api.getTrack('idontexist')
       .then(function(data) {
         done(new Error('Should have failed'));
       }, function(err) {
-        'non existing id'.should.equal(err.error.message);
+        'non existing id'.should.equal(err.message);
         done();
       });
   });
@@ -51,7 +51,7 @@ describe('Spotify Web API', function() {
     api.getTrack()
       .then(function(data) {
         done(new Error('Should have failed'));
-      }, function(err) {;
+      }, function(err) {
         done();
       });
   });
@@ -543,5 +543,22 @@ describe('Spotify Web API', function() {
       done(err);
     });
   });
+
+  it('handles expired tokens', function(done) {
+    var accessToken = "BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g";
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0'])
+    .then(function(data) {
+      console.log(data);
+      done(new Error('should have failed'));
+    }, function(err) {
+      err.message.should.equal('The access token expired');
+      done();
+    });
+
+  })
 
 });
