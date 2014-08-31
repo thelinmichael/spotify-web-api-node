@@ -528,22 +528,22 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'fields' : 'i
 
 #### 1.0.0
 
-- Add **Replace tracks in a Playlist** endpoint
-- Add **Remove tracks in a Playlist** endpoint
+- Add **[Replace tracks in a Playlist](https://developer.spotify.com/web-api/remove-tracks-playlist/)** endpoint
+- Add **[Remove tracks in a Playlist](https://developer.spotify.com/web-api/replace-playlists-tracks/)** endpoint
 - Return errors as Error objects instead of unparsed JSON. Thanks [niftylettuce](https://github.com/niftylettuce).
 
 #### 0.0.11
 
-- Add **Change Playlist details** endpoint (change published status and name). Gracias [JMPerez](https://github.com/JMPerez).
+- Add **[Change Playlist details](https://developer.spotify.com/web-api/change-playlist-details/)** endpoint (change published status and name). Gracias [JMPerez](https://github.com/JMPerez).
 
 #### 0.0.10
 
-- Add Your Music Endpoints (add tracks, remove tracks, contains tracks, get tracks).
+- Add Your Music Endpoints (**[Add tracks](https://developer.spotify.com/web-api/save-tracks-user/)**, **[Remove tracks](https://developer.spotify.com/web-api/remove-tracks-user/)**, **[Contains tracks](https://developer.spotify.com/web-api/check-users-saved-tracks/)**, **[Get tracks](https://developer.spotify.com/web-api/get-users-saved-tracks/)**).
 - Documentation updates (change scope name of playlist-modify to playlist-modify-public, and a fix to a parameter type). Thanks [JMPerez](https://github.com/JMPerez) and [matiassingers](https://github.com/matiassingers).
 
 #### 0.0.9
 
-- Add [Related artists](https://developer.spotify.com/web-api/get-related-artists/) endpoint
+- Add **[Related artists](https://developer.spotify.com/web-api/get-related-artists/)** endpoint
 
 
 ## Future development
