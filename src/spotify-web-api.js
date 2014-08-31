@@ -551,7 +551,6 @@ function SpotifyWebApi(credentials) {
    * @param {Object} options Options, snapshot_id being the only one.
    */
   this.removeTracksFromPlaylist = function(userId, playlistId, tracks, options) {
-    console.log(tracks);
     var request = WebApiRequest.builder().
     withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
     withHeaders({ 'Content-Type' : 'application/json' }).
@@ -564,6 +563,25 @@ function SpotifyWebApi(credentials) {
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.del, request);
   };
+
+  /**
+   * Replace tracks in a playlist.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {Object[]} uris An array of track URIs (strings)
+   */
+  this.replaceTracksInPlaylist = function(userId, playlistId, uris) {
+    var request = WebApiRequest.builder().
+    withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+    withHeaders({ 'Content-Type' : 'application/json' }).
+    withBodyParameters({
+      'uris': uris
+    }).
+    build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.put, request);
+  }
 
   /**
    * Request an access token using the Client Credentials flow.

@@ -1,7 +1,8 @@
 var SpotifyWebApi = require("../");
 
 /**
- * This example demonstrates removing tracks from a specified position in a playlist.
+ * This example demonstrates adding tracks, removing tracks, and replacing tracks in a playlist. At this time of writing this
+ * documentation, this is the available playlist track modification features in the Spotify Web API.
  *
  * Since authorization is required, this example retrieves an access token using the Authorization Code Grant flow,
  * documented here: https://developer.spotify.com/spotify-web-api/authorization-guide/#authorization_code_flow
@@ -14,16 +15,16 @@ var SpotifyWebApi = require("../");
 /* This code is hardcoded. For a working implementation, the code needs to be retrieved from the user. See documentation about
  * the Authorization Code flow for more information.
  */
-var authorizationCode = '<your authorization code with playlist-modify-public scope>';
+var authorizationCode = '<insert authorization code with playlist-modify-public scope>';
 
 /**
  * Set the credentials given on Spotify's My Applications page.
  * https://developer.spotify.com/my-applications
  */
 var spotifyApi = new SpotifyWebApi({
-  clientId : '<insert client id>',
-  clientSecret : '<insert client secret>',
-  redirectUri : '<insert redirect URI>'
+  clientId : '<client id>',
+  clientSecret : '<client secret>',
+  redirectUri : '<redirect uri>'
 });
 
 var playlistId;
@@ -32,7 +33,6 @@ var playlistId;
 spotifyApi.authorizationCodeGrant(authorizationCode)
   .then(function(data) {
 
-    console.log(data);
     // Save the access token so that it's used in future requests
     spotifyApi.setAccessToken(data['access_token']);
 
@@ -58,6 +58,16 @@ spotifyApi.authorizationCodeGrant(authorizationCode)
           'positions' : [0]
       }])
 
+  }).then(function(data) {
+    console.log('Ok. Tracks removed!');
+
+    // Actually, lets just replace all tracks in the playlist with something completely different
+    return spotifyApi.replaceTracksInPlaylist('thelinmichael', playlistId, ['spotify:track:5Wd2bfQ7wc6GgSa32OmQU3',
+      'spotify:track:4r8lRYnoOGdEi6YyI5OC1o', 'spotify:track:4TZZvblv2yzLIBk2JwJ6Un', 'spotify:track:2IA4WEsWAYpV9eKkwR2UYv', 
+      'spotify:track:6hDH3YWFdcUNQjubYztIsG']);
+
+  }).then(function(data) {
+    console.log('Ok. Tracks replaced!');
   }).catch(function(err) {
     console.log(err);
     console.log('Something went wrong!');
