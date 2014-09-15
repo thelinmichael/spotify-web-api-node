@@ -526,6 +526,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'fields' : 'i
 
 ## Change log
 
+#### 1.0.1
+- Allow options to be set when retrieving a user's playlists. Thanks [EaterOfCode](https://github.com/EaterOfCode).
+
 #### 1.0.0
 
 - Add **[Replace tracks in a Playlist](https://developer.spotify.com/web-api/remove-tracks-playlist/)** endpoint
