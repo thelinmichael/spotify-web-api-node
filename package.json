@@ -6,6 +6,10 @@
   "main": "src/spotify-web-api.js",
   "author": "Michael Thelin",
   "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/thelinmichael/spotify-web-api-node.git"
+  },
   "dependencies": {
     "restler": "~3.2.0",
     "promise": "~5.0.0"
