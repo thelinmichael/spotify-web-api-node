@@ -516,7 +516,7 @@ var spotifyApi = new SpotifyWebApi({
 });
 
 // Get tracks in a playlist
-api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'fields' : 'items' })
+api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1, 'limit' : 5, 'fields' : 'items' })
   .then(function(data) {
     console.log('The playlist contains these tracks', data);
   }, function(err) {
