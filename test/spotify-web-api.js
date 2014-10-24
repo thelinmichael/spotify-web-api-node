@@ -558,7 +558,54 @@ describe('Spotify Web API', function() {
       err.message.should.equal('The access token expired');
       done();
     });
-
   })
+
+  /* Run this test with a valid access token */
+  it('should get new releases', function(done) {
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.getNewReleases({
+      limit : 5,
+      offset: 0,
+      country: 'SE'
+    })
+    .then(function(data) {
+      data.albums.href.should.equal('https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5')
+      data.albums.items.length.should.equal(5);
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+  });
+
+    /* Run this test with a valid access token */
+  it('should get featured playlists', function(done) {
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.getFeaturedPlaylists({
+      limit : 3,
+      offset: 1,
+      country: 'SE',
+      locale: 'sv_SE',
+      timestamp:'2014-10-23T09:00:00'
+    })
+    .then(function(data) {
+      data.playlists.href.should.equal('https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3')
+      data.playlists.items.length.should.equal(3);
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+  });
 
 });

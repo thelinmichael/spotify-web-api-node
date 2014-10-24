@@ -27,6 +27,10 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 - Add, remove, and get tracks that are in the signed in user's Your Music library
 - Check if a track is in the signed in user's Your Music library
 
+#### Browse
+- Get New Releases
+- Get Featured Playlists
+
 Some methods require authentication, which can be done using these flows:
 
 - [Client credentials flow](http://tools.ietf.org/html/rfc6749#section-4.4) (Application-only authentication)
@@ -241,7 +245,7 @@ spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spot
   });
 
 // Change playlist details
-spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', 
+spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
   {
     name: 'This is a new name for my Cool Playlist, and will become private',
     'public' : false
@@ -258,7 +262,7 @@ spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
 // Get tracks in the signed in user's Your Music library
 spotifyApi.getMySavedTracks({
     limit : 2,
-    offset: 1 
+    offset: 1
   })
   .then(function(data) {
     console.log('Done!');
