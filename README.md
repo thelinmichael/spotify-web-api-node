@@ -305,6 +305,28 @@ api.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
   });
 });
 
+/*
+ * Browse methods
+ */
+
+  // Retrieve new releases
+spotifyApi.getNewReleases({ limit : 5, offset: 0, country: 'SE' })
+  .then(function(data) {
+    console.log(data);
+      done();
+    }, function(err) {
+       console.log("Something went wrong!", err);
+    });
+  });
+
+//  Retrieve featured playlists
+spotifyApi.getFeaturedPlaylists({ limit : 3, offset: 1, country: 'SE', locale: 'sv_SE', timestamp:'2014-10-23T09:00:00' })
+  .then(function(data) { 
+    console.log(data);
+  }, function(err) {
+    console.log("Something went wrong!", err);
+  });
+
 ```
 
 ### Nesting calls
