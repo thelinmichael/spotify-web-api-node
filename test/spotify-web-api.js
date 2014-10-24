@@ -143,6 +143,7 @@ describe('Spotify Web API', function() {
         'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'.should.equal(data.tracks.href);
         done();
       }, function(err) {
+        console.log(err);
         done(err);
       });
   });
@@ -151,9 +152,10 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.getArtistAlbums('0oSGxfWSnnOXhD2fKuz2Gy', { album_type : 'album', country : 'GB', limit : 2, offset : 5 })
       .then(function(data) {
-        'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album'.should.equal(data.href);
+        'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'.should.equal(data.href);
         done();
       }, function(err) {
+        console.log(err);
         done(err);
       });
   });
@@ -544,7 +546,7 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it.only('handles expired tokens', function(done) {
+  it('handles expired tokens', function(done) {
     var accessToken = "BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g";
     var api = new SpotifyWebApi({
       accessToken : accessToken
