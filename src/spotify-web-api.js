@@ -733,6 +733,38 @@ function SpotifyWebApi(credentials) {
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.put, request);
   };
+
+  /**
+   * Retrieve new releases
+   * @param {Object} [options] Options, being country, limit and/or offset.
+   * @returns {Promise} A promise that if successful, resolves to an object containing a paging object which contains
+   * album objects.
+   */
+  this.getNewReleases = function(options) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/browse/new-releases')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters(options)
+      .build();
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
+  };
+
+  /**
+   * Retrieve featured playlists
+   * @param {Object} [options] Options, being country, locale, timestamp, limit, offset.
+   * @returns {Promise} A promise that if successful, resolves to an object containing a paging object which contains
+   * featured playlists.
+   */
+  this.getFeaturedPlaylists = function(options) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/browse/featured-playlists')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters(options)
+      .build();
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
+  };
 }
 
 module.exports = SpotifyWebApi;
