@@ -26,18 +26,13 @@ var _getParametersFromRequest = function(request) {
 
 var _getErrorObject = function(defaultMessage, err) {
   'use strict';
-  try {
-    var errorJSON = JSON.parse(err);
-    var errorObject;
-    if (typeof errorJSON.error === 'object' && typeof errorJSON.error.message === 'string') {
-      errorObject = new Error(errorJSON.error.message);
-    } else {
-      errorObject = new Error(defaultMessage + '. JSON has unexpected format ' + errorJSON);
-    }
-    return errorObject;
-  } catch (e) {
-    return new Error(defaultMessage + '. Failed to parse response: ' + err);  
+  var errorObject;
+  if (typeof err.error === 'object' && typeof err.error.message === 'string') {
+    errorObject = new Error(err.error.message);
+  } else {
+    errorObject = new Error(defaultMessage + '. JSON has unexpected format ' + err);
   }
+  return errorObject;
 };
 
 var _makeRequest = function(method, options, uri, callback) {

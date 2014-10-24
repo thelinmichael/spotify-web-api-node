@@ -544,7 +544,7 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it('handles expired tokens', function(done) {
+  it.only('handles expired tokens', function(done) {
     var accessToken = "BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g";
     var api = new SpotifyWebApi({
       accessToken : accessToken
@@ -561,7 +561,7 @@ describe('Spotify Web API', function() {
   })
 
   /* Run this test with a valid access token */
-  it('should get new releases', function(done) {
+  it.skip('should get new releases', function(done) {
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -584,7 +584,7 @@ describe('Spotify Web API', function() {
   });
 
     /* Run this test with a valid access token */
-  it('should get featured playlists', function(done) {
+  it.skip('should get featured playlists', function(done) {
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
