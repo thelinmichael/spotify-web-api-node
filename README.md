@@ -552,6 +552,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Change log
 
+#### 1.1.0
+- Add [Browse endpoints](https://developer.spotify.com/web-api/browse-endpoints/). Thanks [fsahin](https://github.com/fsahin).
+
 #### 1.0.2
 - Specify module's git repository. Thanks [vincentorback](https://github.com/vincentorback).
 
