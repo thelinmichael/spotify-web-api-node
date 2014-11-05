@@ -751,7 +751,7 @@ describe('Spotify Web API', function() {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
-      options.query.uri.should.be.an.instanceOf(Array).and.have.lengthOf(2);
+      options.query.uris.should.be.an.instanceOf(Array).and.have.lengthOf(2);
       should.not.exist(options.data);
       options.headers.Authorization.should.equal('Bearer long-access-token');
       callback();
