@@ -2,8 +2,7 @@ var restler = require('restler'),
     HttpManager = require('../src/http-manager'),
     sinon = require('sinon'),
     SpotifyWebApi = require('../src/spotify-web-api'),
-    should = require('should'),
-    fs = require('fs');
+    should = require('should');
 
 'use strict';
 
@@ -433,6 +432,15 @@ describe('Spotify Web API', function() {
   });
 
   it('should fail if no token is provided for a request that requires an access token', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me');
+      if (!options.headers || !options.headers.Authorization) {
+        callback(new Error(), null);
+      }
+    });
+
     var api = new SpotifyWebApi();
 
     api.getMe()
@@ -788,6 +796,19 @@ describe('Spotify Web API', function() {
   });
 
   it('handles expired tokens', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+
+      method.should.equal(restler.put);
+      JSON.parse(options.data).should.eql(["3VNWq8rTnQG6fM1eldSpZ0"]);
+      uri.should.equal('https://api.spotify.com/v1/me/tracks');
+      should.not.exist(options.query);
+      options.headers.Authorization.should.equal('Bearer BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g');
+
+      // simulate token expired
+      callback(new Error('The access token expired'), null);
+    });
+
     var accessToken = "BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g";
     var api = new SpotifyWebApi({
       accessToken : accessToken
@@ -795,7 +816,6 @@ describe('Spotify Web API', function() {
 
     api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0'])
     .then(function(data) {
-      console.log(data);
       done(new Error('should have failed'));
     }, function(err) {
       err.message.should.equal('The access token expired');
