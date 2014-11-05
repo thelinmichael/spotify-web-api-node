@@ -536,7 +536,9 @@ function SpotifyWebApi(credentials) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
-      .withBodyParameters(tracks)
+      .withQueryParameters({
+        uri: tracks
+      })
       .build();
 
     _addQueryParameters(request, options);

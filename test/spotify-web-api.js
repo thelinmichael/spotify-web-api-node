@@ -1,10 +1,24 @@
-var SpotifyWebApi = require('../src/spotify-web-api'),
-    should = require('should')
-    fs = require('fs');
+var restler = require('restler'),
+    HttpManager = require('../src/http-manager'),
+    sinon = require('sinon'),
+    SpotifyWebApi = require('../src/spotify-web-api'),
+    should = require('should');
 
 'use strict';
 
 describe('Spotify Web API', function() {
+
+  beforeEach(function(done){
+    done();
+  });
+
+  afterEach(function(done){
+    if (typeof HttpManager._makeRequest.restore == 'function') {
+      HttpManager._makeRequest.restore();
+    }
+    done();
+  });
+
   this.timeout(5000);
 
   it('should set clientId, clientSecret and redirectUri', function() {
@@ -26,6 +40,14 @@ describe('Spotify Web API', function() {
   });
 
   it("should retrieve track metadata", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
+      should.not.exist(options.data);
+      callback();
+    });
+
     var api = new SpotifyWebApi();
     api.getTrack('3Qm86XLflmIXVm1wcwkgDK')
       .then(function(data) {
@@ -35,7 +57,13 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it.skip("should fail for non existing track id", function(done) {
+  it("should fail for non existing track id", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      callback(new Error('non existing id'), null);
+    });
+
     var api = new SpotifyWebApi();
     api.getTrack('idontexist')
       .then(function(data) {
@@ -47,6 +75,12 @@ describe('Spotify Web API', function() {
   });
 
   it('should fail for empty track id', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      callback(new Error(), null);
+    });
+
     var api = new SpotifyWebApi();
     api.getTrack()
       .then(function(data) {
@@ -57,6 +91,15 @@ describe('Spotify Web API', function() {
   });
 
   it("should retrieve metadata for several tracks", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/tracks');
+      options.query.ids.should.equal('0eGsygTp906u18L0Oimnem,1lDWb6b6ieDQ2xT7ewTC3G');
+      should.not.exist(options.data);
+      callback();
+    });
+
     var api = new SpotifyWebApi();
     api.getTracks(['0eGsygTp906u18L0Oimnem', '1lDWb6b6ieDQ2xT7ewTC3G'])
       .then(function(data) {
@@ -67,6 +110,14 @@ describe('Spotify Web API', function() {
   });
 
   it("should retrieve metadata for an album", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj');
+      should.not.exist(options.data);
+      callback(null, {uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj'});
+    });
+
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj')
       .then(function(data) {
@@ -78,6 +129,18 @@ describe('Spotify Web API', function() {
   });
 
   it("should retrieve metadata for several albums", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/albums');
+      options.query.ids.should.equal('41MnTivkwTO3UUJ8DrqEJJ,6JWc4iAiJ9FjyK0B59ABb4');
+      should.not.exist(options.data);
+      callback(null, {albums:[
+        {uri: 'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'},
+        {uri: 'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'}
+      ]});
+    });
+
     var api = new SpotifyWebApi();
     api.getAlbums(['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4'])
       .then(function(data) {
@@ -91,6 +154,14 @@ describe('Spotify Web API', function() {
 
 
   it("should retrive metadata for an artist", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/artists/0LcJLqbBmaGUft1e9Mm8HV');
+      should.not.exist(options.data);
+      callback(null, {uri: 'spotify:artist:0LcJLqbBmaGUft1e9Mm8HV'});
+    });
+
     var api = new SpotifyWebApi();
     api.getArtist('0LcJLqbBmaGUft1e9Mm8HV')
       .then(function(data) {
@@ -102,6 +173,18 @@ describe('Spotify Web API', function() {
   });
 
   it("should retrieve metadata for several artists", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/artists');
+      options.query.ids.should.equal('0oSGxfWSnnOXhD2fKuz2Gy,3dBVyJ7JuOMt4GE9607Qin');
+      should.not.exist(options.data);
+      callback(null, {artists:[
+        {uri: 'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'},
+        {uri: 'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'}
+      ]});
+    });
+
     var api = new SpotifyWebApi();
     api.getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin'])
       .then(function(data) {
@@ -114,6 +197,24 @@ describe('Spotify Web API', function() {
   });
 
   it("should search for an album using limit and offset", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/search/');
+      options.query.should.eql({
+        limit: 3,
+        offset: 2,
+        q: 'The Best of Keane',
+        type: 'album'
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        albums: {
+          href: 'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
+        }
+      });
+    });
+
     var api = new SpotifyWebApi();
     api.searchAlbums('The Best of Keane', { limit : 3, offset : 2 })
       .then(function(data) {
@@ -126,6 +227,24 @@ describe('Spotify Web API', function() {
   });
 
   it("should search for an artist using limit and offset", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/search/');
+      options.query.should.eql({
+        limit: 5,
+        offset: 1,
+        q: 'David Bowie',
+        type: 'artist'
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        artists: {
+          href: 'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
+        }
+      });
+    });
+
     var api = new SpotifyWebApi();
     api.searchArtists('David Bowie', { limit : 5, offset : 1 })
       .then(function(data) {
@@ -137,6 +256,24 @@ describe('Spotify Web API', function() {
   });
 
   it("should search for a track using limit and offset", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/search/');
+      options.query.should.eql({
+        limit: 3,
+        offset: 2,
+        q: 'Mr. Brightside',
+        type: 'track'
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        tracks: {
+          href: 'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
+        }
+      });
+    });
+
     var api = new SpotifyWebApi();
     api.searchTracks('Mr. Brightside', { limit : 3, offset : 2 })
       .then(function(data) {
@@ -149,6 +286,22 @@ describe('Spotify Web API', function() {
   });
 
   it("should get artists albums", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums');
+      options.query.should.eql({
+        album_type: 'album',
+        country: 'GB',
+        limit: 2,
+        offset: 5
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        href: 'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
+      });
+    });
+
     var api = new SpotifyWebApi();
     api.getArtistAlbums('0oSGxfWSnnOXhD2fKuz2Gy', { album_type : 'album', country : 'GB', limit : 2, offset : 5 })
       .then(function(data) {
@@ -161,6 +314,20 @@ describe('Spotify Web API', function() {
   });
 
   it("should get tracks from album", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks');
+      options.query.should.eql({
+        offset: 1,
+        limit: 5
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        href: 'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
+      });
+    });
+
     var api = new SpotifyWebApi();
     api.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 })
       .then(function(data) {
@@ -172,6 +339,17 @@ describe('Spotify Web API', function() {
   });
 
   it("should get top tracks for artist", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/top-tracks');
+      options.query.should.eql({
+        country: 'GB'
+      });
+      should.not.exist(options.data);
+      callback();
+    });
+
     var api = new SpotifyWebApi();
 
     api.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB')
@@ -183,6 +361,16 @@ describe('Spotify Web API', function() {
   });
 
   it("should get similar artists", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/artists/0qeei9KQnptjwb8MgkqEoy/related-artists');
+      should.not.exist(options.data);
+      callback(null, {
+        artists:[{}]
+      });
+    });
+
     var api = new SpotifyWebApi();
 
     api.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
@@ -195,6 +383,16 @@ describe('Spotify Web API', function() {
   });
 
   it("should get a user", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/users/petteralexis');
+      should.not.exist(options.data);
+      callback(null, {
+        uri: 'spotify:user:petteralexis'
+      });
+    });
+
     var api = new SpotifyWebApi();
 
     api.getUser('petteralexis')
@@ -234,6 +432,15 @@ describe('Spotify Web API', function() {
   });
 
   it('should fail if no token is provided for a request that requires an access token', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me');
+      if (!options.headers || !options.headers.Authorization) {
+        callback(new Error(), null);
+      }
+    });
+
     var api = new SpotifyWebApi();
 
     api.getMe()
@@ -423,7 +630,7 @@ describe('Spotify Web API', function() {
     });
 
     var authorizeURL = api.createAuthorizeURL(scopes, state);
-    'https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'.should.equal(authorizeURL);
+    'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'.should.equal(authorizeURL);
   });
 
   it('should set, get and reset credentials successfully', function() {
@@ -494,6 +701,7 @@ describe('Spotify Web API', function() {
 
   /* Run this test with a valid access token with the user-library-read scope */
   it.skip('should determine if a track is in the users library', function(done) {
+
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -512,7 +720,16 @@ describe('Spotify Web API', function() {
   });
 
   /* Run this test with a valid access token with the user-library-modify scope */
-  it.skip('should remove tracks in the users library', function(done) {
+  it('should remove tracks in the users library', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.del);
+      JSON.parse(options.data).should.eql(["3VNWq8rTnQG6fM1eldSpZ0"]);
+      uri.should.equal('https://api.spotify.com/v1/me/tracks');
+      should.not.exist(options.query);
+      callback();
+    });
+
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -529,8 +746,40 @@ describe('Spotify Web API', function() {
 
   });
 
-  /* Run this test with a valid access token with the user-library-modify scope */
-  it.skip('should add tracks to the users library', function(done) {
+  it('should add tracks to playlist', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.post);
+      uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
+      options.query.uri.should.be.an.instanceOf(Array).and.have.lengthOf(2);
+      should.not.exist(options.data);
+      options.headers.Authorization.should.equal('Bearer long-access-token');
+      callback();
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('long-access-token');
+
+    api.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"])
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err.error);
+        done(err);
+      });
+  });
+
+  it('should add tracks to the users library', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.put);
+      JSON.parse(options.data).should.eql(["3VNWq8rTnQG6fM1eldSpZ0"]);
+      uri.should.equal('https://api.spotify.com/v1/me/tracks');
+      should.not.exist(options.query);
+      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      callback();
+    });
+
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -547,6 +796,19 @@ describe('Spotify Web API', function() {
   });
 
   it('handles expired tokens', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+
+      method.should.equal(restler.put);
+      JSON.parse(options.data).should.eql(["3VNWq8rTnQG6fM1eldSpZ0"]);
+      uri.should.equal('https://api.spotify.com/v1/me/tracks');
+      should.not.exist(options.query);
+      options.headers.Authorization.should.equal('Bearer BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g');
+
+      // simulate token expired
+      callback(new Error('The access token expired'), null);
+    });
+
     var accessToken = "BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g";
     var api = new SpotifyWebApi({
       accessToken : accessToken
@@ -554,7 +816,6 @@ describe('Spotify Web API', function() {
 
     api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0'])
     .then(function(data) {
-      console.log(data);
       done(new Error('should have failed'));
     }, function(err) {
       err.message.should.equal('The access token expired');
@@ -562,8 +823,24 @@ describe('Spotify Web API', function() {
     });
   })
 
-  /* Run this test with a valid access token */
-  it.skip('should get new releases', function(done) {
+  it('should get new releases', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/browse/new-releases');
+      options.query.should.eql({
+        limit: 5,
+        offset: 0,
+        country: 'SE'
+      });
+      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      callback(null, { albums: {
+          href: 'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5',
+          items: [{},{},{},{},{}]
+        }
+      });
+    });
+
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -585,8 +862,26 @@ describe('Spotify Web API', function() {
     });
   });
 
-    /* Run this test with a valid access token */
-  it.skip('should get featured playlists', function(done) {
+  it('should get featured playlists', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/browse/featured-playlists');
+      options.query.should.eql({
+        limit: 3,
+        offset: 1,
+        country: 'SE',
+        locale: 'sv_SE',
+        timestamp: '2014-10-23T09:00:00'
+      });
+      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      callback(null, { playlists: {
+          href: 'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3',
+          items: [{},{},{}]
+        }
+      });
+    });
+
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
