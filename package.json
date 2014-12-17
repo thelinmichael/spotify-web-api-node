@@ -7,19 +7,20 @@
   "author": "Michael Thelin",
   "license": "MIT",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/thelinmichael/spotify-web-api-node.git"
+    "type": "git",
+    "url": "https://github.com/thelinmichael/spotify-web-api-node.git"
   },
   "dependencies": {
     "restler": "~3.2.0",
     "promise": "~5.0.0"
   },
   "devDependencies": {
-    "xunit-file" : "0.0.5",
+    "xunit-file": "0.0.5",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-watch": "~0.6",
     "grunt-simple-mocha": "0.4.x",
     "should": "~3.0",
-    "mocha": "~1.20.1"
+    "mocha": "~1.20.1",
+    "sinon": "~1.12.2"
   }
 }

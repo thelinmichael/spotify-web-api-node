@@ -52,7 +52,9 @@ function SpotifyWebApi(credentials) {
 
   this.setCredentials = function(credentials) {
     for (var key in credentials) {
-      _credentials[key] = credentials[key];
+      if (credentials.hasOwnProperty(key)) {
+        _credentials[key] = credentials[key];
+      }
     }
   };
 
@@ -225,7 +227,7 @@ function SpotifyWebApi(credentials) {
       .withPath('/v1/artists/' + artistId)
       .build();
 
-    _addAccessToken(request);
+    _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.get, request);
   };
 
