@@ -561,7 +561,7 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Change log
 
-#### 1.2.0
+#### 1.2.1
 - Add [Follow endpoints](https://developer.spotify.com/web-api/web-api-follow-endpoints/). Great work [JMPerez](https://github.com/JMPerez)
 
 #### 1.1.0
