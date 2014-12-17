@@ -12,6 +12,10 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 #### Profiles
 - User's emails, product type, display name, image
 
+### Follow
+- Add and remove artists and users to the list of followed ones by the signed in user
+- Check if the signed in user follows certain artists or other users
+
 #### Search
 - Albums, artists, and tracks
 
