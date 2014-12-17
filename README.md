@@ -35,6 +35,11 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 - Get New Releases
 - Get Featured Playlists
 
+#### Follow
+- Follow and unfollow users
+- Follow and unfollow artists
+- Check if the logged in user follows a user or artist
+
 Some methods require authentication, which can be done using these flows:
 
 - [Client credentials flow](http://tools.ietf.org/html/rfc6749#section-4.4) (Application-only authentication)
@@ -555,6 +560,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 ```
 
 ## Change log
+
+#### 1.2.0
+- Add [Follow endpoints](https://developer.spotify.com/web-api/web-api-follow-endpoints/). Great work [JMPerez](https://github.com/JMPerez)
 
 #### 1.1.0
 - Add [Browse endpoints](https://developer.spotify.com/web-api/browse-endpoints/). Thanks [fsahin](https://github.com/fsahin).
