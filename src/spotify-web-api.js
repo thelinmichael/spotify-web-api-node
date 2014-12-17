@@ -163,7 +163,7 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Look up several tracks.
-   * @param {string[]} trackIds The ID's of the artists.
+   * @param {string[]} trackIds The IDs of the artists.
    * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
    * @returns {Promise} A promise that if successful, returns an object containing information
    *          about the artists.
@@ -196,7 +196,7 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Look up several albums.
-   * @param {string[]} artistIds The ID's of the artists.
+   * @param {string[]} artistIds The IDs of the artists.
    * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
    * @returns {Promise} A promise that if successful, returns an object containing information
    *          about the artists.
@@ -231,7 +231,7 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Look up several artists.
-   * @param {string[]} artistIds The ID's of the artists.
+   * @param {string[]} artistIds The IDs of the artists.
    * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
    * @returns {Promise} A promise that if successful, returns an object containing information
    *          about the artists.
@@ -266,9 +266,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      _addAccessToken(request, this.getAccessToken());
-      _addQueryParameters(request, options);
-      return _performRequest(HttpManager.get, request);
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
@@ -289,9 +289,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      _addAccessToken(request, this.getAccessToken());
-      _addQueryParameters(request, options);
-      return _performRequest(HttpManager.get, request);
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
@@ -312,9 +312,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      _addAccessToken(request, this.getAccessToken());
-      _addQueryParameters(request, options);
-      return _performRequest(HttpManager.get, request);
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
@@ -331,9 +331,9 @@ function SpotifyWebApi(credentials) {
       .withPath('/v1/artists/' + artistId + '/albums')
       .build();
 
-      _addAccessToken(request, this.getAccessToken());
-      _addQueryParameters(request, options);
-      return _performRequest(HttpManager.get, request);
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
@@ -350,9 +350,9 @@ function SpotifyWebApi(credentials) {
       .withPath('/v1/albums/' + albumId + '/tracks')
       .build();
 
-      _addAccessToken(request, this.getAccessToken());
-      _addQueryParameters(request, options);
-      return _performRequest(HttpManager.get, request);
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
@@ -372,8 +372,8 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      _addAccessToken(request, this.getAccessToken());
-      return _performRequest(HttpManager.get, request);
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
@@ -388,8 +388,8 @@ function SpotifyWebApi(credentials) {
       .withPath('/v1/artists/' + artistId + '/related-artists')
       .build();
 
-      _addAccessToken(request, this.getAccessToken());
-      return _performRequest(HttpManager.get, request);
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
@@ -405,8 +405,8 @@ function SpotifyWebApi(credentials) {
       .withPath('/v1/users/' + userId)
       .build();
 
-      _addAccessToken(request, this.getAccessToken());
-      return _performRequest(HttpManager.get, request);
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
@@ -472,15 +472,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise} A promise that if successful, resolves to an object that containing
    * the tracks in the playlist. If rejected, it contains an error object.
    */
-   this.getPlaylistTracks = function(userId, playlistId, options) {
+  this.getPlaylistTracks = function(userId, playlistId, options) {
     var request = WebApiRequest.builder().
       withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
       withQueryParameters(options).
       build();
 
-     _addAccessToken(request, this.getAccessToken());
-     return _performRequest(HttpManager.get, request);
-   };
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
+  };
 
   /**
    * Create a playlist.
@@ -517,15 +517,15 @@ function SpotifyWebApi(credentials) {
       .withBodyParameters(options)
       .build();
 
-      _addAccessToken(request, this.getAccessToken());
-      return _performRequest(HttpManager.put, request);
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.put, request);
   };
 
   /**
    * Add tracks to a playlist.
    * @param {string} userId The playlist's owner's user ID
    * @param {string} playlistId The playlist's ID
-   * @param {string[]} tracks ID's of the tracks to add to the playlist.
+   * @param {string[]} tracks IDs of the tracks to add to the playlist.
    * @param {Object} [options] Options, position being the only one.
    * @example addTracksToPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK',
               '["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"]').then(...)
@@ -556,12 +556,12 @@ function SpotifyWebApi(credentials) {
    */
   this.removeTracksFromPlaylist = function(userId, playlistId, tracks, options) {
     var request = WebApiRequest.builder().
-    withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
-    withHeaders({ 'Content-Type' : 'application/json' }).
-    withBodyParameters({
-      'tracks': tracks
-    }).
-    build();
+      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withHeaders({ 'Content-Type' : 'application/json' }).
+      withBodyParameters({
+        'tracks': tracks
+      }).
+      build();
 
     _addBodyParameters(request, options);
     _addAccessToken(request, this.getAccessToken());
@@ -576,12 +576,12 @@ function SpotifyWebApi(credentials) {
    */
   this.replaceTracksInPlaylist = function(userId, playlistId, uris) {
     var request = WebApiRequest.builder().
-    withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
-    withHeaders({ 'Content-Type' : 'application/json' }).
-    withBodyParameters({
-      'uris': uris
-    }).
-    build();
+      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withHeaders({ 'Content-Type' : 'application/json' }).
+      withBodyParameters({
+        'uris': uris
+      }).
+      build();
 
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.put, request);
@@ -605,8 +605,8 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      _addBodyParameters(request, options);
-      return _performRequest(HttpManager.post, request);
+    _addBodyParameters(request, options);
+    return _performRequest(HttpManager.post, request);
   };
 
   /**
@@ -617,7 +617,7 @@ function SpotifyWebApi(credentials) {
    *          refresh token, token type and time to expiration. If rejected, it contains an error object.
    */
   this.authorizationCodeGrant = function(code) {
-     var request = AuthenticationRequest.builder()
+    var request = AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'authorization_code',
@@ -628,7 +628,7 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      return _performRequest(HttpManager.post, request);
+    return _performRequest(HttpManager.post, request);
   };
 
   /**
@@ -649,7 +649,7 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      return _performRequest(HttpManager.post, request);
+    return _performRequest(HttpManager.post, request);
   };
 
   /**
@@ -670,53 +670,56 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-      return request.getURL();
+    return request.getURL();
   };
 
   /**
    * Retrieve the tracks that are saved to the authenticated users Your Music library.
    * @param {Object} [options] Options, being limit and/or offset.
    * @returns {Promise} A promise that if successful, resolves to an object containing a paging object which in turn contains
-   * playlist track objects.
+   *          playlist track objects.
    */
   this.getMySavedTracks = function(options) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/tracks')
       .withQueryParameters(options)
       .build();
-     _addAccessToken(request, this.getAccessToken());
-     return _performRequest(HttpManager.get, request);
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
    * Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.
    * @param {string[]} trackIds The track IDs
-   * @returns {} Returns a promise that if successful, resolves into an array of booleans. The order
+   * @returns {Promise} A promise that if successful, resolves into an array of booleans. The order
    * of the returned array's elements correspond to the track ID in the request.
-   * The boolean value of true indiciates that the track is part of the user's library, otherwise false.
+   * The boolean value of true indicates that the track is part of the user's library, otherwise false.
    */
-   this.containsMySavedTracks = function(trackIds) {
+  this.containsMySavedTracks = function(trackIds) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/tracks/contains')
       .withQueryParameters({
         'ids' : trackIds.join(',')
       })
       .build();
-     _addAccessToken(request, this.getAccessToken());
-     return _performRequest(HttpManager.get, request);
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
    * Remove a track from the authenticated user's Your Music library.
    * @param {string[]} trackIds The track IDs
-   * @returns {Promise} Returns a promise that if successfull returns null, otherwise an error.
+   * @returns {Promise} A promise that if successful returns null, otherwise an error.
    */
   this.removeFromMySavedTracks = function(trackIds) {
     var request = WebApiRequest.builder()
-    .withPath('/v1/me/tracks')
-    .withHeaders({ 'Content-Type' : 'application/json' })
-    .withBodyParameters(trackIds)
-    .build();
+      .withPath('/v1/me/tracks')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters(trackIds)
+      .build();
+
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.del, request);
   };
@@ -724,16 +727,139 @@ function SpotifyWebApi(credentials) {
    /**
    * Remove a track from the authenticated user's Your Music library.
    * @param {string[]} trackIds The track IDs
-   * @returns {Promise} Returns a promise that if successfull returns null, otherwise an error.
+   * @returns {Promise} A promise that if successful returns null, otherwise an error.
    */
   this.addToMySavedTracks = function(trackIds) {
     var request = WebApiRequest.builder()
-    .withPath('/v1/me/tracks')
-    .withHeaders({ 'Content-Type' : 'application/json' })
-    .withBodyParameters(trackIds)
-    .build();
+      .withPath('/v1/me/tracks')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters(trackIds)
+      .build();
+
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.put, request);
+  };
+
+  /**
+   * Add the current user as a follower of one or more other Spotify users.
+   * @param {string[]} userIds The IDs of the users to be followed.
+   * @example followUsers(['thelinmichael', 'wizzler']).then(...)
+   * @returns {Promise} A promise that if successful, simply resolves to an empty object. If rejected,
+   *          it contains an error object.
+   */
+  this.followUsers = function(userIds) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/following')
+      .withQueryParameters({
+        ids: userIds.join(','),
+        type: 'user'
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.put, request);
+  };
+
+  /**
+   * Add the current user as a follower of one or more artists.
+   * @param {string[]} artistIds The IDs of the artists to be followed.
+   * @example followArtists(['0LcJLqbBmaGUft1e9Mm8HV', '3gqv1kgivAc92KnUm4elKv']).then(...)
+   * @returns {Promise} A promise that if successful, simply resolves to an empty object. If rejected,
+   *          it contains an error object.
+   */
+  this.followArtists = function(artistIds) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/following')
+      .withQueryParameters({
+        ids: artistIds.join(','),
+        type: 'artist'
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.put, request);
+  };
+
+  /**
+   * Remove the current user as a follower of one or more other Spotify users.
+   * @param {string[]} userIds The IDs of the users to be unfollowed.
+   * @example unfollowUsers(['thelinmichael', 'wizzler']).then(...)
+   * @returns {Promise} A promise that if successful, simply resolves to an empty object. If rejected,
+   *          it contains an error object.
+   */
+  this.unfollowUsers = function(userIds) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/following')
+      .withQueryParameters({
+        ids: userIds.join(','),
+        type: 'user'
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.del, request);
+  };
+
+  /**
+   * Remove the current user as a follower of one or more artists.
+   * @param {string[]} artistIds The IDs of the artists to be unfollowed.
+   * @example unfollowArtists(['0LcJLqbBmaGUft1e9Mm8HV', '3gqv1kgivAc92KnUm4elKv']).then(...)
+   * @returns {Promise} A promise that if successful, simply resolves to an empty object. If rejected,
+   *          it contains an error object.
+   */
+  this.unfollowArtists = function(artistIds) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/following')
+      .withQueryParameters({
+        ids: artistIds.join(','),
+        type: 'artist'
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.del, request);
+  };
+
+  /**
+   * Check to see if the current user is following one or more other Spotify users.
+   * @param {string[]} userIds The IDs of the users to check if are followed by the current user.
+   * @example isFollowingUsers(['thelinmichael', 'wizzler']).then(...)
+   * @returns {Promise} A promise that if successful, resolves into an array of booleans. The order
+   *          of the returned array's elements correspond to the users IDs in the request.
+   *          The boolean value of true indicates that the user is following that user, otherwise is not.
+   */
+  this.isFollowingUsers = function(userIds) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/following/contains')
+      .withQueryParameters({
+        ids: userIds.join(','),
+        type: 'user'
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
+  };
+
+  /**
+   * Check to see if the current user is following one or more artists.
+   * @param {string[]} artistIds The IDs of the artists to check if are followed by the current user.
+   * @example isFollowingArtists(['0LcJLqbBmaGUft1e9Mm8HV', '3gqv1kgivAc92KnUm4elKv']).then(...)
+   * @returns {Promise} A promise that if successful, resolves into an array of booleans. The order
+   *          of the returned array's elements correspond to the artists IDs in the request.
+   *          The boolean value of true indicates that the user is following that artist, otherwise is not.
+   */
+  this.isFollowingArtists = function(artistIds) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/following/contains')
+      .withQueryParameters({
+        ids: artistIds.join(','),
+        type: 'artist'
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    return _performRequest(HttpManager.get, request);
   };
 
   /**
@@ -748,6 +874,7 @@ function SpotifyWebApi(credentials) {
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters(options)
       .build();
+
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.get, request);
   };
@@ -764,6 +891,7 @@ function SpotifyWebApi(credentials) {
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters(options)
       .build();
+
     _addAccessToken(request, this.getAccessToken());
     return _performRequest(HttpManager.get, request);
   };

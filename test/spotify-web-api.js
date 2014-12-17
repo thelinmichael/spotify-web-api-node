@@ -719,7 +719,6 @@ describe('Spotify Web API', function() {
     });
   });
 
-  /* Run this test with a valid access token with the user-library-modify scope */
   it('should remove tracks in the users library', function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
@@ -743,6 +742,185 @@ describe('Spotify Web API', function() {
       console.log(err);
       done(err);
     });
+
+  });
+
+  it('should follow several users', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.put);
+      uri.should.equal('https://api.spotify.com/v1/me/following');
+      options.query.should.eql({
+        type: 'user',
+        ids: 'thelinmichael,wizzler'
+      });
+      should.not.exist(options.data);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.followUsers(['thelinmichael', 'wizzler'])
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should follow several artists', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.put);
+      uri.should.equal('https://api.spotify.com/v1/me/following');
+      options.query.should.eql({
+        type: 'artist',
+        ids: '137W8MRPWKqSmrBGDBFSop'
+      });
+      should.not.exist(options.data);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.followArtists(['137W8MRPWKqSmrBGDBFSop'])
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should unfollow several users', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.del);
+      uri.should.equal('https://api.spotify.com/v1/me/following');
+      options.query.should.eql({
+        type: 'user',
+        ids: 'thelinmichael,wizzler'
+      });
+      should.not.exist(options.data);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.unfollowUsers(['thelinmichael', 'wizzler'])
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should unfollow several artists', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.del);
+      uri.should.equal('https://api.spotify.com/v1/me/following');
+      options.query.should.eql({
+        type: 'artist',
+        ids: '137W8MRPWKqSmrBGDBFSop'
+      });
+      should.not.exist(options.data);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.unfollowArtists(['137W8MRPWKqSmrBGDBFSop'])
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should check whether the current user follows several other users', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me/following/contains');
+      options.query.should.eql({
+        type: 'user',
+        ids: 'thelinmichael,wizzler'
+      });
+      should.not.exist(options.data);
+      callback(null, [true, false]);
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.isFollowingUsers(['thelinmichael', 'wizzler'])
+      .then(function(data) {
+        data.should.be.an.instanceOf(Array).and.have.lengthOf(2);
+        data[0].should.eql(true);
+        data[1].should.eql(false);
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should check whether the current user follows several artists', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me/following/contains');
+      options.query.should.eql({
+        type: 'artist',
+        ids: '137W8MRPWKqSmrBGDBFSop'
+      });
+      should.not.exist(options.data);
+      callback(null, [false]);
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.isFollowingArtists(['137W8MRPWKqSmrBGDBFSop'])
+      .then(function(data) {
+        data.should.be.an.instanceOf(Array).and.have.lengthOf(1);
+        data[0].should.eql(false);
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
 
   });
 
