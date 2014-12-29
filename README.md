@@ -330,7 +330,7 @@ spotifyApi.getNewReleases({ limit : 5, offset: 0, country: 'SE' })
 
 //  Retrieve featured playlists
 spotifyApi.getFeaturedPlaylists({ limit : 3, offset: 1, country: 'SE', locale: 'sv_SE', timestamp:'2014-10-23T09:00:00' })
-  .then(function(data) { 
+  .then(function(data) {
     console.log(data);
   }, function(err) {
     console.log("Something went wrong!", err);
@@ -561,8 +561,11 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Change log
 
+#### 1.2.2
+- Bugfix. api.addTracksToPlaylist tracks parameter can be a string or an array. Thanks [ofagbemi](https://github.com/ofagbemi)!
+
 #### 1.2.1
-- Add [Follow endpoints](https://developer.spotify.com/web-api/web-api-follow-endpoints/). Great work [JMPerez](https://github.com/JMPerez)
+- Add [Follow endpoints](https://developer.spotify.com/web-api/web-api-follow-endpoints/). Great work [JMPerez](https://github.com/JMPerez).
 
 #### 1.1.0
 - Add [Browse endpoints](https://developer.spotify.com/web-api/browse-endpoints/). Thanks [fsahin](https://github.com/fsahin).
