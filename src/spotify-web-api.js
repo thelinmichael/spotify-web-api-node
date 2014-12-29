@@ -535,11 +535,17 @@ function SpotifyWebApi(credentials) {
    * it contains an error object.
    */
   this.addTracksToPlaylist = function(userId, playlistId, tracks, options) {
+    var tracksString;
+    if (typeof tracks == 'object') {
+      tracksString = tracks.join();
+    } else {
+      tracksString = tracks;
+    }
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters({
-        uris: tracks.join(',')
+        uris: tracksString
       })
       .build();
 
