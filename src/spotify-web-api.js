@@ -539,7 +539,7 @@ function SpotifyWebApi(credentials) {
       .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters({
-        uris: tracks
+        uris: tracks.join(',')
       })
       .build();
 
