@@ -10,26 +10,26 @@ var SpotifyWebApi = require("../");
 
 var spotifyApi = new SpotifyWebApi();
 
-spotifyApi.searchTracks('Love')
-  .then(function(data) {
+spotifyApi.searchTracks('Love', function(err, data) {
+  if (err) {
+    console.error('Something went wrong', err);
+    return;
+  }
 
-    // Print some information about the results
-    console.log('I got ' + data.tracks.total + ' results!');
+  // Print some information about the results
+  console.log('I got ' + data.tracks.total + ' results!');
 
-    // Go through the first page of results
-    var firstPage = data.tracks.items;
-    console.log('The tracks in the first page are.. (popularity in parentheses)');
+  // Go through the first page of results
+  var firstPage = data.tracks.items;
+  console.log('The tracks in the first page are.. (popularity in parentheses)');
 
-    /*
-     * 0: All of Me (97)
-     * 1: My Love (91)
-     * 2: I Love This Life (78)
-     * ...
-     */
-    firstPage.forEach(function(track, index) {
-      console.log(index + ': ' + track.name + ' (' + track.popularity + ')');
-    });
-
-  }, function(err) {
-    console.error(err);
+  /*
+   * 0: All of Me (97)
+   * 1: My Love (91)
+   * 2: I Love This Life (78)
+   * ...
+   */
+  firstPage.forEach(function(track, index) {
+    console.log(index + ': ' + track.name + ' (' + track.popularity + ')');
   });
+});
