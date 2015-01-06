@@ -85,6 +85,18 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
   });
 ```
 
+If you dont wan't to use promises, you can provide a callback method instead.
+```javascript
+// Get Elvis' albums
+spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', function(err, data) {
+  if (err) {
+    console.error('Something went wrong!');
+  } else {
+    console.log(data);
+  }
+});
+```
+
 The functions that fetch data from the API also support an optional JSON object with a set of options. For example, limit and offset can be used in functions that returns paginated results, such as search and retrieving an artist's albums.
 
 ```javascript
@@ -100,6 +112,8 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', {limit: 10, offset: 20})
 ### More examples
 
 Below are examples for all helper functions. Longer examples can be found in the [examples folder](examples/).
+
+Please note that since version 1.3.2 all methods accept an optional callback method as their last parameter. These examples however only use promises.
 
 ```javascript
 var SpotifyWebApi = require('spotify-web-api-node');
@@ -560,6 +574,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 ```
 
 ## Change log
+
+#### 1.3.2
+- Add ability to use callback methods instead of promise.
 
 #### 1.2.2
 - Bugfix. api.addTracksToPlaylist tracks parameter can be a string or an array. Thanks [ofagbemi](https://github.com/ofagbemi)!
