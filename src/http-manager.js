@@ -30,7 +30,8 @@ var _getErrorObject = function(defaultMessage, err) {
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
     errorObject = new Error(err.error.message);
   } else {
-    errorObject = new Error(defaultMessage + '. JSON has unexpected format ' + err);
+    errorObject = new Error(defaultMessage + '. JSON has unexpected format '
+      + JSON.stringify(err));
   }
   return errorObject;
 };
