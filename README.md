@@ -575,6 +575,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Change log
 
+#### 1.3.3
+- [Fix](https://github.com/thelinmichael/spotify-web-api-node/pull/18) error format. Thanks [extrakt](https://github.com/extrakt).
+
 #### 1.3.2
 - Add ability to use callback methods instead of promise.
 
