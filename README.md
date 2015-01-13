@@ -12,7 +12,7 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 #### Profiles
 - User's emails, product type, display name, image
 
-### Follow
+### Follow users/artists
 - Add and remove artists and users to the list of followed ones by the signed in user
 - Check if the signed in user follows certain artists or other users
 
@@ -26,6 +26,8 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 - Add tracks to a playlist
 - Remove tracks from a playlist
 - Replace tracks in a playlist
+- Follow a playlist
+- Unfollow a playlist
 
 #### Your Music library
 - Add, remove, and get tracks that are in the signed in user's Your Music library
@@ -274,6 +276,24 @@ spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
     'public' : false
   }).then(function(data) {
      console.log('Playlist is now private!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Follow a playlist (privately)
+spotifyApi.followPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
+  {
+    'public' : false
+  }).then(function(data) {
+     console.log('Playlist successfully followed privately!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Unfollow a playlist
+spotifyApi.unfollowPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
+  .then(function(data) {
+     console.log('Playlist successfully unfollowed!');
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -574,6 +594,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 ```
 
 ## Change log
+
+#### 1.3.4
+- Add Follow Playlist and Unfollow Playlist endpoints.
 
 #### 1.3.3
 - [Fix](https://github.com/thelinmichael/spotify-web-api-node/pull/18) error format. Thanks [extrakt](https://github.com/extrakt).
