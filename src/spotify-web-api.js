@@ -732,6 +732,67 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
+   * Follow a playlist.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {Object} [options] The possible options, currently only public.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
+   * it contains an error object. Not returned if a callback is given.
+   */
+  this.followPlaylist = function(userId, playlistId, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/followers')
+      .withBodyParameters(options)
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.put, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Unfollow a playlist.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {Object} [options] The possible options, currently only public.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
+   * it contains an error object. Not returned if a callback is given.
+   */
+  this.unfollowPlaylist = function(userId, playlistId, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/followers')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.del, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
    * Change playlist details.
    * @param {string} userId The playlist's owner's user ID
    * @param {string} playlistId The playlist's ID

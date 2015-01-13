@@ -1077,6 +1077,54 @@ describe('Spotify Web API', function() {
 
   });
 
+  it('should follow a playlist', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.put);
+      JSON.parse(options.data).should.eql({ public: false });
+      should.not.exist(options.query);
+      uri.should.equal('https://api.spotify.com/v1/users/jmperezperez/playlists/7p9EIC2KW0NNkTEOnTUZJl/followers');
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.followPlaylist('jmperezperez', '7p9EIC2KW0NNkTEOnTUZJl', { 'public' : false })
+    .then(function(data) {
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+  });
+
+  it('should unfollow a playlist', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.del);
+      should.not.exist(options.data);
+      should.not.exist(options.query);
+      uri.should.equal('https://api.spotify.com/v1/users/jmperezperez/playlists/7p9EIC2KW0NNkTEOnTUZJl/followers');
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.unfollowPlaylist('jmperezperez', '7p9EIC2KW0NNkTEOnTUZJl')
+    .then(function(data) {
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+  });
+
   it('should follow several users', function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
