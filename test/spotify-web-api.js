@@ -821,6 +821,38 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it('should create a private playlist using callback', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.post);
+      uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists');
+      JSON.parse(options.data).should.eql({ name : 'My Cool Playlist', 'public' : false })
+      callback(null, { name : 'My Cool Playlist', 'public' : false });
+      should.not.exist(options.query);
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false }, function(err, data) {
+      done();
+    });
+  });
+
+  it('should create a playlist using callback without options', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.post);
+      uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists');
+      JSON.parse(options.data).should.eql({ name : 'My Cool Playlist' })
+      callback(null, { name : 'My Cool Playlist' });
+      should.not.exist(options.query);
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.createPlaylist('thelinmichael', 'My Cool Playlist', function(err, data) {
+      done();
+    });
+  });
+
   it.skip('should change playlist details', function(done) {
     var api = new SpotifyWebApi();
     api.setAccessToken('long-access-token');

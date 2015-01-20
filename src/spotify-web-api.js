@@ -704,27 +704,43 @@ function SpotifyWebApi(credentials) {
    * Create a playlist.
    * @param {string} userId The playlist's owner's user ID.
    * @param {string} playlistName The name of the playlist.
+   * @param {Object} [options] The possible options, currently only public.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example createPlaylist('thelinmichael', 'My cool playlist!').then(...)
+   * @example createPlaylist('thelinmichael', 'My cool playlist!', { public : false }).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing information about the
    *          created playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.createPlaylist = function(userId, playlistName, callback) {
+  this.createPlaylist = function(userId, playlistName, options, callback) {
+    /* In case someone is using a version where options parameter did not exist. */
+    var actualCallback;
+    if (typeof options === 'function') {
+      actualCallback = options;
+    } else {
+      actualCallback = callback;
+    }
+
+    var actualOptions = { 'name' : playlistName };
+    if (typeof options === 'object') {
+      Object.keys(options).forEach(function(key) {
+        actualOptions[key] = options[key];
+      });
+    }
+
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + userId + '/playlists/')
       .withHeaders({ 'Content-Type' : 'application/json' })
-      .withBodyParameters({ 'name' : playlistName })
+      .withBodyParameters(actualOptions)
       .build();
 
     _addAccessToken(request, this.getAccessToken());
 
     var promise = _performRequest(HttpManager.post, request);
 
-    if (callback) {
+    if (actualCallback) {
       promise.then(function(data) {
-        callback(null, data);
+        actualCallback(null, data);
       }, function(err) {
-        callback(err);
+        actualCallback(err);
       });
     } else {
       return promise;
