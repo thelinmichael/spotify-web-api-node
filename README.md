@@ -242,8 +242,8 @@ spotifyApi.getUserPlaylists('thelinmichael')
     console.log('Something went wrong!', err);
   });
 
-// Create a playlist
-spotifyApi.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : true })
+// Create a private playlist
+spotifyApi.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false })
   .then(function(data) {
     console.log('Created playlist!');
   }, function(err) {
@@ -594,6 +594,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 ```
 
 ## Change log
+
+#### 1.3.5
+- Add missing options parameter in createPlaylist (issue #19). Thanks for raising this [allinallin](https://github.com/allinallin).
 
 #### 1.3.4
 - Add Follow Playlist and Unfollow Playlist endpoints.
