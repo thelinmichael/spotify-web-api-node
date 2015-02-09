@@ -1493,6 +1493,37 @@ describe('Spotify Web API', function() {
 
   });
 
+  it.only('should check whether users follows a playlist', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/users/spotify_germany/playlists/2nKFnGNFvHX9hG5Kv7Bm3G/followers/contains');
+      options.query.should.eql({
+        ids: 'thelinmichael,ella'
+      });
+      should.not.exist(options.data);
+      callback(null, [true, false]);
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.isPlaylistFollowedBy('spotify_germany', '2nKFnGNFvHX9hG5Kv7Bm3G', ['thelinmichael', 'ella'])
+      .then(function(data) {
+        data.should.be.an.instanceOf(Array).and.have.lengthOf(2);
+        data[0].should.eql(true);
+        data[1].should.eql(false);
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
   it('should add tracks to playlist', function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {

@@ -1353,6 +1353,39 @@ function SpotifyWebApi(credentials) {
     }
   };
 
+
+  /**
+   * Check if users are following a playlist.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {String[]} User IDs of the following users
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful returns an array of booleans. If rejected,
+   * it contains an error object. Not returned if a callback is given.
+   */
+  this.isPlaylistFollowedBy = function(userId, playlistId, followerIds, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/followers/contains')
+      .withQueryParameters({
+        ids : followerIds.join(',')
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
   /**
    * Check to see if the current user is following one or more artists.
    * @param {string[]} artistIds The IDs of the artists to check if are followed by the current user.
