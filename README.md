@@ -300,7 +300,7 @@ spotifyApi.unfollowPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
   });
 
 // Check if Users are following a Playlist
-this.isPlaylistFollowedBy = function('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella']) {
+this.areFollowingPlaylist = function('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella']) {
  .then(function(data) {
     data.forEach(function(isFollowing) {
       console.log("User is following: " + isFollowing);
@@ -607,7 +607,7 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Change log
 
-#### 1.3.6
+#### 1.3.7
 - Add [Check if Users are Following Playlist](https://developer.spotify.com/web-api/check-user-following-playlist/) endpoint.
 
 #### 1.3.5

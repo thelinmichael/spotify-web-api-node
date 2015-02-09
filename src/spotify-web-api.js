@@ -1363,7 +1363,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful returns an array of booleans. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.isPlaylistFollowedBy = function(userId, playlistId, followerIds, callback) {
+  this.areFollowingPlaylist = function(userId, playlistId, followerIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/followers/contains')
       .withQueryParameters({

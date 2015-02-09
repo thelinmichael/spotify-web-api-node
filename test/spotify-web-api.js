@@ -1493,7 +1493,7 @@ describe('Spotify Web API', function() {
 
   });
 
-  it.only('should check whether users follows a playlist', function(done) {
+  it('should check whether users follows a playlist', function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.get);
@@ -1511,7 +1511,7 @@ describe('Spotify Web API', function() {
       accessToken : accessToken
     });
 
-    api.isPlaylistFollowedBy('spotify_germany', '2nKFnGNFvHX9hG5Kv7Bm3G', ['thelinmichael', 'ella'])
+    api.areFollowingPlaylist('spotify_germany', '2nKFnGNFvHX9hG5Kv7Bm3G', ['thelinmichael', 'ella'])
       .then(function(data) {
         data.should.be.an.instanceOf(Array).and.have.lengthOf(2);
         data[0].should.eql(true);
