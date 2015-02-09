@@ -26,8 +26,6 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 - Add tracks to a playlist
 - Remove tracks from a playlist
 - Replace tracks in a playlist
-- Follow a playlist
-- Unfollow a playlist
 
 #### Your Music library
 - Add, remove, and get tracks that are in the signed in user's Your Music library
@@ -41,6 +39,9 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 - Follow and unfollow users
 - Follow and unfollow artists
 - Check if the logged in user follows a user or artist
+- Follow a playlist
+- Unfollow a playlist
+- Check if users are following a Playlist
 
 Some methods require authentication, which can be done using these flows:
 
@@ -297,6 +298,17 @@ spotifyApi.unfollowPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
   }, function(err) {
     console.log('Something went wrong!', err);
   });
+
+// Check if Users are following a Playlist
+this.isPlaylistFollowedBy = function('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella']) {
+ .then(function(data) {
+    data.forEach(function(isFollowing) {
+      console.log("User is following: " + isFollowing);
+    });
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+};
 
 /*
  * Your Music library methods
@@ -594,6 +606,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 ```
 
 ## Change log
+
+#### 1.3.6
+- Add [Check if Users are Following Playlist](https://developer.spotify.com/web-api/check-user-following-playlist/) endpoint.
 
 #### 1.3.5
 - Add missing options parameter in createPlaylist (issue #19). Thanks for raising this [allinallin](https://github.com/allinallin).
