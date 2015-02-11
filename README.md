@@ -34,6 +34,9 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 #### Browse
 - Get New Releases
 - Get Featured Playlists
+- Get a List of Categories
+- Get a Category
+- Get a Category's Playlists
 
 #### Follow
 - Follow and unfollow users
@@ -382,6 +385,41 @@ spotifyApi.getFeaturedPlaylists({ limit : 3, offset: 1, country: 'SE', locale: '
     console.log("Something went wrong!", err);
   });
 
+// Get a List of Categories
+spotifyApi.getCategories({
+      limit : 5,
+      offset: 0,
+      country: 'SE',
+      locale: 'sv_SE'
+  })
+  .then(function(data) {
+    console.log(data);
+  }, function(err) {
+    console.log("Something went wrong!", err);
+  });
+
+// Get a Category (in Sweden)
+spotifyApi.getCategory('party', {
+      country: 'SE',
+      locale: 'sv_SE'
+  })
+  .then(function(data) {
+    console.log(data);
+  }, function(err) {
+    console.log("Something went wrong!", err);
+  });
+
+// Get Playlists for a Category (Party in Brazil)
+spotifyApi.getPlaylistsForCategory('party', {
+      country: 'BR',
+      limit : 2,
+      offset : 0
+    })
+  .then(function(data) {
+    console.log(data);
+  }, function(err) {
+    console.log("Something went wrong!", err);
+  });
 ```
 
 ### Nesting calls
@@ -606,6 +644,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 ```
 
 ## Change log
+
+#### 1.3.8
+- Add [Get a List of Categories](https://developer.spotify.com/web-api/get-list-categories/), [Get a Category](https://developer.spotify.com/web-api/get-category/), and [Get A Category's Playlists](https://developer.spotify.com/web-api/get-categorys-playlists/) endpoints.
 
 #### 1.3.7
 - Add [Check if Users are Following Playlist](https://developer.spotify.com/web-api/check-user-following-playlist/) endpoint.
