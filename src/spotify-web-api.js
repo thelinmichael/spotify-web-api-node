@@ -1477,6 +1477,93 @@ function SpotifyWebApi(credentials) {
       return promise;
     }
   };
+
+  /**
+   * Retrieve a list of categories used to tag items in Spotify (e.g. in the 'Browse' tab)
+   * @param {Object} [options] Options, being country, locale, limit, offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object of categories.
+   * Not returned if a callback is given.
+   */
+  this.getCategories = function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/browse/categories')
+      .withQueryParameters(options)
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+        promise.then(function(data) {
+          callback(null, data);
+        }, function(err) {
+          callback(err);
+        });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Retrieve a category.
+   * @param {string} categoryId The id of the category to retrieve.
+   * @param {Object} [options] Options, being country, locale.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a category object.
+   * Not returned if a callback is given.
+   */
+  this.getCategory = function(categoryId, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/browse/categories/' + categoryId)
+      .withQueryParameters(options)
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Retrieve playlists for a category.
+   * @param {string} categoryId The id of the category to retrieve playlists for.
+   * @param {Object} [options] Options, being country, limit, offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves to a paging object containing simple playlists.
+   * Not returned if a callback is given.
+   */
+  this.getPlaylistsForCategory = function(categoryId, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/browse/categories/' + categoryId + '/playlists')
+      .withQueryParameters(options)
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+    promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
 }
 
 module.exports = SpotifyWebApi;

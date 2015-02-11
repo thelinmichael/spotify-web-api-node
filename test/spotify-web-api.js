@@ -1827,4 +1827,114 @@ describe('Spotify Web API', function() {
     });
   });
 
+  it('should get browse categories', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/browse/categories');
+      options.query.should.eql({
+        limit : 2,
+        offset : 4,
+        country : 'SE',
+        locale : 'sv_SE'
+      });
+      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      callback(null, { items : [{ href : "https://api.spotify.com/v1/browse/categories/party" }, { href : "https://api.spotify.com/v1/browse/categories/pop" }] });
+
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.getCategories({
+      limit : 2,
+      offset: 4,
+      country: 'SE',
+      locale: 'sv_SE'
+    }, function(err, data) {
+      should.not.exist(err);
+      data.items[0].href.should.equal('https://api.spotify.com/v1/browse/categories/party');
+      data.items[1].href.should.equal('https://api.spotify.com/v1/browse/categories/pop');
+      data.items.length.should.equal(2);
+      done();
+    });
+
+  });
+
+  it('should get a browse category', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/browse/categories/party');
+      options.query.should.eql({
+        country : 'SE',
+        locale : 'sv_SE'
+      });
+      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      callback(null, {
+        href : 'https://api.spotify.com/v1/browse/categories/party',
+        name : 'Party'
+      });
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.getCategory('party', {
+      country: 'SE',
+      locale: 'sv_SE'
+    }, function(err, data) {
+      should.not.exist(err);
+      data.href.should.equal('https://api.spotify.com/v1/browse/categories/party');
+      data.name.should.equal('Party');
+      done();
+    });
+  });
+
+  it('should get a playlists for a browse category', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/browse/categories/party/playlists');
+      options.query.should.eql({
+        country : 'SE',
+        limit : 2,
+        offset : 1
+      });
+      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      callback(null, {
+        playlists : {
+          items : [ {
+            href : 'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen'
+          },
+          {
+            href : 'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4HZh0C9y80GzHDbHZyX770'
+          }
+        ]}
+      });
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.getPlaylistsForCategory('party', {
+      country: 'SE',
+      limit : 2,
+      offset : 1
+    }, function(err, data) {
+      should.not.exist(err);
+      data.playlists.items[0].href.should.equal('https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen');
+      data.playlists.items[1].href.should.equal('https://api.spotify.com/v1/users/spotifybrazilian/playlists/4HZh0C9y80GzHDbHZyX770');
+      data.playlists.items.length.should.equal(2);
+      done();
+    });
+  });
+
 });
