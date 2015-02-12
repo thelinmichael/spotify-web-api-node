@@ -645,6 +645,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Change log
 
+#### 1.3.9
+- Add market parameter to endpoints supporting [Track Relinking](https://developer.spotify.com/web-api/track-relinking-guide/).
+
 #### 1.3.8
 - Add [Get a List of Categories](https://developer.spotify.com/web-api/get-list-categories/), [Get a Category](https://developer.spotify.com/web-api/get-category/), and [Get A Category's Playlists](https://developer.spotify.com/web-api/get-categorys-playlists/) endpoints.
 
