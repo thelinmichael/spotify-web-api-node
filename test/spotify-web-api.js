@@ -57,12 +57,30 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get track for Swedish market", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
+      options.query.market.should.equal('SE');
+      should.not.exist(options.data);
+      callback();
+    });
+
+    var api = new SpotifyWebApi();
+    api.getTrack('3Qm86XLflmIXVm1wcwkgDK', { market : 'SE' })
+      .then(function(data) {
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
   it("should retrieve track metadata using callback", function(done) {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.get);
       uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
       should.not.exist(options.data);
-      callback();
+      callback();get
     });
 
     var api = new SpotifyWebApi();
@@ -169,6 +187,26 @@ describe('Spotify Web API', function() {
 
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj')
+      .then(function(data) {
+        ('spotify:album:0sNOF9WDwhWunNAHPD3Baj').should.equal(data.uri);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it("should retrieve metadata for an album for a market ", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj');
+      should.not.exist(options.data);
+      options.query.market.should.equal('SE');
+      callback(null, {uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj'});
+    });
+
+    var api = new SpotifyWebApi();
+    api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', { market : 'SE' })
       .then(function(data) {
         ('spotify:album:0sNOF9WDwhWunNAHPD3Baj').should.equal(data.uri);
         done();

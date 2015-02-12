@@ -150,25 +150,42 @@ function SpotifyWebApi(credentials) {
   /**
    * Look up a track.
    * @param {string} trackId The track's ID.
+   * @param {Object} [options] The possible options, currently only market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getTrack('3Qm86XLflmIXVm1wcwkgDK').then(...)
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the track. Not returned if a callback is given.
    */
-  this.getTrack = function(trackId, callback) {
+  this.getTrack = function(trackId, options, callback) {
+     /* In case someone is using a version where options parameter did not exist. */
+    var actualCallback;
+    if (typeof options === 'function') {
+      actualCallback = options;
+    } else {
+      actualCallback = callback;
+    }
+
+    var actualOptions = {};
+    if (typeof options === 'object') {
+      Object.keys(options).forEach(function(key) {
+        actualOptions[key] = options[key];
+      });
+    }
+
     var request = WebApiRequest.builder()
       .withPath('/v1/tracks/' + trackId)
+      .withQueryParameters(actualOptions)
       .build();
 
     _addAccessToken(request, this.getAccessToken());
 
     var promise = _performRequest(HttpManager.get, request);
 
-    if (callback) {
+    if (actualCallback) {
       promise.then(function(data) {
-        callback(null, data);
+        actualCallback(null, data);
       }, function(err) {
-        callback(err);
+        actualCallback(err);
       });
     } else {
       return promise;
@@ -178,12 +195,28 @@ function SpotifyWebApi(credentials) {
   /**
    * Look up several tracks.
    * @param {string[]} trackIds The IDs of the artists.
+   * @param {Object} [options] The possible options, currently only market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the artists. Not returned if a callback is given.
    */
-  this.getTracks = function(trackIds, callback) {
+  this.getTracks = function(trackIds, options, callback) {
+    /* In case someone is using a version where options parameter did not exist. */
+    var actualCallback;
+    if (typeof options === 'function') {
+      actualCallback = options;
+    } else {
+      actualCallback = callback;
+    }
+
+    var actualOptions = {};
+    if (typeof options === 'object') {
+      Object.keys(options).forEach(function(key) {
+        actualOptions[key] = options[key];
+      });
+    }
+
     var request = WebApiRequest.builder()
       .withPath('/v1/tracks')
       .withQueryParameters({
@@ -192,14 +225,15 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, actualOptions);
 
     var promise = _performRequest(HttpManager.get, request);
 
-    if (callback) {
+    if (actualCallback) {
       promise.then(function(data) {
-        callback(null, data);
+        actualCallback(null, data);
       }, function(err) {
-        callback(err);
+        actualCallback(err);
       });
     } else {
       return promise;
@@ -209,23 +243,42 @@ function SpotifyWebApi(credentials) {
   /**
    * Look up an album.
    * @param {string} albumId The album's ID.
+   * @param {Object} [options] The possible options, currently only market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getAlbum('0sNOF9WDwhWunNAHPD3Baj').then(...)
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the album. Not returned if a callback is given.
    */
-  this.getAlbum = function(albumId, callback) {
-    var request = WebApiRequest.builder().withPath('/v1/albums/' + albumId).build();
+  this.getAlbum = function(albumId, options, callback) {
+    /* In case someone is using a version where options parameter did not exist. */
+    var actualCallback;
+    if (typeof options === 'function') {
+      actualCallback = options;
+    } else {
+      actualCallback = callback;
+    }
 
+    var actualOptions = {};
+    if (typeof options === 'object') {
+      Object.keys(options).forEach(function(key) {
+        actualOptions[key] = options[key];
+      });
+    }
+
+    var request = WebApiRequest.builder()
+      .withPath('/v1/albums/' + albumId)
+      .withQueryParameters(actualOptions)
+      .build();
+    
     _addAccessToken(request, this.getAccessToken());
 
     var promise = _performRequest(HttpManager.get, request);
 
-    if (callback) {
+    if (actualCallback) {
       promise.then(function(data) {
-        callback(null, data);
+        actualCallback(null, data);
       }, function(err) {
-        callback(err);
+        actualCallback(err);
       });
     } else {
       return promise;
@@ -235,12 +288,28 @@ function SpotifyWebApi(credentials) {
   /**
    * Look up several albums.
    * @param {string[]} artistIds The IDs of the artists.
+   * @param {Object} [options] The possible options, currently only market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the artists. Not returned if a callback is given.
    */
-  this.getAlbums = function(albumIds, callback) {
+  this.getAlbums = function(albumIds, options, callback) {
+    /* In case someone is using a version where options parameter did not exist. */
+    var actualCallback;
+    if (typeof options === 'function') {
+      actualCallback = options;
+    } else {
+      actualCallback = callback;
+    }
+
+    var actualOptions = {};
+    if (typeof options === 'object') {
+      Object.keys(options).forEach(function(key) {
+        actualOptions[key] = options[key];
+      });
+    }
+
     var request = WebApiRequest.builder()
       .withPath('/v1/albums')
       .withQueryParameters({
@@ -249,14 +318,15 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, actualOptions);
 
     var promise = _performRequest(HttpManager.get, request);
 
-    if (callback) {
+    if (actualCallback) {
       promise.then(function(data) {
-        callback(null, data);
+        actualCallback(null, data);
       }, function(err) {
-        callback(err);
+        actualCallback(err);
       });
     } else {
       return promise;
@@ -829,7 +899,7 @@ function SpotifyWebApi(credentials) {
 
     var promise = _performRequest(HttpManager.put, request);
 
-        if (callback) {
+    if (callback) {
       promise.then(function(data) {
         callback(null, data);
       }, function(err) {
@@ -1076,7 +1146,7 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Retrieve the tracks that are saved to the authenticated users Your Music library.
-   * @param {Object} [options] Options, being limit and/or offset.
+   * @param {Object} [options] Options, being market, limit, and/or offset.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which in turn contains
    *          playlist track objects. Not returned if a callback is given.
