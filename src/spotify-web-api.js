@@ -157,7 +157,7 @@ function SpotifyWebApi(credentials) {
    *          about the track. Not returned if a callback is given.
    */
   this.getTrack = function(trackId, options, callback) {
-     /* In case someone is using a version where options parameter did not exist. */
+     // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
       actualCallback = options;
@@ -202,7 +202,7 @@ function SpotifyWebApi(credentials) {
    *          about the artists. Not returned if a callback is given.
    */
   this.getTracks = function(trackIds, options, callback) {
-    /* In case someone is using a version where options parameter did not exist. */
+    // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
       actualCallback = options;
@@ -250,7 +250,7 @@ function SpotifyWebApi(credentials) {
    *          about the album. Not returned if a callback is given.
    */
   this.getAlbum = function(albumId, options, callback) {
-    /* In case someone is using a version where options parameter did not exist. */
+    // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
       actualCallback = options;
@@ -269,7 +269,7 @@ function SpotifyWebApi(credentials) {
       .withPath('/v1/albums/' + albumId)
       .withQueryParameters(actualOptions)
       .build();
-    
+
     _addAccessToken(request, this.getAccessToken());
 
     var promise = _performRequest(HttpManager.get, request);
@@ -295,7 +295,7 @@ function SpotifyWebApi(credentials) {
    *          about the artists. Not returned if a callback is given.
    */
   this.getAlbums = function(albumIds, options, callback) {
-    /* In case someone is using a version where options parameter did not exist. */
+    // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
       actualCallback = options;
@@ -781,7 +781,7 @@ function SpotifyWebApi(credentials) {
    *          created playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
   this.createPlaylist = function(userId, playlistName, options, callback) {
-    /* In case someone is using a version where options parameter did not exist. */
+    // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
       actualCallback = options;
