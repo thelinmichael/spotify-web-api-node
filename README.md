@@ -1,7 +1,9 @@
 Spotify Web API Node
 ==================
 
-This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). It includes helper functions to do the following:
+This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). If you want to make requests directly from the browser, please check out [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js). A list of selected wrappers for different languages and environments are available on the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/).
+
+It includes helper functions to do the following:
 
 #### Music metadata
 - Albums, artists, and tracks
@@ -10,7 +12,7 @@ This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spo
 - Artists similar to a specific artist
 
 #### Profiles
-- User's emails, product type, display name, image
+- User's emails, product type, display name, birthdate, image
 
 #### Follow users/artists
 - Add and remove artists and users to the list of followed ones by the signed in user
