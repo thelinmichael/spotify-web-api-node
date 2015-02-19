@@ -1,0 +1,26 @@
+meta(name='viewport', content='width=device-width', charset='utf-8')
+
+- var title = 'Documentation for the Spotify Web API Node.JS wrapper'
+- var description = 'List of methods provided by the Spotify Web API Node.JS wrapper'
+title=title
+- var repoLink = 'https://github.com/thelinmichael/spotify-web-api-node'
+
+meta(name='description', content=description)
+meta(name='og:description', content=description)
+meta(name='twitter:description', content=description)
+meta(name='og:title', content=title)
+meta(name='twitter:title', content=title)
+
+// Foundation CSS
+link(rel="stylesheet", href="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/css/foundation.min.css")
+
+// Prism CSS
+style(type="text/css")
+    include css/prism.css
+    include css/custom.css
+
+// Custom Styles
+style(type="text/css")
+    include:styl css/dox-foundation.styl
+
+script(srr="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.js")
