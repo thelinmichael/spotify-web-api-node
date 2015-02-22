@@ -498,6 +498,41 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
+   * Search for playlists.
+   * @param {string} query The search query.
+   * @param {Object} options The possible options.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example searchPlaylists('workout', { limit : 1, offset : 0 }).then(...)
+   * @returns {Promise|undefined} A promise that if successful, returns an object containing the
+   *          search results. The result is paginated. If the promise is rejected,
+   *          it contains an error object. Not returned if a callback is given.
+   */
+  this.searchPlaylists = function(query, options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/search/')
+      .withQueryParameters({
+        type : 'playlist',
+        q : query
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
    * Get an artist's albums.
    * @param {string} artistId The artist's ID.
    * @options {Object} [options] The possible options, e.g. limit, offset.

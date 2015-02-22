@@ -417,6 +417,35 @@ describe('Spotify Web API', function() {
     });
   });
 
+  it("should search for playlists", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/search/');
+      options.query.should.eql({
+        limit: 1,
+        offset: 0,
+        q: 'workout',
+        type: 'playlist'
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        playlists: {
+          href: 'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi();
+    api.searchPlaylists('workout', { limit : 1, offset : 0 })
+      .then(function(data) {
+        'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'.should.equal(data.playlists.href);
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+  });
+
   it("should search for an artist using limit and offset", function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
