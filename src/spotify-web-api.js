@@ -993,7 +993,7 @@ function SpotifyWebApi(credentials) {
    * @param {string} userId The playlist's owner's user ID
    * @param {string} playlistId The playlist's ID
    * @param {Object[]} tracks An array of objects containing a property called uri with the track URI (String), and
-   * a an optional property called positions (int[]).
+   * a an optional property called positions (int[]), e.g. { uri : "spotify:track:491rM2JN8KvmV6p0oDDuJT", positions : [0, 15] }
    * @param {Object} options Options, snapshot_id being the only one.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
@@ -1009,6 +1009,41 @@ function SpotifyWebApi(credentials) {
       build();
 
     _addBodyParameters(request, options);
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.del, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Remove tracks from a playlist by position instead of specifying the tracks' URIs.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {int[]} positions The positions of the tracks in the playlist that should be removed
+   * @param {string} snapshot_id The snapshot ID, or version, of the playlist. Required
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
+   * it contains an error object. Not returned if a callback is given.
+   */
+  this.removeTracksFromPlaylistByPosition = function(userId, playlistId, positions, snapshotId, callback) {
+    var request = WebApiRequest.builder().
+      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withHeaders({ 'Content-Type' : 'application/json' }).
+      withBodyParameters({
+        'positions': positions,
+        'snapshot_id' : snapshotId
+      }).
+      build();
+
     _addAccessToken(request, this.getAccessToken());
 
     var promise = _performRequest(HttpManager.del, request);

@@ -1635,6 +1635,31 @@ describe('Spotify Web API', function() {
     });
   });
 
+  it("should remove tracks from a playlist by position", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.del);
+      uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
+      should.not.exist(options.query);
+      JSON.parse(options.data).positions[0].should.equal(0);
+      JSON.parse(options.data).positions[1].should.equal(2);
+      JSON.parse(options.data)["snapshot_id"].should.equal("0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9");
+      options.headers.Authorization.should.equal('Bearer long-access-token');
+      callback();
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('long-access-token');
+
+    api.removeTracksFromPlaylistByPosition('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', [0, 2], "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9", function(err, data) {
+      if (err) {
+        done(err);
+      } else {
+        done();
+      }
+    });
+
+  });
+
   it('should add tracks to the users library', function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
