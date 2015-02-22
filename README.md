@@ -279,6 +279,24 @@ spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spot
     console.log('Something went wrong!', err);
   });
 
+// Remove tracks from a playlist at a specific position
+spotifyApi.removeTracksFromPlaylistByPosition('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', [0, 2, 130], "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9")
+  .then(function(data) {
+    console.log('Tracks removed from playlist!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Remove all occurrence of a track
+var tracks = { tracks : [ uri : "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" ] };
+var options = { snapshot_id : "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9" };
+spotifyApi.removeTracksFromPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', tracks, options)
+  .then(function(data) {
+    console.log('Tracks removed from playlist!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
 // Change playlist details
 spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
   {
@@ -651,6 +669,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Change log
 
+#### 1.3.12
+- Add language binding for **[Remove tracks in a Playlist by Position](https://developer.spotify.com/web-api/remove-tracks-playlist/)**
+
 #### 1.3.11
 - Add [Search for Playlists](https://developer.spotify.com/web-api/search-item/) endpoint.
 
@@ -693,8 +714,8 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 #### 1.0.0
 
-- Add **[Replace tracks in a Playlist](https://developer.spotify.com/web-api/remove-tracks-playlist/)** endpoint
-- Add **[Remove tracks in a Playlist](https://developer.spotify.com/web-api/replace-playlists-tracks/)** endpoint
+- Add **[Replace tracks in a Playlist](https://developer.spotify.com/web-api/replace-playlists-tracks/)** endpoint
+- Add **[Remove tracks in a Playlist](https://developer.spotify.com/web-api/remove-tracks-playlist/)** endpoint
 - Return errors as Error objects instead of unparsed JSON. Thanks [niftylettuce](https://github.com/niftylettuce).
 
 #### 0.0.11
