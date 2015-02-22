@@ -14,14 +14,10 @@ It includes helper functions to do the following:
 #### Profiles
 - User's emails, product type, display name, birthdate, image
 
-#### Follow users/artists
-- Add and remove artists and users to the list of followed ones by the signed in user
-- Check if the signed in user follows certain artists or other users
-
 #### Search
-- Albums, artists, and tracks
+- Albums, artists, tracks, and playlists
 
-#### Playlists
+#### Playlist manipulation
 - Get a user's playlists
 - Create playlists
 - Change playlist details
@@ -180,6 +176,14 @@ spotifyApi.searchArtists('Love')
 spotifyApi.searchTracks('artist:Love')
   .then(function(data) {
     console.log('Search tracks by "Love" in the artist name', data);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Search playlists whose name or description contains 'workout'
+spotifyApi.searchPlaylists('workout')
+  .then(function(data) {
+    console.log('Found playlists are', data);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -646,6 +650,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 ```
 
 ## Change log
+
+#### 1.3.11
+- Add [Search for Playlists](https://developer.spotify.com/web-api/search-item/) endpoint.
 
 #### 1.3.10
 - Add market parameter to endpoints supporting [Track Relinking](https://developer.spotify.com/web-api/track-relinking-guide/).
