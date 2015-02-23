@@ -669,27 +669,27 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Change log
 
-#### 1.3.12
+#### 1.3.12 (22 Feb 2015)
 - Add language binding for **[Remove tracks in a Playlist by Position](https://developer.spotify.com/web-api/remove-tracks-playlist/)**
 
 #### 1.3.11
-- Add [Search for Playlists](https://developer.spotify.com/web-api/search-item/) endpoint.
+- Add **[Search for Playlists](https://developer.spotify.com/web-api/search-item/)** endpoint.
 
 #### 1.3.10
-- Add market parameter to endpoints supporting [Track Relinking](https://developer.spotify.com/web-api/track-relinking-guide/).
+- Add market parameter to endpoints supporting **[Track Relinking](https://developer.spotify.com/web-api/track-relinking-guide/)**.
 - Improve SEO by adding keywords to the package.json file. ;-)
 
 #### 1.3.8
-- Add [Get a List of Categories](https://developer.spotify.com/web-api/get-list-categories/), [Get a Category](https://developer.spotify.com/web-api/get-category/), and [Get A Category's Playlists](https://developer.spotify.com/web-api/get-categorys-playlists/) endpoints.
+- Add **[Get a List of Categories](https://developer.spotify.com/web-api/get-list-categories/)**, **[Get a Category](https://developer.spotify.com/web-api/get-category/)**, and **[Get A Category's Playlists](https://developer.spotify.com/web-api/get-categorys-playlists/)** endpoints.
 
 #### 1.3.7
-- Add [Check if Users are Following Playlist](https://developer.spotify.com/web-api/check-user-following-playlist/) endpoint.
+- Add **[Check if Users are Following Playlist](https://developer.spotify.com/web-api/check-user-following-playlist/)** endpoint.
 
 #### 1.3.5
 - Add missing options parameter in createPlaylist (issue #19). Thanks for raising this [allinallin](https://github.com/allinallin).
 
 #### 1.3.4
-- Add Follow Playlist and Unfollow Playlist endpoints.
+- Add **[Follow Playlist](https://developer.spotify.com/web-api/follow-playlist/)** and **[Unfollow Playlist](https://developer.spotify.com/web-api/unfollow-playlist/)** endpoints.
 
 #### 1.3.3
 - [Fix](https://github.com/thelinmichael/spotify-web-api-node/pull/18) error format. Thanks [extrakt](https://github.com/extrakt).
@@ -701,10 +701,10 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 - Bugfix. api.addTracksToPlaylist tracks parameter can be a string or an array. Thanks [ofagbemi](https://github.com/ofagbemi)!
 
 #### 1.2.1
-- Add [Follow endpoints](https://developer.spotify.com/web-api/web-api-follow-endpoints/). Great work [JMPerez](https://github.com/JMPerez).
+- Add **[Follow endpoints](https://developer.spotify.com/web-api/web-api-follow-endpoints/)**. Great work [JMPerez](https://github.com/JMPerez).
 
 #### 1.1.0
-- Add [Browse endpoints](https://developer.spotify.com/web-api/browse-endpoints/). Thanks [fsahin](https://github.com/fsahin).
+- Add **[Browse endpoints](https://developer.spotify.com/web-api/browse-endpoints/)**. Thanks [fsahin](https://github.com/fsahin).
 
 #### 1.0.2
 - Specify module's git repository. Thanks [vincentorback](https://github.com/vincentorback).
@@ -730,9 +730,3 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 #### 0.0.9
 
 - Add **[Related artists](https://developer.spotify.com/web-api/get-related-artists/)** endpoint
-
-
-## Future development
-
-- Optional caching
-- Increased test coverage
