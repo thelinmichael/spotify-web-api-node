@@ -1660,6 +1660,38 @@ describe('Spotify Web API', function() {
 
   });
 
+  it("should reorder tracks from a playlist by position", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.put);
+      uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
+      should.not.exist(options.query);
+      JSON.parse(options.data)["range_start"].should.equal(5);
+      JSON.parse(options.data)["range_length"].should.equal(1);
+      JSON.parse(options.data)["insert_before"].should.equal(1512);
+      JSON.parse(options.data)["snapshot_id"].should.equal("0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9");
+      options.headers.Authorization.should.equal('Bearer long-access-token');
+
+      callback();
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('long-access-token');
+
+    var options = {
+      'snapshot_id': '0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9',
+      'range_length' : 1
+    };
+
+    api.reorderTracksInPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', 5, 1512, options, function(err, data) {
+      if (err) {
+        done(err);
+      } else {
+        done();
+      }
+    });
+
+  });
+
   it('should add tracks to the users library', function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {

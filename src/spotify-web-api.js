@@ -1093,6 +1093,43 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
+   * Reorder tracks in a playlist.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {int} rangeStart The position of the first track to be reordered.
+   * @param {int} insertBefore The position where the tracks should be inserted.
+   * @param {Object} options Optional parameters, i.e. range_start and snapshot_id.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
+   * it contains an error object. Not returned if a callback is given.
+   */
+  this.reorderTracksInPlaylist = function(userId, playlistId, rangeStart, insertBefore, options, callback) {
+    var request = WebApiRequest.builder().
+      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withHeaders({ 'Content-Type' : 'application/json' }).
+      withBodyParameters({
+        'range_start': rangeStart,
+        'insert_before' : insertBefore
+      }).
+      build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addBodyParameters(request, options);
+
+    var promise =  _performRequest(HttpManager.put, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
    * Request an access token using the Client Credentials flow.
    * Requires that client ID and client secret has been set previous to the call.
    * @param {Object} options Options.

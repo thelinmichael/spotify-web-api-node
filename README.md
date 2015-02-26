@@ -24,6 +24,7 @@ It includes helper functions to do the following:
 - Add tracks to a playlist
 - Remove tracks from a playlist
 - Replace tracks in a playlist
+- Reorder tracks in a playlist
 
 #### Your Music library
 - Add, remove, and get tracks that are in the signed in user's Your Music library
@@ -293,6 +294,15 @@ var options = { snapshot_id : "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5ws
 spotifyApi.removeTracksFromPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', tracks, options)
   .then(function(data) {
     console.log('Tracks removed from playlist!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Reorder the first two tracks in a playlist to the place before the track at the 10th position
+var options = { "range_length" : 2 };
+spotifyApi.reorderTracksInPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', 0, 10, options)
+  .then(function(data) {
+    console.log('Tracks reordered in playlist!');
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -668,6 +678,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 ```
 
 ## Change log
+
+#### 1.3.13 (26 Feb 2015)
+- Add language binding for **[Reorder tracks in a Playlist](https://developer.spotify.com/web-api/reorder-playlists-tracks/)**
 
 #### 1.3.12 (22 Feb 2015)
 - Add language binding for **[Remove tracks in a Playlist by Position](https://developer.spotify.com/web-api/remove-tracks-playlist/)**
