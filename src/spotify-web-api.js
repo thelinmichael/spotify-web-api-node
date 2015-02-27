@@ -1098,7 +1098,7 @@ function SpotifyWebApi(credentials) {
    * @param {string} playlistId The playlist's ID
    * @param {int} rangeStart The position of the first track to be reordered.
    * @param {int} insertBefore The position where the tracks should be inserted.
-   * @param {Object} options Optional parameters, i.e. range_start and snapshot_id.
+   * @param {Object} options Optional parameters, i.e. range_length and snapshot_id.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
