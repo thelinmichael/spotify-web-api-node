@@ -149,7 +149,7 @@ Retrieving a track's metadata in `spotify-web-api-node` version 1.4.0 and later
   "headers": {
     "date": "Fri, 27 Feb 2015 09:25:48 GMT",
     "content-type": "application/json; charset=utf-8",
-    "cache-control": 'public, max-age=7200',
+    "cache-control": "public, max-age=7200",
   },
   "statusCode": 200
 }
