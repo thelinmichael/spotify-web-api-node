@@ -832,7 +832,7 @@ function SpotifyWebApi(credentials) {
     }
 
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/')
+      .withPath('/v1/users/' + userId + '/playlists')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(actualOptions)
       .build();
