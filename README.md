@@ -119,13 +119,13 @@ To enable caching, this wrapper now exposes the response headers and not just th
 
 ```json
 {
-  body : {
+  "body" : {
     ...
   },
-  headers : {
+  "headers" : {
     ...
   },
-  statusCode : ...
+  "statusCode" : ...
 }
 ```
 
@@ -137,23 +137,23 @@ Retrieving a track's metadata in `spotify-web-api-node` version 1.4.0 and later
 
 ```json
 {
-  body:
+  "body":
   {
     ...
-    name: 'Golpe Maestro',
-    popularity: 42,
-    preview_url: 'https://p.scdn.co/mp3-preview/4ac44a56e3a4b7b354c1273d7550bbad38c51f5d',
-    track_number: 1,
-    type: 'track',
-    uri: 'spotify:track:3Qm86XLflmIXVm1wcwkgDK'
+    "name": 'Golpe Maestro',
+    "popularity": 42,
+    "preview_url": 'https://p.scdn.co/mp3-preview/4ac44a56e3a4b7b354c1273d7550bbad38c51f5d',
+    "track_number": 1,
+    "type": 'track',
+    "uri": 'spotify:track:3Qm86XLflmIXVm1wcwkgDK'
   },
-  headers: {
-    date: 'Fri, 27 Feb 2015 09:25:48 GMT',
-    'content-type': 'application/json; charset=utf-8',
-    'cache-control': 'public, max-age=7200',
+  "headers": {
+    "date": 'Fri, 27 Feb 2015 09:25:48 GMT',
+    "content-type": 'application/json; charset=utf-8',
+    "cache-control": 'public, max-age=7200',
     ...
   },
-  statusCode: 200
+  "statusCode": 200
 }
 ```
 
@@ -161,12 +161,12 @@ The response object for the same request in earlier versions than to 1.4.0
 ```json
 {
   ...
-  name: 'Golpe Maestro',
-  popularity: 42,
-  preview_url: 'https://p.scdn.co/mp3-preview/4ac44a56e3a4b7b354c1273d7550bbad38c51f5d',
-  track_number: 1,
-  type: 'track',
-  uri: 'spotify:track:3Qm86XLflmIXVm1wcwkgDK'
+  "name": 'Golpe Maestro',
+  "popularity": 42,
+  "preview_url": 'https://p.scdn.co/mp3-preview/4ac44a56e3a4b7b354c1273d7550bbad38c51f5d',
+  "track_number": 1,
+  "type": 'track',
+  "uri": 'spotify:track:3Qm86XLflmIXVm1wcwkgDK'
 }
 ```
 
@@ -738,24 +738,6 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 #### 1.4.0 (27 Feb 2015)
 - Add headers and status code to all responses to enable users to implement caching.
-
-Note that this is a breaking change since the response object now looks like, for example
-
-```json
-{
-  body : { albums : [ ... ] },
-  headers : { ... },
-  statusCode : 200
-}
-```
-
-Responses in versions previous to 1.4.0 had the format
-
-```json
-{
-  albums : [ ... ]
-}
-```
 
 #### 1.3.13 (26 Feb 2015)
 - Add language binding for **[Reorder tracks in a Playlist](https://developer.spotify.com/web-api/reorder-playlists-tracks/)**
