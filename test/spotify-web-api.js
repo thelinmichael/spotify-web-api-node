@@ -2,6 +2,7 @@ var restler = require('restler'),
     HttpManager = require('../src/http-manager'),
     sinon = require('sinon'),
     SpotifyWebApi = require('../src/spotify-web-api'),
+    WebApiError = require('../src/webapi-error'),
     should = require('should');
 
 'use strict';
@@ -40,22 +41,43 @@ describe('Spotify Web API', function() {
   });
 
   it("should retrieve track metadata", function(done) {
-
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.get);
       uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
       should.not.exist(options.data);
-      callback();
+      callback(null, { body : { "uri" : "spotify:track:3Qm86XLflmIXVm1wcwkgDK" }, headers : { "cache-control" : "public, max-age=7200" }, statusCode : 200 });
     });
 
     var api = new SpotifyWebApi();
     api.getTrack('3Qm86XLflmIXVm1wcwkgDK')
       .then(function(data) {
+        data.body.uri.should.equal('spotify:track:3Qm86XLflmIXVm1wcwkgDK');
+        (data.statusCode).should.equal(200);
+        (data.headers['cache-control']).should.equal('public, max-age=7200');
         done();
       }, function(err) {
         done(err);
       });
   });
+
+  it("should retrieve error when retrieving track metadata", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
+      should.not.exist(options.data);
+      callback(new WebApiError("Do NOT do that again!", 400));
+    });
+
+    var api = new SpotifyWebApi();
+    api.getTrack('3Qm86XLflmIXVm1wcwkgDK')
+      .then(function(data) {
+        done(new Error("Test failed!"));
+      }, function(err) {
+        (err.statusCode).should.equal(400);
+        err.message.should.equal("Do NOT do that again!");
+        done();
+      });
+    });
 
   it("should get track for Swedish market", function(done) {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
@@ -80,7 +102,7 @@ describe('Spotify Web API', function() {
       method.should.equal(restler.get);
       uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
       should.not.exist(options.data);
-      callback();get
+      callback();
     });
 
     var api = new SpotifyWebApi();
@@ -94,7 +116,7 @@ describe('Spotify Web API', function() {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.get);
-      callback(new Error('non existing id'), null);
+      callback(new WebApiError('non existing id', 400));
     });
 
     var api = new SpotifyWebApi();
@@ -112,7 +134,7 @@ describe('Spotify Web API', function() {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.get);
-      callback(new Error('non existing id'), null);
+      callback(new WebApiError('non existing id', 400), null);
     });
 
     var api = new SpotifyWebApi();
@@ -128,7 +150,7 @@ describe('Spotify Web API', function() {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.get);
-      callback(new Error(), null);
+      callback(new WebApiError('Fail', 400), null);
     });
 
     var api = new SpotifyWebApi();
@@ -136,6 +158,7 @@ describe('Spotify Web API', function() {
       .then(function(data) {
         done(new Error('Should have failed'));
       }, function(err) {
+        should.exist(err);
         done();
       });
   });
@@ -182,13 +205,14 @@ describe('Spotify Web API', function() {
       method.should.equal(restler.get);
       uri.should.equal('https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj');
       should.not.exist(options.data);
-      callback(null, {uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj'});
+      callback(null, { body : { uri : 'spotify:album:0sNOF9WDwhWunNAHPD3Baj'}, statusCode : 200 });
     });
 
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj')
       .then(function(data) {
-        ('spotify:album:0sNOF9WDwhWunNAHPD3Baj').should.equal(data.uri);
+        ('spotify:album:0sNOF9WDwhWunNAHPD3Baj').should.equal(data.body.uri);
+        (200).should.equal(data.statusCode);
         done();
       }, function(err) {
         done(err);
@@ -202,13 +226,14 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj');
       should.not.exist(options.data);
       options.query.market.should.equal('SE');
-      callback(null, {uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj'});
+      callback(null, { body : { uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj' }, statusCode : 200 });
     });
 
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', { market : 'SE' })
       .then(function(data) {
-        ('spotify:album:0sNOF9WDwhWunNAHPD3Baj').should.equal(data.uri);
+        ('spotify:album:0sNOF9WDwhWunNAHPD3Baj').should.equal(data.body.uri);
+        (200).should.equal(data.statusCode);
         done();
       }, function(err) {
         done(err);
@@ -221,13 +246,14 @@ describe('Spotify Web API', function() {
       method.should.equal(restler.get);
       uri.should.equal('https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj');
       should.not.exist(options.data);
-      callback(null, {uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj'});
+      callback(null, { body : { uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj' }, statusCode : 200 });
     });
 
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', function(err, data) {
       should.not.exist(err);
-      ('spotify:album:0sNOF9WDwhWunNAHPD3Baj').should.equal(data.uri);
+      ('spotify:album:0sNOF9WDwhWunNAHPD3Baj').should.equal(data.body.uri);
+      (200).should.equal(data.statusCode);
       done();
     });
   });
@@ -239,17 +265,18 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/albums');
       options.query.ids.should.equal('41MnTivkwTO3UUJ8DrqEJJ,6JWc4iAiJ9FjyK0B59ABb4');
       should.not.exist(options.data);
-      callback(null, {albums:[
+      callback(null, { body : { albums: [
         {uri: 'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'},
         {uri: 'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'}
-      ]});
+      ]}, statusCode : 200 });
     });
 
     var api = new SpotifyWebApi();
     api.getAlbums(['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4'])
       .then(function(data) {
-        'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'.should.equal(data.albums[0].uri);
-        'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'.should.equal(data.albums[1].uri);
+        'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'.should.equal(data.body.albums[0].uri);
+        'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'.should.equal(data.body.albums[1].uri);
+        (200).should.equal(data.statusCode);
         done();
       }, function(err) {
         done(err);
@@ -263,17 +290,18 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/albums');
       options.query.ids.should.equal('41MnTivkwTO3UUJ8DrqEJJ,6JWc4iAiJ9FjyK0B59ABb4');
       should.not.exist(options.data);
-      callback(null, {albums:[
+      callback(null, { body : { albums:[
         {uri: 'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'},
         {uri: 'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'}
-      ]});
+      ]}, statusCode : 200 });
     });
 
     var api = new SpotifyWebApi();
     api.getAlbums(['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4'], function(err, data) {
       should.not.exist(err);
-      'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'.should.equal(data.albums[0].uri);
-      'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'.should.equal(data.albums[1].uri);
+      'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'.should.equal(data.body.albums[0].uri);
+      'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'.should.equal(data.body.albums[1].uri);
+      (200).should.equal(data.statusCode);
       done();
     });
   });
@@ -297,7 +325,7 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it("should retrive metadata for an artist using callback", function(done) {
+  it("should retrieve metadata for an artist using callback", function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.get);
@@ -321,17 +349,18 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/artists');
       options.query.ids.should.equal('0oSGxfWSnnOXhD2fKuz2Gy,3dBVyJ7JuOMt4GE9607Qin');
       should.not.exist(options.data);
-      callback(null, {artists:[
+      callback(null, { body: { artists:[
         {uri: 'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'},
         {uri: 'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'}
-      ]});
+      ]}, statusCode: 200 });
     });
 
     var api = new SpotifyWebApi();
     api.getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin'])
       .then(function(data) {
-        'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'.should.equal(data.artists[0].uri);
-        'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'.should.equal(data.artists[1].uri);
+        'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'.should.equal(data.body.artists[0].uri);
+        'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'.should.equal(data.body.artists[1].uri);
+        (200).should.equal(data.statusCode);
         done();
       }, function(err) {
         done(err);
@@ -345,17 +374,18 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/artists');
       options.query.ids.should.equal('0oSGxfWSnnOXhD2fKuz2Gy,3dBVyJ7JuOMt4GE9607Qin');
       should.not.exist(options.data);
-      callback(null, {artists:[
-        {uri: 'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'},
-        {uri: 'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'}
-      ]});
+      callback(null, { body : { artists:[
+        { uri: 'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy' },
+        { uri: 'spotify:artist:3dBVyJ7JuOMt4GE9607Qin' }
+      ]}, statusCode : 200 });
     });
 
     var api = new SpotifyWebApi();
     api.getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin'], function(err, data) {
       should.not.exist(err);
-      'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'.should.equal(data.artists[0].uri);
-      'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'.should.equal(data.artists[1].uri);
+      'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'.should.equal(data.body.artists[0].uri);
+      'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'.should.equal(data.body.artists[1].uri);
+      (200).should.equal(data.statusCode);
       done();
     });
   });
@@ -373,16 +403,24 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        albums: {
-          href: 'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
-        }
+        body : {
+          albums: {
+            href: 'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
+          }
+        },
+        headers : {
+          'test' : 'value'
+        },
+        statusCode : 200
       });
     });
 
     var api = new SpotifyWebApi();
     api.searchAlbums('The Best of Keane', { limit : 3, offset : 2 })
       .then(function(data) {
-        'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'.should.equal(data.albums.href);
+        'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'.should.equal(data.body.albums.href);
+        (200).should.equal(data.statusCode);
+        'value'.should.equal(data.headers.test);
         done();
       }, function(err) {
         console.log(err);
@@ -403,8 +441,10 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        albums: {
-          href: 'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
+        body : {
+          albums: {
+            href: 'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
+          }
         }
       });
     });
@@ -412,7 +452,7 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchAlbums('The Best of Keane', { limit : 3, offset : 2 }, function(err, data) {
       should.not.exist(err);
-      'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'.should.equal(data.albums.href);
+      'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'.should.equal(data.body.albums.href);
       done();
     });
   });
@@ -429,8 +469,10 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        playlists: {
-          href: 'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'
+        body : {
+          playlists: {
+            href: 'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'
+          }
         }
       });
     });
@@ -438,7 +480,7 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchPlaylists('workout', { limit : 1, offset : 0 })
       .then(function(data) {
-        'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'.should.equal(data.playlists.href);
+        'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'.should.equal(data.body.playlists.href);
         done();
       }, function(err) {
         console.log(err);
@@ -459,8 +501,10 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        artists: {
-          href: 'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
+        body : {
+          artists: {
+            href: 'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
+          }
         }
       });
     });
@@ -468,7 +512,7 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchArtists('David Bowie', { limit : 5, offset : 1 })
       .then(function(data) {
-        'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'.should.equal(data.artists.href);
+        'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'.should.equal(data.body.artists.href);
         done();
       }, function(err) {
         done(err);
@@ -488,8 +532,10 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        artists: {
-          href: 'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
+        body : {
+          artists: {
+            href: 'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
+          }
         }
       });
     });
@@ -497,7 +543,7 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchArtists('David Bowie', { limit : 5, offset : 1 }, function(err, data) {
       should.not.exist(err);
-      'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'.should.equal(data.artists.href);
+      'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'.should.equal(data.body.artists.href);
       done();
     });
   });
@@ -515,8 +561,10 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        tracks: {
-          href: 'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
+        body : {
+          tracks: {
+            href: 'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
+          }
         }
       });
     });
@@ -524,7 +572,7 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchTracks('Mr. Brightside', { limit : 3, offset : 2 })
       .then(function(data) {
-        'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'.should.equal(data.tracks.href);
+        'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'.should.equal(data.body.tracks.href);
         done();
       }, function(err) {
         console.log(err);
@@ -545,8 +593,10 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        tracks: {
-          href: 'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
+        body : {
+          tracks: {
+            href: 'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
+          }
         }
       });
     });
@@ -554,7 +604,7 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchTracks('Mr. Brightside', { limit : 3, offset : 2 }, function(err, data) {
       should.not.exist(err);
-      'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'.should.equal(data.tracks.href);
+      'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'.should.equal(data.body.tracks.href);
       done();
     });
   });
@@ -572,14 +622,16 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        href: 'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
+        body : {
+          href: 'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
+        }
       });
     });
 
     var api = new SpotifyWebApi();
     api.getArtistAlbums('0oSGxfWSnnOXhD2fKuz2Gy', { album_type : 'album', country : 'GB', limit : 2, offset : 5 })
       .then(function(data) {
-        'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'.should.equal(data.href);
+        'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'.should.equal(data.body.href);
         done();
       }, function(err) {
         console.log(err);
@@ -600,14 +652,16 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        href: 'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
+        body : {
+          href: 'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
+        }
       });
     });
 
     var api = new SpotifyWebApi();
     api.getArtistAlbums('0oSGxfWSnnOXhD2fKuz2Gy', { album_type : 'album', country : 'GB', limit : 2, offset : 5 }, function(err, data) {
       should.not.exist(err);
-      'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'.should.equal(data.href);
+      'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'.should.equal(data.body.href);
       done();
     });
   });
@@ -623,14 +677,16 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        href: 'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
+        body : {
+          href: 'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
+        }
       });
     });
 
     var api = new SpotifyWebApi();
     api.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 })
       .then(function(data) {
-        'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'.should.equal(data.href);
+        'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'.should.equal(data.body.href);
         done();
       }, function(err) {
         done(err);
@@ -648,14 +704,16 @@ describe('Spotify Web API', function() {
       });
       should.not.exist(options.data);
       callback(null, {
-        href: 'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
+        body : {
+          href: 'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
+        }
       });
     });
 
     var api = new SpotifyWebApi();
     api.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 }, function(err, data) {
       should.not.exist(err);
-      'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'.should.equal(data.href);
+      'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'.should.equal(data.body.href);
       done();
     });
   });
@@ -709,7 +767,9 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/artists/0qeei9KQnptjwb8MgkqEoy/related-artists');
       should.not.exist(options.data);
       callback(null, {
-        artists:[{}]
+        body : {
+          artists:[ {} ]
+        }
       });
     });
 
@@ -717,7 +777,7 @@ describe('Spotify Web API', function() {
 
     api.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
       .then(function(data) {
-        should.exist(data.artists);
+        should.exist(data.body.artists);
         done();
       }, function(err) {
         done(err);
@@ -731,14 +791,16 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/artists/0qeei9KQnptjwb8MgkqEoy/related-artists');
       should.not.exist(options.data);
       callback(null, {
-        artists:[{}]
+        body : {
+          artists:[{}]
+        }
       });
     });
 
     var api = new SpotifyWebApi();
 
     api.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy', function(err, data) {
-      should.exist(data.artists);
+      should.exist(data.body.artists);
       done();
     });
   });
@@ -749,8 +811,11 @@ describe('Spotify Web API', function() {
       method.should.equal(restler.get);
       uri.should.equal('https://api.spotify.com/v1/users/petteralexis');
       should.not.exist(options.data);
-      callback(null, {
-        uri: 'spotify:user:petteralexis'
+      callback(null,
+      {
+        body : {
+          uri: 'spotify:user:petteralexis'
+        }
       });
     });
 
@@ -758,7 +823,7 @@ describe('Spotify Web API', function() {
 
     api.getUser('petteralexis')
       .then(function(data) {
-        'spotify:user:petteralexis'.should.equal(data.uri);
+        'spotify:user:petteralexis'.should.equal(data.body.uri);
         done();
       }, function(err) {
         done(err);
@@ -772,14 +837,16 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/users/petteralexis');
       should.not.exist(options.data);
       callback(null, {
-        uri: 'spotify:user:petteralexis'
+        body : {
+          uri: 'spotify:user:petteralexis'
+        }
       });
     });
 
     var api = new SpotifyWebApi();
 
     api.getUser('petteralexis', function(err, data) {
-      'spotify:user:petteralexis'.should.equal(data.uri);
+      'spotify:user:petteralexis'.should.equal(data.body.uri);
       done();
     });
 
@@ -792,7 +859,7 @@ describe('Spotify Web API', function() {
 
     api.getMe()
       .then(function(data) {
-        'spotify:user:thelinmichael'.should.equal(data.uri);
+        'spotify:user:thelinmichael'.should.equal(data.body.uri);
         done();
       }, function(err) {
         done(err);
@@ -805,7 +872,7 @@ describe('Spotify Web API', function() {
 
     api.getMe()
       .then(function(data) {
-        'spotify:user:thelinmichael'.should.equal(data.uri);
+        'spotify:user:thelinmichael'.should.equal(data.body.uri);
         done();
       }, function(err) {
         done(err);
@@ -818,7 +885,7 @@ describe('Spotify Web API', function() {
       method.should.equal(restler.get);
       uri.should.equal('https://api.spotify.com/v1/me');
       if (!options.headers || !options.headers.Authorization) {
-        callback(new Error(), null);
+        callback(new WebApiError('No token', 401), null);
       }
     });
 
@@ -828,6 +895,8 @@ describe('Spotify Web API', function() {
       .then(function(data) {
         done(new Error('Should have failed!'));
       }, function(err) {
+        'No token'.should.equal(err.message);
+        (401).should.equal(err.statusCode);
         done();
       });
   });
@@ -838,13 +907,15 @@ describe('Spotify Web API', function() {
       method.should.equal(restler.get);
       uri.should.equal('https://api.spotify.com/v1/me');
       if (!options.headers || !options.headers.Authorization) {
-        callback(new Error(), null);
+        callback(new WebApiError('No token', 401), null);
       }
     });
 
     var api = new SpotifyWebApi();
 
     api.getMe(function(err) {
+      'No token'.should.equal(err.message);
+      (401).should.equal(err.statusCode);
       should.exist(err);
       done();
     });
@@ -892,14 +963,17 @@ describe('Spotify Web API', function() {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists');
-      JSON.parse(options.data).should.eql({ name : 'My Cool Playlist', 'public' : false })
-      callback(null, { name : 'My Cool Playlist', 'public' : false });
+      JSON.parse(options.data).should.eql({ name : 'My Cool Playlist', 'public' : false });
       should.not.exist(options.query);
+      callback(null, { body : { name : 'My Cool Playlist', 'public' : false }, statusCode : 200 });
     });
 
     var api = new SpotifyWebApi();
 
     api.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false }, function(err, data) {
+      console.log(err);
+      'My Cool Playlist'.should.equal(data.body.name);
+      (200).should.equal(data.statusCode);
       done();
     });
   });
@@ -1426,7 +1500,7 @@ describe('Spotify Web API', function() {
         ids: '137W8MRPWKqSmrBGDBFSop'
       });
       should.not.exist(options.data);
-      callback();
+      callback(null, { statusCode : 200 });
     });
 
     var accessToken = 'myAccessToken';
@@ -1436,6 +1510,7 @@ describe('Spotify Web API', function() {
     });
 
     api.unfollowArtists(['137W8MRPWKqSmrBGDBFSop'], function(err, data) {
+      (200).should.equal(data.statusCode);
       done();
     });
 
@@ -1451,7 +1526,7 @@ describe('Spotify Web API', function() {
         ids: 'thelinmichael,wizzler'
       });
       should.not.exist(options.data);
-      callback(null, [true, false]);
+      callback(null, { body : [true, false] });
     });
 
     var accessToken = 'myAccessToken';
@@ -1462,9 +1537,9 @@ describe('Spotify Web API', function() {
 
     api.isFollowingUsers(['thelinmichael', 'wizzler'])
       .then(function(data) {
-        data.should.be.an.instanceOf(Array).and.have.lengthOf(2);
-        data[0].should.eql(true);
-        data[1].should.eql(false);
+        data.body.should.be.an.instanceOf(Array).and.have.lengthOf(2);
+        data.body[0].should.eql(true);
+        data.body[1].should.eql(false);
         done();
       }, function(err) {
         console.log(err);
@@ -1483,7 +1558,7 @@ describe('Spotify Web API', function() {
         ids: 'thelinmichael,wizzler'
       });
       should.not.exist(options.data);
-      callback(null, [true, false]);
+      callback(null, { body : [true, false] });
     });
 
     var accessToken = 'myAccessToken';
@@ -1494,9 +1569,9 @@ describe('Spotify Web API', function() {
 
     api.isFollowingUsers(['thelinmichael', 'wizzler'], function(err, data) {
       should.not.exist(err);
-      data.should.be.an.instanceOf(Array).and.have.lengthOf(2);
-      data[0].should.eql(true);
-      data[1].should.eql(false);
+      data.body.should.be.an.instanceOf(Array).and.have.lengthOf(2);
+      data.body[0].should.eql(true);
+      data.body[1].should.eql(false);
       done();
     });
   });
@@ -1511,7 +1586,7 @@ describe('Spotify Web API', function() {
         ids: '137W8MRPWKqSmrBGDBFSop'
       });
       should.not.exist(options.data);
-      callback(null, [false]);
+      callback(null, { body : [false] });
     });
 
     var accessToken = 'myAccessToken';
@@ -1522,8 +1597,8 @@ describe('Spotify Web API', function() {
 
     api.isFollowingArtists(['137W8MRPWKqSmrBGDBFSop'])
       .then(function(data) {
-        data.should.be.an.instanceOf(Array).and.have.lengthOf(1);
-        data[0].should.eql(false);
+        data.body.should.be.an.instanceOf(Array).and.have.lengthOf(1);
+        data.body[0].should.eql(false);
         done();
       }, function(err) {
         console.log(err);
@@ -1542,7 +1617,7 @@ describe('Spotify Web API', function() {
         ids: '137W8MRPWKqSmrBGDBFSop'
       });
       should.not.exist(options.data);
-      callback(null, [false]);
+      callback(null, { body : [false] });
     });
 
     var accessToken = 'myAccessToken';
@@ -1553,8 +1628,8 @@ describe('Spotify Web API', function() {
 
     api.isFollowingArtists(['137W8MRPWKqSmrBGDBFSop'], function(err, data) {
       should.not.exist(err);
-      data.should.be.an.instanceOf(Array).and.have.lengthOf(1);
-      data[0].should.eql(false);
+      data.body.should.be.an.instanceOf(Array).and.have.lengthOf(1);
+      data.body[0].should.eql(false);
       done();
     });
 
@@ -1569,7 +1644,7 @@ describe('Spotify Web API', function() {
         ids: 'thelinmichael,ella'
       });
       should.not.exist(options.data);
-      callback(null, [true, false]);
+      callback(null, { body : [true, false] });
     });
 
     var accessToken = 'myAccessToken';
@@ -1580,9 +1655,9 @@ describe('Spotify Web API', function() {
 
     api.areFollowingPlaylist('spotify_germany', '2nKFnGNFvHX9hG5Kv7Bm3G', ['thelinmichael', 'ella'])
       .then(function(data) {
-        data.should.be.an.instanceOf(Array).and.have.lengthOf(2);
-        data[0].should.eql(true);
-        data[1].should.eql(false);
+        data.body.should.be.an.instanceOf(Array).and.have.lengthOf(2);
+        data.body[0].should.eql(true);
+        data.body[1].should.eql(false);
         done();
       }, function(err) {
         console.log(err);
@@ -1751,7 +1826,7 @@ describe('Spotify Web API', function() {
       options.headers.Authorization.should.equal('Bearer BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g');
 
       // simulate token expired
-      callback(new Error('The access token expired'), null);
+      callback(new WebApiError('The access token expired', 401), null);
     });
 
     var accessToken = "BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g";
@@ -1763,7 +1838,8 @@ describe('Spotify Web API', function() {
     .then(function(data) {
       done(new Error('should have failed'));
     }, function(err) {
-      err.message.should.equal('The access token expired');
+      'The access token expired'.should.equal(err.message);
+      (401).should.equal(err.statusCode);
       done();
     });
   })
@@ -1779,7 +1855,7 @@ describe('Spotify Web API', function() {
       options.headers.Authorization.should.equal('Bearer BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g');
 
       // simulate token expired
-      callback(new Error('The access token expired'), null);
+      callback(new WebApiError('The access token expired', 401), null);
     });
 
     var accessToken = "BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g";
@@ -1788,7 +1864,8 @@ describe('Spotify Web API', function() {
     });
 
     api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0'], function(err, data) {
-      err.message.should.equal('The access token expired');
+      'The access token expired'.should.equal(err.message);
+      (401).should.equal(err.statusCode);
       done();
     });
   });
@@ -1804,9 +1881,12 @@ describe('Spotify Web API', function() {
         country: 'SE'
       });
       options.headers.Authorization.should.equal('Bearer myAccessToken');
-      callback(null, { albums: {
-          href: 'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5',
-          items: [{},{},{},{},{}]
+      callback(null, {
+        body : {
+          albums: {
+            href: 'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5',
+            items: [{},{},{},{},{}]
+          }
         }
       });
     });
@@ -1823,11 +1903,10 @@ describe('Spotify Web API', function() {
       country: 'SE'
     })
     .then(function(data) {
-      data.albums.href.should.equal('https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5')
-      data.albums.items.length.should.equal(5);
+      data.body.albums.href.should.equal('https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5')
+      data.body.albums.items.length.should.equal(5);
       done();
     }, function(err) {
-      console.log(err);
       done(err);
     });
   });
@@ -1843,11 +1922,16 @@ describe('Spotify Web API', function() {
         country: 'SE'
       });
       options.headers.Authorization.should.equal('Bearer myAccessToken');
-      callback(null, { albums: {
-          href: 'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5',
-          items: [{},{},{},{},{}]
-        }
-      });
+      callback(null,
+        {
+          body : {
+            albums: {
+              href: 'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5',
+              items: [{},{},{},{},{}]
+           }
+         },
+         statusCode : 200
+       });
     });
 
     var accessToken = 'myAccessToken';
@@ -1862,8 +1946,9 @@ describe('Spotify Web API', function() {
       country: 'SE'
     }, function(err, data) {
       should.not.exist(err);
-      data.albums.href.should.equal('https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5')
-      data.albums.items.length.should.equal(5);
+      data.body.albums.href.should.equal('https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5')
+      data.body.albums.items.length.should.equal(5);
+      (200).should.equal(data.statusCode);
       done();
     });
   });
@@ -1881,10 +1966,15 @@ describe('Spotify Web API', function() {
         timestamp: '2014-10-23T09:00:00'
       });
       options.headers.Authorization.should.equal('Bearer myAccessToken');
-      callback(null, { playlists: {
-          href: 'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3',
-          items: [{},{},{}]
-        }
+      callback(null,
+        {
+          body : {
+            playlists: {
+              href: 'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3',
+              items: [{},{},{}]
+            }
+          },
+          statusCode : 200
       });
     });
 
@@ -1902,8 +1992,9 @@ describe('Spotify Web API', function() {
       timestamp:'2014-10-23T09:00:00'
     })
     .then(function(data) {
-      data.playlists.href.should.equal('https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3')
-      data.playlists.items.length.should.equal(3);
+      data.body.playlists.href.should.equal('https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3')
+      data.body.playlists.items.length.should.equal(3);
+      (200).should.equal(data.statusCode);
       done();
     }, function(err) {
       console.log(err);
@@ -1924,10 +2015,15 @@ describe('Spotify Web API', function() {
         timestamp: '2014-10-23T09:00:00'
       });
       options.headers.Authorization.should.equal('Bearer myAccessToken');
-      callback(null, { playlists: {
-          href: 'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3',
-          items: [{},{},{}]
-        }
+      callback(null,
+        {
+          body : {
+            playlists: {
+              href: 'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3',
+              items: [{},{},{}]
+            }
+          },
+          statusCode : 200
       });
     });
 
@@ -1945,8 +2041,9 @@ describe('Spotify Web API', function() {
       timestamp:'2014-10-23T09:00:00'
     }, function(err, data) {
       should.not.exist(err);
-      data.playlists.href.should.equal('https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3')
-      data.playlists.items.length.should.equal(3);
+      data.body.playlists.href.should.equal('https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3')
+      data.body.playlists.items.length.should.equal(3);
+      (200).should.equal(data.statusCode);
       done();
     });
   });
@@ -1963,8 +2060,14 @@ describe('Spotify Web API', function() {
         locale : 'sv_SE'
       });
       options.headers.Authorization.should.equal('Bearer myAccessToken');
-      callback(null, { items : [{ href : "https://api.spotify.com/v1/browse/categories/party" }, { href : "https://api.spotify.com/v1/browse/categories/pop" }] });
-
+      callback(null,
+        {
+          body : {
+            items : [{ href : "https://api.spotify.com/v1/browse/categories/party" }, { href : "https://api.spotify.com/v1/browse/categories/pop" }]
+          },
+          statusCode : 200
+        }
+      );
     });
 
     var accessToken = 'myAccessToken';
@@ -1980,9 +2083,10 @@ describe('Spotify Web API', function() {
       locale: 'sv_SE'
     }, function(err, data) {
       should.not.exist(err);
-      data.items[0].href.should.equal('https://api.spotify.com/v1/browse/categories/party');
-      data.items[1].href.should.equal('https://api.spotify.com/v1/browse/categories/pop');
-      data.items.length.should.equal(2);
+      data.body.items[0].href.should.equal('https://api.spotify.com/v1/browse/categories/party');
+      data.body.items[1].href.should.equal('https://api.spotify.com/v1/browse/categories/pop');
+      data.body.items.length.should.equal(2);
+      (200).should.equal(data.statusCode);
       done();
     });
 
@@ -1998,8 +2102,11 @@ describe('Spotify Web API', function() {
       });
       options.headers.Authorization.should.equal('Bearer myAccessToken');
       callback(null, {
-        href : 'https://api.spotify.com/v1/browse/categories/party',
-        name : 'Party'
+        body : {
+          href : 'https://api.spotify.com/v1/browse/categories/party',
+          name : 'Party'
+        },
+        statusCode : 200
       });
     });
 
@@ -2014,8 +2121,9 @@ describe('Spotify Web API', function() {
       locale: 'sv_SE'
     }, function(err, data) {
       should.not.exist(err);
-      data.href.should.equal('https://api.spotify.com/v1/browse/categories/party');
-      data.name.should.equal('Party');
+      data.body.href.should.equal('https://api.spotify.com/v1/browse/categories/party');
+      data.body.name.should.equal('Party');
+      (200).should.equal(data.statusCode);
       done();
     });
   });
@@ -2031,14 +2139,17 @@ describe('Spotify Web API', function() {
       });
       options.headers.Authorization.should.equal('Bearer myAccessToken');
       callback(null, {
-        playlists : {
-          items : [ {
-            href : 'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen'
-          },
-          {
-            href : 'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4HZh0C9y80GzHDbHZyX770'
-          }
-        ]}
+        body : {
+          playlists : {
+            items : [ {
+              href : 'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen'
+            },
+            {
+              href : 'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4HZh0C9y80GzHDbHZyX770'
+            }
+          ]}
+        },
+        statusCode : 200
       });
     });
 
@@ -2054,9 +2165,10 @@ describe('Spotify Web API', function() {
       offset : 1
     }, function(err, data) {
       should.not.exist(err);
-      data.playlists.items[0].href.should.equal('https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen');
-      data.playlists.items[1].href.should.equal('https://api.spotify.com/v1/users/spotifybrazilian/playlists/4HZh0C9y80GzHDbHZyX770');
-      data.playlists.items.length.should.equal(2);
+      data.body.playlists.items[0].href.should.equal('https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen');
+      data.body.playlists.items[1].href.should.equal('https://api.spotify.com/v1/users/spotifybrazilian/playlists/4HZh0C9y80GzHDbHZyX770');
+      data.body.playlists.items.length.should.equal(2);
+      (200).should.equal(data.statusCode);
       done();
     });
   });

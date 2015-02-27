@@ -84,7 +84,7 @@ Lastly, use the wrapper's helper methods to make the request to Spotify's Web AP
 // Get Elvis' albums
 spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
   .then(function(data) {
-    console.log('Artist albums', data);
+    console.log('Artist albums', data.body);
   }, function(err) {
     console.error(err);
   });
@@ -97,7 +97,7 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', function(err, data) {
   if (err) {
     console.error('Something went wrong!');
   } else {
-    console.log(data);
+    console.log(data.body);
   }
 });
 ```
@@ -108,15 +108,69 @@ The functions that fetch data from the API also support an optional JSON object 
 // Passing a callback - get Elvis' albums in range [20...29]
 spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', {limit: 10, offset: 20})
   .then(function(data) {
-    console.log('Album information', data);
+    console.log('Album information', data.body);
   }, function(err) {
     console.error(err);
   });
 ```
 
+### Response body, statuscode, and headers
+To enable caching, this wrapper now exposes the response headers and not just the response body. Since version 2.0.0, the response object has the format
+
+```json
+{
+  "body" : {
+  
+  },
+  "headers" : {
+  
+  },
+  "statusCode" : 
+}
+```
+
+In previous versions, the response object was the same as the response body.
+
+#### Example of a response
+
+Retrieving a track's metadata in `spotify-web-api-node` version 1.4.0 and later
+
+```json
+{
+  "body":
+  {
+    "name": "Golpe Maestro",
+    "popularity": 42,
+    "preview_url": "https://p.scdn.co/mp3-preview/4ac44a56e3a4b7b354c1273d7550bbad38c51f5d",
+    "track_number": 1,
+    "type": "track",
+    "uri": "spotify:track:3Qm86XLflmIXVm1wcwkgDK"
+  },
+  "headers": {
+    "date": "Fri, 27 Feb 2015 09:25:48 GMT",
+    "content-type": "application/json; charset=utf-8",
+    "cache-control": "public, max-age=7200",
+  },
+  "statusCode": 200
+}
+```
+
+The response object for the same request in earlier versions than to 2.0.0.
+```json
+{
+    "name": "Golpe Maestro",
+    "popularity": 42,
+    "preview_url": "https://p.scdn.co/mp3-preview/4ac44a56e3a4b7b354c1273d7550bbad38c51f5d",
+    "track_number": 1,
+    "type": "track",
+    "uri": "spotify:track:3Qm86XLflmIXVm1wcwkgDK"
+  }
+```
+
+
 ### More examples
 
-Below are examples for all helper functions. Longer examples can be found in the [examples folder](examples/).
+Below are examples for all helper functions. Longer examples of some requests can be found in the [examples folder](examples/).
 
 Please note that since version 1.3.2 all methods accept an optional callback method as their last parameter. These examples however only use promises.
 
@@ -128,7 +182,7 @@ var spotifyApi = new SpotifyWebApi();
 // Get multiple albums
 spotifyApi.getAlbums(['5U4W9E5WsYb2jUQWePT8Xm', '3KyVcddATClQKIdtaap4bV'])
   .then(function(data) {
-    console.log('Albums information', data);
+    console.log('Albums information', data.body);
   }, function(err) {
     console.error(err);
   });
@@ -136,7 +190,7 @@ spotifyApi.getAlbums(['5U4W9E5WsYb2jUQWePT8Xm', '3KyVcddATClQKIdtaap4bV'])
 // Get an artist
 spotifyApi.getArtist('2hazSY4Ef3aB9ATXW7F5w3')
   .then(function(data) {
-    console.log('Artist information', data);
+    console.log('Artist information', data.body);
   }, function(err) {
     console.error(err);
   });
@@ -144,7 +198,7 @@ spotifyApi.getArtist('2hazSY4Ef3aB9ATXW7F5w3')
 // Get multiple artists
 spotifyApi.getArtists(['2hazSY4Ef3aB9ATXW7F5w3', '6J6yx1t3nwIDyPXk5xa7O8'])
   .then(function(data) {
-    console.log('Artists information', data);
+    console.log('Artists information', data.body);
   }, function(err) {
     console.error(err);
   });
@@ -152,7 +206,7 @@ spotifyApi.getArtists(['2hazSY4Ef3aB9ATXW7F5w3', '6J6yx1t3nwIDyPXk5xa7O8'])
 // Get albums by a certain artist
 spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
   .then(function(data) {
-    console.log('Artist albums', data);
+    console.log('Artist albums', data.body);
   }, function(err) {
     console.error(err);
   });
@@ -160,7 +214,7 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
 // Search tracks whose name, album or artist contains 'Love'
 spotifyApi.searchTracks('Love')
   .then(function(data) {
-    console.log('Search by "Love"', data);
+    console.log('Search by "Love"', data.body);
   }, function(err) {
     console.error(err);
   });
@@ -168,7 +222,7 @@ spotifyApi.searchTracks('Love')
 // Search artists whose name contains 'Love'
 spotifyApi.searchArtists('Love')
   .then(function(data) {
-    console.log('Search artists by "Love"', data);
+    console.log('Search artists by "Love"', data.body);
   }, function(err) {
     console.error(err);
   });
@@ -176,7 +230,7 @@ spotifyApi.searchArtists('Love')
 // Search tracks whose artist's name contains 'Love'
 spotifyApi.searchTracks('artist:Love')
   .then(function(data) {
-    console.log('Search tracks by "Love" in the artist name', data);
+    console.log('Search tracks by "Love" in the artist name', data.body);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -184,7 +238,7 @@ spotifyApi.searchTracks('artist:Love')
 // Search playlists whose name or description contains 'workout'
 spotifyApi.searchPlaylists('workout')
   .then(function(data) {
-    console.log('Found playlists are', data);
+    console.log('Found playlists are', data.body);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -192,7 +246,7 @@ spotifyApi.searchPlaylists('workout')
 // Get tracks in an album
 spotifyApi.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 })
   .then(function(data) {
-    console.log(data);
+    console.log(data.body);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -200,7 +254,7 @@ spotifyApi.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 })
 // Get an artist's top tracks
 spotifyApi.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB')
   .then(function(data) {
-    console.log(data);
+    console.log(data.body);
     }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -208,7 +262,7 @@ spotifyApi.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB')
 // Get artists related to an artist
 spotifyApi.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
   .then(function(data) {
-    console.log(data);
+    console.log(data.body);
   }, function(err) {
     done(err);
   });
@@ -220,7 +274,7 @@ spotifyApi.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
 // Get a user
 spotifyApi.getUser('petteralexis')
   .then(function(data) {
-    console.log('Some information about this user', data);
+    console.log('Some information about this user', data.body);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -228,7 +282,7 @@ spotifyApi.getUser('petteralexis')
 // Get the authenticated user
 spotifyApi.getMe()
   .then(function(data) {
-    console.log('Some information about the authenticated user', data);
+    console.log('Some information about the authenticated user', data.body);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -240,7 +294,7 @@ spotifyApi.getMe()
 // Get a playlist
 spotifyApi.getPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
   .then(function(data) {
-    console.log('Some information about this playlist', data);
+    console.log('Some information about this playlist', data.body);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -248,7 +302,7 @@ spotifyApi.getPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
 // Get a user's playlists
 spotifyApi.getUserPlaylists('thelinmichael')
   .then(function(data) {
-    console.log('Retrieved playlists', data);
+    console.log('Retrieved playlists', data.body);
   },function(err) {
     console.log('Something went wrong!', err);
   });
@@ -339,7 +393,7 @@ spotifyApi.unfollowPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
 // Check if Users are following a Playlist
 this.areFollowingPlaylist = function('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella']) {
  .then(function(data) {
-    data.forEach(function(isFollowing) {
+    data.body.forEach(function(isFollowing) {
       console.log("User is following: " + isFollowing);
     });
   }, function(err) {
@@ -368,7 +422,7 @@ spotifyApi.containsMySavedTracks(["5ybJm6GczjQOgTqmJ0BomP"])
   .then(function(data) {
 
     // An array is returned, where the first element corresponds to the first track ID in the query
-    var trackIsInYourMusic = data[0];
+    var trackIsInYourMusic = data.body[0];
 
     if (trackIsInYourMusic) {
       console.log('Track was found in the user\'s Your Music library');
@@ -404,7 +458,7 @@ api.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
   // Retrieve new releases
 spotifyApi.getNewReleases({ limit : 5, offset: 0, country: 'SE' })
   .then(function(data) {
-    console.log(data);
+    console.log(data.body);
       done();
     }, function(err) {
        console.log("Something went wrong!", err);
@@ -414,7 +468,7 @@ spotifyApi.getNewReleases({ limit : 5, offset: 0, country: 'SE' })
 //  Retrieve featured playlists
 spotifyApi.getFeaturedPlaylists({ limit : 3, offset: 1, country: 'SE', locale: 'sv_SE', timestamp:'2014-10-23T09:00:00' })
   .then(function(data) {
-    console.log(data);
+    console.log(data.body);
   }, function(err) {
     console.log("Something went wrong!", err);
   });
@@ -427,7 +481,7 @@ spotifyApi.getCategories({
       locale: 'sv_SE'
   })
   .then(function(data) {
-    console.log(data);
+    console.log(data.body);
   }, function(err) {
     console.log("Something went wrong!", err);
   });
@@ -438,7 +492,7 @@ spotifyApi.getCategory('party', {
       locale: 'sv_SE'
   })
   .then(function(data) {
-    console.log(data);
+    console.log(data.body);
   }, function(err) {
     console.log("Something went wrong!", err);
   });
@@ -450,7 +504,7 @@ spotifyApi.getPlaylistsForCategory('party', {
       offset : 0
     })
   .then(function(data) {
-    console.log(data);
+    console.log(data.body);
   }, function(err) {
     console.log("Something went wrong!", err);
   });
@@ -461,13 +515,13 @@ spotifyApi.getPlaylistsForCategory('party', {
 // track detail information for album tracks
 spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm')
   .then(function(data) {
-    return data.tracks.map(function(t) { return t.id; });
+    return data.body.tracks.map(function(t) { return t.id; });
   })
   .then(function(trackIds) {
     return spotifyApi.getTracks(trackIds);
   })
-  .then(function(tracksInfo) {
-    console.log(tracksInfo);
+  .then(function(data) {
+    console.log(data.body);
   })
   .catch(function(error) {
     console.error(error);
@@ -476,12 +530,12 @@ spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm')
   // album detail for the first 10 Elvis' albums
 spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', {limit: 10})
   .then(function(data) {
-    return data.albums.map(function(a) { return a.id; });
+    return data.body.albums.map(function(a) { return a.id; });
   })
   .then(function(albums) {
     return spotifyApi.getAlbums(albums);
   }).then(function(data) {
-    console.log(data);
+    console.log(data.body);
   });
 ```
 
@@ -533,13 +587,13 @@ var code = 'MQCbtKe23z7YzzS44KzZzZgjQa621hgSzHN';
 // Retrieve an access token and a refresh token
 spotifyApi.authorizationCodeGrant(code)
   .then(function(data) {
-    console.log('The token expires in ' + data['expires_in']);
-    console.log('The access token is ' + data['access_token']);
-    console.log('The refresh token is ' + data['refresh_token']);
+    console.log('The token expires in ' + data.body['expires_in']);
+    console.log('The access token is ' + data.body['access_token']);
+    console.log('The refresh token is ' + data.body['refresh_token']);
 
     // Set the access token on the API object to use it in later calls
-    spotifyApi.setAccessToken(data['access_token']);
-    spotifyApi.setRefreshToken(data['refresh_token']);
+    spotifyApi.setAccessToken(data.body['access_token']);
+    spotifyApi.setRefreshToken(data.body['refresh_token']);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -574,11 +628,11 @@ var spotifyApi = new SpotifyWebApi({
 // Retrieve an access token.
 spotifyApi.clientCredentialsGrant()
   .then(function(data) {
-    console.log('The access token expires in ' + data['expires_in']);
-    console.log('The access token is ' + data['access_token']);
+    console.log('The access token expires in ' + data.body['expires_in']);
+    console.log('The access token is ' + data.body['access_token']);
 
     // Save the access token so that it's used in future calls
-    spotifyApi.setAccessToken(data['access_token']);
+    spotifyApi.setAccessToken(data.body['access_token']);
   }, function(err) {
         console.log('Something went wrong when retrieving an access token', err);
   });
@@ -640,8 +694,8 @@ var spotifyApi = new SpotifyWebApi({
 // Get an access token and 'save' it using a setter
 spotifyApi.clientCredentialsGrant()
   .then(function(data) {
-    console.log('The access token is ' + data['access_token']);
-    spotifyApi.setAccessToken(data['access_token']);
+    console.log('The access token is ' + data.body['access_token']);
+    spotifyApi.setAccessToken(data.body['access_token']);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -656,7 +710,7 @@ var spotifyApi = new SpotifyWebApi({
 // Do search using the access token
 spotifyApi.searchTracks('artist:Love')
   .then(function(data) {
-    console.log(data);
+    console.log(data.body);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
@@ -671,13 +725,16 @@ var spotifyApi = new SpotifyWebApi({
 // Get tracks in a playlist
 api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1, 'limit' : 5, 'fields' : 'items' })
   .then(function(data) {
-    console.log('The playlist contains these tracks', data);
+    console.log('The playlist contains these tracks', data.body);
   }, function(err) {
     console.log('Something went wrong!', err);
   });
 ```
 
 ## Change log
+
+#### 2.0.0 (27 Feb 2015)
+- **Breaking change**: Response object changed. Add headers and status code to all responses to enable users to implement caching. 
 
 #### 1.3.13 (26 Feb 2015)
 - Add language binding for **[Reorder tracks in a Playlist](https://developer.spotify.com/web-api/reorder-playlists-tracks/)**

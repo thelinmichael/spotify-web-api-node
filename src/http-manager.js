@@ -1,7 +1,9 @@
-var restler = require('restler');
+var restler = require('restler'),
+    WebApiError = require('./webapi-error');
 
 var HttpManager = {};
 
+/* Create restler options from the base request */
 var _getParametersFromRequest = function(request) {
   'use strict';
 
@@ -24,23 +26,25 @@ var _getParametersFromRequest = function(request) {
   return options;
 };
 
+/* Create an error object from an error returned from the Web API */
 var _getErrorObject = function(defaultMessage, err) {
   'use strict';
   var errorObject;
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
-    errorObject = new Error(err.error.message);
+    errorObject = new WebApiError(err.error.message, err.error.status);
   } else {
-    errorObject = new Error(defaultMessage + '. JSON has unexpected format ' + JSON.stringify(err));
+    errorObject = new WebApiError(defaultMessage + ': ' + JSON.stringify(err));
   }
   return errorObject;
 };
 
+/* Make the request to the Web API */
 HttpManager._makeRequest = function(method, options, uri, callback) {
   'use strict';
 
   method(uri, options)
     .on('success', function(data, response) {
-      callback(null, data);
+      callback(null, { 'body' : data, 'headers': response.headers, 'statusCode' : response.statusCode });
     })
     .on('fail', function(err, response) {
       if (err) {
@@ -63,6 +67,11 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
     });
 };
 
+/**
+ * Make a HTTP GET request.
+ * @param {BaseRequest} The request.
+ * @param {Function} The callback function.
+ */
 HttpManager.get = function(request, callback) {
   'use strict';
   var options = _getParametersFromRequest(request);
@@ -71,6 +80,11 @@ HttpManager.get = function(request, callback) {
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
 
+/**
+ * Make a HTTP POST request.
+ * @param {BaseRequest} The request.
+ * @param {Function} The callback function.
+ */
 HttpManager.post = function(request, callback) {
   'use strict';
 
@@ -80,6 +94,11 @@ HttpManager.post = function(request, callback) {
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
 
+/**
+ * Make a HTTP DELETE request.
+ * @param {BaseRequest} The request.
+ * @param {Function} The callback function.
+ */
 HttpManager.del = function(request, callback) {
   'use strict';
 
@@ -89,6 +108,11 @@ HttpManager.del = function(request, callback) {
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
 
+/**
+ * Make a HTTP PUT request.
+ * @param {BaseRequest} The request.
+ * @param {Function} The callback function.
+ */
 HttpManager.put = function(request, callback) {
   'use strict';
 
