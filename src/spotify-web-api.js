@@ -1674,11 +1674,11 @@ function SpotifyWebApi(credentials) {
     var promise = _performRequest(HttpManager.get, request);
 
     if (callback) {
-        promise.then(function(data) {
-          callback(null, data);
-        }, function(err) {
-          callback(err);
-        });
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
     } else {
       return promise;
     }
@@ -1732,7 +1732,7 @@ function SpotifyWebApi(credentials) {
     var promise = _performRequest(HttpManager.get, request);
 
     if (callback) {
-    promise.then(function(data) {
+      promise.then(function(data) {
         callback(null, data);
       }, function(err) {
         callback(err);
