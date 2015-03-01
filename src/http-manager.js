@@ -1,3 +1,5 @@
+'use strict';
+
 var restler = require('restler'),
     WebApiError = require('./webapi-error');
 
@@ -5,7 +7,6 @@ var HttpManager = {};
 
 /* Create restler options from the base request */
 var _getParametersFromRequest = function(request) {
-  'use strict';
 
   var options = {};
 
@@ -28,7 +29,6 @@ var _getParametersFromRequest = function(request) {
 
 /* Create an error object from an error returned from the Web API */
 var _getErrorObject = function(defaultMessage, err) {
-  'use strict';
   var errorObject;
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
     errorObject = new WebApiError(err.error.message, err.error.status);
@@ -40,7 +40,6 @@ var _getErrorObject = function(defaultMessage, err) {
 
 /* Make the request to the Web API */
 HttpManager._makeRequest = function(method, options, uri, callback) {
-  'use strict';
 
   method(uri, options)
     .on('success', function(data, response) {
@@ -73,7 +72,6 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
  * @param {Function} The callback function.
  */
 HttpManager.get = function(request, callback) {
-  'use strict';
   var options = _getParametersFromRequest(request);
   var method = restler.get;
 
@@ -86,7 +84,6 @@ HttpManager.get = function(request, callback) {
  * @param {Function} The callback function.
  */
 HttpManager.post = function(request, callback) {
-  'use strict';
 
   var options = _getParametersFromRequest(request);
   var method = restler.post;
@@ -100,7 +97,6 @@ HttpManager.post = function(request, callback) {
  * @param {Function} The callback function.
  */
 HttpManager.del = function(request, callback) {
-  'use strict';
 
   var options = _getParametersFromRequest(request);
   var method = restler.del;
@@ -114,7 +110,6 @@ HttpManager.del = function(request, callback) {
  * @param {Function} The callback function.
  */
 HttpManager.put = function(request, callback) {
-  'use strict';
 
   var options = _getParametersFromRequest(request);
   var method = restler.put;
