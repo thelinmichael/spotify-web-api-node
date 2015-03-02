@@ -32,11 +32,11 @@ spotifyApi.authorizationCodeGrant(authorizationCode)
   .then(function(data) {
 
     // Set the access token and refresh token
-    spotifyApi.setAccessToken(data['access_token']);
-    spotifyApi.setRefreshToken(data['refresh_token']);
+    spotifyApi.setAccessToken(data.body['access_token']);
+    spotifyApi.setRefreshToken(data.body['refresh_token']);
 
     // Save the amount of seconds until the access token expired
-    tokenExpirationEpoch = (new Date().getTime() / 1000) + data['expires_in'];
+    tokenExpirationEpoch = (new Date().getTime() / 1000) + data.body['expires_in'];
     console.log('Retrieved token. It expires in ' + Math.floor(tokenExpirationEpoch - new Date().getTime() / 1000) + ' seconds!');
   }, function(err) {
     console.log('Something went wrong when retrieving the access token!', err.message);
@@ -55,7 +55,7 @@ setInterval(function() {
     // Refresh token and print the new time to expiration.
     spotifyApi.refreshAccessToken()
       .then(function(data) {
-        tokenExpirationEpoch = (new Date().getTime() / 1000) + data['expires_in'];
+        tokenExpirationEpoch = (new Date().getTime() / 1000) + data.body['expires_in'];
         console.log('Refreshed token. It now expires in ' + Math.floor(tokenExpirationEpoch - new Date().getTime() / 1000) + ' seconds!');
       }, function(err) {
         console.log('Could not refresh the token!', err.message);

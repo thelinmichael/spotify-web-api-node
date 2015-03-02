@@ -16,11 +16,11 @@ var artistId = '0qeei9KQnptjwb8MgkqEoy';
 spotifyApi.getArtistRelatedArtists(artistId)
   .then(function(data) {
 
-    if (data.artists.length) {
+    if (data.body.artists.length) {
       // Print the number of similar artists
-      console.log('I got ' + data.artists.length + ' similar artists!');
+      console.log('I got ' + data.body.artists.length + ' similar artists!');
 
-      console.log('The most similar one is ' + data.artists[0].name);
+      console.log('The most similar one is ' + data.body.artists[0].name);
     } else {
       console.log('I didn\'t find any similar artists.. Sorry.');
     }

@@ -22,7 +22,7 @@ var spotifyApi = new SpotifyWebApi({
 spotifyApi.clientCredentialsGrant()
   .then(function(data) {
     // Set the access token on the API object so that it's used in all future requests
-    spotifyApi.setAccessToken(data['access_token']);
+    spotifyApi.setAccessToken(data.body['access_token']);
 
     // Get the most popular tracks by David Bowie in Great Britain
     return spotifyApi.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB')
@@ -37,7 +37,7 @@ spotifyApi.clientCredentialsGrant()
      * 3. Let's Dance - 1999 Digital Remaster (popularity is 20)
      * 4. ...
     */
-    data.tracks.forEach(function(track, index) {
+    data.body.tracks.forEach(function(track, index) {
       console.log((index+1) + '. ' + track.name + ' (popularity is ' + track.popularity + ')');
     });
 

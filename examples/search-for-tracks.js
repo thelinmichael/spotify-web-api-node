@@ -12,15 +12,15 @@ var spotifyApi = new SpotifyWebApi();
 
 spotifyApi.searchTracks('Love', function(err, data) {
   if (err) {
-    console.error('Something went wrong', err);
+    console.error('Something went wrong', err.message);
     return;
   }
 
   // Print some information about the results
-  console.log('I got ' + data.tracks.total + ' results!');
+  console.log('I got ' + data.body.tracks.total + ' results!');
 
   // Go through the first page of results
-  var firstPage = data.tracks.items;
+  var firstPage = data.body.tracks.items;
   console.log('The tracks in the first page are.. (popularity in parentheses)');
 
   /*

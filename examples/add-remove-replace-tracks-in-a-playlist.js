@@ -40,7 +40,7 @@ spotifyApi.authorizationCodeGrant(authorizationCode)
     return spotifyApi.createPlaylist('thelinmichael', 'My New Awesome Playlist');
   }).then(function(data) {
     console.log('Ok. Playlist created!');
-    playlistId = data['id'];
+    playlistId = data.body['id'];
 
     // Add tracks to the playlist
     return spotifyApi.addTracksToPlaylist('thelinmichael', playlistId, ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh",

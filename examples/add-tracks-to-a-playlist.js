@@ -29,7 +29,7 @@ var spotifyApi = new SpotifyWebApi({
 // First retrieve an access token
 spotifyApi.authorizationCodeGrant(authorizationCode)
   .then(function(data) {
-    spotifyApi.setAccessToken(data['access_token']);
+    spotifyApi.setAccessToken(data.body['access_token']);
     return spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"],
       {
         position : 10
