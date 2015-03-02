@@ -120,12 +120,12 @@ To enable caching, this wrapper now exposes the response headers and not just th
 ```json
 {
   "body" : {
-  
+
   },
   "headers" : {
-  
+
   },
-  "statusCode" : 
+  "statusCode" :
 }
 ```
 
@@ -733,8 +733,11 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Change log
 
+#### 2.0.1 (2 Mar 2015)
+- Return WebApiError objects if error occurs during authentication.
+
 #### 2.0.0 (27 Feb 2015)
-- **Breaking change**: Response object changed. Add headers and status code to all responses to enable users to implement caching. 
+- **Breaking change**: Response object changed. Add headers and status code to all responses to enable users to implement caching.
 
 #### 1.3.13 (26 Feb 2015)
 - Add language binding for **[Reorder tracks in a Playlist](https://developer.spotify.com/web-api/reorder-playlists-tracks/)**
