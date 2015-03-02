@@ -35,7 +35,9 @@ var _getErrorObject = function(defaultMessage, err) {
     errorObject = new WebApiError(err.error.message, err.error.status);
   } else if (typeof err.error === 'string') {
     // Authorization Error format
+    /* jshint ignore:start */
     errorObject = new WebApiError(err.error + ': ' + err['error_description']);
+    /* jshint ignore:end */
   } else {
     // Unexpected format
     errorObject = new WebApiError(defaultMessage + ': ' + JSON.stringify(err));
