@@ -31,8 +31,13 @@ var _getParametersFromRequest = function(request) {
 var _getErrorObject = function(defaultMessage, err) {
   var errorObject;
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
+    // Web API Error format
     errorObject = new WebApiError(err.error.message, err.error.status);
+  } else if (typeof err.error === 'string') {
+    // Authorization Error format
+    errorObject = new WebApiError(err.error + ': ' + err['error_description']);
   } else {
+    // Unexpected format
     errorObject = new WebApiError(defaultMessage + ': ' + JSON.stringify(err));
   }
   return errorObject;
