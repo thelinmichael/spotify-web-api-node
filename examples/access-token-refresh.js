@@ -39,7 +39,7 @@ spotifyApi.authorizationCodeGrant(authorizationCode)
     tokenExpirationEpoch = (new Date().getTime() / 1000) + data['expires_in'];
     console.log('Retrieved token. It expires in ' + Math.floor(tokenExpirationEpoch - new Date().getTime() / 1000) + ' seconds!');
   }, function(err) {
-    console.log('Something went wrong when retrieving the access token!', err);
+    console.log('Something went wrong when retrieving the access token!', err.message);
   });
 
 // Continually print out the time left until the token expires..
@@ -58,7 +58,7 @@ setInterval(function() {
         tokenExpirationEpoch = (new Date().getTime() / 1000) + data['expires_in'];
         console.log('Refreshed token. It now expires in ' + Math.floor(tokenExpirationEpoch - new Date().getTime() / 1000) + ' seconds!');
       }, function(err) {
-        console.log('Could not refresh the token!', err);
+        console.log('Could not refresh the token!', err.message);
       });
   }
 }, 1000);

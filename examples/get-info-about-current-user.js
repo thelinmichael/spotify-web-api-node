@@ -48,5 +48,5 @@ spotifyApi.authorizationCodeGrant(authorizationCode)
     console.log('This user has a ' + data.product + ' account');
   })
   .catch(function(err) {
-    console.log('Something went wrong', err);
+    console.log('Something went wrong', err.message);
   });

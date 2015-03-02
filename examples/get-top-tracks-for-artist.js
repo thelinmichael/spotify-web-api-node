@@ -42,5 +42,5 @@ spotifyApi.clientCredentialsGrant()
     });
 
   }).catch(function(err) {
-    console.log('Unfortunately, something has gone wrong.', err);
+    console.log('Unfortunately, something has gone wrong.', err.message);
   });

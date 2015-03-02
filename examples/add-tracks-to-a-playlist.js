@@ -37,5 +37,5 @@ spotifyApi.authorizationCodeGrant(authorizationCode)
   }).then(function(data) {
     console.log('Added tracks to the playlist!');
   }).catch(function(err) {
-    console.log('Something went wrong!');
+    console.log('Something went wrong!', err.message);
   });

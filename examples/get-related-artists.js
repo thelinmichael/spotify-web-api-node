@@ -26,5 +26,5 @@ spotifyApi.getArtistRelatedArtists(artistId)
     }
 
   }, function(err) {
-    console.log('Something went wrong..', err);
+    console.log('Something went wrong..', err.message);
   });
