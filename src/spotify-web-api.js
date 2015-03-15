@@ -24,9 +24,18 @@ function SpotifyWebApi(credentials) {
       return;
     }
     for (var key in options) {
-      if (key !== 'credentials') {
+      if (key !== 'credentials' && key !== 'headers') {
         request.addQueryParameter(key, options[key]);
       }
+    }
+  }
+
+  function _addHeaderParameters(request, options) {
+    if (!options) {
+      return;
+    }
+    for (var key in options) {
+      request.addHeaders(options);
     }
   }
 
@@ -761,6 +770,7 @@ function SpotifyWebApi(credentials) {
 
     _addAccessToken(request, this.getAccessToken());
     _addQueryParameters(request, options);
+    _addHeaderParameters(request,options.headers);
 
     var promise = _performRequest(HttpManager.get, request);
 
