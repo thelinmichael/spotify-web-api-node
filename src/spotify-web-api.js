@@ -361,7 +361,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
@@ -393,7 +392,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
@@ -635,7 +633,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
@@ -664,7 +661,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
@@ -694,7 +690,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
@@ -724,7 +719,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
@@ -930,7 +924,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.del, request);
 
@@ -1080,7 +1073,6 @@ function SpotifyWebApi(credentials) {
       build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.del, request);
 
@@ -1114,7 +1106,6 @@ function SpotifyWebApi(credentials) {
       build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise =  _performRequest(HttpManager.put, request);
 
@@ -1337,7 +1328,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
@@ -1367,7 +1357,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.del, request);
 
@@ -1396,7 +1385,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.put, request);
 
@@ -1429,7 +1417,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.put, request);
 
@@ -1462,7 +1449,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.put, request);
 
@@ -1495,7 +1481,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.del, request);
 
@@ -1528,7 +1513,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.del, request);
 
@@ -1563,7 +1547,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
@@ -1597,7 +1580,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
@@ -1632,7 +1614,6 @@ function SpotifyWebApi(credentials) {
       .build();
 
     _addAccessToken(request, this.getAccessToken());
-    _addHeaderParameters(request,(options.headers || null));
 
     var promise = _performRequest(HttpManager.get, request);
 
