@@ -167,6 +167,19 @@ The response object for the same request in earlier versions than to 2.0.0.
   }
 ```
 
+To support making API calls with specific headers you may pass in the desired headers under the `headers` key for any
+wrapper call that supports optional parameters; e.g. getting a playlist could have usage
+```javascript
+spotifyApi.getPlaylist('odesza','0uxUkSQHZVM7so7msXl9Ck', { headers: { 'If-None-Match': 'AAAANPBn03qInch471K02Rncz5IHWVja'} })
+  .then(function(data) {
+    if(data.statusCode !== 304)
+      console.log('Playlist information', data.body);
+    else
+      console.log('Use cached playlist information');
+  }, function(err) {
+    console.error(err);
+  });
+```
 
 ### More examples
 
@@ -244,7 +257,7 @@ spotifyApi.searchPlaylists('workout')
   });
 
 // Get tracks in an album
-spotifyApi.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 })
+spotifyApi.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1, headers: {'If-None-Match':'cachedEtagValue'} })
   .then(function(data) {
     console.log(data.body);
   }, function(err) {
@@ -513,7 +526,7 @@ spotifyApi.getPlaylistsForCategory('party', {
 ### Nesting calls
 ```javascript
 // track detail information for album tracks
-spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm')
+spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm',{ headers: {'If-None-Match':'cachedEtagValue'} })
   .then(function(data) {
     return data.body.tracks.map(function(t) { return t.id; });
   })
@@ -732,6 +745,9 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 ```
 
 ## Change log
+
+#### 2.1.0 (15 Mar 2015)
+- Allow setting API call Header values via optional `headers` parameters in calls that support optional parameters.
 
 #### 2.0.1 (2 Mar 2015)
 - Return WebApiError objects if error occurs during authentication.
