@@ -93,7 +93,7 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
 If you dont wan't to use promises, you can provide a callback method instead.
 ```javascript
 // Get Elvis' albums
-spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', function(err, data) {
+spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', {limit: 10, offset: 20}, function(err, data) {
   if (err) {
     console.error('Something went wrong!');
   } else {
@@ -102,7 +102,7 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', function(err, data) {
 });
 ```
 
-The functions that fetch data from the API also support an optional JSON object with a set of options. For example, limit and offset can be used in functions that returns paginated results, such as search and retrieving an artist's albums.
+The functions that fetch data from the API also require a JSON object with a set of options. For example, limit and offset can be used in functions that returns paginated results, such as search and retrieving an artist's albums.
 
 ```javascript
 // Passing a callback - get Elvis' albums in range [20...29]
