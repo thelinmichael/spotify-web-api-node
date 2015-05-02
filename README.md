@@ -343,7 +343,7 @@ spotifyApi.removeTracksFromPlaylistByPosition('thelinmichael', '5ieJqeLJjjI8iJWa
   });
 
 // Remove all occurrence of a track
-var tracks = { tracks : [ uri : "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" ] };
+var tracks = { tracks : [{ uri : "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" }] };
 var options = { snapshot_id : "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9" };
 spotifyApi.removeTracksFromPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', tracks, options)
   .then(function(data) {
