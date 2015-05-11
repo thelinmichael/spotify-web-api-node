@@ -4,7 +4,7 @@ Spotify Web API Node
 [![Tests](https://travis-ci.org/thelinmichael/spotify-web-api-node.svg?branch=master)](https://travis-ci.org/thelinmichael/spotify-web-api-node)
 [![Coverage Status](https://coveralls.io/repos/thelinmichael/spotify-web-api-node/badge.svg)](https://coveralls.io/r/thelinmichael/spotify-web-api-node)
 
-This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). If you want to make requests directly from the browser, please check out [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/).
+This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). If you want to make requests directly from the browser, please check out [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/). Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez).
 
 It includes helper functions to do the following:
 
@@ -741,6 +741,10 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 You can run the unit tests executing `mocha` and get a test coverage report running `mocha -r blanket -R html-cov > coverage.html`.
 
 ## Change log
+
+#### 2.0.2 (11 May 2015)
+- Bugfix for retrieving an access token through the Client Credentials flow. (Thanks [Nate Wilkins](https://github.com/Nate-Wilkins)!)
+- Add test coverage and Travis CI.
 
 #### 2.0.1 (2 Mar 2015)
 - Return WebApiError objects if error occurs during authentication.
