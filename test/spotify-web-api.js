@@ -971,7 +971,6 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
 
     api.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false }, function(err, data) {
-      console.log(err);
       'My Cool Playlist'.should.equal(data.body.name);
       (200).should.equal(data.statusCode);
       done();
