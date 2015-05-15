@@ -32,6 +32,7 @@
     "grunt-simple-mocha": "0.4.x",
     "mocha": "~1.20.1",
     "mocha-lcov-reporter": "0.0.2",
+    "mockery": "^1.4.0",
     "should": "~3.0",
     "sinon": "~1.12.2",
     "xunit-file": "0.0.5"
