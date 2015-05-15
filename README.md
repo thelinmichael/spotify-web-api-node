@@ -6,7 +6,7 @@ Spotify Web API Node
 
 This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). If you want to make requests directly from the browser, please check out [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/). 
 
-Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez).
+Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez), with help from [a lot of awesome contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members).
 
 It includes helper functions to do the following:
 
