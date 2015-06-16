@@ -1,7 +1,12 @@
 Spotify Web API Node
 ==================
 
-This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). If you want to make requests directly from the browser, please check out [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/).
+[![Tests](https://travis-ci.org/thelinmichael/spotify-web-api-node.svg?branch=master)](https://travis-ci.org/thelinmichael/spotify-web-api-node)
+[![Coverage Status](https://coveralls.io/repos/thelinmichael/spotify-web-api-node/badge.svg)](https://coveralls.io/r/thelinmichael/spotify-web-api-node)
+
+This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). If you want to make requests directly from the browser, please check out [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/). 
+
+Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez), with help from [a lot of awesome contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members).
 
 It includes helper functions to do the following:
 
@@ -93,7 +98,7 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
 If you dont wan't to use promises, you can provide a callback method instead.
 ```javascript
 // Get Elvis' albums
-spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', function(err, data) {
+spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', { limit: 10, offset: 20 }, function(err, data) {
   if (err) {
     console.error('Something went wrong!');
   } else {
@@ -102,7 +107,9 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', function(err, data) {
 });
 ```
 
-The functions that fetch data from the API also support an optional JSON object with a set of options. For example, limit and offset can be used in functions that returns paginated results, such as search and retrieving an artist's albums.
+The functions that fetch data from the API also accept a JSON object with a set of options. For example, limit and offset can be used in functions that returns paginated results, such as search and retrieving an artist's albums.
+
+Note that the **options** parameter is currently **required if you're using callback methods**.
 
 ```javascript
 // Passing a callback - get Elvis' albums in range [20...29]
@@ -167,19 +174,6 @@ The response object for the same request in earlier versions than to 2.0.0.
   }
 ```
 
-To support making API calls with specific headers you may pass in the desired headers under the `headers` key for any
-wrapper call that supports optional parameters; e.g. getting a playlist could have usage
-```javascript
-spotifyApi.getPlaylist('odesza','0uxUkSQHZVM7so7msXl9Ck', { headers: { 'If-None-Match': 'AAAANPBn03qInch471K02Rncz5IHWVja'} })
-  .then(function(data) {
-    if(data.statusCode !== 304)
-      console.log('Playlist information', data.body);
-    else
-      console.log('Use cached playlist information');
-  }, function(err) {
-    console.error(err);
-  });
-```
 
 ### More examples
 
@@ -257,7 +251,7 @@ spotifyApi.searchPlaylists('workout')
   });
 
 // Get tracks in an album
-spotifyApi.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1, headers: {'If-None-Match':'cachedEtagValue'} })
+spotifyApi.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 })
   .then(function(data) {
     console.log(data.body);
   }, function(err) {
@@ -356,7 +350,7 @@ spotifyApi.removeTracksFromPlaylistByPosition('thelinmichael', '5ieJqeLJjjI8iJWa
   });
 
 // Remove all occurrence of a track
-var tracks = { tracks : [ uri : "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" ] };
+var tracks = { tracks : [{ uri : "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" }] };
 var options = { snapshot_id : "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9" };
 spotifyApi.removeTracksFromPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', tracks, options)
   .then(function(data) {
@@ -526,7 +520,7 @@ spotifyApi.getPlaylistsForCategory('party', {
 ### Nesting calls
 ```javascript
 // track detail information for album tracks
-spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm',{ headers: {'If-None-Match':'cachedEtagValue'} })
+spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm')
   .then(function(data) {
     return data.body.tracks.map(function(t) { return t.id; });
   })
@@ -744,10 +738,21 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
   });
 ```
 
+
+## Development
+
+See something you think can be improved? [Open an issue](https://github.com/thelinmichael/spotify-web-api-node/issues/new) or clone the project and send a pull request with your changes. 
+
+### Running tests
+
+You can run the unit tests executing `mocha` and get a test coverage report running `mocha -r blanket -R html-cov > coverage.html`.
+
+
 ## Change log
 
-#### 2.1.0 (15 Mar 2015)
-- Allow setting API call Header values via optional `headers` parameters in calls that support optional parameters.
+#### 2.0.2 (11 May 2015)
+- Bugfix for retrieving an access token through the Client Credentials flow. (Thanks [Nate Wilkins](https://github.com/Nate-Wilkins)!)
+- Add test coverage and Travis CI.
 
 #### 2.0.1 (2 Mar 2015)
 - Return WebApiError objects if error occurs during authentication.
@@ -755,67 +760,4 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 #### 2.0.0 (27 Feb 2015)
 - **Breaking change**: Response object changed. Add headers and status code to all responses to enable users to implement caching.
 
-#### 1.3.13 (26 Feb 2015)
-- Add language binding for **[Reorder tracks in a Playlist](https://developer.spotify.com/web-api/reorder-playlists-tracks/)**
-
-#### 1.3.12 (22 Feb 2015)
-- Add language binding for **[Remove tracks in a Playlist by Position](https://developer.spotify.com/web-api/remove-tracks-playlist/)**
-
-#### 1.3.11
-- Add **[Search for Playlists](https://developer.spotify.com/web-api/search-item/)** endpoint.
-
-#### 1.3.10
-- Add market parameter to endpoints supporting **[Track Relinking](https://developer.spotify.com/web-api/track-relinking-guide/)**.
-- Improve SEO by adding keywords to the package.json file. ;-)
-
-#### 1.3.8
-- Add **[Get a List of Categories](https://developer.spotify.com/web-api/get-list-categories/)**, **[Get a Category](https://developer.spotify.com/web-api/get-category/)**, and **[Get A Category's Playlists](https://developer.spotify.com/web-api/get-categorys-playlists/)** endpoints.
-
-#### 1.3.7
-- Add **[Check if Users are Following Playlist](https://developer.spotify.com/web-api/check-user-following-playlist/)** endpoint.
-
-#### 1.3.5
-- Add missing options parameter in createPlaylist (issue #19). Thanks for raising this [allinallin](https://github.com/allinallin).
-
-#### 1.3.4
-- Add **[Follow Playlist](https://developer.spotify.com/web-api/follow-playlist/)** and **[Unfollow Playlist](https://developer.spotify.com/web-api/unfollow-playlist/)** endpoints.
-
-#### 1.3.3
-- [Fix](https://github.com/thelinmichael/spotify-web-api-node/pull/18) error format. Thanks [extrakt](https://github.com/extrakt).
-
-#### 1.3.2
-- Add ability to use callback methods instead of promise.
-
-#### 1.2.2
-- Bugfix. api.addTracksToPlaylist tracks parameter can be a string or an array. Thanks [ofagbemi](https://github.com/ofagbemi)!
-
-#### 1.2.1
-- Add **[Follow endpoints](https://developer.spotify.com/web-api/web-api-follow-endpoints/)**. Great work [JMPerez](https://github.com/JMPerez).
-
-#### 1.1.0
-- Add **[Browse endpoints](https://developer.spotify.com/web-api/browse-endpoints/)**. Thanks [fsahin](https://github.com/fsahin).
-
-#### 1.0.2
-- Specify module's git repository. Thanks [vincentorback](https://github.com/vincentorback).
-
-#### 1.0.1
-- Allow options to be set when retrieving a user's playlists. Thanks [EaterOfCode](https://github.com/EaterOfCode).
-
-#### 1.0.0
-
-- Add **[Replace tracks in a Playlist](https://developer.spotify.com/web-api/replace-playlists-tracks/)** endpoint
-- Add **[Remove tracks in a Playlist](https://developer.spotify.com/web-api/remove-tracks-playlist/)** endpoint
-- Return errors as Error objects instead of unparsed JSON. Thanks [niftylettuce](https://github.com/niftylettuce).
-
-#### 0.0.11
-
-- Add **[Change Playlist details](https://developer.spotify.com/web-api/change-playlist-details/)** endpoint (change published status and name). Gracias [JMPerez](https://github.com/JMPerez).
-
-#### 0.0.10
-
-- Add Your Music Endpoints (**[Add tracks](https://developer.spotify.com/web-api/save-tracks-user/)**, **[Remove tracks](https://developer.spotify.com/web-api/remove-tracks-user/)**, **[Contains tracks](https://developer.spotify.com/web-api/check-users-saved-tracks/)**, **[Get tracks](https://developer.spotify.com/web-api/get-users-saved-tracks/)**).
-- Documentation updates (change scope name of playlist-modify to playlist-modify-public, and a fix to a parameter type). Thanks [JMPerez](https://github.com/JMPerez) and [matiassingers](https://github.com/matiassingers).
-
-#### 0.0.9
-
-- Add **[Related artists](https://developer.spotify.com/web-api/get-related-artists/)** endpoint
+[Full change log](https://github.com/thelinmichael/spotify-web-api-node/blob/master/HISTORY.md)

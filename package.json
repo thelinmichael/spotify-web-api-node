@@ -1,6 +1,6 @@
 {
   "name": "spotify-web-api-node",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "homepage": "https://github.com/thelinmichael/spotify-web-api-node",
   "description": "A Node.js wrapper for Spotify's Web API",
   "main": "src/spotify-web-api.js",
@@ -14,14 +14,28 @@
     "restler": "~3.2.0",
     "promise": "~5.0.0"
   },
+  "config": {
+    "blanket": {
+      "pattern": "src",
+      "data-cover-never": "node_modules"
+    }
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha",
+    "coveralls": "./node_modules/.bin/mocha -r blanket -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js"
+  },
   "devDependencies": {
-    "xunit-file": "0.0.5",
+    "blanket": "^1.1.7",
+    "coveralls": "^2.11.2",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-watch": "~0.6",
     "grunt-simple-mocha": "0.4.x",
-    "should": "~3.0",
     "mocha": "~1.20.1",
-    "sinon": "~1.12.2"
+    "mocha-lcov-reporter": "0.0.2",
+    "mockery": "^1.4.0",
+    "should": "~3.0",
+    "sinon": "~1.12.2",
+    "xunit-file": "0.0.5"
   },
   "keywords": [
     "spotify",
