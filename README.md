@@ -398,7 +398,7 @@ spotifyApi.unfollowPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
   });
 
 // Check if Users are following a Playlist
-this.areFollowingPlaylist = function('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella']) {
+spotifyApi.areFollowingPlaylist = function('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella']) {
  .then(function(data) {
     data.body.forEach(function(isFollowing) {
       console.log("User is following: " + isFollowing);
