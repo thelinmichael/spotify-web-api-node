@@ -398,7 +398,7 @@ spotifyApi.unfollowPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
   });
 
 // Check if Users are following a Playlist
-spotifyApi.areFollowingPlaylist = function('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella']) {
+spotifyApi.areFollowingPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella'])
  .then(function(data) {
     data.body.forEach(function(isFollowing) {
       console.log("User is following: " + isFollowing);
@@ -406,7 +406,6 @@ spotifyApi.areFollowingPlaylist = function('thelinmichael', '5ieJqeLJjjI8iJWaxeB
   }, function(err) {
     console.log('Something went wrong!', err);
   });
-};
 
 /*
  * Your Music library methods
@@ -450,7 +449,7 @@ spotifyApi.removeFromMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
 });
 
 // Add tracks to the signed in user's Your Music library
-api.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
+spotifyApi.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
   .then(function(data) {
     console.log('Added track!');
   }, function(err) {
