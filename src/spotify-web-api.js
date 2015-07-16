@@ -1531,6 +1531,38 @@ function SpotifyWebApi(credentials) {
     }
   };
 
+  /**
+   * Get the current user's followed artists.
+   * @param {Object} [options] Options, being after and limit.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which contains
+   * album objects. Not returned if a callback is given.
+   */
+  this.getFollowedArtists = function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/following')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters({
+        type : 'artist'
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
 
   /**
    * Check if users are following a playlist.

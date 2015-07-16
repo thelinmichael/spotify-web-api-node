@@ -1035,7 +1035,7 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK');
       JSON.parse(options.data).should.eql({
         name : 'This is a new name for my Cool Playlist, and will become private',
-        'public' : false 
+        'public' : false
       })
       callback(null, { statusCode : 200 });
       should.not.exist(options.query);
@@ -1711,6 +1711,60 @@ describe('Spotify Web API', function() {
       done();
     });
 
+  });
+
+  it('should get a user\'s followed artists using callback', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me/following');
+      options.query.should.eql({
+        type: 'artist',
+        after: '6tbXwhqy3WAFqanusCLvEU',
+        limit: 3
+      });
+      should.not.exist(options.data);
+      callback(null, { body : { 'artists' : { 'items' : [] } } });
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.getFollowedArtists({ after : '6tbXwhqy3WAFqanusCLvEU', limit : 3 })
+      .then(function(data) {
+        should.exist(data.body.artists);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it('should get a user\'s followed artists using callback', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me/following');
+      options.query.should.eql({
+        type: 'artist',
+        after: '6tbXwhqy3WAFqanusCLvEU',
+        limit: 3
+      });
+      should.not.exist(options.data);
+      callback(null, { body : { 'artists' : { 'items' : [] } } });
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.getFollowedArtists({ after : '6tbXwhqy3WAFqanusCLvEU', limit : 3 }, function(err, data) {
+      should.not.exist(err);
+      should.exist(data.body.artists);
+      done();
+    });
   });
 
   it('should check whether users follows a playlist', function(done) {
