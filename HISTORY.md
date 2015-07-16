@@ -1,5 +1,8 @@
 ## Change log
 
+#### 2.1.0 (16 July 2015)
+- Add language binding for **[Get Followed Artists](https://developer.spotify.com/web-api/get-followed-artists/)**
+
 #### 2.0.2 (11 May 2015)
 - Bugfix for retrieving an access token through the Client Credentials flow. (Thanks [Nate Wilkins](https://github.com/Nate-Wilkins)!)
 - Add test coverage and Travis CI.

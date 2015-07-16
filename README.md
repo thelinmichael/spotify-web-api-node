@@ -4,7 +4,7 @@ Spotify Web API Node
 [![Tests](https://travis-ci.org/thelinmichael/spotify-web-api-node.svg?branch=master)](https://travis-ci.org/thelinmichael/spotify-web-api-node)
 [![Coverage Status](https://coveralls.io/repos/thelinmichael/spotify-web-api-node/badge.svg)](https://coveralls.io/r/thelinmichael/spotify-web-api-node)
 
-This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). If you want to make requests directly from the browser, please check out [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/). 
+This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). If you want to make requests directly from the browser, please check out [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/).
 
 Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez), with help from [a lot of awesome contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members).
 
@@ -48,6 +48,7 @@ It includes helper functions to do the following:
 - Check if the logged in user follows a user or artist
 - Follow a playlist
 - Unfollow a playlist
+- Get followed artists
 - Check if users are following a Playlist
 
 Some methods require authentication, which can be done using these flows:
@@ -408,6 +409,37 @@ spotifyApi.areFollowingPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['the
   });
 
 /*
+ * Following Users and Artists methods
+ */
+
+/* Get followed artists */
+spotifyApi.getFollowedArtists({ limit : 1 })
+  .then(function(data) {
+    // 'This user is following 1051 artists!'
+    console.log('This user is following ', data.body.artists.total ' artists!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+/* Follow a user */
+// TBD.
+
+/* Follow an artist */
+// TBD.
+
+/* Unfollow a user */
+// TBD
+
+/* Unfollow an artist */
+// TBD
+
+/* Check if a user is following a user */
+// TBD
+
+/* Check if a user is following an artist */
+// TBD
+
+/*
  * Your Music library methods
  */
 
@@ -740,7 +772,7 @@ api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', { 'offset' : 1,
 
 ## Development
 
-See something you think can be improved? [Open an issue](https://github.com/thelinmichael/spotify-web-api-node/issues/new) or clone the project and send a pull request with your changes. 
+See something you think can be improved? [Open an issue](https://github.com/thelinmichael/spotify-web-api-node/issues/new) or clone the project and send a pull request with your changes.
 
 ### Running tests
 
@@ -748,6 +780,9 @@ You can run the unit tests executing `mocha` and get a test coverage report runn
 
 
 ## Change log
+
+#### 2.1.0 (16 July 2015)
+- Add language binding for **[Get Followed Artists](https://developer.spotify.com/web-api/get-followed-artists/)**
 
 #### 2.0.2 (11 May 2015)
 - Bugfix for retrieving an access token through the Client Credentials flow. (Thanks [Nate Wilkins](https://github.com/Nate-Wilkins)!)
