@@ -1328,6 +1328,116 @@ describe('Spotify Web API', function() {
 
   });
 
+  it('should remove albums in the users library', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.del);
+      JSON.parse(options.data).should.eql(["27cZdqrQiKt3IT00338dws"]);
+      uri.should.equal('https://api.spotify.com/v1/me/albums');
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.removeFromMySavedAlbums(["27cZdqrQiKt3IT00338dws"])
+    .then(function(data) {
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+
+  });
+
+  it('should add albums to the users library', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.put);
+      JSON.parse(options.data).should.eql(["27cZdqrQiKt3IT00338dws"]);
+      uri.should.equal('https://api.spotify.com/v1/me/albums');
+      should.not.exist(options.query);
+      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.addToMySavedAlbums(["27cZdqrQiKt3IT00338dws"])
+    .then(function(data) {
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+  });
+
+  it('should get albums in the users library', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me/albums');
+      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      options.query.limit.should.equal(2);
+      options.query.offset.should.equal(1);
+      callback(null, { body: { href : 'https://api.spotify.com/v1/me/albums?offset=1&limit=2',
+                               items : [  { 'added_at' : '2014-07-08T18:18:33Z', 'album' : { 'name' : 'Album!'} } ] } });
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.getMySavedAlbums({
+      limit : 2,
+      offset: 1
+    })
+    .then(function(data) {
+      data.body.href.should.equal("https://api.spotify.com/v1/me/albums?offset=1&limit=2");
+      data.body.items[0]['added_at'].should.equal('2014-07-08T18:18:33Z');
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+  });
+
+  it('should determine if an album is in the users library', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me/albums/contains');
+      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      options.query.ids.should.equal("27cZdqrQiKt3IT00338dws");
+      callback(null, { body: [ true ] });
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+    api.containsMySavedAlbums(["27cZdqrQiKt3IT00338dws"])
+    .then(function(data) {
+      Object.prototype.toString.call(data.body).should.equal('[object Array]');
+      data.body.length.should.equal(1);
+      data.body[0].should.equal(true);
+      done();
+    }, function(err) {
+      console.log(err);
+      done(err);
+    });
+  });
+
+
   it('should follow a playlist', function(done) {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.put);

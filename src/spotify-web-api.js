@@ -1342,7 +1342,7 @@ function SpotifyWebApi(credentials) {
   };
 
    /**
-   * Remove a track from the authenticated user's Your Music library.
+   * Add a track from the authenticated user's Your Music library.
    * @param {string[]} trackIds The track IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
@@ -1368,6 +1368,124 @@ function SpotifyWebApi(credentials) {
       return promise;
     }
   };
+
+  /**
+   * Remove an album from the authenticated user's Your Music library.
+   * @param {string[]} albumIds The album IDs
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error.
+   * Not returned if a callback is given.
+   */
+  this.removeFromMySavedAlbums = function(albumIds, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/albums')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters(albumIds)
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.del, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Add an album from the authenticated user's Your Music library.
+   * @param {string[]} albumIds The track IDs
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
+   */
+  this.addToMySavedAlbums = function(albumIds, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/albums')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters(albumIds)
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.put, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Retrieve the albums that are saved to the authenticated users Your Music library.
+   * @param {Object} [options] Options, being market, limit, and/or offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which in turn contains
+   *          playlist album objects. Not returned if a callback is given.
+   */
+  this.getMySavedAlbums = function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/albums')
+      .withQueryParameters(options)
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Check if one or more albums is already saved in the current Spotify user’s “Your Music” library.
+   * @param {string[]} albumIds The album IDs
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into an array of booleans. The order
+   * of the returned array's elements correspond to the album ID in the request.
+   * The boolean value of true indicates that the album is part of the user's library, otherwise false.
+   * Not returned if a callback is given.
+   */
+  this.containsMySavedAlbums = function(albumIds, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/albums/contains')
+      .withQueryParameters({
+        'ids' : albumIds.join(',')
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
 
   /**
    * Add the current user as a follower of one or more other Spotify users.
