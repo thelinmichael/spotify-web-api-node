@@ -1,5 +1,8 @@
 ## Change log
 
+#### 2.1.1 (23 November 2015)
+- Username encoding bugfix.
+
 #### 2.1.0 (16 July 2015)
 - Add language binding for **[Get Followed Artists](https://developer.spotify.com/web-api/get-followed-artists/)**
 
