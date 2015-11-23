@@ -32,8 +32,8 @@ It includes helper functions to do the following:
 - Reorder tracks in a playlist
 
 #### Your Music library
-- Add, remove, and get tracks that are in the signed in user's Your Music library
-- Check if a track is in the signed in user's Your Music library
+- Add, remove, and get tracks and albums that are in the signed in user's Your Music library
+- Check if a track or album is in the signed in user's Your Music library
 
 #### Browse
 - Get New Releases
@@ -443,6 +443,8 @@ spotifyApi.getFollowedArtists({ limit : 1 })
  * Your Music library methods
  */
 
+/* Tracks */
+
 // Get tracks in the signed in user's Your Music library
 spotifyApi.getMySavedTracks({
     limit : 2,
@@ -488,6 +490,56 @@ spotifyApi.addToMySavedTracks(["3VNWq8rTnQG6fM1eldSpZ0"])
     console.log('Something went wrong!', err);
   });
 });
+
+/* Albums */
+
+// Get albums in the signed in user's Your Music library
+spotifyApi.getMySavedAlbums({
+    limit : 1,
+    offset: 0
+  })
+  .then(function(data) {
+    // Output items
+    console.log(data.body.items);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+
+// Check if albums are in the signed in user's Your Music library
+spotifyApi.containsMySavedAlbums(["1H8AHEB8VSE8irHViGOIrF"])
+  .then(function(data) {
+
+    // An array is returned, where the first element corresponds to the first album ID in the query
+    var albumIsInYourMusic = data.body[0];
+
+    if (albumIsInYourMusic) {
+      console.log('Album was found in the user\'s Your Music library');
+    } else {
+      console.log('Album was not found.');
+    }
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Remove albums from the signed in user's Your Music library
+spotifyApi.removeFromMySavedAlbums(["1H8AHEB8VSE8irHViGOIrF"])
+  .then(function(data) {
+    console.log('Removed!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+});
+
+// Add albums to the signed in user's Your Music library
+spotifyApi.addToMySavedAlbums(["1H8AHEB8VSE8irHViGOIrF"])
+  .then(function(data) {
+    console.log('Added album!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+});
+
 
 /*
  * Browse methods
@@ -780,6 +832,9 @@ You can run the unit tests executing `mocha` and get a test coverage report runn
 
 
 ## Change log
+
+#### 2.2.0 (23 November 2015)
+- Add language bindings for **[Get User's Saved Albums](https://developer.spotify.com/web-api/get-users-saved-albums/)** and other endpoints related to the user's saved albums.
 
 #### 2.1.1 (23 November 2015)
 - Username encoding bugfix.

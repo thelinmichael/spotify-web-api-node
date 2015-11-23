@@ -1,5 +1,8 @@
 ## Change log
 
+#### 2.2.0 (23 November 2015)
+- Add language bindings for **[Get User's Saved Albums](https://developer.spotify.com/web-api/get-users-saved-albums/)** and other endpoints related to the user's saved albums.
+
 #### 2.1.1 (23 November 2015)
 - Username encoding bugfix.
 
