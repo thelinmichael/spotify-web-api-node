@@ -667,7 +667,7 @@ function SpotifyWebApi(credentials) {
    */
   this.getUser = function(userId, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId)
+      .withPath('/v1/users/' + encodeURI(userId))
       .build();
 
     _addAccessToken(request, this.getAccessToken());
@@ -725,7 +725,7 @@ function SpotifyWebApi(credentials) {
    */
   this.getUserPlaylists = function(userId, options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists')
+      .withPath('/v1/users/' + encodeURI(userId) + '/playlists')
       .build();
 
     _addAccessToken(request, this.getAccessToken());
@@ -756,7 +756,7 @@ function SpotifyWebApi(credentials) {
    */
   this.getPlaylist = function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/' + playlistId)
+      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId)
       .build();
 
     _addAccessToken(request, this.getAccessToken());
@@ -787,7 +787,7 @@ function SpotifyWebApi(credentials) {
    */
   this.getPlaylistTracks = function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withQueryParameters(options).
       build();
 
@@ -833,7 +833,7 @@ function SpotifyWebApi(credentials) {
     }
 
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists')
+      .withPath('/v1/users/' + encodeURI(userId) + '/playlists')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(actualOptions)
       .build();
@@ -864,7 +864,7 @@ function SpotifyWebApi(credentials) {
    */
   this.followPlaylist = function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/followers')
+      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/followers')
       .withBodyParameters(options)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .build();
@@ -895,7 +895,7 @@ function SpotifyWebApi(credentials) {
    */
   this.unfollowPlaylist = function(userId, playlistId, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/followers')
+      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/followers')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .build();
 
@@ -926,7 +926,7 @@ function SpotifyWebApi(credentials) {
    */
   this.changePlaylistDetails = function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/' + playlistId)
+      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(options)
       .build();
@@ -966,7 +966,7 @@ function SpotifyWebApi(credentials) {
       tracksString = tracks;
     }
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks')
+      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters({
         uris: tracksString
@@ -1002,7 +1002,7 @@ function SpotifyWebApi(credentials) {
    */
   this.removeTracksFromPlaylist = function(userId, playlistId, tracks, options, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'tracks': tracks
@@ -1037,7 +1037,7 @@ function SpotifyWebApi(credentials) {
    */
   this.removeTracksFromPlaylistByPosition = function(userId, playlistId, positions, snapshotId, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'positions': positions,
@@ -1071,7 +1071,7 @@ function SpotifyWebApi(credentials) {
    */
   this.replaceTracksInPlaylist = function(userId, playlistId, uris, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'uris': uris
@@ -1106,7 +1106,7 @@ function SpotifyWebApi(credentials) {
    */
   this.reorderTracksInPlaylist = function(userId, playlistId, rangeStart, insertBefore, options, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'range_start': rangeStart,
@@ -1575,7 +1575,7 @@ function SpotifyWebApi(credentials) {
    */
   this.areFollowingPlaylist = function(userId, playlistId, followerIds, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + userId + '/playlists/' + playlistId + '/followers/contains')
+      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/followers/contains')
       .withQueryParameters({
         ids : followerIds.join(',')
       })
