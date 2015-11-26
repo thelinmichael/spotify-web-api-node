@@ -38,10 +38,21 @@ var _getErrorObject = function(defaultMessage, err) {
     /* jshint ignore:start */
     errorObject = new WebApiError(err.error + ': ' + err['error_description']);
     /* jshint ignore:end */
-  } else {
+  } else if (typeof err === 'string') {
+    // Serialized JSON error
+    try {
+      var parsedError = JSON.parse(err);
+      errorObject = new WebApiError(parsedError.error.message, parsedError.error.status);
+    } catch (err) { 
+      // Error not JSON formatted
+    }
+  }
+
+  if(!errorObject) {
     // Unexpected format
     errorObject = new WebApiError(defaultMessage + ': ' + JSON.stringify(err));
   }
+
   return errorObject;
 };
 
