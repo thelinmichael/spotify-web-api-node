@@ -314,6 +314,14 @@ spotifyApi.getUserPlaylists('thelinmichael')
   },function(err) {
     console.log('Something went wrong!', err);
   });
+  
+// Get the current user's playlists
+spotifyApi.getCurrentUserPlaylists()
+  .then(function(data) {
+    console.log('Retrieved playlists', data.body);
+  },function(err) {
+    console.log('Something went wrong!', err);
+  });
 
 // Create a private playlist
 spotifyApi.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false })

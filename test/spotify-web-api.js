@@ -964,6 +964,29 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it('should get the current users playlists', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me/playlists');
+      should.not.exist(options.query);
+      callback(null, { body : { items: [
+        { uri: 'spotify:user:thelinmichael:playlist:5ieJqeLJjjI8iJWaxeBLuK' },
+        { uri: 'spotify:user:thelinmichael:playlist:3EsfV6XzCHU8SPNdbnFogK' }
+      ]},
+        statusCode : 200 });
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('myVeryLongAccessToken');
+
+    api.getCurrentUserPlaylists()
+        .then(function(data) {
+          (2).should.equal(data.body.items.length);
+          (200).should.equal(data.statusCode);
+          done();
+        });
+  });
+
   it('should get a playlist', function(done) {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(restler.get);
