@@ -146,6 +146,33 @@ describe("Make requests", function() {
       });
     });
 
+    it("Should process a failing GET request with a JSON string formatted error object with message and status", function(done) {
+
+      useRestlerMock({
+        method: 'get',
+        event: 'fail',
+        response: {
+          data: '{ "error": { "message": "API rate limit exceeded", "status": 429 } }',
+          headers: {},
+          statusCode: 429
+        }
+      });
+
+      var HttpManager = require('../src/http-manager');
+      var request = Request.builder()
+        .withHost("such.api.wow")
+        .withPort(1337)
+        .withScheme("http")
+        .build();
+
+      HttpManager.get(request, function(errorObject) {
+        errorObject.should.be.an.instanceOf(Error);
+        errorObject.message.should.equal('API rate limit exceeded');
+        errorObject.statusCode.should.equal(429)
+        done();
+      });
+    });
+
     it("Should process a failing GET request with a Web API error object with message", function(done) {
 
       useRestlerMock({
