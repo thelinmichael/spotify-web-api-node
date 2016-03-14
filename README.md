@@ -242,6 +242,15 @@ spotifyApi.searchTracks('artist:Love')
   }, function(err) {
     console.log('Something went wrong!', err);
   });
+  
+// Search tracks whose artist's name contains 'Kendrick Lamar', and track name contains 'Alright'
+spotifyApi.searchTracks('track:Alright artist:Kendrick Lamar')
+  .then(function(data) {
+    console.log('Search tracks by "Love" in the artist name', data.body);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
 
 // Search playlists whose name or description contains 'workout'
 spotifyApi.searchPlaylists('workout')
