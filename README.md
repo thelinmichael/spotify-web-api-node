@@ -12,6 +12,7 @@ It includes helper functions to do the following:
 
 #### Music metadata
 - Albums, artists, and tracks
+- Audio features for tracks
 - Albums for a specific artist
 - Top tracks for a specific artist
 - Artists similar to a specific artist
@@ -35,12 +36,17 @@ It includes helper functions to do the following:
 - Add, remove, and get tracks and albums that are in the signed in user's Your Music library
 - Check if a track or album is in the signed in user's Your Music library
 
+#### Personalization
+- Get a user’s top artists and tracks based on calculated affinity
+
 #### Browse
 - Get New Releases
 - Get Featured Playlists
 - Get a List of Categories
 - Get a Category
 - Get a Category's Playlists
+- Get recommendations based on seeds
+- Get available genre seeds
 
 #### Follow
 - Follow and unfollow users
@@ -242,7 +248,7 @@ spotifyApi.searchTracks('artist:Love')
   }, function(err) {
     console.log('Something went wrong!', err);
   });
-  
+
 // Search tracks whose artist's name contains 'Kendrick Lamar', and track name contains 'Alright'
 spotifyApi.searchTracks('track:Alright artist:Kendrick Lamar')
   .then(function(data) {

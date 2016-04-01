@@ -721,7 +721,7 @@ function SpotifyWebApi(credentials) {
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getUserPlaylists('thelinmichael').then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
-   *          the a list of playlists. If rejected, it contains an error object. Not returned if a callback is given.
+   *          a list of playlists. If rejected, it contains an error object. Not returned if a callback is given.
    */
   this.getUserPlaylists = function(userId, options, callback) {
     var request = WebApiRequest.builder()
@@ -1131,6 +1131,124 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
+   * Get audio features for a single track identified by its unique Spotify ID.
+   * @param {string} trackId The track ID
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getAudioFeaturesForTrack('38P3Q4QcdjQALGF2Z92BmR').then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object
+   *          containing information about the audio features. If the promise is
+   *          rejected, it contains an error object. Not returned if a callback is given.
+   */
+  this.getAudioFeaturesForTrack = function(trackId, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/audio-features/' + trackId)
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Get audio features for multiple tracks identified by their unique Spotify ID.
+   * @param {string[]} trackIds The track IDs
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getAudioFeaturesForTracks(['38P3Q4QcdjQALGF2Z92BmR', '2HO2bnoMrpnZUbUqiilLHi']).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object
+   *          containing information about the audio features for the tracks. If the promise is
+   *          rejected, it contains an error object. Not returned if a callback is given.
+   */
+  this.getAudioFeaturesForTracks = function(trackIds, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/audio-features')
+      .withQueryParameters({
+        'ids' : trackIds.join(',')
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Create a playlist-style listening experience based on seed artists, tracks and genres.
+   * @param {Object} [options] The options supplied to this request.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getRecommendations({ min_energy: 0.4, seed_artists: ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'], min_popularity: 50 }).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
+   *          a list of tracks and a list of seeds. If rejected, it contains an error object. Not returned if a callback is given.
+   */
+  this.getRecommendations = function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/recommendations')
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Retrieve a list of available genres seed parameter values for recommendations.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getAvailableGenreSeeds().then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
+   *          a list of available genres to be used as seeds for recommendations.
+   *          If rejected, it contains an error object. Not returned if a callback is given.
+   */
+  this.getAvailableGenreSeeds = function(callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/recommendations/available-genre-seeds')
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
    * Request an access token using the Client Credentials flow.
    * Requires that client ID and client secret has been set previous to the call.
    * @param {Object} options Options.
@@ -1486,6 +1604,61 @@ function SpotifyWebApi(credentials) {
     }
   };
 
+  /**
+   * Get the current user's top artists based on calculated affinity.
+   * @param {Object} [options] Options, being time_range, limit, offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of artists,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  this.getMyTopArtists = function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/top/artists')
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
+   * Get the current user's top tracks based on calculated affinity.
+   * @param {Object} [options] Options, being time_range, limit, offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  this.getMyTopTracks = function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/top/tracks')
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
 
   /**
    * Add the current user as a follower of one or more other Spotify users.
