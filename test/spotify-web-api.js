@@ -609,6 +609,35 @@ describe('Spotify Web API', function() {
     });
   });
 
+  it("should search for several types using callback", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/search/');
+      options.query.should.eql({
+        limit: 3,
+        offset: 2,
+        q: 'Mr. Brightside',
+        type: 'track,album'
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        body : {
+          tracks: {
+            href: 'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track,album'
+          }
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi();
+    api.search('Mr. Brightside', ['track', 'album'], { limit : 3, offset : 2 }, function(err, data) {
+      should.not.exist(err);
+      'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track,album'.should.equal(data.body.tracks.href);
+      done();
+    });
+  });
+
   it("should get artists albums", function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
