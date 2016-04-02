@@ -903,7 +903,7 @@ function SpotifyWebApi(credentials) {
    * Add tracks to a playlist.
    * @param {string} userId The playlist's owner's user ID
    * @param {string} playlistId The playlist's ID
-   * @param {string[]} tracks IDs of the tracks to add to the playlist.
+   * @param {string[]} tracks URIs of the tracks to add to the playlist.
    * @param {Object} [options] Options, position being the only one.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example addTracksToPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK',
