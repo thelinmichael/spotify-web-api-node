@@ -290,6 +290,13 @@ spotifyApi.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
     done(err);
   });
 
+/* Get Audio Features for a Track */
+// TBD
+
+/* Get Audio Features for several tracks Track */
+// TBD
+
+
 /*
  * User methods
  */
@@ -613,6 +620,19 @@ spotifyApi.getPlaylistsForCategory('party', {
   }, function(err) {
     console.log("Something went wrong!", err);
   });
+
+/* Get Recommendations Based on Seeds */
+// TBD
+
+
+/**
+ * Personalization Endpoints
+ */
+
+/* Get a User’s Top Artists and Tracks */
+// TBD
+
+Get a User’s Top Artists and Tracks
 ```
 
 ### Nesting calls
@@ -847,6 +867,10 @@ You can run the unit tests executing `mocha` and get a test coverage report runn
 
 
 ## Change log
+
+#### 2.3.0 (2 April 2016)
+- Add language bindings for **[Get Recommendations Based on Seeds](https://developer.spotify.com/web-api/get-recommendations/)**, **[Get a User's Top Artists and Tracks](https://developer.spotify.com/web-api/get-users-top-artists-and-tracks/)**, **[Get Audio Features for a Track](https://developer.spotify.com/web-api/get-audio-features/)**, and **[Get Audio Features for Several Tracks](https://developer.spotify.com/web-api/get-several-audio-features/)**. Read more about the endpoints in the links above or in this [blog post](https://developer.spotify.com/news-stories/2016/03/29/api-improvements-update/).
+- Add generic search method enabling searches for several types at once, e.g. search for both tracks and albums in a single request, instead of one request for track results and one request for album results.
 
 #### 2.2.0 (23 November 2015)
 - Add language bindings for **[Get User's Saved Albums](https://developer.spotify.com/web-api/get-users-saved-albums/)** and other endpoints related to the user's saved albums.
