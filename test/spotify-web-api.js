@@ -1123,6 +1123,58 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get user's top artists", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me/top/artists');
+      options.query.should.eql({
+        limit : 5
+      });
+      options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
+      callback(null, {
+        body : {
+          items: [ ]
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.getMyTopArtists({ limit : 5})
+      .then(function(data) {
+        should.exist(data.body.items);
+        done();
+      });
+  });
+
+  it("should get user's top tracks", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/me/top/tracks');
+      options.query.should.eql({
+        limit : 5
+      });
+      options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
+      callback(null, {
+        body : {
+          items: [ ]
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.getMyTopTracks({ limit : 5})
+      .then(function(data) {
+        should.exist(data.body.items);
+        done();
+      });
+  });
+
   it.skip("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
@@ -2444,4 +2496,115 @@ describe('Spotify Web API', function() {
     });
   });
 
+  it("should get the audio features for a track", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/audio-features/3Qm86XLflmIXVm1wcwkgDK');
+      should.not.exist(options.query);
+      should.not.exist(options.data);
+      callback(null, {
+        body : {
+          danceability : 0,
+          energy : 0
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getAudioFeaturesForTrack('3Qm86XLflmIXVm1wcwkgDK')
+      .then(function(data) {
+        should.exist(data.body.danceability);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it("should get the audio features for a several tracks", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/audio-features');
+      options.query.should.eql({
+        ids : '3Qm86XLflmIXVm1wcwkgDK,1lDWb6b6ieDQ2xT7ewTC3G'
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        body : {
+          audio_features : [ ]
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getAudioFeaturesForTracks(['3Qm86XLflmIXVm1wcwkgDK', '1lDWb6b6ieDQ2xT7ewTC3G'])
+      .then(function(data) {
+        should.exist(data.body.audio_features);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it("should get recommendations", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/recommendations');
+      options.query.should.eql({
+        min_energy : 0.4,
+        market : 'ES',
+        seed_artists : ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'],
+        limit : 5,
+        min_popularity : 50
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        body : {
+          tracks:[ {} ],
+          seeds:[ {} ]
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getRecommendations({
+        min_energy : 0.4,
+        market : 'ES',
+        seed_artists : ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'],
+        limit : 5,
+        min_popularity : 50
+      })
+      .then(function(data) {
+        should.exist(data.body.tracks);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it("should get available genre seeds", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/recommendations/available-genre-seeds');
+      should.not.exist(options.query);
+      should.not.exist(options.data);
+      callback(null, {
+        body : {
+          genres :[ ]
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getAvailableGenreSeeds()
+      .then(function(data) {
+        should.exist(data.body.genres);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
 });
