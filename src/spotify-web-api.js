@@ -394,20 +394,22 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
-   * Search for an album.
+   * Search for music entities of certain types.
    * @param {string} query The search query.
+   * @param {string[]} types An array of item types to search across.
+   * Valid types are: 'album', 'artist', 'playlist', and 'track'.
    * @param {Object} [options] The possible options, e.g. limit, offset.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example searchArtists('David Bowie', { limit : 5, offset : 1 }).then(...)
+   * @example search('Abba', ['track', 'playlist'], { limit : 5, offset : 1 }).then(...)
    * @returns {Promise|undefined} A promise that if successful, returns an object containing the
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.searchAlbums = function(query, options, callback) {
+  this.search = function(query, types, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/search/')
       .withQueryParameters({
-        type : 'album',
+        type : types.join(','),
         q : query
       })
       .build();
@@ -426,6 +428,20 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
+  };
+
+  /**
+   * Search for an album.
+   * @param {string} query The search query.
+   * @param {Object} [options] The possible options, e.g. limit, offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example searchAlbums('Space Oddity', { limit : 5, offset : 1 }).then(...)
+   * @returns {Promise|undefined} A promise that if successful, returns an object containing the
+   *          search results. The result is paginated. If the promise is rejected,
+   *          it contains an error object. Not returned if a callback is given.
+   */
+  this.searchAlbums = function(query, options, callback) {
+    return this.search(query, ['album'], options, callback);
   };
 
   /**
@@ -439,28 +455,7 @@ function SpotifyWebApi(credentials) {
    *          it contains an error object. Not returned if a callback is given.
    */
   this.searchArtists = function(query, options, callback) {
-    var request = WebApiRequest.builder()
-      .withPath('/v1/search/')
-      .withQueryParameters({
-        type : 'artist',
-        q : query
-      })
-      .build();
-
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
-
-    var promise =  _performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this.search(query, ['artist'], options, callback);
   };
 
   /**
@@ -474,28 +469,7 @@ function SpotifyWebApi(credentials) {
    *          it contains an error object. Not returned if a callback is given.
    */
   this.searchTracks = function(query, options, callback) {
-    var request = WebApiRequest.builder()
-      .withPath('/v1/search/')
-      .withQueryParameters({
-        type : 'track',
-        q : query
-      })
-      .build();
-
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
-
-    var promise = _performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this.search(query, ['track'], options, callback);
   };
 
   /**
@@ -509,28 +483,7 @@ function SpotifyWebApi(credentials) {
    *          it contains an error object. Not returned if a callback is given.
    */
   this.searchPlaylists = function(query, options, callback) {
-    var request = WebApiRequest.builder()
-      .withPath('/v1/search/')
-      .withQueryParameters({
-        type : 'playlist',
-        q : query
-      })
-      .build();
-
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
-
-    var promise = _performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this.search(query, ['playlist'], options, callback);
   };
 
   /**
