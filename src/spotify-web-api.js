@@ -1146,15 +1146,23 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Create a playlist-style listening experience based on seed artists, tracks and genres.
-   * @param {Object} [options] The options supplied to this request.
+   * @param {Object} [seeds] At least one of seed_tracks, seed_artists or seed_genres must be supplied. Eg. { seed_artists: ['0oSGxfWSnnOXhD2fKuz2Gy'] }
+   * @param {Object} [options] Optional parameters supplied to this request.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getRecommendations({ min_energy: 0.4, seed_artists: ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'], min_popularity: 50 }).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
    *          a list of tracks and a list of seeds. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getRecommendations = function(options, callback) {
+  this.getRecommendations = function(seeds, options, callback) {
+    var actualSeeds = {};
+
+    Object.keys(seeds).forEach(function(key) {
+        actualSeeds[key] = seeds[key].join(',')
+    });
+
     var request = WebApiRequest.builder()
       .withPath('/v1/recommendations')
+      .withQueryParameters(actualSeeds)
       .build();
 
     _addAccessToken(request, this.getAccessToken());
