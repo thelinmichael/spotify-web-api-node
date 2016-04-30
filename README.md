@@ -438,7 +438,7 @@ spotifyApi.areFollowingPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['the
 spotifyApi.getFollowedArtists({ limit : 1 })
   .then(function(data) {
     // 'This user is following 1051 artists!'
-    console.log('This user is following ', data.body.artists.total ' artists!');
+    console.log('This user is following ', data.body.artists.total, ' artists!');
   }, function(err) {
     console.log('Something went wrong!', err);
   });
