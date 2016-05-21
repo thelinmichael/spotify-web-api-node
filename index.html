@@ -225,7 +225,7 @@ code {
   margin-right: 6px;
   font-size: 0.7em;
 }
-</style><script srr="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.js"></script></head><body><div class="row"><div class="small-12 columns"><h1 class="page-title">Documentation for the Spotify Web API Node.JS wrapper</h1></div></div><div class="row"><div class="small-12 columns">Check the&nbsp;<a href="https://github.com/thelinmichael/spotify-web-api-node">GitHub repository</a>&nbsp;for more information about the project</div></div><hr><div class="row"><div id="nav" class="large-3 columns"><div data-section="accordian" data-options="" class="section-container accordian"><div class="section active"><ul class="side-nav solo"><li><a href="#getTrack">getTrack</a></li><li><a href="#getTracks">getTracks</a></li><li><a href="#getAlbum">getAlbum</a></li><li><a href="#getAlbums">getAlbums</a></li><li><a href="#getArtist">getArtist</a></li><li><a href="#getArtists">getArtists</a></li><li><a href="#searchAlbums">searchAlbums</a></li><li><a href="#searchArtists">searchArtists</a></li><li><a href="#searchTracks">searchTracks</a></li><li><a href="#searchPlaylists">searchPlaylists</a></li><li><a href="#getArtistAlbums">getArtistAlbums</a></li><li><a href="#getAlbumTracks">getAlbumTracks</a></li><li><a href="#getArtistTopTracks">getArtistTopTracks</a></li><li><a href="#getArtistRelatedArtists">getArtistRelatedArtists</a></li><li><a href="#getUser">getUser</a></li><li><a href="#getMe">getMe</a></li><li><a href="#getUserPlaylists">getUserPlaylists</a></li><li><a href="#getPlaylist">getPlaylist</a></li><li><a href="#getPlaylistTracks">getPlaylistTracks</a></li><li><a href="#createPlaylist">createPlaylist</a></li><li><a href="#followPlaylist">followPlaylist</a></li><li><a href="#unfollowPlaylist">unfollowPlaylist</a></li><li><a href="#changePlaylistDetails">changePlaylistDetails</a></li><li><a href="#addTracksToPlaylist">addTracksToPlaylist</a></li><li><a href="#removeTracksFromPlaylist">removeTracksFromPlaylist</a></li><li><a href="#removeTracksFromPlaylistByPosition">removeTracksFromPlaylistByPosition</a></li><li><a href="#replaceTracksInPlaylist">replaceTracksInPlaylist</a></li><li><a href="#reorderTracksInPlaylist">reorderTracksInPlaylist</a></li><li><a href="#clientCredentialsGrant">clientCredentialsGrant</a></li><li><a href="#authorizationCodeGrant">authorizationCodeGrant</a></li><li><a href="#refreshAccessToken">refreshAccessToken</a></li><li><a href="#createAuthorizeURL">createAuthorizeURL</a></li><li><a href="#getMySavedTracks">getMySavedTracks</a></li><li><a href="#containsMySavedTracks">containsMySavedTracks</a></li><li><a href="#removeFromMySavedTracks">removeFromMySavedTracks</a></li><li><a href="#addToMySavedTracks">addToMySavedTracks</a></li><li><a href="#removeFromMySavedAlbums">removeFromMySavedAlbums</a></li><li><a href="#addToMySavedAlbums">addToMySavedAlbums</a></li><li><a href="#getMySavedAlbums">getMySavedAlbums</a></li><li><a href="#containsMySavedAlbums">containsMySavedAlbums</a></li><li><a href="#followUsers">followUsers</a></li><li><a href="#followArtists">followArtists</a></li><li><a href="#unfollowUsers">unfollowUsers</a></li><li><a href="#unfollowArtists">unfollowArtists</a></li><li><a href="#isFollowingUsers">isFollowingUsers</a></li><li><a href="#getFollowedArtists">getFollowedArtists</a></li><li><a href="#areFollowingPlaylist">areFollowingPlaylist</a></li><li><a href="#isFollowingArtists">isFollowingArtists</a></li><li><a href="#getNewReleases">getNewReleases</a></li><li><a href="#getFeaturedPlaylists">getFeaturedPlaylists</a></li><li><a href="#getCategories">getCategories</a></li><li><a href="#getCategory">getCategory</a></li><li><a href="#getPlaylistsForCategory">getPlaylistsForCategory</a></li></ul></div></div></div><div class="small-12 large-9 columns"><article class="comment"><header><h1 id="getTrack">getTrack</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getTrack()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">trackId</span><span class="description">The track's ID.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The possible options, currently only market.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">getTrack('3Qm86XLflmIXVm1wcwkgDK').then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, returns an object containing information          about the track. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Look up a track.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getTrack = function(trackId, options, callback) {
+</style><script srr="http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.js"></script></head><body><div class="row"><div class="small-12 columns"><h1 class="page-title">Documentation for the Spotify Web API Node.JS wrapper</h1></div></div><div class="row"><div class="small-12 columns">Check the&nbsp;<a href="https://github.com/thelinmichael/spotify-web-api-node">GitHub repository</a>&nbsp;for more information about the project</div></div><hr><div class="row"><div id="nav" class="large-3 columns"><div data-section="accordian" data-options="" class="section-container accordian"><div class="section active"><ul class="side-nav solo"><li><a href="#getTrack">getTrack</a></li><li><a href="#getTracks">getTracks</a></li><li><a href="#getAlbum">getAlbum</a></li><li><a href="#getAlbums">getAlbums</a></li><li><a href="#getArtist">getArtist</a></li><li><a href="#getArtists">getArtists</a></li><li><a href="#search">search</a></li><li><a href="#searchAlbums">searchAlbums</a></li><li><a href="#searchArtists">searchArtists</a></li><li><a href="#searchTracks">searchTracks</a></li><li><a href="#searchPlaylists">searchPlaylists</a></li><li><a href="#getArtistAlbums">getArtistAlbums</a></li><li><a href="#getAlbumTracks">getAlbumTracks</a></li><li><a href="#getArtistTopTracks">getArtistTopTracks</a></li><li><a href="#getArtistRelatedArtists">getArtistRelatedArtists</a></li><li><a href="#getUser">getUser</a></li><li><a href="#getMe">getMe</a></li><li><a href="#getUserPlaylists">getUserPlaylists</a></li><li><a href="#getPlaylist">getPlaylist</a></li><li><a href="#getPlaylistTracks">getPlaylistTracks</a></li><li><a href="#createPlaylist">createPlaylist</a></li><li><a href="#followPlaylist">followPlaylist</a></li><li><a href="#unfollowPlaylist">unfollowPlaylist</a></li><li><a href="#changePlaylistDetails">changePlaylistDetails</a></li><li><a href="#addTracksToPlaylist">addTracksToPlaylist</a></li><li><a href="#removeTracksFromPlaylist">removeTracksFromPlaylist</a></li><li><a href="#removeTracksFromPlaylistByPosition">removeTracksFromPlaylistByPosition</a></li><li><a href="#replaceTracksInPlaylist">replaceTracksInPlaylist</a></li><li><a href="#reorderTracksInPlaylist">reorderTracksInPlaylist</a></li><li><a href="#getAudioFeaturesForTrack">getAudioFeaturesForTrack</a></li><li><a href="#getAudioFeaturesForTracks">getAudioFeaturesForTracks</a></li><li><a href="#getRecommendations">getRecommendations</a></li><li><a href="#getAvailableGenreSeeds">getAvailableGenreSeeds</a></li><li><a href="#clientCredentialsGrant">clientCredentialsGrant</a></li><li><a href="#authorizationCodeGrant">authorizationCodeGrant</a></li><li><a href="#refreshAccessToken">refreshAccessToken</a></li><li><a href="#createAuthorizeURL">createAuthorizeURL</a></li><li><a href="#getMySavedTracks">getMySavedTracks</a></li><li><a href="#containsMySavedTracks">containsMySavedTracks</a></li><li><a href="#removeFromMySavedTracks">removeFromMySavedTracks</a></li><li><a href="#addToMySavedTracks">addToMySavedTracks</a></li><li><a href="#removeFromMySavedAlbums">removeFromMySavedAlbums</a></li><li><a href="#addToMySavedAlbums">addToMySavedAlbums</a></li><li><a href="#getMySavedAlbums">getMySavedAlbums</a></li><li><a href="#containsMySavedAlbums">containsMySavedAlbums</a></li><li><a href="#getMyTopArtists">getMyTopArtists</a></li><li><a href="#getMyTopTracks">getMyTopTracks</a></li><li><a href="#followUsers">followUsers</a></li><li><a href="#followArtists">followArtists</a></li><li><a href="#unfollowUsers">unfollowUsers</a></li><li><a href="#unfollowArtists">unfollowArtists</a></li><li><a href="#isFollowingUsers">isFollowingUsers</a></li><li><a href="#getFollowedArtists">getFollowedArtists</a></li><li><a href="#areFollowingPlaylist">areFollowingPlaylist</a></li><li><a href="#isFollowingArtists">isFollowingArtists</a></li><li><a href="#getNewReleases">getNewReleases</a></li><li><a href="#getFeaturedPlaylists">getFeaturedPlaylists</a></li><li><a href="#getCategories">getCategories</a></li><li><a href="#getCategory">getCategory</a></li><li><a href="#getPlaylistsForCategory">getPlaylistsForCategory</a></li></ul></div></div></div><div class="small-12 large-9 columns"><article class="comment"><header><h1 id="getTrack">getTrack</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getTrack()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">trackId</span><span class="description">The track's ID.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The possible options, currently only market.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">getTrack('3Qm86XLflmIXVm1wcwkgDK').then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, returns an object containing information          about the track. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Look up a track.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getTrack = function(trackId, options, callback) {
      // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
@@ -406,12 +406,12 @@ code {
     } else {
       return promise;
     }
-  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="searchAlbums">searchAlbums</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.searchAlbums()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">query</span><span class="description">The search query.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The possible options, e.g. limit, offset.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">searchArtists('David Bowie', { limit : 5, offset : 1 }).then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, returns an object containing the          search results. The result is paginated. If the promise is rejected,
-         it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Search for an album.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.searchAlbums = function(query, options, callback) {
+  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="search">search</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.search()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">query</span><span class="description">The search query.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{string[]}</span><span class="name">types</span><span class="description">An array of item types to search across. Valid types are: 'album', 'artist', 'playlist', and 'track'.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The possible options, e.g. limit, offset.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">search('Abba', ['track', 'playlist'], { limit : 5, offset : 1 }).then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, returns an object containing the          search results. The result is paginated. If the promise is rejected,
+         it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Search for music entities of certain types.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.search = function(query, types, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/search/')
       .withQueryParameters({
-        type : 'album',
+        type : types.join(','),
         q : query
       })
       .build();
@@ -430,78 +430,18 @@ code {
     } else {
       return promise;
     }
+  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="searchAlbums">searchAlbums</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.searchAlbums()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">query</span><span class="description">The search query.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The possible options, e.g. limit, offset.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">searchAlbums('Space Oddity', { limit : 5, offset : 1 }).then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, returns an object containing the          search results. The result is paginated. If the promise is rejected,
+         it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Search for an album.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.searchAlbums = function(query, options, callback) {
+    return this.search(query, ['album'], options, callback);
   };</code></pre></div></div></div></article><article class="comment"><header><h1 id="searchArtists">searchArtists</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.searchArtists()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">query</span><span class="description">The search query.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The possible options, e.g. limit, offset.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">searchArtists('David Bowie', { limit : 5, offset : 1 }).then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, returns an object containing the          search results. The result is paginated. If the promise is rejected,
          it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Search for an artist.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.searchArtists = function(query, options, callback) {
-    var request = WebApiRequest.builder()
-      .withPath('/v1/search/')
-      .withQueryParameters({
-        type : 'artist',
-        q : query
-      })
-      .build();
-
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
-
-    var promise =  _performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this.search(query, ['artist'], options, callback);
   };</code></pre></div></div></div></article><article class="comment"><header><h1 id="searchTracks">searchTracks</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.searchTracks()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">query</span><span class="description">The search query.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The possible options, e.g. limit, offset.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">searchTracks('Mr. Brightside', { limit : 3, offset : 2 }).then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, returns an object containing the          search results. The result is paginated. If the promise is rejected,
          it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Search for a track.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.searchTracks = function(query, options, callback) {
-    var request = WebApiRequest.builder()
-      .withPath('/v1/search/')
-      .withQueryParameters({
-        type : 'track',
-        q : query
-      })
-      .build();
-
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
-
-    var promise = _performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this.search(query, ['track'], options, callback);
   };</code></pre></div></div></div></article><article class="comment"><header><h1 id="searchPlaylists">searchPlaylists</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.searchPlaylists()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">query</span><span class="description">The search query.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">options</span><span class="description">The possible options.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">searchPlaylists('workout', { limit : 1, offset : 0 }).then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, returns an object containing the          search results. The result is paginated. If the promise is rejected,
          it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Search for playlists.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.searchPlaylists = function(query, options, callback) {
-    var request = WebApiRequest.builder()
-      .withPath('/v1/search/')
-      .withQueryParameters({
-        type : 'playlist',
-        q : query
-      })
-      .build();
-
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
-
-    var promise = _performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this.search(query, ['playlist'], options, callback);
   };</code></pre></div></div></div></article><article class="comment"><header><h1 id="getArtistAlbums">getArtistAlbums</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getArtistAlbums()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">artistId</span><span class="description">The artist's ID.</span></li><li class="tag"><span class="type">@options: </span><span class="string">{Object} [options] The possible options, e.g. limit, offset.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">getArtistAlbums('0oSGxfWSnnOXhD2fKuz2Gy', { album_type : 'album', country : 'GB', limit : 2, offset : 5 }).then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, returns an object containing the albums          for the given artist. The result is paginated. If the promise is rejected,
          it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Get an artist&#39;s albums.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getArtistAlbums = function(artistId, options, callback) {
     var request = WebApiRequest.builder()
@@ -621,7 +561,7 @@ code {
     } else {
       return promise;
     }
-  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="getUserPlaylists">getUserPlaylists</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getUserPlaylists()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">userId</span><span class="description">The user ID.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The options supplied to this request.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">getUserPlaylists('thelinmichael').then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, resolves to an object containing          the a list of playlists. If rejected, it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Get a user&#39;s playlists.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getUserPlaylists = function(userId, options, callback) {
+  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="getUserPlaylists">getUserPlaylists</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getUserPlaylists()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">userId</span><span class="description">The user ID.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The options supplied to this request.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">getUserPlaylists('thelinmichael').then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, resolves to an object containing          a list of playlists. If rejected, it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Get a user&#39;s playlists.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getUserPlaylists = function(userId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURI(userId) + '/playlists')
       .build();
@@ -893,6 +833,85 @@ code {
     } else {
       return promise;
     }
+  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="getAudioFeaturesForTrack">getAudioFeaturesForTrack</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getAudioFeaturesForTrack()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string}</span><span class="name">trackId</span><span class="description">The track ID</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">getAudioFeaturesForTrack('38P3Q4QcdjQALGF2Z92BmR').then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, resolves to an object          containing information about the audio features. If the promise is
+         rejected, it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Get audio features for a single track identified by its unique Spotify ID.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getAudioFeaturesForTrack = function(trackId, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/audio-features/' + trackId)
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="getAudioFeaturesForTracks">getAudioFeaturesForTracks</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getAudioFeaturesForTracks()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{string[]}</span><span class="name">trackIds</span><span class="description">The track IDs</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">getAudioFeaturesForTracks(['38P3Q4QcdjQALGF2Z92BmR', '2HO2bnoMrpnZUbUqiilLHi']).then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, resolves to an object          containing information about the audio features for the tracks. If the promise is
+         rejected, it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Get audio features for multiple tracks identified by their unique Spotify ID.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getAudioFeaturesForTracks = function(trackIds, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/audio-features')
+      .withQueryParameters({
+        'ids' : trackIds.join(',')
+      })
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="getRecommendations">getRecommendations</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getRecommendations()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">The options supplied to this request.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">getRecommendations({ min_energy: 0.4, seed_artists: ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'], min_popularity: 50 }).then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, resolves to an object containing          a list of tracks and a list of seeds. If rejected, it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Create a playlist-style listening experience based on seed artists, tracks and genres.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getRecommendations = function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/recommendations')
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="getAvailableGenreSeeds">getAvailableGenreSeeds</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getAvailableGenreSeeds()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@example: </span><span class="string">getAvailableGenreSeeds().then(...)</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, resolves to an object containing          a list of available genres to be used as seeds for recommendations.
+         If rejected, it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Retrieve a list of available genres seed parameter values for recommendations.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getAvailableGenreSeeds = function(callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/recommendations/available-genre-seeds')
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
   };</code></pre></div></div></div></article><article class="comment"><header><h1 id="clientCredentialsGrant">clientCredentialsGrant</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.clientCredentialsGrant()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">options</span><span class="description">Options.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, resolves into an object containing the access token,          token type and time to expiration. If rejected, it contains an error object. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Request an access token using the Client Credentials flow.<br />Requires that client ID and client secret has been set previous to the call.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.clientCredentialsGrant = function(options, callback) {
     var request = AuthenticationRequest.builder()
       .withPath('/api/token')
@@ -1130,6 +1149,44 @@ Not returned if a callback is given.</span></li></ul><div data-section="accordia
       .build();
 
     _addAccessToken(request, this.getAccessToken());
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="getMyTopArtists">getMyTopArtists</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getMyTopArtists()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">Options, being time_range, limit, offset.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, resolves into a paging object of artists,          otherwise an error. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Get the current user&#39;s top artists based on calculated affinity.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getMyTopArtists = function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/top/artists')
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };</code></pre></div></div></div></article><article class="comment"><header><h1 id="getMyTopTracks">getMyTopTracks</h1><h5 class="subheader"><div class="label radius ctx-type">method</div>this.getMyTopTracks()</h5></header><ul class="no-bullet tags"><li class="tag"><span class="type">@param: </span><span class="types">{Object}</span><span class="name">[options]</span><span class="description">Options, being time_range, limit, offset.</span></li><li class="tag"><span class="type">@param: </span><span class="types">{requestCallback}</span><span class="name">[callback]</span><span class="description">Optional callback method to be called instead of the promise.</span></li><li class="tag"><span class="type">@returns: </span><span class="string">{Promise|undefined} A promise that if successful, resolves into a paging object of tracks,          otherwise an error. Not returned if a callback is given.</span></li></ul><div data-section="accordian" data-options="one_up: false;" class="section-container code auto"><div class="section"><p data-section-title class="title"><a href="#">Description</a></p><div data-section-content class="content description"><p>Get the current user&#39;s top tracks based on calculated affinity.</p></div></div><div class="section"><p data-section-title class="title"><a href="#">Source</a></p><div data-section-content class="content"><pre><code class="language-javascript">this.getMyTopTracks = function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/top/tracks')
+      .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
 
     var promise = _performRequest(HttpManager.get, request);
 
