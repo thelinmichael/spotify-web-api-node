@@ -66,7 +66,7 @@ Even though authentication isn't always necessary, it always gives benefits such
 
 ##### Dependencies
 
-This project depends on [restler](https://github.com/danwrong/restler) to make HTTP requests, and [promise](https://github.com/then/promise) as its [Promises/A+](http://promises-aplus.github.io/promises-spec/) implementation.
+This project depends on [superagent](https://github.com/visionmedia/superagent) to make HTTP requests, and [promise](https://github.com/then/promise) as its [Promises/A+](http://promises-aplus.github.io/promises-spec/) implementation.
 
 ## Installation
 

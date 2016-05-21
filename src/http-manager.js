@@ -1,11 +1,11 @@
 'use strict';
 
-var restler = require('restler'),
+var superagent = require('superagent'),
     WebApiError = require('./webapi-error');
 
 var HttpManager = {};
 
-/* Create restler options from the base request */
+/* Create superagent options from the base request */
 var _getParametersFromRequest = function(request) {
 
   var options = {};
@@ -58,31 +58,35 @@ var _getErrorObject = function(defaultMessage, err) {
 
 /* Make the request to the Web API */
 HttpManager._makeRequest = function(method, options, uri, callback) {
+  var req = method(uri)
 
-  method(uri, options)
-    .on('success', function(data, response) {
-      callback(null, { 'body' : data, 'headers': response.headers, 'statusCode' : response.statusCode });
+  if (options.query) {
+    req.query(options.query)
+  }
+
+  if (options.data) {
+    req.send(data)
+  }
+
+  if (options.headers) {
+    req.set(options.headers)
+  }
+
+  req.end(function (err, response) {
+    if (err) {
+      var errorObject = _getErrorObject('Request error', {
+        error: err
+      });
+      return callback(errorObject);
+    }
+
+    return callback(null, {
+      body: response.body,
+      headers: response.headers,
+      statusCode: response.statusCode
     })
-    .on('fail', function(err, response) {
-      if (err) {
-        var errorObject = _getErrorObject('Request failed', err);
-        callback(errorObject);
-      } else {
-        callback(new Error('Request failed'));
-      }
-    })
-    .on('error', function(err, response) {
-      if (err) {
-        var errorObject = _getErrorObject('Request error', err);
-        callback(errorObject);
-      } else {
-        callback(new Error('Request error'));
-      }
-    })
-    .on('timeout', function(ms) {
-      callback(new Error('Request timed out (' + ms + ')'));
-    });
-};
+  })
+}
 
 /**
  * Make a HTTP GET request.
@@ -91,7 +95,7 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
  */
 HttpManager.get = function(request, callback) {
   var options = _getParametersFromRequest(request);
-  var method = restler.get;
+  var method = superagent.get;
 
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
@@ -104,7 +108,7 @@ HttpManager.get = function(request, callback) {
 HttpManager.post = function(request, callback) {
 
   var options = _getParametersFromRequest(request);
-  var method = restler.post;
+  var method = superagent.post;
 
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
@@ -117,7 +121,7 @@ HttpManager.post = function(request, callback) {
 HttpManager.del = function(request, callback) {
 
   var options = _getParametersFromRequest(request);
-  var method = restler.del;
+  var method = superagent.del;
 
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
@@ -130,7 +134,7 @@ HttpManager.del = function(request, callback) {
 HttpManager.put = function(request, callback) {
 
   var options = _getParametersFromRequest(request);
-  var method = restler.put;
+  var method = superagent.put;
 
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
