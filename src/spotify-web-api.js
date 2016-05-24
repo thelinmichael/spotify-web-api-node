@@ -288,12 +288,12 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Look up several albums.
-   * @param {string[]} artistIds The IDs of the artists.
+   * @param {string[]} albumIds The IDs of the albums.
    * @param {Object} [options] The possible options, currently only market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
+   * @example getAlbums(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
-   *          about the artists. Not returned if a callback is given.
+   *          about the albums. Not returned if a callback is given.
    */
   this.getAlbums = function(albumIds, options, callback) {
     // In case someone is using a version where options parameter did not exist.
