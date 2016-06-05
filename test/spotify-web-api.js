@@ -2554,7 +2554,7 @@ describe('Spotify Web API', function() {
       options.query.should.eql({
         min_energy : 0.4,
         market : 'ES',
-        seed_artists : ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'],
+        seed_artists : '6mfK6Q2tzLMEchAr0e9Uzu,4DYFVNKZ1uixa6SQTvzQwJ',
         limit : 5,
         min_popularity : 50
       });
@@ -2569,10 +2569,13 @@ describe('Spotify Web API', function() {
 
     var api = new SpotifyWebApi();
 
-    api.getRecommendations({
+    api.getRecommendations(
+      {
+        seed_artists: ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ']
+      },
+      {
         min_energy : 0.4,
         market : 'ES',
-        seed_artists : ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'],
         limit : 5,
         min_popularity : 50
       })
