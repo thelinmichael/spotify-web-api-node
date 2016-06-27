@@ -2554,7 +2554,44 @@ describe('Spotify Web API', function() {
       options.query.should.eql({
         min_energy : 0.4,
         market : 'ES',
-        seed_artists : ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'],
+        seed_artists : '6mfK6Q2tzLMEchAr0e9Uzu,4DYFVNKZ1uixa6SQTvzQwJ',
+        limit : 5,
+        min_popularity : 50
+      });
+      should.not.exist(options.data);
+      callback(null, {
+        body : {
+          tracks:[ {} ],
+          seeds:[ {} ]
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getRecommendations({
+        min_energy : 0.4,
+        market : 'ES',
+        seed_artists : '6mfK6Q2tzLMEchAr0e9Uzu,4DYFVNKZ1uixa6SQTvzQwJ',
+        limit : 5,
+        min_popularity : 50
+      })
+      .then(function(data) {
+        should.exist(data.body.tracks);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+  it("should get recommendations using an array of seeds", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(restler.get);
+      uri.should.equal('https://api.spotify.com/v1/recommendations');
+      options.query.should.eql({
+        min_energy : 0.4,
+        market : 'ES',
+        seed_artists : '6mfK6Q2tzLMEchAr0e9Uzu,4DYFVNKZ1uixa6SQTvzQwJ',
         limit : 5,
         min_popularity : 50
       });

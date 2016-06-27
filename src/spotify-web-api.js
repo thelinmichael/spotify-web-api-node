@@ -1157,8 +1157,21 @@ function SpotifyWebApi(credentials) {
       .withPath('/v1/recommendations')
       .build();
 
+    var _opts = {};
+    var optionsOfTypeArray = ['seed_artists', 'seed_genres', 'seed_tracks'];
+    for (var option in options) {
+      if (options.hasOwnProperty(option)) {
+        if (optionsOfTypeArray.indexOf(option) !== -1 &&
+          Object.prototype.toString.call(options[option]) === '[object Array]') {
+          _opts[option] = options[option].join(',');
+        } else {
+          _opts[option] = options[option];
+        }
+      }
+    }
+
     _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
+    _addQueryParameters(request, _opts);
 
     var promise = _performRequest(HttpManager.get, request);
 
