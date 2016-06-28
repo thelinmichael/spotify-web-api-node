@@ -730,6 +730,7 @@ Since the access token was set on the api object in the previous success callbac
 // clientId, clientSecret and refreshToken has been set on the api object previous to this call.
 spotifyApi.refreshAccessToken()
   .then(function(data) {
+    spotifyApi.setAccessToken(data.body.access_token);
     console.log('The access token has been refreshed!');
   }, function(err) {
     console.log('Could not refresh access token', err);
