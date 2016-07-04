@@ -66,17 +66,29 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
     .on('fail', function(err, response) {
       if (err) {
         var errorObject = _getErrorObject('Request failed', err);
-        callback(errorObject);
+        callback({
+          'error': errorObject,
+          'headers': (typeof response.headers != 'undefined') ? response.headers : null
+        });
       } else {
-        callback(new Error('Request failed'));
+        callback({
+          'error': new Error('Request failed'),
+          'headers': (typeof response.headers != 'undefined') ? response.headers : null
+        });
       }
     })
     .on('error', function(err, response) {
       if (err) {
         var errorObject = _getErrorObject('Request error', err);
-        callback(errorObject);
+        callback({
+          'error': errorObject,
+          'headers': (typeof response.headers != 'undefined') ? response.headers : null
+        });
       } else {
-        callback(new Error('Request error'));
+        callback({
+          'error': new Error('Request error'),
+          'headers': (typeof response.headers != 'undefined') ? response.headers : null
+        });
       }
     })
     .on('timeout', function(ms) {
