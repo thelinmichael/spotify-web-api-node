@@ -669,7 +669,9 @@ function SpotifyWebApi(credentials) {
 
   /**
    * Get a user's playlists.
-   * @param {string} userId The user ID.
+   * @param {string} userId An optional id of the user. If you know the Spotify URI it is easy
+   * to find the id (e.g. spotify:user:<here_is_the_id>). If not provided, the id of the user that granted
+   * the permissions will be used.
    * @param {Object} [options] The options supplied to this request.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getUserPlaylists('thelinmichael').then(...)
@@ -677,8 +679,15 @@ function SpotifyWebApi(credentials) {
    *          a list of playlists. If rejected, it contains an error object. Not returned if a callback is given.
    */
   this.getUserPlaylists = function(userId, options, callback) {
+    var path;
+    if (typeof userId === 'string') {
+      path = '/v1/users/' + encodeURI(userId) + '/playlists';
+    } else {
+      path = '/v1/me/playlists';
+    }
+
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + encodeURI(userId) + '/playlists')
+      .withPath(path)
       .build();
 
     _addAccessToken(request, this.getAccessToken());
