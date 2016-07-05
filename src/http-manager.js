@@ -68,26 +68,27 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
         var errorObject = _getErrorObject('Request failed', err);
         callback({
           'error': errorObject,
-          'headers': (typeof response.headers != 'undefined') ? response.headers : null
+          'headers': (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
         });
       } else {
         callback({
           'error': new Error('Request failed'),
-          'headers': (typeof response.headers != 'undefined') ? response.headers : null
+          'headers': (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
         });
       }
     })
     .on('error', function(err, response) {
       if (err) {
         var errorObject = _getErrorObject('Request error', err);
+
         callback({
           'error': errorObject,
-          'headers': (typeof response.headers != 'undefined') ? response.headers : null
+          'headers': (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
         });
       } else {
         callback({
           'error': new Error('Request error'),
-          'headers': (typeof response.headers != 'undefined') ? response.headers : null
+          'headers': (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
         });
       }
     })
