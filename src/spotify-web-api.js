@@ -698,6 +698,35 @@ function SpotifyWebApi(credentials) {
   };
 
   /**
+   * Get the current user's playlists.
+   * @param {Object} [options] The options supplied to this request.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getCurrentUserPlaylists().then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
+   *          a list of playlists. If rejected, it contains an error object. Not returned if a callback is given.
+   */
+  this.getCurrentUserPlaylists = function (options, callback) {
+    var request = WebApiRequest.builder()
+        .withPath('/v1/me/playlists')
+        .build();
+
+    _addAccessToken(request, this.getAccessToken());
+    _addQueryParameters(request, options);
+
+    var promise = _performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function (data) {
+        callback(null, data);
+      }, function (err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  };
+
+  /**
    * Get a playlist.
    * @param {string} userId The playlist's owner's user ID.
    * @param {string} playlistId The playlist's ID.
