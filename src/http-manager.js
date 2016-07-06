@@ -1,7 +1,8 @@
 'use strict';
 
 var restler = require('restler'),
-    WebApiError = require('./webapi-error');
+    WebApiError = require('./webapi-error'),
+    WebapiRateLimitError = require('./webapi-rate-limit-error');
 
 var HttpManager = {};
 
@@ -28,11 +29,15 @@ var _getParametersFromRequest = function(request) {
 };
 
 /* Create an error object from an error returned from the Web API */
-var _getErrorObject = function(defaultMessage, err) {
+var _getErrorObject = function(defaultMessage, err, response) {
   var errorObject;
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
-    // Web API Error format
-    errorObject = new WebApiError(err.error.message, err.error.status);
+    if ( err.error.status===429 ) {
+      errorObject = new WebapiRateLimitError(err.error.message, err.error.status, response.headers['retry-after']);
+    } else {
+      // Web API Error format
+      errorObject = new WebApiError(err.error.message, err.error.status);
+    }
   } else if (typeof err.error === 'string') {
     // Authorization Error format
     /* jshint ignore:start */
@@ -42,8 +47,13 @@ var _getErrorObject = function(defaultMessage, err) {
     // Serialized JSON error
     try {
       var parsedError = JSON.parse(err);
-      errorObject = new WebApiError(parsedError.error.message, parsedError.error.status);
-    } catch (err) { 
+      if ( parsedError.error.status===429 ) {
+        errorObject = new WebapiRateLimitError(parsedError.error.message, parsedError.error.status,  response.headers['retry-after'] );
+      } else {
+        // Web API Error format
+        errorObject = new WebApiError(parsedError.error.message, parsedError.error.status);
+      }
+    } catch (err) {
       // Error not JSON formatted
     }
   }
@@ -65,7 +75,7 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
     })
     .on('fail', function(err, response) {
       if (err) {
-        var errorObject = _getErrorObject('Request failed', err);
+        var errorObject = _getErrorObject('Request failed', err, response);
         callback(errorObject);
       } else {
         callback(new Error('Request failed'));
@@ -73,7 +83,7 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
     })
     .on('error', function(err, response) {
       if (err) {
-        var errorObject = _getErrorObject('Request error', err);
+        var errorObject = _getErrorObject('Request error', err, response);
         callback(errorObject);
       } else {
         callback(new Error('Request error'));
