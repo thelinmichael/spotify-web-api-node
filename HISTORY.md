@@ -1,5 +1,8 @@
 ## Change log
 
+#### 2.3.2 (10 July 2016)
+- Add language bindnings for **[Get a List of Current User's Playlists](https://developer.spotify.com/web-api/get-a-list-of-current-users-playlists/). Thanks [@JMPerez](https://github.com/JMPerez) and [@vinialbano](https://github.com/vinialbano).
+
 #### 2.3.1 (3 July 2016)
 - Fix for `getRecomendations` method causing client error response from the API when making the request. Thanks [@kyv](https://github.com/kyv) for reporting, and [@Boberober](https://github.com/Boberober) and [@JMPerez](https://github.com/JMPerez) for providing fixes.
 
