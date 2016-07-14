@@ -995,7 +995,7 @@ describe('Spotify Web API', function() {
 
   it('should get the current users playlists', function(done) {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
-      method.should.equal(restler.get);
+      method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/playlists');
       should.not.exist(options.query);
       callback(null, { body : { items: [
