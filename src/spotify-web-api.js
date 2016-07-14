@@ -2,8 +2,7 @@
 
 var AuthenticationRequest = require('./authentication-request'),
     WebApiRequest = require('./webapi-request'),
-    HttpManager = require('./http-manager'),
-    PromiseImpl = require('promise');
+    HttpManager = require('./http-manager');
 
 function SpotifyWebApi(credentials) {
   this._credentials = credentials || {};
@@ -41,7 +40,7 @@ SpotifyWebApi.prototype = {
         }
       });
     };
-    return new PromiseImpl(promiseFunction);
+    return new Promise(promiseFunction);
   },
 
   _addAccessToken: function(request, accessToken) {
