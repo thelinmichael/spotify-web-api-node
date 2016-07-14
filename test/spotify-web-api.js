@@ -1,7 +1,7 @@
 var superagent = require('superagent'),
     HttpManager = require('../src/http-manager'),
     sinon = require('sinon'),
-    SpotifyWebApi = require('../src/spotify-web-api'),
+    SpotifyWebApi = require('../src/server'),
     WebApiError = require('../src/webapi-error'),
     should = require('should');
 
