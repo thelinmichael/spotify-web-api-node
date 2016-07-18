@@ -868,6 +868,9 @@ You can run the unit tests executing `mocha` and get a test coverage report runn
 
 ## Change log
 
+#### 2.3.4 (18 July 2016)
+- Fixed a bug in `clientCredentialsGrant()`.
+
 #### 2.3.3 (18 July 2016)
 - Migrated to the `superagent` request library to support Node.JS and browsers. Thanks [@SomeoneWeird](https://github.com/SomeoneWeird) for the PR to add it, and [@erezny](https://github.com/erezny) for reporting bugs.
 
