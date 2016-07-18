@@ -61,18 +61,18 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
   var req = method(uri);
 
   if (options.query) {
-    req.query(options.query)
+    req.query(options.query);
   }
 
   if (options.data && (!options.headers || options.headers['Content-Type'] !== 'application/json')) {
     req.type('form');
     req.send(options.data);
   } else if (options.data) {
-    req.send(options.data)
+    req.send(options.data);
   }
 
   if (options.headers) {
-    req.set(options.headers)
+    req.set(options.headers);
   }
 
   req.end(function (err, response) {
@@ -87,9 +87,9 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
       body: response.body,
       headers: response.headers,
       statusCode: response.statusCode
-    })
-  })
-}
+    });
+  });
+};
 
 /**
  * Make a HTTP GET request.

@@ -1,3 +1,5 @@
+'use strict';
+
 var AuthenticationRequest = require('./authentication-request');
 var HttpManager = require('./http-manager');
 
@@ -23,7 +25,7 @@ module.exports = {
 
     this._addBodyParameters(request, options);
 
-    var promise =  _performRequest(HttpManager.post, request);
+    var promise =  this._performRequest(HttpManager.post, request);
 
     if (callback) {
       promise.then(function(data) {
