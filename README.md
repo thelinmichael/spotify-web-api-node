@@ -4,7 +4,7 @@ Spotify Web API Node
 [![Tests](https://travis-ci.org/thelinmichael/spotify-web-api-node.svg?branch=master)](https://travis-ci.org/thelinmichael/spotify-web-api-node)
 [![Coverage Status](https://coveralls.io/repos/thelinmichael/spotify-web-api-node/badge.svg)](https://coveralls.io/r/thelinmichael/spotify-web-api-node)
 
-This is a Node.js wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/). If you want to make requests directly from the browser, please check out [spotify-web-api-js](https://github.com/JMPerez/spotify-web-api-js). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/).
+This is a universal wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/) that runs on Node.JS and the browser, using [browserify](http://browserify.org/)/[webpack](https://webpack.github.io/)/[rollup](http://rollupjs.org/). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/).
 
 Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez), with help from [a lot of awesome contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members).
 
@@ -868,8 +868,11 @@ You can run the unit tests executing `mocha` and get a test coverage report runn
 
 ## Change log
 
+#### 2.3.3 (18 July 2016)
+- Migrated to the `superagent` request library to support Node.JS and browsers. Thanks [@SomeoneWeird](https://github.com/SomeoneWeird) for the PR to add it, and [@erezny](https://github.com/erezny) for reporting bugs.
+
 #### 2.3.2 (10 July 2016)
-- Add language bindnings for **[Get a List of Current User's Playlists](https://developer.spotify.com/web-api/get-a-list-of-current-users-playlists/)**. Thanks [@JMPerez](https://github.com/JMPerez) and [@vinialbano](https://github.com/vinialbano).
+- Add language bindings for **[Get a List of Current User's Playlists](https://developer.spotify.com/web-api/get-a-list-of-current-users-playlists/)**. Thanks [@JMPerez](https://github.com/JMPerez) and [@vinialbano](https://github.com/vinialbano).
 
 #### 2.3.1 (3 July 2016)
 - Fix for `getRecomendations` method causing client error response from the API when making the request. Thanks [@kyv](https://github.com/kyv) for reporting, and [@Boberober](https://github.com/Boberober) and [@JMPerez](https://github.com/JMPerez) for providing fixes.
