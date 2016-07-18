@@ -20,13 +20,15 @@
     }
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --bail",
+    "lint": "grunt jshint",
+    "test": "npm run lint && ./node_modules/.bin/mocha --bail",
     "coveralls": "./node_modules/.bin/mocha -r blanket -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js"
   },
   "devDependencies": {
     "blanket": "^1.1.7",
     "coveralls": "^2.11.2",
-    "grunt-contrib-jshint": "~0.10.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "~0.11.0",
     "grunt-contrib-watch": "~0.6",
     "grunt-simple-mocha": "0.4.x",
     "mocha": "~1.20.1",
