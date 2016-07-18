@@ -43,7 +43,7 @@ var _getErrorObject = function(defaultMessage, err) {
     try {
       var parsedError = JSON.parse(err);
       errorObject = new WebApiError(parsedError.error.message, parsedError.error.status);
-    } catch (err) { 
+    } catch (err) {
       // Error not JSON formatted
     }
   }
@@ -58,14 +58,17 @@ var _getErrorObject = function(defaultMessage, err) {
 
 /* Make the request to the Web API */
 HttpManager._makeRequest = function(method, options, uri, callback) {
-  var req = method(uri)
+  var req = method(uri);
 
   if (options.query) {
     req.query(options.query)
   }
 
-  if (options.data) {
-    req.send(data)
+  if (options.data && (!options.headers || options.headers['Content-Type'] !== 'application/json')) {
+    req.type('form');
+    req.send(options.data);
+  } else if (options.data) {
+    req.send(options.data)
   }
 
   if (options.headers) {
