@@ -2,14 +2,14 @@
 
 var AuthenticationRequest = require('./authentication-request'),
     WebApiRequest = require('./webapi-request'),
-    HttpManager = require('./http-manager'),
-    PromiseImpl = require('promise');
+    HttpManager = require('./http-manager');
 
 function SpotifyWebApi(credentials) {
+  this._credentials = credentials || {};
+}
 
-  var _credentials = credentials || {};
-
-  function _addBodyParameters(request, options) {
+SpotifyWebApi.prototype = {
+  _addBodyParameters: function(request, options) {
     if (options) {
       for (var key in options) {
         if (key !== 'credentials') {
@@ -17,9 +17,9 @@ function SpotifyWebApi(credentials) {
         }
       }
     }
-  }
+  },
 
-  function _addQueryParameters(request, options) {
+  _addQueryParameters: function(request, options) {
     if (!options) {
       return;
     }
@@ -28,9 +28,9 @@ function SpotifyWebApi(credentials) {
         request.addQueryParameter(key, options[key]);
       }
     }
-  }
+  },
 
-  function _performRequest(method, request) {
+  _performRequest: function(method, request) {
     var promiseFunction = function(resolve, reject) {
       method(request, function(error, result) {
         if (error) {
@@ -40,113 +40,113 @@ function SpotifyWebApi(credentials) {
         }
       });
     };
-    return new PromiseImpl(promiseFunction);
-  }
+    return new Promise(promiseFunction);
+  },
 
-  function _addAccessToken(request, accessToken) {
+  _addAccessToken: function(request, accessToken) {
     if (accessToken) {
       request.addHeaders({
         'Authorization' : 'Bearer ' + accessToken
       });
     }
-  }
+  },
 
-  this.setCredentials = function(credentials) {
+  setCredentials: function(credentials) {
     for (var key in credentials) {
       if (credentials.hasOwnProperty(key)) {
-        _credentials[key] = credentials[key];
+        this._credentials[key] = credentials[key];
       }
     }
-  };
+  },
 
-  this.getCredentials = function() {
-    return _credentials;
-  };
+  getCredentials: function() {
+    return this._credentials;
+  },
 
-  this.resetCredentials = function() {
-    _credentials = null;
-  };
+  resetCredentials: function() {
+    this._credentials = null;
+  },
 
-  this.setClientId = function(clientId) {
-    _setCredential('clientId', clientId);
-  };
+  setClientId: function(clientId) {
+    this._setCredential('clientId', clientId);
+  },
 
-  this.setClientSecret = function(clientSecret) {
-    _setCredential('clientSecret', clientSecret);
-  };
+  setClientSecret: function(clientSecret) {
+    this._setCredential('clientSecret', clientSecret);
+  },
 
-  this.setAccessToken = function(accessToken) {
-    _setCredential('accessToken', accessToken);
-  };
+  setAccessToken: function(accessToken) {
+    this._setCredential('accessToken', accessToken);
+  },
 
-  this.setRefreshToken = function(refreshToken) {
-    _setCredential('refreshToken', refreshToken);
-  };
+  setRefreshToken: function(refreshToken) {
+    this._setCredential('refreshToken', refreshToken);
+  },
 
-  this.setRedirectURI = function(redirectUri) {
-    _setCredential('redirectUri', redirectUri);
-  };
+  setRedirectURI: function(redirectUri) {
+    this._setCredential('redirectUri', redirectUri);
+  },
 
-  this.getRedirectURI = function() {
-    return _getCredential('redirectUri');
-  };
+  getRedirectURI: function() {
+    return this._getCredential('redirectUri');
+  },
 
-  this.getClientId = function() {
-    return _getCredential('clientId');
-  };
+  getClientId: function() {
+    return this._getCredential('clientId');
+  },
 
-  this.getClientSecret = function() {
-    return _getCredential('clientSecret');
-  };
+  getClientSecret: function() {
+    return this._getCredential('clientSecret');
+  },
 
-  this.getAccessToken = function() {
-    return _getCredential('accessToken');
-  };
+  getAccessToken: function() {
+    return this._getCredential('accessToken');
+  },
 
-  this.getRefreshToken = function() {
-    return _getCredential('refreshToken');
-  };
+  getRefreshToken: function() {
+    return this._getCredential('refreshToken');
+  },
 
-  this.resetClientId = function() {
-    _resetCredential('clientId');
-  };
+  resetClientId: function() {
+    this._resetCredential('clientId');
+  },
 
-  this.resetClientSecret = function() {
-    _resetCredential('clientSecret');
-  };
+  resetClientSecret: function() {
+    this._resetCredential('clientSecret');
+  },
 
-  this.resetAccessToken = function() {
-    _resetCredential('accessToken');
-  };
+  resetAccessToken: function() {
+    this._resetCredential('accessToken');
+  },
 
-  this.resetRefreshToken = function() {
-    _resetCredential('refreshToken');
-  };
+  resetRefreshToken: function() {
+    this._resetCredential('refreshToken');
+  },
 
-  this.resetRedirectURI = function() {
-    _resetCredential('redirectUri');
-  };
+  resetRedirectURI: function() {
+    this._resetCredential('redirectUri');
+  },
 
-  function _setCredential(credentialKey, value) {
-    _credentials = _credentials || {};
-    _credentials[credentialKey] = value;
-  }
+  _setCredential: function(credentialKey, value) {
+    this._credentials = this._credentials || {};
+    this._credentials[credentialKey] = value;
+  },
 
-  function _getCredential(credentialKey) {
-    if (!_credentials) {
+  _getCredential: function(credentialKey) {
+    if (!this._credentials) {
       return;
     } else {
-      return _credentials[credentialKey];
+      return this._credentials[credentialKey];
     }
-  }
+  },
 
-  function _resetCredential(credentialKey) {
-    if (!_credentials) {
+  _resetCredential: function(credentialKey) {
+    if (!this._credentials) {
       return;
     } else {
-      _credentials[credentialKey] = null;
+      this._credentials[credentialKey] = null;
     }
-  }
+  },
 
   /**
    * Look up a track.
@@ -157,7 +157,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the track. Not returned if a callback is given.
    */
-  this.getTrack = function(trackId, options, callback) {
+  getTrack: function(trackId, options, callback) {
      // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
@@ -178,9 +178,9 @@ function SpotifyWebApi(credentials) {
       .withQueryParameters(actualOptions)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (actualCallback) {
       promise.then(function(data) {
@@ -191,7 +191,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Look up several tracks.
@@ -202,7 +202,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the artists. Not returned if a callback is given.
    */
-  this.getTracks = function(trackIds, options, callback) {
+  getTracks: function(trackIds, options, callback) {
     // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
@@ -225,10 +225,10 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, actualOptions);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, actualOptions);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (actualCallback) {
       promise.then(function(data) {
@@ -239,7 +239,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Look up an album.
@@ -250,7 +250,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the album. Not returned if a callback is given.
    */
-  this.getAlbum = function(albumId, options, callback) {
+  getAlbum: function(albumId, options, callback) {
     // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
@@ -271,9 +271,9 @@ function SpotifyWebApi(credentials) {
       .withQueryParameters(actualOptions)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (actualCallback) {
       promise.then(function(data) {
@@ -284,7 +284,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Look up several albums.
@@ -295,7 +295,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the albums. Not returned if a callback is given.
    */
-  this.getAlbums = function(albumIds, options, callback) {
+  getAlbums: function(albumIds, options, callback) {
     // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
@@ -318,10 +318,10 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, actualOptions);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, actualOptions);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (actualCallback) {
       promise.then(function(data) {
@@ -332,7 +332,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Look up an artist.
@@ -342,14 +342,14 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the artist. Not returned if a callback is given.
    */
-  this.getArtist = function(artistId, callback) {
+  getArtist: function(artistId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/artists/' + artistId)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -360,7 +360,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Look up several artists.
@@ -370,7 +370,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing information
    *          about the artists. Not returned if a callback is given.
    */
-  this.getArtists = function(artistIds, callback) {
+  getArtists: function(artistIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/artists')
       .withQueryParameters({
@@ -378,9 +378,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -391,7 +391,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Search for music entities of certain types.
@@ -405,7 +405,7 @@ function SpotifyWebApi(credentials) {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.search = function(query, types, options, callback) {
+  search: function(query, types, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/search/')
       .withQueryParameters({
@@ -414,10 +414,10 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -428,7 +428,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Search for an album.
@@ -440,9 +440,9 @@ function SpotifyWebApi(credentials) {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.searchAlbums = function(query, options, callback) {
+  searchAlbums: function(query, options, callback) {
     return this.search(query, ['album'], options, callback);
-  };
+  },
 
   /**
    * Search for an artist.
@@ -454,9 +454,9 @@ function SpotifyWebApi(credentials) {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.searchArtists = function(query, options, callback) {
+  searchArtists: function(query, options, callback) {
     return this.search(query, ['artist'], options, callback);
-  };
+  },
 
   /**
    * Search for a track.
@@ -468,9 +468,9 @@ function SpotifyWebApi(credentials) {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.searchTracks = function(query, options, callback) {
+  searchTracks: function(query, options, callback) {
     return this.search(query, ['track'], options, callback);
-  };
+  },
 
   /**
    * Search for playlists.
@@ -482,9 +482,9 @@ function SpotifyWebApi(credentials) {
    *          search results. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.searchPlaylists = function(query, options, callback) {
+  searchPlaylists: function(query, options, callback) {
     return this.search(query, ['playlist'], options, callback);
-  };
+  },
 
   /**
    * Get an artist's albums.
@@ -496,15 +496,15 @@ function SpotifyWebApi(credentials) {
    *          for the given artist. The result is paginated. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.getArtistAlbums = function(artistId, options, callback) {
+  getArtistAlbums: function(artistId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/artists/' + artistId + '/albums')
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -515,7 +515,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get the tracks of an album.
@@ -527,15 +527,15 @@ function SpotifyWebApi(credentials) {
    *                    tracks in the album. The result is paginated. If the promise is rejected.
    *                    it contains an error object. Not returned if a callback is given.
    */
-  this.getAlbumTracks = function(albumId, options, callback) {
+  getAlbumTracks: function(albumId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/albums/' + albumId + '/tracks')
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -546,7 +546,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get an artist's top tracks.
@@ -558,7 +558,7 @@ function SpotifyWebApi(credentials) {
    *          artist's top tracks in the given country. If the promise is rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.getArtistTopTracks = function(artistId, country, callback) {
+  getArtistTopTracks: function(artistId, country, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/artists/' + artistId + '/top-tracks')
       .withQueryParameters({
@@ -566,9 +566,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -579,7 +579,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get related artists.
@@ -589,14 +589,14 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, returns an object containing the
    *          related artists. If the promise is rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getArtistRelatedArtists = function(artistId, callback) {
+  getArtistRelatedArtists: function(artistId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/artists/' + artistId + '/related-artists')
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -607,7 +607,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get information about a user.
@@ -618,14 +618,14 @@ function SpotifyWebApi(credentials) {
    *          containing information about the user. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getUser = function(userId, callback) {
+  getUser: function(userId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURI(userId))
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -636,7 +636,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get information about the user that has signed in (the current user).
@@ -647,14 +647,14 @@ function SpotifyWebApi(credentials) {
    *          depends on the permissions given by the user. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getMe = function(callback) {
+  getMe: function(callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me')
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -665,7 +665,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get a user's playlists.
@@ -678,7 +678,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
    *          a list of playlists. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getUserPlaylists = function(userId, options, callback) {
+  getUserPlaylists: function(userId, options, callback) {
     var path;
     if (typeof userId === 'string') {
       path = '/v1/users/' + encodeURI(userId) + '/playlists';
@@ -690,10 +690,10 @@ function SpotifyWebApi(credentials) {
       .withPath(path)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -704,7 +704,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get a playlist.
@@ -716,15 +716,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
    *          the playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getPlaylist = function(userId, playlistId, options, callback) {
+  getPlaylist: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -735,7 +735,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get tracks in a playlist.
@@ -747,15 +747,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object that containing
    * the tracks in the playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getPlaylistTracks = function(userId, playlistId, options, callback) {
+  getPlaylistTracks: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder().
       withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withQueryParameters(options).
       build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -766,7 +766,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Create a playlist.
@@ -778,7 +778,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing information about the
    *          created playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.createPlaylist = function(userId, playlistName, options, callback) {
+  createPlaylist: function(userId, playlistName, options, callback) {
     // In case someone is using a version where options parameter did not exist.
     var actualCallback;
     if (typeof options === 'function') {
@@ -800,9 +800,9 @@ function SpotifyWebApi(credentials) {
       .withBodyParameters(actualOptions)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.post, request);
+    var promise = this._performRequest(HttpManager.post, request);
 
     if (actualCallback) {
       promise.then(function(data) {
@@ -813,7 +813,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Follow a playlist.
@@ -824,16 +824,16 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.followPlaylist = function(userId, playlistId, options, callback) {
+  followPlaylist: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/followers')
       .withBodyParameters(options)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.put, request);
+    var promise = this._performRequest(HttpManager.put, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -844,7 +844,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Unfollow a playlist.
@@ -855,15 +855,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.unfollowPlaylist = function(userId, playlistId, callback) {
+  unfollowPlaylist: function(userId, playlistId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/followers')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.del, request);
+    var promise = this._performRequest(HttpManager.del, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -874,7 +874,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Change playlist details.
@@ -886,16 +886,16 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.changePlaylistDetails = function(userId, playlistId, options, callback) {
+  changePlaylistDetails: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(options)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.put, request);
+    var promise = this._performRequest(HttpManager.put, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -906,7 +906,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Add tracks to a playlist.
@@ -920,7 +920,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.addTracksToPlaylist = function(userId, playlistId, tracks, options, callback) {
+  addTracksToPlaylist: function(userId, playlistId, tracks, options, callback) {
     var tracksString;
     if (typeof tracks === 'object') {
       tracksString = tracks.join();
@@ -935,10 +935,10 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addQueryParameters(request, options);
-    _addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.post, request);
+    var promise = this._performRequest(HttpManager.post, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -949,7 +949,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Remove tracks from a playlist.
@@ -962,7 +962,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.removeTracksFromPlaylist = function(userId, playlistId, tracks, options, callback) {
+  removeTracksFromPlaylist: function(userId, playlistId, tracks, options, callback) {
     var request = WebApiRequest.builder().
       withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
@@ -971,10 +971,10 @@ function SpotifyWebApi(credentials) {
       }).
       build();
 
-    _addBodyParameters(request, options);
-    _addAccessToken(request, this.getAccessToken());
+    this._addBodyParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.del, request);
+    var promise = this._performRequest(HttpManager.del, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -985,7 +985,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Remove tracks from a playlist by position instead of specifying the tracks' URIs.
@@ -997,7 +997,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.removeTracksFromPlaylistByPosition = function(userId, playlistId, positions, snapshotId, callback) {
+  removeTracksFromPlaylistByPosition: function(userId, playlistId, positions, snapshotId, callback) {
     var request = WebApiRequest.builder().
       withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
@@ -1007,9 +1007,9 @@ function SpotifyWebApi(credentials) {
       }).
       build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.del, request);
+    var promise = this._performRequest(HttpManager.del, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1020,7 +1020,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Replace tracks in a playlist.
@@ -1031,7 +1031,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful returns an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.replaceTracksInPlaylist = function(userId, playlistId, uris, callback) {
+  replaceTracksInPlaylist: function(userId, playlistId, uris, callback) {
     var request = WebApiRequest.builder().
       withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
@@ -1040,9 +1040,9 @@ function SpotifyWebApi(credentials) {
       }).
       build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise =  _performRequest(HttpManager.put, request);
+    var promise = this._performRequest(HttpManager.put, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1053,7 +1053,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Reorder tracks in a playlist.
@@ -1066,7 +1066,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.reorderTracksInPlaylist = function(userId, playlistId, rangeStart, insertBefore, options, callback) {
+  reorderTracksInPlaylist: function(userId, playlistId, rangeStart, insertBefore, options, callback) {
     var request = WebApiRequest.builder().
       withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
@@ -1076,10 +1076,10 @@ function SpotifyWebApi(credentials) {
       }).
       build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addBodyParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addBodyParameters(request, options);
 
-    var promise =  _performRequest(HttpManager.put, request);
+    var promise =  this._performRequest(HttpManager.put, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1090,7 +1090,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get audio features for a single track identified by its unique Spotify ID.
@@ -1101,14 +1101,14 @@ function SpotifyWebApi(credentials) {
    *          containing information about the audio features. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getAudioFeaturesForTrack = function(trackId, callback) {
+  getAudioFeaturesForTrack: function(trackId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/audio-features/' + trackId)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1119,7 +1119,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get audio features for multiple tracks identified by their unique Spotify ID.
@@ -1130,7 +1130,7 @@ function SpotifyWebApi(credentials) {
    *          containing information about the audio features for the tracks. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getAudioFeaturesForTracks = function(trackIds, callback) {
+  getAudioFeaturesForTracks: function(trackIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/audio-features')
       .withQueryParameters({
@@ -1138,9 +1138,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1151,7 +1151,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Create a playlist-style listening experience based on seed artists, tracks and genres.
@@ -1161,7 +1161,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
    *          a list of tracks and a list of seeds. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getRecommendations = function(options, callback) {
+  getRecommendations: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/recommendations')
       .build();
@@ -1179,10 +1179,10 @@ function SpotifyWebApi(credentials) {
       }
     }
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, _opts);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, _opts);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1193,7 +1193,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Retrieve a list of available genres seed parameter values for recommendations.
@@ -1203,48 +1203,14 @@ function SpotifyWebApi(credentials) {
    *          a list of available genres to be used as seeds for recommendations.
    *          If rejected, it contains an error object. Not returned if a callback is given.
    */
-  this.getAvailableGenreSeeds = function(callback) {
+  getAvailableGenreSeeds: function(callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/recommendations/available-genre-seeds')
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
-  };
-
-  /**
-   * Request an access token using the Client Credentials flow.
-   * Requires that client ID and client secret has been set previous to the call.
-   * @param {Object} options Options.
-   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @returns {Promise|undefined} A promise that if successful, resolves into an object containing the access token,
-   *          token type and time to expiration. If rejected, it contains an error object. Not returned if a callback is given.
-   */
-  this.clientCredentialsGrant = function(options, callback) {
-    var request = AuthenticationRequest.builder()
-      .withPath('/api/token')
-      .withBodyParameters({
-        'grant_type' : 'client_credentials'
-      })
-      .withHeaders({
-        Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
-      })
-      .build();
-
-    _addBodyParameters(request, options);
-
-    var promise =  _performRequest(HttpManager.post, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1255,74 +1221,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
-
-  /**
-   * Request an access token using the Authorization Code flow.
-   * Requires that client ID, client secret, and redirect URI has been set previous to the call.
-   * @param {string} code The authorization code returned in the callback in the Authorization Code flow.
-   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @returns {Promise|undefined} A promise that if successful, resolves into an object containing the access token,
-   *          refresh token, token type and time to expiration. If rejected, it contains an error object.
-   *          Not returned if a callback is given.
-   */
-  this.authorizationCodeGrant = function(code, callback) {
-    var request = AuthenticationRequest.builder()
-      .withPath('/api/token')
-      .withBodyParameters({
-        'grant_type' : 'authorization_code',
-        'redirect_uri' : this.getRedirectURI(),
-        'code' : code,
-        'client_id' : this.getClientId(),
-        'client_secret' : this.getClientSecret()
-      })
-      .build();
-
-    var promise = _performRequest(HttpManager.post, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
-  };
-
-  /**
-   * Refresh the access token given that it hasn't expired.
-   * Requires that client ID, client secret and refresh token has been set previous to the call.
-   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing the
-   *          access token, time to expiration and token type. If rejected, it contains an error object.
-   *          Not returned if a callback is given.
-   */
-  this.refreshAccessToken = function(callback) {
-    var request = AuthenticationRequest.builder()
-      .withPath('/api/token')
-      .withBodyParameters({
-        'grant_type' : 'refresh_token',
-        'refresh_token' : this.getRefreshToken()
-      })
-      .withHeaders({
-        Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
-      })
-      .build();
-
-    var promise = _performRequest(HttpManager.post, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
-  };
+  },
 
   /**
    * Retrieve a URL where the user can give the application permissions.
@@ -1330,7 +1229,7 @@ function SpotifyWebApi(credentials) {
    * @param {string} state A parameter that you can use to maintain a value between the request and the callback to redirect_uri.It is useful to prevent CSRF exploits.
    * @returns {string} The URL where the user can give application permissions.
    */
-  this.createAuthorizeURL = function(scopes, state) {
+  createAuthorizeURL: function(scopes, state) {
     var request = AuthenticationRequest.builder()
       .withPath('/authorize')
       .withQueryParameters({
@@ -1343,7 +1242,7 @@ function SpotifyWebApi(credentials) {
       .build();
 
     return request.getURL();
-  };
+  },
 
   /**
    * Retrieve the tracks that are saved to the authenticated users Your Music library.
@@ -1352,15 +1251,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which in turn contains
    *          playlist track objects. Not returned if a callback is given.
    */
-  this.getMySavedTracks = function(options, callback) {
+  getMySavedTracks: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/tracks')
       .withQueryParameters(options)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1371,7 +1270,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.
@@ -1382,7 +1281,7 @@ function SpotifyWebApi(credentials) {
    * The boolean value of true indicates that the track is part of the user's library, otherwise false.
    * Not returned if a callback is given.
    */
-  this.containsMySavedTracks = function(trackIds, callback) {
+  containsMySavedTracks: function(trackIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/tracks/contains')
       .withQueryParameters({
@@ -1390,9 +1289,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1403,7 +1302,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Remove a track from the authenticated user's Your Music library.
@@ -1412,16 +1311,16 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error.
    * Not returned if a callback is given.
    */
-  this.removeFromMySavedTracks = function(trackIds, callback) {
+  removeFromMySavedTracks: function(trackIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(trackIds)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.del, request);
+    var promise = this._performRequest(HttpManager.del, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1432,7 +1331,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
    /**
    * Add a track from the authenticated user's Your Music library.
@@ -1440,16 +1339,16 @@ function SpotifyWebApi(credentials) {
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
    */
-  this.addToMySavedTracks = function(trackIds, callback) {
+  addToMySavedTracks: function(trackIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(trackIds)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.put, request);
+    var promise = this._performRequest(HttpManager.put, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1460,7 +1359,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Remove an album from the authenticated user's Your Music library.
@@ -1469,16 +1368,16 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error.
    * Not returned if a callback is given.
    */
-  this.removeFromMySavedAlbums = function(albumIds, callback) {
+  removeFromMySavedAlbums: function(albumIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/albums')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(albumIds)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.del, request);
+    var promise = this._performRequest(HttpManager.del, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1489,7 +1388,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Add an album from the authenticated user's Your Music library.
@@ -1497,16 +1396,16 @@ function SpotifyWebApi(credentials) {
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
    */
-  this.addToMySavedAlbums = function(albumIds, callback) {
+  addToMySavedAlbums: function(albumIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/albums')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(albumIds)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.put, request);
+    var promise = this._performRequest(HttpManager.put, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1517,7 +1416,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Retrieve the albums that are saved to the authenticated users Your Music library.
@@ -1526,15 +1425,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which in turn contains
    *          playlist album objects. Not returned if a callback is given.
    */
-  this.getMySavedAlbums = function(options, callback) {
+  getMySavedAlbums: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/albums')
       .withQueryParameters(options)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1545,7 +1444,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Check if one or more albums is already saved in the current Spotify user’s “Your Music” library.
@@ -1556,7 +1455,7 @@ function SpotifyWebApi(credentials) {
    * The boolean value of true indicates that the album is part of the user's library, otherwise false.
    * Not returned if a callback is given.
    */
-  this.containsMySavedAlbums = function(albumIds, callback) {
+  containsMySavedAlbums: function(albumIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/albums/contains')
       .withQueryParameters({
@@ -1564,9 +1463,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1577,7 +1476,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get the current user's top artists based on calculated affinity.
@@ -1586,15 +1485,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of artists,
    *          otherwise an error. Not returned if a callback is given.
    */
-  this.getMyTopArtists = function(options, callback) {
+  getMyTopArtists: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/top/artists')
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1605,7 +1504,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get the current user's top tracks based on calculated affinity.
@@ -1614,15 +1513,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  this.getMyTopTracks = function(options, callback) {
+  getMyTopTracks: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/top/tracks')
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1633,7 +1532,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Add the current user as a follower of one or more other Spotify users.
@@ -1643,7 +1542,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.followUsers = function(userIds, callback) {
+  followUsers: function(userIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/following')
       .withQueryParameters({
@@ -1652,9 +1551,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.put, request);
+    var promise = this._performRequest(HttpManager.put, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1665,7 +1564,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Add the current user as a follower of one or more artists.
@@ -1675,7 +1574,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.followArtists = function(artistIds, callback) {
+  followArtists: function(artistIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/following')
       .withQueryParameters({
@@ -1684,9 +1583,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.put, request);
+    var promise = this._performRequest(HttpManager.put, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1697,7 +1596,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Remove the current user as a follower of one or more other Spotify users.
@@ -1707,7 +1606,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.unfollowUsers = function(userIds, callback) {
+  unfollowUsers: function(userIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/following')
       .withQueryParameters({
@@ -1716,9 +1615,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.del, request);
+    var promise = this._performRequest(HttpManager.del, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1729,7 +1628,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Remove the current user as a follower of one or more artists.
@@ -1739,7 +1638,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    *          it contains an error object. Not returned if a callback is given.
    */
-  this.unfollowArtists = function(artistIds, callback) {
+  unfollowArtists: function(artistIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/following')
       .withQueryParameters({
@@ -1748,9 +1647,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.del, request);
+    var promise = this._performRequest(HttpManager.del, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1761,7 +1660,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Check to see if the current user is following one or more other Spotify users.
@@ -1773,7 +1672,7 @@ function SpotifyWebApi(credentials) {
    *          The boolean value of true indicates that the user is following that user, otherwise is not.
    *          Not returned if a callback is given.
    */
-  this.isFollowingUsers = function(userIds, callback) {
+  isFollowingUsers: function(userIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/following/contains')
       .withQueryParameters({
@@ -1782,9 +1681,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1795,7 +1694,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Get the current user's followed artists.
@@ -1804,7 +1703,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which contains
    * album objects. Not returned if a callback is given.
    */
-  this.getFollowedArtists = function(options, callback) {
+  getFollowedArtists: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/following')
       .withHeaders({ 'Content-Type' : 'application/json' })
@@ -1813,10 +1712,10 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
-    _addQueryParameters(request, options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1827,8 +1726,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
-
+  },
 
   /**
    * Check if users are following a playlist.
@@ -1839,7 +1737,7 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful returns an array of booleans. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  this.areFollowingPlaylist = function(userId, playlistId, followerIds, callback) {
+  areFollowingPlaylist: function(userId, playlistId, followerIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/followers/contains')
       .withQueryParameters({
@@ -1847,9 +1745,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1860,7 +1758,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Check to see if the current user is following one or more artists.
@@ -1872,7 +1770,7 @@ function SpotifyWebApi(credentials) {
    *          The boolean value of true indicates that the user is following that artist, otherwise is not.
    *          Not returned if a callback is given.
    */
-  this.isFollowingArtists = function(artistIds, callback) {
+  isFollowingArtists: function(artistIds, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/following/contains')
       .withQueryParameters({
@@ -1881,9 +1779,9 @@ function SpotifyWebApi(credentials) {
       })
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1894,7 +1792,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Retrieve new releases
@@ -1903,16 +1801,16 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which contains
    * album objects. Not returned if a callback is given.
    */
-  this.getNewReleases = function(options, callback) {
+  getNewReleases: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/browse/new-releases')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters(options)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1923,7 +1821,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Retrieve featured playlists
@@ -1932,16 +1830,16 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which contains
    * featured playlists. Not returned if a callback is given.
    */
-  this.getFeaturedPlaylists = function(options, callback) {
+  getFeaturedPlaylists: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/browse/featured-playlists')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters(options)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise =  _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1952,7 +1850,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Retrieve a list of categories used to tag items in Spotify (e.g. in the 'Browse' tab)
@@ -1961,15 +1859,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object of categories.
    * Not returned if a callback is given.
    */
-  this.getCategories = function(options, callback) {
+  getCategories: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/browse/categories')
       .withQueryParameters(options)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -1980,7 +1878,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Retrieve a category.
@@ -1990,15 +1888,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a category object.
    * Not returned if a callback is given.
    */
-  this.getCategory = function(categoryId, options, callback) {
+  getCategory: function(categoryId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/browse/categories/' + categoryId)
       .withQueryParameters(options)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -2009,7 +1907,7 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  },
 
   /**
    * Retrieve playlists for a category.
@@ -2019,15 +1917,15 @@ function SpotifyWebApi(credentials) {
    * @returns {Promise|undefined} A promise that if successful, resolves to a paging object containing simple playlists.
    * Not returned if a callback is given.
    */
-  this.getPlaylistsForCategory = function(categoryId, options, callback) {
+  getPlaylistsForCategory: function(categoryId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/browse/categories/' + categoryId + '/playlists')
       .withQueryParameters(options)
       .build();
 
-    _addAccessToken(request, this.getAccessToken());
+    this._addAccessToken(request, this.getAccessToken());
 
-    var promise = _performRequest(HttpManager.get, request);
+    var promise = this._performRequest(HttpManager.get, request);
 
     if (callback) {
       promise.then(function(data) {
@@ -2038,8 +1936,15 @@ function SpotifyWebApi(credentials) {
     } else {
       return promise;
     }
-  };
+  }
+};
 
-}
+SpotifyWebApi._addMethods = function(methods) {
+  for (var i in methods) {
+    if (methods.hasOwnProperty(i)) {
+      this.prototype[i] = methods[i];
+    }
+  }
+};
 
 module.exports = SpotifyWebApi;
