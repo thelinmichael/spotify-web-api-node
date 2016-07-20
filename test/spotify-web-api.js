@@ -859,6 +859,31 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get a user with a '#' character and encode it properly", function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.get);
+      uri.should.equal('https://api.spotify.com/v1/users/%23matze23');
+      should.not.exist(options.data);
+      callback(null,
+      {
+        body : {
+          uri: 'spotify:user:%23matze23'
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getUser('#matze23')
+      .then(function(data) {
+        'spotify:user:%23matze23'.should.equal(data.body.uri);
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
   it("should get a user using callback", function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
