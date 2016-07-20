@@ -620,7 +620,7 @@ SpotifyWebApi.prototype = {
    */
   getUser: function(userId, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + encodeURI(userId))
+      .withPath('/v1/users/' + encodeURIComponent(userId))
       .build();
 
     this._addAccessToken(request, this.getAccessToken());
@@ -681,7 +681,7 @@ SpotifyWebApi.prototype = {
   getUserPlaylists: function(userId, options, callback) {
     var path;
     if (typeof userId === 'string') {
-      path = '/v1/users/' + encodeURI(userId) + '/playlists';
+      path = '/v1/users/' + encodeURIComponent(userId) + '/playlists';
     } else {
       path = '/v1/me/playlists';
     }
@@ -718,7 +718,7 @@ SpotifyWebApi.prototype = {
    */
   getPlaylist: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId)
+      .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId)
       .build();
 
     this._addAccessToken(request, this.getAccessToken());
@@ -749,7 +749,7 @@ SpotifyWebApi.prototype = {
    */
   getPlaylistTracks: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withQueryParameters(options).
       build();
 
@@ -795,7 +795,7 @@ SpotifyWebApi.prototype = {
     }
 
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + encodeURI(userId) + '/playlists')
+      .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(actualOptions)
       .build();
@@ -826,7 +826,7 @@ SpotifyWebApi.prototype = {
    */
   followPlaylist: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/followers')
+      .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers')
       .withBodyParameters(options)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .build();
@@ -857,7 +857,7 @@ SpotifyWebApi.prototype = {
    */
   unfollowPlaylist: function(userId, playlistId, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/followers')
+      .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .build();
 
@@ -888,7 +888,7 @@ SpotifyWebApi.prototype = {
    */
   changePlaylistDetails: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId)
+      .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(options)
       .build();
@@ -928,7 +928,7 @@ SpotifyWebApi.prototype = {
       tracksString = tracks;
     }
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks')
+      .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters({
         uris: tracksString
@@ -964,7 +964,7 @@ SpotifyWebApi.prototype = {
    */
   removeTracksFromPlaylist: function(userId, playlistId, tracks, options, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'tracks': tracks
@@ -999,7 +999,7 @@ SpotifyWebApi.prototype = {
    */
   removeTracksFromPlaylistByPosition: function(userId, playlistId, positions, snapshotId, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'positions': positions,
@@ -1033,7 +1033,7 @@ SpotifyWebApi.prototype = {
    */
   replaceTracksInPlaylist: function(userId, playlistId, uris, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'uris': uris
@@ -1068,7 +1068,7 @@ SpotifyWebApi.prototype = {
    */
   reorderTracksInPlaylist: function(userId, playlistId, rangeStart, insertBefore, options, callback) {
     var request = WebApiRequest.builder().
-      withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/tracks').
+      withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'range_start': rangeStart,
@@ -1739,7 +1739,7 @@ SpotifyWebApi.prototype = {
    */
   areFollowingPlaylist: function(userId, playlistId, followerIds, callback) {
     var request = WebApiRequest.builder()
-      .withPath('/v1/users/' + encodeURI(userId) + '/playlists/' + playlistId + '/followers/contains')
+      .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers/contains')
       .withQueryParameters({
         ids : followerIds.join(',')
       })
