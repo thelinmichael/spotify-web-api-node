@@ -1,5 +1,8 @@
 ## Change log
 
+#### 2.3.5 (20 July 2016)
+- Use `encodeURIComponent` instead of `encodeURI` to encode the user's id. 'encodeURI' wasn't encoding characters like `/` or `#` that were generating an invalid endpoint url. Thanks [@jgranstrom](https://github.com/jgranstrom) for the PR.
+
 #### 2.3.4 (18 July 2016)
 - Fixed a bug in `clientCredentialsGrant()`.
 
