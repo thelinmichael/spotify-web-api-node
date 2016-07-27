@@ -14,6 +14,7 @@ module.exports = {
    */
   clientCredentialsGrant: function(options, callback) {
     var request = AuthenticationRequest.builder()
+      .withHost(this.getAuthHost())
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'client_credentials'
@@ -49,6 +50,7 @@ module.exports = {
    */
   authorizationCodeGrant: function(code, callback) {
     var request = AuthenticationRequest.builder()
+      .withHost(this.getAuthHost())
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'authorization_code',
@@ -82,6 +84,7 @@ module.exports = {
    */
   refreshAccessToken: function(callback) {
     var request = AuthenticationRequest.builder()
+      .withHost(this.getAuthHost())
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'refresh_token',

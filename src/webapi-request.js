@@ -2,7 +2,7 @@
 
 var Request = require('./base-request');
 
-var DEFAULT_HOST = process.env.SPOTIFY_API_HOST || 'api.spotify.com',
+var DEFAULT_HOST = 'api.spotify.com',
     DEFAULT_PORT = 443,
     DEFAULT_SCHEME = 'https';
 
@@ -12,3 +12,5 @@ module.exports.builder = function() {
       .withPort(DEFAULT_PORT)
       .withScheme(DEFAULT_SCHEME);
 };
+
+module.exports.DEFAULT_HOST = DEFAULT_HOST;
