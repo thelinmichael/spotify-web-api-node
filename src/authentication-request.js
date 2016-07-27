@@ -2,7 +2,7 @@
 
 var Request = require('./base-request');
 
-var DEFAULT_HOST = 'accounts.spotify.com',
+var DEFAULT_HOST = process.env.SPOTIFY_AUTH_HOST || 'accounts.spotify.com',
     DEFAULT_PORT = 443,
     DEFAULT_SCHEME = 'https';
 
