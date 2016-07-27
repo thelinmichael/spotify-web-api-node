@@ -2692,4 +2692,38 @@ describe('Spotify Web API', function() {
         done(err);
       });
   });
+
+  it("should allow setting different api host", function (done) {
+    var myHost = 'api.example.com';
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      uri.should.equal('https://api.example.com/v1/recommendations/available-genre-seeds');
+      callback(null);
+    });
+
+    var api = new SpotifyWebApi({apiHost: myHost});
+
+    api.getAvailableGenreSeeds()
+      .then(function(data) {
+        done();
+      }, function(err) {
+        done(err);
+      });
+  });
+
+
+  it('should allow setting different auth host', function() {
+    var scopes = ['user-read-private', 'user-read-email'],
+        redirectUri = 'https://example.com/callback',
+        clientId = '5fe01282e44241328a84e7c5cc169165',
+        state = 'some-state-of-my-choice';
+
+    var api = new SpotifyWebApi({
+        clientId : clientId,
+        redirectUri : redirectUri,
+        authHost: 'accounts.example.com'
+    });
+
+    var authorizeURL = api.createAuthorizeURL(scopes, state);
+    'https://accounts.example.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'.should.equal(authorizeURL);
+  });
 });
