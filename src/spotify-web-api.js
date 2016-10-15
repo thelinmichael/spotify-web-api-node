@@ -1122,6 +1122,35 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+   * Get audio analysis for a single track identified by its unique Spotify ID.
+   * @param {string} trackId The track ID
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getAudioAnalysisForTrack('38P3Q4QcdjQALGF2Z92BmR').then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object
+   *          containing information about the audio analysis. If the promise is
+   *          rejected, it contains an error object. Not returned if a callback is given.
+   */
+  getAudioAnalysisForTrack: function(trackId, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/audio-analysis/' + trackId)
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+
+    var promise = this._performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
    * Get audio features for multiple tracks identified by their unique Spotify ID.
    * @param {string[]} trackIds The track IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
