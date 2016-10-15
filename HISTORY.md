@@ -1,5 +1,8 @@
 ## Change log
 
+#### 2.3.6 (15 October 2016)
+- Add language bindings for the **[Get Audio Analysis for a Track](https://developer.spotify.com/web-api/get-audio-analysis/)** endpoint. 
+
 #### 2.3.5 (20 July 2016)
 - Use `encodeURIComponent` instead of `encodeURI` to encode the user's id. 'encodeURI' wasn't encoding characters like `/` or `#` that were generating an invalid endpoint url. Thanks [@jgranstrom](https://github.com/jgranstrom) for the PR.
 

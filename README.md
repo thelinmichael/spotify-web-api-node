@@ -12,7 +12,7 @@ It includes helper functions to do the following:
 
 #### Music metadata
 - Albums, artists, and tracks
-- Audio features for tracks
+- Audio features and analysis for tracks
 - Albums for a specific artist
 - Top tracks for a specific artist
 - Artists similar to a specific artist
@@ -872,6 +872,9 @@ You can run the unit tests executing `mocha` and get a test coverage report runn
 
 
 ## Change log
+
+#### 2.3.6 (15 October 2016)
+- Add language bindings for the **[Get Audio Analysis for a Track](https://developer.spotify.com/web-api/get-audio-analysis/)** endpoint. 
 
 #### 2.3.5 (20 July 2016)
 - Use `encodeURIComponent` instead of `encodeURI` to encode the user's id. 'encodeURI' wasn't encoding characters like `/` or `#` that were generating an invalid endpoint url. Thanks [@jgranstrom](https://github.com/jgranstrom) for the PR.
