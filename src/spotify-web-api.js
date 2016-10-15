@@ -1127,7 +1127,7 @@ SpotifyWebApi.prototype = {
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getAudioAnalysisForTrack('38P3Q4QcdjQALGF2Z92BmR').then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves to an object
-   *          containing information about the audio features. If the promise is
+   *          containing information about the audio analysis. If the promise is
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
   getAudioAnalysisForTrack: function(trackId, callback) {
