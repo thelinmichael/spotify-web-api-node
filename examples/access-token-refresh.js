@@ -19,9 +19,9 @@ var authorizationCode = 'AQAgjS78s64u1axMCBCRA0cViW_ZDDU0pbgENJ_-WpZr3cEO7V5O-JE
  * https://developer.spotify.com/my-applications
  */
 var spotifyApi = new SpotifyWebApi({
-  clientId : 'fcecfc72172e4cd267473117a17cbd4d',
-  clientSecret : 'a6338157c9bb5ac9c71924cb2940e1a7',
-  redirectUri : 'http://www.example.com/callback'
+  clientId : '<insert client id>',
+  clientSecret : '<insert client secret>',
+  redirectUri : '<insert redirect URI>'
 });
 
 // When our access token will expire

@@ -14,8 +14,8 @@ var SpotifyWebApi = require("../");
  * https://developer.spotify.com/my-applications
  */
 var spotifyApi = new SpotifyWebApi({
-  clientId : 'fcecfc79122e4cd299473677a17cbd4d',
-  clientSecret : 'f6338737c9bb4bc9a71924cb2940eaedb'
+  clientId : '<insert client id>',
+  clientSecret : '<insert client secret>',
 });
 
 // Retrieve an access token

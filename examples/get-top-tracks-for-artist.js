@@ -14,8 +14,8 @@ var SpotifyWebApi = require("../");
  * https://developer.spotify.com/spotify-web-api/authorization-guide/#client_credentials_flow
  */
 var spotifyApi = new SpotifyWebApi({
-  clientId : 'fcecfc72172e4cd267473117a17cbd4d',
-  clientSecret : 'a6338157c9bb5ac9c71924cb2940e1a7'
+  clientId : '<insert client id>',
+  clientSecret : '<insert client secret>'
 });
 
 // Retrieve an access token
