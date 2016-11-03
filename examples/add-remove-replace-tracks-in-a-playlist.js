@@ -22,9 +22,9 @@ var authorizationCode = '<insert authorization code with playlist-modify-public 
  * https://developer.spotify.com/my-applications
  */
 var spotifyApi = new SpotifyWebApi({
-  clientId : '<client id>',
-  clientSecret : '<client secret>',
-  redirectUri : '<redirect uri>'
+  clientId : '<insert client id>',
+  clientSecret : '<insert client secret>',
+  redirectUri : '<insert redirect URI>'
 });
 
 var playlistId;
