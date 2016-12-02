@@ -291,10 +291,28 @@ spotifyApi.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
   });
 
 /* Get Audio Features for a Track */
-// TBD
+spotifyApi.getAudioFeaturesForTrack('3Qm86XLflmIXVm1wcwkgDK')
+  .then(function(data) {
+    console.log(data.body);
+  }, function(err) {
+    done(err);
+  });
 
-/* Get Audio Features for several tracks Track */
-// TBD
+/* Get Audio Analysis for a Track */
+spotifyApi.getAudioAnalysisForTrack('3Qm86XLflmIXVm1wcwkgDK')
+  .then(function(data) {
+    console.log(data.body);
+  }, function(err) {
+    done(err);
+  });
+
+/* Get Audio Features for several tracks */
+spotifyApi.getAudioFeaturesForTracks(['4iV5W9uYEdYUVa79Axb7Rh', '3Qm86XLflmIXVm1wcwkgDK'])
+  .then(function(data) {
+    console.log(data.body);
+  }, function(err) {
+    done(err);
+  });
 
 
 /*
