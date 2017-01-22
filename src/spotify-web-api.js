@@ -1258,7 +1258,7 @@ SpotifyWebApi.prototype = {
    * @param {string} state A parameter that you can use to maintain a value between the request and the callback to redirect_uri.It is useful to prevent CSRF exploits.
    * @returns {string} The URL where the user can give application permissions.
    */
-  createAuthorizeURL: function(scopes, state) {
+  createAuthorizeURL: function(scopes, state, showDialog) {
     var request = AuthenticationRequest.builder()
       .withPath('/authorize')
       .withQueryParameters({
@@ -1266,7 +1266,8 @@ SpotifyWebApi.prototype = {
         'response_type' : 'code',
         'redirect_uri' : this.getRedirectURI(),
         'scope' : scopes.join('%20'),
-        'state' : state
+        'state' : state,
+        'show_dialog' : showDialog
       })
       .build();
 
