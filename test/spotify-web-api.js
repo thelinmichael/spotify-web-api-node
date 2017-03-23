@@ -1223,6 +1223,32 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get user's recently played tracks:", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.get);
+      uri.should.equal('https://api.spotify.com/v1/me/player/recently-played');
+      options.query.should.eql({
+        limit : 5
+      });
+      options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
+      callback(null, {
+        body : {
+          items: [ ]
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.getMyRecentlyPlayed({ limit : 5})
+      .then(function(data) {
+        should.exist(data.body.items);
+        done();
+      });
+  });
+
   it.skip("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
