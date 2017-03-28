@@ -1223,9 +1223,9 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it.skip("should retrieve an access token using the client credentials flow", function(done) {
-    var clientId = 'someClientId',
-        clientSecret = 'someClientSecret';
+  it("should retrieve an access token using the client credentials flow", function(done) {
+    var clientId = '8986995be8be4c769935dfac648f94e9',
+        clientSecret = 'cbaf60a67b334b9d84161b2d803c7771';
 
     var api = new SpotifyWebApi({
       clientId : clientId,
@@ -1234,18 +1234,20 @@ describe('Spotify Web API', function() {
 
     api.clientCredentialsGrant()
       .then(function(data) {
-        'Bearer'.should.equal(data['token_type']);
-        (3600).should.equal(data['expires_in']);
-        should.exist(data['access_token']);
+        var body = data.body;
+        'Bearer'.should.equal(body['token_type']);
+        (3600).should.equal(body['expires_in']);
+        should.exist(body['access_token']);
         done();
       }, function(err) {
+        console.log('error');
         done(err);
       });
   });
 
-  it.skip("should retrieve an access token with scopes", function(done) {
-    var clientId = 'fcecfc79122e4cd299473677a17cbd4d',
-        clientSecret = 'f6338737c9bb4bc9a71924cb2940adss';
+  it("should retrieve an access token with scopes", function(done) {
+    var clientId = '8986995be8be4c769935dfac648f94e9',
+        clientSecret = 'cbaf60a67b334b9d84161b2d803c7771';
 
     var api = new SpotifyWebApi({
       clientId : clientId,
@@ -1258,10 +1260,10 @@ describe('Spotify Web API', function() {
       'scope' : scopes
     })
     .then(function(data) {
-        console.log(data);
-        'Bearer'.should.equal(data['token_type']);
-        (3600).should.equal(data['expires_in']);
-        should.exist(data['access_token']);
+        var body = data.body;
+        'Bearer'.should.equal(body['token_type']);
+        (3600).should.equal(body['expires_in']);
+        should.exist(body['access_token']);
         done();
       }, function(err) {
         done(err);
