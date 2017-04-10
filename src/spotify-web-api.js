@@ -930,7 +930,7 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
-      .withQueryParameters({
+      .withBodyParameters({
         uris: tracksString
       })
       .build();
