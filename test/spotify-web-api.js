@@ -1134,7 +1134,8 @@ describe('Spotify Web API', function() {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
-      options.query.should.eql({uris: 'spotify:track:4iV5W9uYEdYUVa79Axb7Rh,spotify:track:1301WleyT98MSxVHPZCA6M'});
+      should.not.exist(options.query);
+      JSON.parse(options.data)["uris"].should.be.an.instanceOf(Array).and.have.lengthOf(2);
       callback(null, { body: { snapshot_id: 'aSnapshotId'}, statusCode : 201 });
     });
 
@@ -1151,10 +1152,11 @@ describe('Spotify Web API', function() {
   it('should add tracks to playlist with specified index', function(done) {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.post);
+      JSON.parse(options.data)["uris"].should.be.an.instanceOf(Array).and.have.lengthOf(2);
       options.query.should.eql({
-        uris: 'spotify:track:4iV5W9uYEdYUVa79Axb7Rh,spotify:track:1301WleyT98MSxVHPZCA6M',
         position: 10
       });
+      console.log('inside');
       callback(null, { body: { snapshot_id: 'aSnapshotId'}, statusCode : 201 });
     });
 
@@ -2042,9 +2044,8 @@ describe('Spotify Web API', function() {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
-      var trackUris = options.query.uris.split(",");
-      trackUris.should.be.an.instanceOf(Array).and.have.lengthOf(2);
-      should.not.exist(options.data);
+      should.not.exist(options.query);
+      JSON.parse(options.data)["uris"].should.be.an.instanceOf(Array).and.have.lengthOf(2);
       options.headers.Authorization.should.equal('Bearer long-access-token');
       callback();
     });
@@ -2066,9 +2067,8 @@ describe('Spotify Web API', function() {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
-      var trackUris = options.query.uris.split(",");
-      trackUris.should.be.an.instanceOf(Array).and.have.lengthOf(2);
-      should.not.exist(options.data);
+      should.not.exist(options.query);
+      JSON.parse(options.data)["uris"].should.be.an.instanceOf(Array).and.have.lengthOf(2);
       options.headers.Authorization.should.equal('Bearer long-access-token');
       callback();
     });
