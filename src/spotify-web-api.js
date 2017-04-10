@@ -921,17 +921,11 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   addTracksToPlaylist: function(userId, playlistId, tracks, options, callback) {
-    var tracksString;
-    if (typeof tracks === 'object') {
-      tracksString = tracks.join();
-    } else {
-      tracksString = tracks;
-    }
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters({
-        uris: tracksString
+        uris: tracks
       })
       .build();
 
