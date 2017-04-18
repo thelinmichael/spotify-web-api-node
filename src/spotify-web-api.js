@@ -1570,7 +1570,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  getMyRecentlyPlayed: function(options, callback) {
+  getMyRecentlyPlayedTracks: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/recently-played')
       .build();

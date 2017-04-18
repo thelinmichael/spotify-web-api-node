@@ -1242,7 +1242,7 @@ describe('Spotify Web API', function() {
       accessToken : 'someAccessToken'
     });
 
-    api.getMyRecentlyPlayed({ limit : 5})
+    api.getMyRecentlyPlayedTracks({ limit : 5})
       .then(function(data) {
         should.exist(data.body.items);
         done();
