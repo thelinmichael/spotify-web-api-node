@@ -30,7 +30,11 @@ SpotifyWebApi.prototype = {
     }
   },
 
-  _performRequest: function(method, request) {
+  _performRequest: function(method, request, callback) {
+    if (callback) {
+      method(request, callback);
+      return;
+    }
     var promiseFunction = function(resolve, reject) {
       method(request, function(error, result) {
         if (error) {
@@ -180,17 +184,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (actualCallback) {
-      promise.then(function(data) {
-        actualCallback(null, data);
-      }, function(err) {
-        actualCallback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, actualCallback);
   },
 
   /**
@@ -228,17 +222,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, actualOptions);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (actualCallback) {
-      promise.then(function(data) {
-        actualCallback(null, data);
-      }, function(err) {
-        actualCallback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, actualCallback);
   },
 
   /**
@@ -273,17 +257,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (actualCallback) {
-      promise.then(function(data) {
-        actualCallback(null, data);
-      }, function(err) {
-        actualCallback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, actualCallback);
   },
 
   /**
@@ -321,17 +295,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, actualOptions);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (actualCallback) {
-      promise.then(function(data) {
-        actualCallback(null, data);
-      }, function(err) {
-        actualCallback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, actualCallback);
   },
 
   /**
@@ -349,17 +313,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -380,17 +334,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -417,17 +361,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -504,17 +438,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -535,17 +459,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -568,17 +482,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -596,17 +500,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -625,17 +519,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -654,17 +538,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -693,17 +567,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -724,17 +588,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -755,17 +609,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -802,17 +646,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.post, request);
-
-    if (actualCallback) {
-      promise.then(function(data) {
-        actualCallback(null, data);
-      }, function(err) {
-        actualCallback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.post, request, actualCallback);
   },
 
   /**
@@ -833,17 +667,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.put, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.put, request, callback);
   },
 
   /**
@@ -863,17 +687,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.del, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.del, request, callback);
   },
 
   /**
@@ -895,17 +709,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.put, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.put, request, callback);
   },
 
   /**
@@ -938,17 +742,7 @@ SpotifyWebApi.prototype = {
     this._addQueryParameters(request, options);
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.post, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.post, request, callback);
   },
 
   /**
@@ -974,17 +768,7 @@ SpotifyWebApi.prototype = {
     this._addBodyParameters(request, options);
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.del, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.del, request, callback);
   },
 
   /**
@@ -1009,17 +793,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.del, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.del, request, callback);
   },
 
   /**
@@ -1042,17 +816,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.put, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.put, request, callback);
   },
 
   /**
@@ -1079,17 +843,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addBodyParameters(request, options);
 
-    var promise =  this._performRequest(HttpManager.put, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.put, request, callback);
   },
 
   /**
@@ -1108,17 +862,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1137,17 +881,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1169,17 +903,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1211,17 +935,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, _opts);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1239,17 +953,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1288,17 +992,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1320,17 +1014,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1349,17 +1033,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.del, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.del, request, callback);
   },
 
    /**
@@ -1377,17 +1051,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.put, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.put, request, callback);
   },
 
   /**
@@ -1406,17 +1070,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.del, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.del, request, callback);
   },
 
   /**
@@ -1434,17 +1088,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.put, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.put, request, callback);
   },
 
   /**
@@ -1462,17 +1106,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1494,17 +1128,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1522,17 +1146,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1550,17 +1164,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1578,17 +1182,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1610,17 +1204,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.put, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.put, request, callback);
   },
 
   /**
@@ -1642,17 +1226,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.put, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.put, request, callback);
   },
 
   /**
@@ -1674,17 +1248,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.del, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.del, request, callback);
   },
 
   /**
@@ -1706,17 +1270,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.del, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.del, request, callback);
   },
 
   /**
@@ -1740,17 +1294,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1772,17 +1316,7 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1804,17 +1338,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1838,17 +1362,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1867,17 +1381,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1896,17 +1400,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1924,17 +1418,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1953,17 +1437,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   },
 
   /**
@@ -1982,17 +1456,7 @@ SpotifyWebApi.prototype = {
 
     this._addAccessToken(request, this.getAccessToken());
 
-    var promise = this._performRequest(HttpManager.get, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+    return this._performRequest(HttpManager.get, request, callback);
   }
 };
 
