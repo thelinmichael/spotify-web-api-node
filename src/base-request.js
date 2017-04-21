@@ -92,16 +92,6 @@ Request.prototype.addBodyParameter = function(key, value) {
   this.bodyParameters[key] = value;
 };
 
-Request.prototype.addHeaders = function(headers) {
-  if (!this.headers) {
-    this.headers = headers;
-  } else {
-    for (var key in headers) {
-      this.headers[key] = headers[key];
-    }
-  }
-};
-
 Request.prototype.getQueryParameterString = function() {
   var queryParameters = this.getQueryParameters();
   if (!queryParameters) {
@@ -123,7 +113,6 @@ Request.prototype.getQueryParameterString = function() {
 };
 
 var Builder = function() {
-  var host, port, scheme, queryParameters, bodyParameters, headers, jsonBody;
 };
 
 Builder.prototype.withHost = function(host) {
@@ -157,8 +146,24 @@ Builder.prototype.withBodyParameters = function(bodyParameters) {
 };
 
 Builder.prototype.withHeaders = function(headers) {
-  this.headers = headers;
+  this.headers = this._assign(this.headers, headers);
   return this;
+};
+
+Builder.prototype.withAuth = function(accessToken) {
+  if (accessToken) {
+    this.withHeaders(
+      {'Authorization' : 'Bearer ' + accessToken}
+    );
+  }
+  return this;
+};
+
+Builder.prototype._assign = function(src, obj) {
+  if (obj) {
+    return Object.assign(src || {}, obj);
+  }
+  return src;
 };
 
 Builder.prototype.build = function() {

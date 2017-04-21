@@ -47,14 +47,6 @@ SpotifyWebApi.prototype = {
     return new Promise(promiseFunction);
   },
 
-  _addAccessToken: function(request, accessToken) {
-    if (accessToken) {
-      request.addHeaders({
-        'Authorization' : 'Bearer ' + accessToken
-      });
-    }
-  },
-
   setCredentials: function(credentials) {
     for (var key in credentials) {
       if (credentials.hasOwnProperty(key)) {
@@ -180,9 +172,8 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder()
       .withPath('/v1/tracks/' + trackId)
       .withQueryParameters(actualOptions)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, actualCallback);
   },
@@ -217,9 +208,9 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         'ids' : trackIds.join(',')
       })
-      .build();
+      .withAuth(this.getAccessToken())
 
-    this._addAccessToken(request, this.getAccessToken());
+      .build();
     this._addQueryParameters(request, actualOptions);
 
     return this._performRequest(HttpManager.get, request, actualCallback);
@@ -253,9 +244,8 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder()
       .withPath('/v1/albums/' + albumId)
       .withQueryParameters(actualOptions)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, actualCallback);
   },
@@ -290,9 +280,9 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         'ids' : albumIds.join(',')
       })
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, actualOptions);
 
     return this._performRequest(HttpManager.get, request, actualCallback);
@@ -309,9 +299,8 @@ SpotifyWebApi.prototype = {
   getArtist: function(artistId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/artists/' + artistId)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -330,9 +319,8 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         'ids' : artistIds.join(',')
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -356,9 +344,9 @@ SpotifyWebApi.prototype = {
         type : types.join(','),
         q : query
       })
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -433,9 +421,9 @@ SpotifyWebApi.prototype = {
   getArtistAlbums: function(artistId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/artists/' + artistId + '/albums')
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -454,9 +442,9 @@ SpotifyWebApi.prototype = {
   getAlbumTracks: function(albumId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/albums/' + albumId + '/tracks')
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -478,9 +466,8 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         'country' : country
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -496,9 +483,8 @@ SpotifyWebApi.prototype = {
   getArtistRelatedArtists: function(artistId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/artists/' + artistId + '/related-artists')
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -515,9 +501,8 @@ SpotifyWebApi.prototype = {
   getUser: function(userId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURIComponent(userId))
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -534,9 +519,8 @@ SpotifyWebApi.prototype = {
   getMe: function(callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me')
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -562,9 +546,9 @@ SpotifyWebApi.prototype = {
 
     var request = WebApiRequest.builder()
       .withPath(path)
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -583,9 +567,9 @@ SpotifyWebApi.prototype = {
   getPlaylist: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId)
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -605,9 +589,9 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder().
       withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withQueryParameters(options).
+      withAuth(this.getAccessToken()).
       build();
 
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -642,9 +626,8 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(actualOptions)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.post, request, actualCallback);
   },
@@ -663,9 +646,8 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers')
       .withBodyParameters(options)
       .withHeaders({ 'Content-Type' : 'application/json' })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.put, request, callback);
   },
@@ -683,9 +665,8 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers')
       .withHeaders({ 'Content-Type' : 'application/json' })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.del, request, callback);
   },
@@ -705,9 +686,8 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(options)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.put, request, callback);
   },
@@ -737,10 +717,10 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         uris: tracksString
       })
+      .withAuth(this.getAccessToken())
       .build();
 
     this._addQueryParameters(request, options);
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.post, request, callback);
   },
@@ -763,10 +743,10 @@ SpotifyWebApi.prototype = {
       withBodyParameters({
         'tracks': tracks
       }).
+      withAuth(this.getAccessToken()).
       build();
 
     this._addBodyParameters(request, options);
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.del, request, callback);
   },
@@ -789,9 +769,9 @@ SpotifyWebApi.prototype = {
         'positions': positions,
         'snapshot_id' : snapshotId
       }).
+      withAuth(this.getAccessToken()).
       build();
 
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.del, request, callback);
   },
@@ -812,9 +792,9 @@ SpotifyWebApi.prototype = {
       withBodyParameters({
         'uris': uris
       }).
+      withAuth(this.getAccessToken()).
       build();
 
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.put, request, callback);
   },
@@ -838,9 +818,9 @@ SpotifyWebApi.prototype = {
         'range_start': rangeStart,
         'insert_before' : insertBefore
       }).
+      withAuth(this.getAccessToken()).
       build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addBodyParameters(request, options);
 
     return this._performRequest(HttpManager.put, request, callback);
@@ -858,9 +838,8 @@ SpotifyWebApi.prototype = {
   getAudioFeaturesForTrack: function(trackId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/audio-features/' + trackId)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -877,9 +856,8 @@ SpotifyWebApi.prototype = {
   getAudioAnalysisForTrack: function(trackId, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/audio-analysis/' + trackId)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -899,9 +877,8 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         'ids' : trackIds.join(',')
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -917,6 +894,7 @@ SpotifyWebApi.prototype = {
   getRecommendations: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/recommendations')
+      .withAuth(this.getAccessToken())
       .build();
 
     var _opts = {};
@@ -932,7 +910,6 @@ SpotifyWebApi.prototype = {
       }
     }
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, _opts);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -949,9 +926,8 @@ SpotifyWebApi.prototype = {
   getAvailableGenreSeeds: function(callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/recommendations/available-genre-seeds')
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -988,9 +964,8 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/tracks')
       .withQueryParameters(options)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1010,9 +985,8 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         'ids' : trackIds.join(',')
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1029,9 +1003,8 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/me/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(trackIds)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.del, request, callback);
   },
@@ -1047,9 +1020,8 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/me/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(trackIds)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.put, request, callback);
   },
@@ -1066,9 +1038,8 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/me/albums')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(albumIds)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.del, request, callback);
   },
@@ -1084,9 +1055,8 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/me/albums')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(albumIds)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.put, request, callback);
   },
@@ -1102,9 +1072,8 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/albums')
       .withQueryParameters(options)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1124,9 +1093,8 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         'ids' : albumIds.join(',')
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1141,9 +1109,9 @@ SpotifyWebApi.prototype = {
   getMyTopArtists: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/top/artists')
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1159,9 +1127,9 @@ SpotifyWebApi.prototype = {
   getMyTopTracks: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/top/tracks')
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1177,9 +1145,9 @@ SpotifyWebApi.prototype = {
   getMyRecentlyPlayedTracks: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/recently-played')
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1200,9 +1168,8 @@ SpotifyWebApi.prototype = {
         ids: userIds.join(','),
         type: 'user'
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.put, request, callback);
   },
@@ -1222,9 +1189,8 @@ SpotifyWebApi.prototype = {
         ids: artistIds.join(','),
         type: 'artist'
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.put, request, callback);
   },
@@ -1244,9 +1210,8 @@ SpotifyWebApi.prototype = {
         ids: userIds.join(','),
         type: 'user'
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.del, request, callback);
   },
@@ -1266,9 +1231,8 @@ SpotifyWebApi.prototype = {
         ids: artistIds.join(','),
         type: 'artist'
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.del, request, callback);
   },
@@ -1290,9 +1254,8 @@ SpotifyWebApi.prototype = {
         ids: userIds.join(','),
         type: 'user'
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1311,9 +1274,9 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         type : 'artist'
       })
+      .withAuth(this.getAccessToken())
       .build();
 
-    this._addAccessToken(request, this.getAccessToken());
     this._addQueryParameters(request, options);
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1334,9 +1297,8 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         ids : followerIds.join(',')
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1358,9 +1320,8 @@ SpotifyWebApi.prototype = {
         ids: artistIds.join(','),
         type: 'artist'
       })
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1377,9 +1338,8 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/browse/new-releases')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters(options)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1396,9 +1356,8 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/browse/featured-playlists')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters(options)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1414,9 +1373,8 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder()
       .withPath('/v1/browse/categories')
       .withQueryParameters(options)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1433,9 +1391,8 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder()
       .withPath('/v1/browse/categories/' + categoryId)
       .withQueryParameters(options)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   },
@@ -1452,9 +1409,8 @@ SpotifyWebApi.prototype = {
     var request = WebApiRequest.builder()
       .withPath('/v1/browse/categories/' + categoryId + '/playlists')
       .withQueryParameters(options)
+      .withAuth(this.getAccessToken())
       .build();
-
-    this._addAccessToken(request, this.getAccessToken());
 
     return this._performRequest(HttpManager.get, request, callback);
   }
