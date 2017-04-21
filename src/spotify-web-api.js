@@ -155,18 +155,13 @@ SpotifyWebApi.prototype = {
    */
   getTrack: function(trackId, options, callback) {
      // In case someone is using a version where options parameter did not exist.
-    var actualCallback;
-    if (typeof options === 'function') {
+    var actualCallback, actualOptions;
+    if (typeof options === 'function' && !callback) {
       actualCallback = options;
+      actualOptions = {};
     } else {
       actualCallback = callback;
-    }
-
-    var actualOptions = {};
-    if (typeof options === 'object') {
-      Object.keys(options).forEach(function(key) {
-        actualOptions[key] = options[key];
-      });
+      actualOptions = options;
     }
 
     var request = WebApiRequest.builder()
@@ -189,18 +184,13 @@ SpotifyWebApi.prototype = {
    */
   getTracks: function(trackIds, options, callback) {
     // In case someone is using a version where options parameter did not exist.
-    var actualCallback;
-    if (typeof options === 'function') {
+    var actualCallback, actualOptions;
+    if (typeof options === 'function' && !callback) {
       actualCallback = options;
+      actualOptions = {};
     } else {
       actualCallback = callback;
-    }
-
-    var actualOptions = {};
-    if (typeof options === 'object') {
-      Object.keys(options).forEach(function(key) {
-        actualOptions[key] = options[key];
-      });
+      actualOptions = options;
     }
 
     var request = WebApiRequest.builder()
@@ -227,18 +217,13 @@ SpotifyWebApi.prototype = {
    */
   getAlbum: function(albumId, options, callback) {
     // In case someone is using a version where options parameter did not exist.
-    var actualCallback;
-    if (typeof options === 'function') {
+    var actualCallback, actualOptions;
+    if (typeof options === 'function' && !callback) {
       actualCallback = options;
+      actualOptions = {};
     } else {
       actualCallback = callback;
-    }
-
-    var actualOptions = {};
-    if (typeof options === 'object') {
-      Object.keys(options).forEach(function(key) {
-        actualOptions[key] = options[key];
-      });
+      actualOptions = options;
     }
 
     var request = WebApiRequest.builder()
@@ -261,18 +246,13 @@ SpotifyWebApi.prototype = {
    */
   getAlbums: function(albumIds, options, callback) {
     // In case someone is using a version where options parameter did not exist.
-    var actualCallback;
-    if (typeof options === 'function') {
+    var actualCallback, actualOptions;
+    if (typeof options === 'function' && !callback) {
       actualCallback = options;
+      actualOptions = {};
     } else {
       actualCallback = callback;
-    }
-
-    var actualOptions = {};
-    if (typeof options === 'object') {
-      Object.keys(options).forEach(function(key) {
-        actualOptions[key] = options[key];
-      });
+      actualOptions = options;
     }
 
     var request = WebApiRequest.builder()
@@ -609,7 +589,7 @@ SpotifyWebApi.prototype = {
   createPlaylist: function(userId, playlistName, options, callback) {
     // In case someone is using a version where options parameter did not exist.
     var actualCallback;
-    if (typeof options === 'function') {
+    if (typeof options === 'function' && !callback) {
       actualCallback = options;
     } else {
       actualCallback = callback;
