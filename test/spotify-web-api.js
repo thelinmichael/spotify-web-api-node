@@ -1298,6 +1298,39 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it('should transfer the user\'s playback', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player');
+      options.query.should.eql({
+        'device_ids': ['deviceId'],
+        'play': true,
+        'deviceIds' : ['deviceId']
+      });
+      should.not.exist(options.data);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.transferMyPlayback({
+      deviceIds: ['deviceId'],
+      play: true
+    })
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
   it.skip("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';

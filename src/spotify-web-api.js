@@ -1646,6 +1646,38 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+   * Transfer a User's Playback
+   * @param {Object} [options] Options, being market.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  transferMyPlayback: function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player')
+      .withQueryParameters({
+        'device_ids': options.deviceIds,
+        'play': options.play || false
+      })
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
+
+    var promise = this._performRequest(HttpManager.put, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
    * Add the current user as a follower of one or more other Spotify users.
    * @param {string[]} userIds The IDs of the users to be followed.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
