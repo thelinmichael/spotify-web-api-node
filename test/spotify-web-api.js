@@ -1249,6 +1249,55 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get user's devices:", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.get);
+      uri.should.equal('https://api.spotify.com/v1/me/player/devices');
+      options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
+      callback(null, {
+        body : {
+          devices: [ ]
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.getMyDevices()
+      .then(function(data) {
+        should.exist(data.body.devices);
+        done();
+      });
+  });
+
+  it("should get user's current playback status:", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.get);
+      uri.should.equal('https://api.spotify.com/v1/me/player');
+      options.query.should.eql({
+        market : "GB"
+      });
+      options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
+      callback(null, {
+        body : {
+          device: { }
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.getMyCurrentPlaybackState({ market : "GB"})
+      .then(function(data) {
+        should.exist(data.body.device);
+        done();
+      });
+  });
+
   it.skip("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
