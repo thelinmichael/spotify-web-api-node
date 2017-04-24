@@ -1156,7 +1156,6 @@ describe('Spotify Web API', function() {
       options.query.should.eql({
         position: 10
       });
-      console.log('inside');
       callback(null, { body: { snapshot_id: 'aSnapshotId'}, statusCode : 201 });
     });
 
