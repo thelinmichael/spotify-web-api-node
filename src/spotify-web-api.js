@@ -1655,14 +1655,15 @@ SpotifyWebApi.prototype = {
   transferMyPlayback: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player')
-      .withQueryParameters({
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters({
         'device_ids': options.deviceIds,
         'play': options.play || false
       })
       .build();
 
     this._addAccessToken(request, this.getAccessToken());
-    this._addQueryParameters(request, options);
+    this._addBodyParameters(request, options);
 
     var promise = this._performRequest(HttpManager.put, request);
 

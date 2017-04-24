@@ -1303,12 +1303,12 @@ describe('Spotify Web API', function() {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player');
-      options.query.should.eql({
+      JSON.parse(options.data).should.eql({
         'device_ids': ['deviceId'],
         'play': true,
         'deviceIds' : ['deviceId']
       });
-      should.not.exist(options.data);
+      should.not.exist(options.query);
       callback();
     });
 
