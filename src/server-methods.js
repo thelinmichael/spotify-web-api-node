@@ -18,12 +18,11 @@ module.exports = {
       .withBodyParameters({
         'grant_type' : 'client_credentials'
       })
+      .withBodyParameters(options)
       .withHeaders({
         Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
       })
       .build();
-
-    this._addBodyParameters(request, options);
 
     var promise =  this._performRequest(HttpManager.post, request);
 

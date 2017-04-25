@@ -9,15 +9,6 @@ function SpotifyWebApi(credentials) {
 }
 
 SpotifyWebApi.prototype = {
-  _addBodyParameters: function(request, options) {
-    if (options) {
-      for (var key in options) {
-        if (key !== 'credentials') {
-          request.addBodyParameter(key, options[key]);
-        }
-      }
-    }
-  },
 
   _performRequest: function(method, request, callback) {
     if (callback) {
@@ -704,10 +695,9 @@ SpotifyWebApi.prototype = {
       withBodyParameters({
         'tracks': tracks
       }).
+      withBodyParameters(options).
       withAuth(this.getAccessToken()).
       build();
-
-    this._addBodyParameters(request, options);
 
     return this._performRequest(HttpManager.del, request, callback);
   },
@@ -777,10 +767,9 @@ SpotifyWebApi.prototype = {
         'range_start': rangeStart,
         'insert_before' : insertBefore
       }).
+      withBodyParameters(options).
       withAuth(this.getAccessToken()).
       build();
-
-    this._addBodyParameters(request, options);
 
     return this._performRequest(HttpManager.put, request, callback);
   },

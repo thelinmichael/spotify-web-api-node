@@ -66,19 +66,6 @@ Request.prototype.getURL = function() {
   }
 };
 
-Request.prototype.addBodyParameters = function(bodyParameters) {
-  for (var key in bodyParameters) {
-    this.addBodyParameter(key, bodyParameters[key]);
-  }
-};
-
-Request.prototype.addBodyParameter = function(key, value) {
-  if (!this.bodyParameters) {
-    this.bodyParameters = {};
-  }
-  this.bodyParameters[key] = value;
-};
-
 Request.prototype.getQueryParameterString = function() {
   var queryParameters = this.getQueryParameters();
   if (!queryParameters) {
@@ -128,7 +115,7 @@ Builder.prototype.withPath = function(path) {
 };
 
 Builder.prototype.withBodyParameters = function(bodyParameters) {
-  this.bodyParameters = bodyParameters;
+  this.bodyParameters = this._assign(this.bodyParameters, bodyParameters);
   return this;
 };
 
