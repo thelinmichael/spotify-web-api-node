@@ -32,6 +32,43 @@ describe("Create Requests", function() {
     request.getQueryParameters().thirdParameter.should.equal("hello");
   });
 
+  it("Should add query parameters (multiple calls)", function() {
+    var request = Request.builder()
+      .withHost("such.api.wow")
+      .withPort(1337)
+      .withScheme("http")
+      .withQueryParameters({
+        "oneParameter" : 1,
+        "anotherParameter" : true
+      })
+      .withQueryParameters({
+        "thirdParameter" : "hello"
+      })
+      .build();
+
+    request.getQueryParameters().oneParameter.should.equal(1);
+    request.getQueryParameters().anotherParameter.should.equal(true);
+    request.getQueryParameters().thirdParameter.should.equal("hello");
+  });
+
+  it("Should add query parameters (combine calls)", function() {
+    var request = Request.builder()
+      .withHost("such.api.wow")
+      .withPort(1337)
+      .withScheme("http")
+      .withQueryParameters({
+        "oneParameter" : 1,
+        "anotherParameter" : true
+      }, {
+        "thirdParameter" : "hello"
+      })
+      .build();
+
+    request.getQueryParameters().oneParameter.should.equal(1);
+    request.getQueryParameters().anotherParameter.should.equal(true);
+    request.getQueryParameters().thirdParameter.should.equal("hello");
+  });
+
   it("Should add body parameters", function() {
     var request = Request.builder()
       .withHost("such.api.wow")

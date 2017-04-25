@@ -177,8 +177,7 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/tracks')
       .withQueryParameters({
         'ids' : trackIds.join(',')
-      })
-      .withQueryParameters(actualOptions)
+      }, actualOptions)
       .withAuth(this.getAccessToken())
       .build();
 
@@ -239,8 +238,7 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/albums')
       .withQueryParameters({
         'ids' : albumIds.join(',')
-      })
-      .withQueryParameters(actualOptions)
+      }, actualOptions)
       .withAuth(this.getAccessToken())
       .build();
 
@@ -302,8 +300,7 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         type : types.join(','),
         q : query
-      })
-      .withQueryParameters(options)
+      }, options)
       .withAuth(this.getAccessToken())
       .build();
 
@@ -502,8 +499,8 @@ SpotifyWebApi.prototype = {
 
     var request = WebApiRequest.builder()
       .withPath(path)
-      .withAuth(this.getAccessToken())
       .withQueryParameters(options)
+      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -597,8 +594,8 @@ SpotifyWebApi.prototype = {
   followPlaylist: function(userId, playlistId, options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers')
-      .withBodyParameters(options)
       .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters(options)
       .withAuth(this.getAccessToken())
       .build();
 
@@ -669,8 +666,7 @@ SpotifyWebApi.prototype = {
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters({
         uris: tracksString
-      })
-      .withQueryParameters(options)
+      }, options)
       .withAuth(this.getAccessToken())
       .build();
 
@@ -694,8 +690,7 @@ SpotifyWebApi.prototype = {
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'tracks': tracks
-      }).
-      withBodyParameters(options).
+      }, options).
       withAuth(this.getAccessToken()).
       build();
 
@@ -766,8 +761,7 @@ SpotifyWebApi.prototype = {
       withBodyParameters({
         'range_start': rangeStart,
         'insert_before' : insertBefore
-      }).
-      withBodyParameters(options).
+      }, options).
       withAuth(this.getAccessToken()).
       build();
 
@@ -1217,8 +1211,7 @@ SpotifyWebApi.prototype = {
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters({
         type : 'artist'
-      })
-      .withQueryParameters(options)
+      }, options)
       .withAuth(this.getAccessToken())
       .build();
 

@@ -104,8 +104,10 @@ Builder.prototype.withScheme = function(scheme) {
   return this;
 };
 
-Builder.prototype.withQueryParameters = function(queryParameters) {
-  this.queryParameters = this._assign(this.queryParameters, queryParameters);
+Builder.prototype.withQueryParameters = function() {
+  for (var i = 0; i < arguments.length; i++) {
+    this.queryParameters = this._assign(this.queryParameters, arguments[i]);
+  }
   return this;
 };
 
@@ -114,13 +116,17 @@ Builder.prototype.withPath = function(path) {
   return this;
 };
 
-Builder.prototype.withBodyParameters = function(bodyParameters) {
-  this.bodyParameters = this._assign(this.bodyParameters, bodyParameters);
+Builder.prototype.withBodyParameters = function() {
+  for (var i = 0; i < arguments.length; i++) {
+    this.bodyParameters = this._assign(this.bodyParameters, arguments[i]);
+  }
   return this;
 };
 
-Builder.prototype.withHeaders = function(headers) {
-  this.headers = this._assign(this.headers, headers);
+Builder.prototype.withHeaders = function() {
+  for (var i = 0; i < arguments.length; i++) {
+    this.headers = this._assign(this.headers, arguments[i]);
+  }
   return this;
 };
 
