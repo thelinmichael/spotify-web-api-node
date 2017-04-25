@@ -14,33 +14,23 @@ var Request = function(builder) {
   this.path = builder.path;
 };
 
-Request.prototype.getHost = function() {
-  return this.host;
+Request.prototype._getter = function (key) {
+  return function () { return this[key]; };
 };
 
-Request.prototype.getPort = function() {
-  return this.port;
-};
+Request.prototype.getHost = Request.prototype._getter('host');
 
-Request.prototype.getScheme = function() {
-  return this.scheme;
-};
+Request.prototype.getPort = Request.prototype._getter('port');
 
-Request.prototype.getPath = function() {
-  return this.path;
-};
+Request.prototype.getScheme = Request.prototype._getter('scheme');
 
-Request.prototype.getQueryParameters = function() {
-  return this.queryParameters;
-};
+Request.prototype.getPath = Request.prototype._getter('path');
 
-Request.prototype.getBodyParameters = function() {
-  return this.bodyParameters;
-};
+Request.prototype.getQueryParameters = Request.prototype._getter('queryParameters');
 
-Request.prototype.getHeaders = function() {
-  return this.headers;
-};
+Request.prototype.getBodyParameters = Request.prototype._getter('bodyParameters');
+
+Request.prototype.getHeaders = Request.prototype._getter('headers');
 
 Request.prototype.getURI = function() {
   if (!this.scheme || !this.host || !this.port) {
@@ -107,46 +97,35 @@ Request.prototype.execute = function (method, callback) {
 var Builder = function() {
 };
 
-Builder.prototype.withHost = function(host) {
-  this.host = host;
-  return this;
+Builder.prototype._setter = function (key) {
+  return function (value) {
+    this[key] = value;
+    return this;
+  };
 };
 
-Builder.prototype.withPort = function(port) {
-  this.port = port;
-  return this;
+Builder.prototype.withHost = Builder.prototype._setter('host');
+
+Builder.prototype.withPort = Builder.prototype._setter('port');
+
+Builder.prototype.withScheme = Builder.prototype._setter('scheme');
+
+Builder.prototype.withPath = Builder.prototype._setter('path');
+
+Builder.prototype._assigner = function (key) {
+  return function () {
+    for (var i = 0; i < arguments.length; i++) {
+      this[key] = this._assign(this[key], arguments[i]);
+    }
+    return this;
+  };
 };
 
-Builder.prototype.withScheme = function(scheme) {
-  this.scheme = scheme;
-  return this;
-};
+Builder.prototype.withQueryParameters = Builder.prototype._assigner('queryParameters');
 
-Builder.prototype.withQueryParameters = function() {
-  for (var i = 0; i < arguments.length; i++) {
-    this.queryParameters = this._assign(this.queryParameters, arguments[i]);
-  }
-  return this;
-};
+Builder.prototype.withBodyParameters = Builder.prototype._assigner('bodyParameters');
 
-Builder.prototype.withPath = function(path) {
-  this.path = path;
-  return this;
-};
-
-Builder.prototype.withBodyParameters = function() {
-  for (var i = 0; i < arguments.length; i++) {
-    this.bodyParameters = this._assign(this.bodyParameters, arguments[i]);
-  }
-  return this;
-};
-
-Builder.prototype.withHeaders = function() {
-  for (var i = 0; i < arguments.length; i++) {
-    this.headers = this._assign(this.headers, arguments[i]);
-  }
-  return this;
-};
+Builder.prototype.withHeaders = Builder.prototype._assigner('headers');
 
 Builder.prototype.withAuth = function(accessToken) {
   if (accessToken) {
