@@ -13,7 +13,7 @@ module.exports = {
    *          token type and time to expiration. If rejected, it contains an error object. Not returned if a callback is given.
    */
   clientCredentialsGrant: function(options, callback) {
-    var request = AuthenticationRequest.builder()
+    return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'client_credentials'
@@ -22,19 +22,8 @@ module.exports = {
       .withHeaders({
         Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
       })
-      .build();
-
-    var promise =  this._performRequest(HttpManager.post, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+      .build()
+      .execute(HttpManager.post, callback);
   },
 
   /**
@@ -47,7 +36,7 @@ module.exports = {
    *          Not returned if a callback is given.
    */
   authorizationCodeGrant: function(code, callback) {
-    var request = AuthenticationRequest.builder()
+    return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'authorization_code',
@@ -56,19 +45,8 @@ module.exports = {
         'client_id' : this.getClientId(),
         'client_secret' : this.getClientSecret()
       })
-      .build();
-
-    var promise = this._performRequest(HttpManager.post, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+      .build()
+      .execute(HttpManager.post, callback);
   },
 
   /**
@@ -80,7 +58,7 @@ module.exports = {
    *          Not returned if a callback is given.
    */
   refreshAccessToken: function(callback) {
-    var request = AuthenticationRequest.builder()
+    return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         'grant_type' : 'refresh_token',
@@ -89,18 +67,7 @@ module.exports = {
       .withHeaders({
         Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
       })
-      .build();
-
-    var promise = this._performRequest(HttpManager.post, request);
-
-    if (callback) {
-      promise.then(function(data) {
-        callback(null, data);
-      }, function(err) {
-        callback(err);
-      });
-    } else {
-      return promise;
-    }
+      .build()
+      .execute(HttpManager.post, callback);
   }
 };

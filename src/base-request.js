@@ -86,6 +86,24 @@ Request.prototype.getQueryParameterString = function() {
   return queryParameterString;
 };
 
+Request.prototype.execute = function (method, callback) {
+  if (callback) {
+    method(this, callback);
+    return;
+  }
+  var _self = this;
+
+  return new Promise(function(resolve, reject) {
+    method(_self, function(error, result) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 var Builder = function() {
 };
 
