@@ -144,10 +144,9 @@ SpotifyWebApi.prototype = {
       actualOptions = options;
     }
 
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/tracks/' + trackId)
       .withQueryParameters(actualOptions)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, actualCallback);
@@ -173,12 +172,11 @@ SpotifyWebApi.prototype = {
       actualOptions = options;
     }
 
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/tracks')
       .withQueryParameters({
         'ids' : trackIds.join(',')
       }, actualOptions)
-      .withAuth(this.getAccessToken())
       .build();
 
 
@@ -205,10 +203,9 @@ SpotifyWebApi.prototype = {
       actualOptions = options;
     }
 
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/albums/' + albumId)
       .withQueryParameters(actualOptions)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, actualCallback);
@@ -234,12 +231,11 @@ SpotifyWebApi.prototype = {
       actualOptions = options;
     }
 
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/albums')
       .withQueryParameters({
         'ids' : albumIds.join(',')
       }, actualOptions)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, actualCallback);
@@ -254,9 +250,8 @@ SpotifyWebApi.prototype = {
    *          about the artist. Not returned if a callback is given.
    */
   getArtist: function(artistId, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -271,12 +266,11 @@ SpotifyWebApi.prototype = {
    *          about the artists. Not returned if a callback is given.
    */
   getArtists: function(artistIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists')
       .withQueryParameters({
         'ids' : artistIds.join(',')
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -295,13 +289,12 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   search: function(query, types, options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/search/')
       .withQueryParameters({
         type : types.join(','),
         q : query
       }, options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -374,10 +367,9 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   getArtistAlbums: function(artistId, options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId + '/albums')
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -394,10 +386,9 @@ SpotifyWebApi.prototype = {
    *                    it contains an error object. Not returned if a callback is given.
    */
   getAlbumTracks: function(albumId, options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/albums/' + albumId + '/tracks')
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -414,12 +405,11 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   getArtistTopTracks: function(artistId, country, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId + '/top-tracks')
       .withQueryParameters({
         'country' : country
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -434,9 +424,8 @@ SpotifyWebApi.prototype = {
    *          related artists. If the promise is rejected, it contains an error object. Not returned if a callback is given.
    */
   getArtistRelatedArtists: function(artistId, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/artists/' + artistId + '/related-artists')
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -452,9 +441,8 @@ SpotifyWebApi.prototype = {
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
   getUser: function(userId, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId))
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -470,9 +458,8 @@ SpotifyWebApi.prototype = {
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
   getMe: function(callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me')
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -497,10 +484,9 @@ SpotifyWebApi.prototype = {
       path = '/v1/me/playlists';
     }
 
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath(path)
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -517,10 +503,9 @@ SpotifyWebApi.prototype = {
    *          the playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
   getPlaylist: function(userId, playlistId, options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId)
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -537,10 +522,9 @@ SpotifyWebApi.prototype = {
    * the tracks in the playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
   getPlaylistTracks: function(userId, playlistId, options, callback) {
-    var request = WebApiRequest.builder().
+    var request = WebApiRequest.builder(this.getAccessToken()).
       withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withQueryParameters(options).
-      withAuth(this.getAccessToken()).
       build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -572,11 +556,10 @@ SpotifyWebApi.prototype = {
       });
     }
 
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(actualOptions)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.post, request, actualCallback);
@@ -592,11 +575,10 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   followPlaylist: function(userId, playlistId, options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.put, request, callback);
@@ -612,10 +594,9 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   unfollowPlaylist: function(userId, playlistId, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers')
       .withHeaders({ 'Content-Type' : 'application/json' })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.del, request, callback);
@@ -632,11 +613,10 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   changePlaylistDetails: function(userId, playlistId, options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.put, request, callback);
@@ -661,13 +641,12 @@ SpotifyWebApi.prototype = {
     } else {
       tracksString = tracks;
     }
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters({
         uris: tracksString
       }, options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.post, request, callback);
@@ -685,13 +664,12 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   removeTracksFromPlaylist: function(userId, playlistId, tracks, options, callback) {
-    var request = WebApiRequest.builder().
+    var request = WebApiRequest.builder(this.getAccessToken()).
       withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'tracks': tracks
       }, options).
-      withAuth(this.getAccessToken()).
       build();
 
     return this._performRequest(HttpManager.del, request, callback);
@@ -708,14 +686,13 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   removeTracksFromPlaylistByPosition: function(userId, playlistId, positions, snapshotId, callback) {
-    var request = WebApiRequest.builder().
+    var request = WebApiRequest.builder(this.getAccessToken()).
       withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'positions': positions,
         'snapshot_id' : snapshotId
       }).
-      withAuth(this.getAccessToken()).
       build();
 
     return this._performRequest(HttpManager.del, request, callback);
@@ -731,13 +708,12 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   replaceTracksInPlaylist: function(userId, playlistId, uris, callback) {
-    var request = WebApiRequest.builder().
+    var request = WebApiRequest.builder(this.getAccessToken()).
       withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'uris': uris
       }).
-      withAuth(this.getAccessToken()).
       build();
 
     return this._performRequest(HttpManager.put, request, callback);
@@ -755,14 +731,13 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   reorderTracksInPlaylist: function(userId, playlistId, rangeStart, insertBefore, options, callback) {
-    var request = WebApiRequest.builder().
+    var request = WebApiRequest.builder(this.getAccessToken()).
       withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
         'range_start': rangeStart,
         'insert_before' : insertBefore
       }, options).
-      withAuth(this.getAccessToken()).
       build();
 
     return this._performRequest(HttpManager.put, request, callback);
@@ -778,9 +753,8 @@ SpotifyWebApi.prototype = {
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
   getAudioFeaturesForTrack: function(trackId, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-features/' + trackId)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -796,9 +770,8 @@ SpotifyWebApi.prototype = {
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
   getAudioAnalysisForTrack: function(trackId, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-analysis/' + trackId)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -814,12 +787,11 @@ SpotifyWebApi.prototype = {
    *          rejected, it contains an error object. Not returned if a callback is given.
    */
   getAudioFeaturesForTracks: function(trackIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/audio-features')
       .withQueryParameters({
         'ids' : trackIds.join(',')
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -847,10 +819,9 @@ SpotifyWebApi.prototype = {
       }
     }
 
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/recommendations')
       .withQueryParameters(_opts)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -865,9 +836,8 @@ SpotifyWebApi.prototype = {
    *          If rejected, it contains an error object. Not returned if a callback is given.
    */
   getAvailableGenreSeeds: function(callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/recommendations/available-genre-seeds')
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -902,10 +872,9 @@ SpotifyWebApi.prototype = {
    *          playlist track objects. Not returned if a callback is given.
    */
   getMySavedTracks: function(options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks')
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -921,12 +890,11 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   containsMySavedTracks: function(trackIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks/contains')
       .withQueryParameters({
         'ids' : trackIds.join(',')
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -940,11 +908,10 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   removeFromMySavedTracks: function(trackIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(trackIds)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.del, request, callback);
@@ -957,11 +924,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
    */
   addToMySavedTracks: function(trackIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(trackIds)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.put, request, callback);
@@ -975,11 +941,10 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   removeFromMySavedAlbums: function(albumIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(albumIds)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.del, request, callback);
@@ -992,11 +957,10 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
    */
   addToMySavedAlbums: function(albumIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(albumIds)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.put, request, callback);
@@ -1010,10 +974,9 @@ SpotifyWebApi.prototype = {
    *          playlist album objects. Not returned if a callback is given.
    */
   getMySavedAlbums: function(options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums')
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1029,12 +992,11 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   containsMySavedAlbums: function(albumIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/albums/contains')
       .withQueryParameters({
         'ids' : albumIds.join(',')
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1048,10 +1010,9 @@ SpotifyWebApi.prototype = {
    *          otherwise an error. Not returned if a callback is given.
    */
   getMyTopArtists: function(options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/top/artists')
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1065,10 +1026,9 @@ SpotifyWebApi.prototype = {
    *          otherwise an error. Not returned if a callback is given.
    */
   getMyTopTracks: function(options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/top/tracks')
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1082,10 +1042,9 @@ SpotifyWebApi.prototype = {
    *          otherwise an error. Not returned if a callback is given.
    */
   getMyRecentlyPlayedTracks: function(options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/recently-played')
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1100,13 +1059,12 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   followUsers: function(userIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
       .withQueryParameters({
         ids: userIds.join(','),
         type: 'user'
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.put, request, callback);
@@ -1121,13 +1079,12 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   followArtists: function(artistIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
       .withQueryParameters({
         ids: artistIds.join(','),
         type: 'artist'
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.put, request, callback);
@@ -1142,13 +1099,12 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   unfollowUsers: function(userIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
       .withQueryParameters({
         ids: userIds.join(','),
         type: 'user'
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.del, request, callback);
@@ -1163,13 +1119,12 @@ SpotifyWebApi.prototype = {
    *          it contains an error object. Not returned if a callback is given.
    */
   unfollowArtists: function(artistIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
       .withQueryParameters({
         ids: artistIds.join(','),
         type: 'artist'
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.del, request, callback);
@@ -1186,13 +1141,12 @@ SpotifyWebApi.prototype = {
    *          Not returned if a callback is given.
    */
   isFollowingUsers: function(userIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following/contains')
       .withQueryParameters({
         ids: userIds.join(','),
         type: 'user'
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1206,13 +1160,12 @@ SpotifyWebApi.prototype = {
    * album objects. Not returned if a callback is given.
    */
   getFollowedArtists: function(options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters({
         type : 'artist'
       }, options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1228,12 +1181,11 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   areFollowingPlaylist: function(userId, playlistId, followerIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/followers/contains')
       .withQueryParameters({
         ids : followerIds.join(',')
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1250,13 +1202,12 @@ SpotifyWebApi.prototype = {
    *          Not returned if a callback is given.
    */
   isFollowingArtists: function(artistIds, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following/contains')
       .withQueryParameters({
         ids: artistIds.join(','),
         type: 'artist'
       })
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1270,11 +1221,10 @@ SpotifyWebApi.prototype = {
    * album objects. Not returned if a callback is given.
    */
   getNewReleases: function(options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/new-releases')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1288,11 +1238,10 @@ SpotifyWebApi.prototype = {
    * featured playlists. Not returned if a callback is given.
    */
   getFeaturedPlaylists: function(options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/featured-playlists')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1306,10 +1255,9 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   getCategories: function(options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories')
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1324,10 +1272,9 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   getCategory: function(categoryId, options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories/' + categoryId)
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
@@ -1342,10 +1289,9 @@ SpotifyWebApi.prototype = {
    * Not returned if a callback is given.
    */
   getPlaylistsForCategory: function(categoryId, options, callback) {
-    var request = WebApiRequest.builder()
+    var request = WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/categories/' + categoryId + '/playlists')
       .withQueryParameters(options)
-      .withAuth(this.getAccessToken())
       .build();
 
     return this._performRequest(HttpManager.get, request, callback);
