@@ -66,19 +66,6 @@ Request.prototype.getURL = function() {
   }
 };
 
-Request.prototype.addQueryParameters = function(queryParameters) {
-  for (var key in queryParameters) {
-    this.addQueryParameter(key, queryParameters[key]);
-  }
-};
-
-Request.prototype.addQueryParameter = function(key, value) {
-  if (!this.queryParameters) {
-    this.queryParameters = {};
-  }
-  this.queryParameters[key] = value;
-};
-
 Request.prototype.addBodyParameters = function(bodyParameters) {
   for (var key in bodyParameters) {
     this.addBodyParameter(key, bodyParameters[key]);
@@ -131,7 +118,7 @@ Builder.prototype.withScheme = function(scheme) {
 };
 
 Builder.prototype.withQueryParameters = function(queryParameters) {
-  this.queryParameters = queryParameters;
+  this.queryParameters = this._assign(this.queryParameters, queryParameters);
   return this;
 };
 
