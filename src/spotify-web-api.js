@@ -598,18 +598,13 @@ SpotifyWebApi.prototype = {
    * it contains an error object. Not returned if a callback is given.
    */
   addTracksToPlaylist: function(userId, playlistId, tracks, options, callback) {
-    var tracksString;
-    if (typeof tracks === 'object') {
-      tracksString = tracks.join();
-    } else {
-      tracksString = tracks;
-    }
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks')
       .withHeaders({ 'Content-Type' : 'application/json' })
-      .withQueryParameters({
-        uris: tracksString
-      }, options)
+      .withQueryParameters(options)
+      .withBodyParameters({
+        uris: tracks
+      })
       .build()
       .execute(HttpManager.post, callback);
   },
