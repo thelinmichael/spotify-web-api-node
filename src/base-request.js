@@ -58,22 +58,11 @@ Request.prototype.getURL = function() {
 
 Request.prototype.getQueryParameterString = function() {
   var queryParameters = this.getQueryParameters();
-  if (!queryParameters) {
-    return;
+  if (queryParameters) {
+    return '?' + Object.keys(queryParameters).map(function (key) {
+      return key + '=' + queryParameters[key];
+    }).join('&');
   }
-  var queryParameterString = '?';
-  var first = true;
-  for (var key in queryParameters) {
-    if (queryParameters.hasOwnProperty(key)) {
-      if (!first) {
-        queryParameterString += '&';
-      } else {
-        first = false;
-      }
-      queryParameterString += key + '=' + queryParameters[key];
-    }
-  }
-  return queryParameterString;
 };
 
 Request.prototype.execute = function (method, callback) {
