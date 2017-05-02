@@ -38,6 +38,7 @@ It includes helper functions to do the following:
 
 #### Personalization
 - Get a user’s top artists and tracks based on calculated affinity
+- Get current user’s recently played tracks
 
 #### Browse
 - Get New Releases
@@ -56,6 +57,11 @@ It includes helper functions to do the following:
 - Unfollow a playlist
 - Get followed artists
 - Check if users are following a Playlist
+
+#### Player
+ - Get a user's available devices
+ - Get information about the user's current playback
+ - Transfer a user's playback
 
 Some methods require authentication, which can be done using these flows:
 
@@ -887,49 +893,3 @@ See something you think can be improved? [Open an issue](https://github.com/thel
 ### Running tests
 
 You can run the unit tests executing `mocha` and get a test coverage report running `mocha -r blanket -R html-cov > coverage.html`.
-
-
-## Change log
-
-#### 2.3.6 (15 October 2016)
-- Add language bindings for the **[Get Audio Analysis for a Track](https://developer.spotify.com/web-api/get-audio-analysis/)** endpoint.
-
-#### 2.3.5 (20 July 2016)
-- Use `encodeURIComponent` instead of `encodeURI` to encode the user's id. 'encodeURI' wasn't encoding characters like `/` or `#` that were generating an invalid endpoint url. Thanks [@jgranstrom](https://github.com/jgranstrom) for the PR.
-
-#### 2.3.4 (18 July 2016)
-- Fixed a bug in `clientCredentialsGrant()`.
-
-#### 2.3.3 (18 July 2016)
-- Migrated to the `superagent` request library to support Node.JS and browsers. Thanks [@SomeoneWeird](https://github.com/SomeoneWeird) for the PR to add it, and [@erezny](https://github.com/erezny) for reporting bugs.
-
-#### 2.3.2 (10 July 2016)
-- Add language bindings for **[Get a List of Current User's Playlists](https://developer.spotify.com/web-api/get-a-list-of-current-users-playlists/)**. Thanks [@JMPerez](https://github.com/JMPerez) and [@vinialbano](https://github.com/vinialbano).
-
-#### 2.3.1 (3 July 2016)
-- Fix for `getRecomendations` method causing client error response from the API when making the request. Thanks [@kyv](https://github.com/kyv) for reporting, and [@Boberober](https://github.com/Boberober) and [@JMPerez](https://github.com/JMPerez) for providing fixes.
-
-#### 2.3.0 (2 April 2016)
-- Add language bindings for **[Get Recommendations Based on Seeds](https://developer.spotify.com/web-api/get-recommendations/)**, **[Get a User's Top Artists and Tracks](https://developer.spotify.com/web-api/get-users-top-artists-and-tracks/)**, **[Get Audio Features for a Track](https://developer.spotify.com/web-api/get-audio-features/)**, and **[Get Audio Features for Several Tracks](https://developer.spotify.com/web-api/get-several-audio-features/)**. Read more about the endpoints in the links above or in this [blog post](https://developer.spotify.com/news-stories/2016/03/29/api-improvements-update/).
-- Add generic search method enabling searches for several types at once, e.g. search for both tracks and albums in a single request, instead of one request for track results and one request for album results.
-
-#### 2.2.0 (23 November 2015)
-- Add language bindings for **[Get User's Saved Albums](https://developer.spotify.com/web-api/get-users-saved-albums/)** and other endpoints related to the user's saved albums.
-
-#### 2.1.1 (23 November 2015)
-- Username encoding bugfix.
-
-#### 2.1.0 (16 July 2015)
-- Add language binding for **[Get Followed Artists](https://developer.spotify.com/web-api/get-followed-artists/)**
-
-#### 2.0.2 (11 May 2015)
-- Bugfix for retrieving an access token through the Client Credentials flow. (Thanks [Nate Wilkins](https://github.com/Nate-Wilkins)!)
-- Add test coverage and Travis CI.
-
-#### 2.0.1 (2 Mar 2015)
-- Return WebApiError objects if error occurs during authentication.
-
-#### 2.0.0 (27 Feb 2015)
-- **Breaking change**: Response object changed. Add headers and status code to all responses to enable users to implement caching.
-
-[Full change log](https://github.com/thelinmichael/spotify-web-api-node/blob/master/HISTORY.md)

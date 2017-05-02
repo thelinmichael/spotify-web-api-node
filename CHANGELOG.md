@@ -1,7 +1,11 @@
 ## Change log
 
+#### 2.4.0 (2 May 2017)
+- Change `addTracksToPlaylist` to pass the data in the body, preventing an issue with a long URL when passing many tracks. Thanks [@dolcalmi](https://github.com/dolcalmi) for [the PR](https://github.com/thelinmichael/spotify-web-api-node/pull/117)
+- Add support for fetching [recently played tracks](https://developer.spotify.com/web-api/console/get-recently-played/). Thanks [@jeremyboles](https://github.com/jeremyboles) for [the PR](https://github.com/thelinmichael/spotify-web-api-node/pull/111).
+
 #### 2.3.6 (15 October 2016)
-- Add language bindings for the **[Get Audio Analysis for a Track](https://developer.spotify.com/web-api/get-audio-analysis/)** endpoint. 
+- Add language bindings for the **[Get Audio Analysis for a Track](https://developer.spotify.com/web-api/get-audio-analysis/)** endpoint.
 
 #### 2.3.5 (20 July 2016)
 - Use `encodeURIComponent` instead of `encodeURI` to encode the user's id. 'encodeURI' wasn't encoding characters like `/` or `#` that were generating an invalid endpoint url. Thanks [@jgranstrom](https://github.com/jgranstrom) for the PR.
