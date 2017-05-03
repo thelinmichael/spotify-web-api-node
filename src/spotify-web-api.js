@@ -1030,7 +1030,8 @@ SpotifyWebApi.prototype = {
       withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/tracks').
       withHeaders({ 'Content-Type' : 'application/json' }).
       withBodyParameters({
-        'uris': uris
+        'uris': uris,
+        'range_start': 0
       }).
       build();
 
