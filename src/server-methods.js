@@ -53,9 +53,10 @@ module.exports = {
       .withBodyParameters({
         'grant_type' : 'authorization_code',
         'redirect_uri' : this.getRedirectURI(),
-        'code' : code,
-        'client_id' : this.getClientId(),
-        'client_secret' : this.getClientSecret()
+        'code' : code
+      })
+      .withHeaders({
+        Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
       })
       .build();
 
