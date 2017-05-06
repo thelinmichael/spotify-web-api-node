@@ -1337,6 +1337,21 @@ describe('Spotify Web API', function() {
     'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'.should.equal(authorizeURL);
   });
 
+  it('should ignore entire show_dialog param if it is not included', function() {
+    var scopes = ['user-read-private', 'user-read-email'],
+        redirectUri = 'https://example.com/callback',
+        clientId = '5fe01282e44241328a84e7c5cc169165',
+        state = 'some-state-of-my-choice';
+
+    var api = new SpotifyWebApi({
+        clientId : clientId,
+        redirectUri : redirectUri
+    });
+
+    var authorizeURL = api.createAuthorizeURL(scopes, state);
+    'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'.should.equal(authorizeURL);
+  });
+
   it('should set, get and reset credentials successfully', function() {
     var api = new SpotifyWebApi({
       clientId : 'myClientId',
