@@ -1723,7 +1723,6 @@ SpotifyWebApi.prototype = {
       .build();
 
     this._addAccessToken(request, this.getAccessToken());
-    this._addBodyParameters(request, options);
 
     var promise = this._performRequest(HttpManager.put, request);
 
