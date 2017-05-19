@@ -1690,8 +1690,37 @@ SpotifyWebApi.prototype = {
       })
       .build();
 
-    console.log('request', request);
-    console.log('options', options);
+    this._addAccessToken(request, this.getAccessToken());
+    this._addBodyParameters(request, options);
+
+    var promise = this._performRequest(HttpManager.put, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, true);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
+   * Pause a User's Playback
+   * @param {Object} [options] Options, deviceId: the id of the targetted device.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a booolean true value,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  pauseMyPlayback: function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/pause')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters({
+        'device_id': options.deviceId || undefined,
+      })
+      .build();
 
     this._addAccessToken(request, this.getAccessToken());
     this._addBodyParameters(request, options);
