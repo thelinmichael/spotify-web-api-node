@@ -1673,6 +1673,43 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+   * Start/Resume a User's Playback
+   * @param {Object} [options] Options, contextUri, uris and offset. Only one of either contextUri or uris can be specified.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a booolean true value,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  startMyPlayback: function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/play')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters({
+        'context_uri': options.contextUri || undefined,
+        'uris': options.uris || undefined,
+        'offset': options.offset || undefined
+      })
+      .build();
+
+    console.log('request', request);
+    console.log('options', options);
+
+    this._addAccessToken(request, this.getAccessToken());
+    this._addBodyParameters(request, options);
+
+    var promise = this._performRequest(HttpManager.put, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, true);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
    * Add the current user as a follower of one or more other Spotify users.
    * @param {string[]} userIds The IDs of the users to be followed.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
