@@ -1611,6 +1611,35 @@ SpotifyWebApi.prototype = {
     }
   },
 
+
+  /**
+   * Get the Current User's Currently Playing Track.
+   * @param {Object} [options] Options, being market.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  getMyCurrentlyPlaying: function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/currently-playing')
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+    this._addQueryParameters(request, options);
+
+    var promise = this._performRequest(HttpManager.get, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
   /**
    * Get the Current User's Current Playback State
    * @param {Object} [options] Options, being market.
