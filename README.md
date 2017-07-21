@@ -63,12 +63,10 @@ It includes helper functions to do the following:
  - Get information about the user's current playback
  - Transfer a user's playback
 
-Some methods require authentication, which can be done using these flows:
+All methods require authentication, which can be done using these flows:
 
 - [Client credentials flow](http://tools.ietf.org/html/rfc6749#section-4.4) (Application-only authentication)
 - [Authorization code grant](http://tools.ietf.org/html/rfc6749#section-4.1) (Signed by user)
-
-Even though authentication isn't always necessary, it always gives benefits such as an increased rate limit.
 
 ##### Dependencies
 
@@ -690,7 +688,7 @@ spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', {limit: 10})
 
 ### Authorization
 
-Supplying an access token in a request is not always required by the API (see the [Endpoint reference](https://developer.spotify.com/spotify-web-api/endpoint-reference/) for details), but it will give your application benefits such as a higher rate limit. This wrapper supports two authorization flows; The Authorization Code flow (signed by a user), and the Client Credentials flow (application authentication - the user isn't involved). See Spotify's [Authorization guide](https://developer.spotify.com/spotify-web-api/authorization-guide/) for detailed information on these flows.
+Supplying an access token is required for all requests to the Spotify API. This wrapper supports two authorization flows - The Authorization Code flow (signed by a user), and the Client Credentials flow (application authentication - the user isn't involved). See Spotify's [Authorization guide](https://developer.spotify.com/spotify-web-api/authorization-guide/) for detailed information on these flows.
 
 **Important: If you are writing a universal/isomorphic web app using this library, you will not be able to use those methods that send a client secret to the Spotify authorization service. Client secrets should be kept server-side and not exposed. Never include your client secret in the public JS served to the browser.**
 
