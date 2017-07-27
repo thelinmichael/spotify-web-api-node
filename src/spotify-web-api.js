@@ -1681,7 +1681,7 @@ SpotifyWebApi.prototype = {
   */
   skipMyPlaybackToNextTrack: function(options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('v1/me/player/next')
+      .withPath('/v1/me/player/next')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .build();
 
@@ -1710,7 +1710,7 @@ SpotifyWebApi.prototype = {
   */
   skipMyPlaybackToPreviousTrack: function(options, callback) {
     var request = WebApiRequest.builder()
-      .withPath('v1/me/player/previous')
+      .withPath('/v1/me/player/previous')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .build();
 

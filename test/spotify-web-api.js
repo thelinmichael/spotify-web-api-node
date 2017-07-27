@@ -1332,6 +1332,60 @@ describe('Spotify Web API', function() {
 
   });
 
+  it('should skip to user\'s next track', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.post);
+      uri.should.equal('https://api.spotify.com/v1/me/player/next');
+      JSON.parse(options.data).should.eql({
+        'device_id' : 123
+      });
+      options.headers.should.eql({
+        Authorization: 'Bearer someAccessToken',
+        'Content-Type': 'application/json'
+      });
+      callback();
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.skipMyPlaybackToNextTrack({ 'device_id': 123})
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+  });
+
+  it('should skip to user\'s previous track', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.post);
+      uri.should.equal('https://api.spotify.com/v1/me/player/previous');
+      JSON.parse(options.data).should.eql({
+        'device_id' : 456
+      });
+      options.headers.should.eql({
+        Authorization: 'Bearer someAccessToken',
+        'Content-Type': 'application/json'
+      });
+      callback();
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.skipMyPlaybackToPreviousTrack({ 'device_id': 456})
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+  });
+
   it.skip("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
