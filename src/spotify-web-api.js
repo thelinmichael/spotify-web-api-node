@@ -1685,7 +1685,7 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/me/player/play')
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters({
-        'context_uri': options ? options.context_uri : null,
+        'context_uri': options ? options.contextUri : null,
         'offset': options ? options.offset : null
       })
       .build();
