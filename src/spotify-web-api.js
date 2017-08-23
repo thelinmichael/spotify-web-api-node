@@ -1791,7 +1791,7 @@ SpotifyWebApi.prototype = {
   playbackRepeat: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/repeat')
-      .withBodyParameters({
+      .withQueryParameters({
         'state': options.state || 'off'
       })
       .build();
@@ -1822,7 +1822,7 @@ SpotifyWebApi.prototype = {
   playbackShuffle: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/shuffle')
-      .withBodyParameters({
+      .withQueryParameters({
         'state': options.state || 'false'
       })
       .build();
