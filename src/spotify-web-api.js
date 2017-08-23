@@ -1673,6 +1673,110 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+   * Resumes the Current User's Playback
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  playbackResume: function(callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/play')
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+
+    var promise = this._performRequest(HttpManager.put, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
+   * Pauses the Current User's Playback
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  playbackPause: function(callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/pause')
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+
+    var promise = this._performRequest(HttpManager.put, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
+   * Skip the Current User's Playback To Previous Track
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  playbackPrevious: function(callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/previous')
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+
+    var promise = this._performRequest(HttpManager.post, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
+   * Skip the Current User's Playback To Next Track
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  playbackNext: function(callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/next')
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+
+    var promise = this._performRequest(HttpManager.post, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
    * Add the current user as a follower of one or more other Spotify users.
    * @param {string[]} userIds The IDs of the users to be followed.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
