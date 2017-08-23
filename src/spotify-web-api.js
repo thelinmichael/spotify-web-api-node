@@ -1675,6 +1675,7 @@ SpotifyWebApi.prototype = {
   /**
    * Resumes the Current User's Playback
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackResume().then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
@@ -1701,6 +1702,7 @@ SpotifyWebApi.prototype = {
   /**
    * Pauses the Current User's Playback
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackPause().then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
@@ -1727,6 +1729,7 @@ SpotifyWebApi.prototype = {
   /**
    * Skip the Current User's Playback To Previous Track
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackPrevious().then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
@@ -1753,6 +1756,7 @@ SpotifyWebApi.prototype = {
   /**
    * Skip the Current User's Playback To Next Track
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackNext().then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
@@ -1764,6 +1768,68 @@ SpotifyWebApi.prototype = {
     this._addAccessToken(request, this.getAccessToken());
 
     var promise = this._performRequest(HttpManager.post, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
+   * Set Repeat Mode On The Current User's Playback
+   * @param {Object} [options] Options, being state (track, context, off).
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackRepeat({state: 'context'}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  playbackRepeat: function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/repeat')
+      .withBodyParameters({
+        'state': options.state || 'off'
+      })
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+
+    var promise = this._performRequest(HttpManager.put, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
+   * Set Shuffle Mode On The Current User's Playback
+   * @param {Object} [options] Options, being state (true, false).
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackShuffle({state: 'false'}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  playbackShuffle: function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/shuffle')
+      .withBodyParameters({
+        'state': options.state || 'false'
+      })
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+
+    var promise = this._performRequest(HttpManager.put, request);
 
     if (callback) {
       promise.then(function(data) {
