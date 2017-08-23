@@ -1437,7 +1437,8 @@ describe('Spotify Web API', function() {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player/repeat');
-      should.not.exist(options.query);
+      should.exist(options.query);
+      should.not.exist(options.body);
       callback();
     });
 
@@ -1462,7 +1463,8 @@ describe('Spotify Web API', function() {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player/shuffle');
-      should.not.exist(options.query);
+      should.exist(options.query);
+      should.not.exist(options.body);
       callback();
     });
 
