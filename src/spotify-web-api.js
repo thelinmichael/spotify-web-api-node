@@ -1677,6 +1677,64 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+  * Skips to next track in user's queue.
+  * @param {Object} [options] Options, being only device_id.
+  * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+  * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
+  *           it contains an error object. Not returned if a callback is given.
+  */
+  skipMyPlaybackToNextTrack: function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/next')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+    this._addBodyParameters(request, options);
+
+    var promise = this._performRequest(HttpManager.post, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
+  * Skips to previous track in user's queue.
+  * @param {Object} [options] Options, being only device_id.
+  * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+  * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
+  *           it contains an error object. Not returned if a callback is given.
+  */
+  skipMyPlaybackToPreviousTrack: function(options, callback) {
+    var request = WebApiRequest.builder()
+      .withPath('/v1/me/player/previous')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .build();
+
+    this._addAccessToken(request, this.getAccessToken());
+    this._addBodyParameters(request, options);
+
+    var promise = this._performRequest(HttpManager.post, request);
+
+    if (callback) {
+      promise.then(function(data) {
+        callback(null, data);
+      }, function(err) {
+        callback(err);
+      });
+    } else {
+      return promise;
+    }
+  },
+
+  /**
    * Add the current user as a follower of one or more other Spotify users.
    * @param {string[]} userIds The IDs of the users to be followed.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1868,7 +1926,7 @@ SpotifyWebApi.prototype = {
     } else {
       return promise;
     }
-  },
+  }, 
 
   /**
    * Check if users are following a playlist.
