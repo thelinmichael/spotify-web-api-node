@@ -1332,6 +1332,158 @@ describe('Spotify Web API', function() {
 
   });
 
+  it('should resume the user\'s playback', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/play');
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.playbackResume()
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should pause the user\'s playback', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/pause');
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.playbackPause()
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should skip the user\'s playback to next track', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.post);
+      uri.should.equal('https://api.spotify.com/v1/me/player/next');
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.playbackNext()
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should skip the user\'s playback to previous track', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.post);
+      uri.should.equal('https://api.spotify.com/v1/me/player/previous');
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.playbackPrevious()
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should set the user\'s playback repeat mode', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/repeat');
+      should.exist(options.query);
+      should.not.exist(options.body);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.playbackRepeat({state: 'off'})
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should set the user\'s playback shuffle mode', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/shuffle');
+      should.exist(options.query);
+      should.not.exist(options.body);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.playbackShuffle({state: 'false'})
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
   it.skip("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';

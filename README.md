@@ -62,6 +62,11 @@ It includes helper functions to do the following:
  - Get a user's available devices
  - Get information about the user's current playback
  - Transfer a user's playback
+ - Resume a user's playback
+ - Skip a user's playback to next track
+ - Skip a user's playback to previous track
+ - Set a user's shuffle mode
+ - Set a user's repeat mode
 
 All methods require authentication, which can be done using these flows:
 
