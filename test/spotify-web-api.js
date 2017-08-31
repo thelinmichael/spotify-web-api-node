@@ -1347,7 +1347,7 @@ describe('Spotify Web API', function() {
       accessToken : accessToken
     });
 
-    api.playbackResume()
+    api.play()
       .then(function(data) {
         done();
       }, function(err) {
@@ -1372,7 +1372,7 @@ describe('Spotify Web API', function() {
       accessToken : accessToken
     });
 
-    api.playbackPause()
+    api.pause()
       .then(function(data) {
         done();
       }, function(err) {
@@ -1397,7 +1397,7 @@ describe('Spotify Web API', function() {
       accessToken : accessToken
     });
 
-    api.playbackNext()
+    api.skipToNext()
       .then(function(data) {
         done();
       }, function(err) {
@@ -1422,7 +1422,7 @@ describe('Spotify Web API', function() {
       accessToken : accessToken
     });
 
-    api.playbackPrevious()
+    api.skipToPrevious()
       .then(function(data) {
         done();
       }, function(err) {
@@ -1448,7 +1448,7 @@ describe('Spotify Web API', function() {
       accessToken : accessToken
     });
 
-    api.playbackRepeat({state: 'off'})
+    api.setRepeat({state: 'off'})
       .then(function(data) {
         done();
       }, function(err) {
@@ -1474,7 +1474,7 @@ describe('Spotify Web API', function() {
       accessToken : accessToken
     });
 
-    api.playbackShuffle({state: 'false'})
+    api.setShuffle({state: 'false'})
       .then(function(data) {
         done();
       }, function(err) {

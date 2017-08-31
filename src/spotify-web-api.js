@@ -1623,7 +1623,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  getMyCurrentlyPlaying: function(options, callback) {
+  getMyCurrentPlayingTrack: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/currently-playing')
       .build();
@@ -1706,14 +1706,14 @@ SpotifyWebApi.prototype = {
   },
 
   /**
-   * Resumes the Current User's Playback
+   * Starts o Resumes the Current User's Playback
    * @param {Object} [options] Options, being context_uri, offset, uris.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  playbackResume: function(options, callback) {
+  play: function(options, callback) {
 
     var actualOptions = {};
     if (typeof options === 'object') {
@@ -1750,7 +1750,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  playbackPause: function(callback) {
+  pause: function(callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/pause')
       .build();
@@ -1777,7 +1777,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  playbackPrevious: function(callback) {
+  skipToPrevious: function(callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/previous')
       .build();
@@ -1804,7 +1804,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  playbackNext: function(callback) {
+  skipToNext: function(callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/next')
       .build();
@@ -1832,7 +1832,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  playbackRepeat: function(options, callback) {
+  setRepeat: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/repeat')
       .withQueryParameters({
@@ -1863,7 +1863,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  playbackShuffle: function(options, callback) {
+  setShuffle: function(options, callback) {
     var request = WebApiRequest.builder()
       .withPath('/v1/me/player/shuffle')
       .withQueryParameters({
