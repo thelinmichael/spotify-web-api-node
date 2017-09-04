@@ -1,16 +1,16 @@
 var mockery = require('mockery');
-var Request = require("../src/base-request");
+var Request = require('../src/base-request');
 
 function useSuperagentMock(method, error, response) {
   // method
   // response
-    // data
-    // headers
-    // statusCode
+  // data
+  // headers
+  // statusCode
 
-  var onEnd = function (callback) {
+  var onEnd = function(callback) {
     if (error) {
-      return callback(error)
+      return callback(error);
     }
     callback(null, {
       body: response.data,
@@ -19,25 +19,23 @@ function useSuperagentMock(method, error, response) {
     });
   };
 
-  var noop = function () {}
+  var noop = function() {};
 
-  var superagentMock = { };
-  superagentMock[method] = function (url) {
+  var superagentMock = {};
+  superagentMock[method] = function(url) {
     return {
       query: noop,
       send: noop,
       set: noop,
       end: onEnd
-    }
+    };
   };
 
   mockery.registerMock('superagent', superagentMock);
 }
 
-describe("Make requests", function() {
-
-  beforeEach(function(){
-
+describe('Make requests', function() {
+  beforeEach(function() {
     mockery.enable({
       warnOnReplace: false,
       warnOnUnregistered: false,
@@ -45,15 +43,13 @@ describe("Make requests", function() {
     });
   });
 
-  afterEach(function(){
+  afterEach(function() {
     mockery.deregisterAll();
     mockery.disable();
   });
 
-  describe("GET requests", function() {
-
-    it("Should make a successful GET request", function(done) {
-
+  describe('GET requests', function() {
+    it('Should make a successful GET request', function(done) {
       useSuperagentMock('get', null, {
         data: 'some data',
         headers: {},
@@ -62,9 +58,9 @@ describe("Make requests", function() {
 
       var HttpManager = require('../src/http-manager');
       var request = Request.builder()
-        .withHost("such.api.wow")
+        .withHost('such.api.wow')
         .withPort(1337)
-        .withScheme("http")
+        .withScheme('http')
         .build();
 
       HttpManager.get(request, function(errorObject) {
@@ -72,15 +68,14 @@ describe("Make requests", function() {
       });
     });
 
-    it("Should process an error GET request", function(done) {
-
+    it('Should process an error GET request', function(done) {
       useSuperagentMock('get', new Error('GET request error'));
 
       var HttpManager = require('../src/http-manager');
       var request = Request.builder()
-        .withHost("such.api.wow")
+        .withHost('such.api.wow')
         .withPort(1337)
-        .withScheme("http")
+        .withScheme('http')
         .build();
 
       HttpManager.get(request, function(errorObject) {
@@ -90,15 +85,16 @@ describe("Make requests", function() {
       });
     });
 
-    it("Should process an error GET request with an error message", function(done) {
-
+    it('Should process an error GET request with an error message', function(
+      done
+    ) {
       useSuperagentMock('get', new Error('There is a problem in your request'));
 
       var HttpManager = require('../src/http-manager');
       var request = Request.builder()
-        .withHost("such.api.wow")
+        .withHost('such.api.wow')
         .withPort(1337)
-        .withScheme("http")
+        .withScheme('http')
         .build();
 
       HttpManager.get(request, function(errorObject) {
@@ -109,8 +105,7 @@ describe("Make requests", function() {
     });
   });
 
-  it("Should make a successful POST request", function(done) {
-
+  it('Should make a successful POST request', function(done) {
     useSuperagentMock('post', null, {
       data: 'some data',
       headers: {},
@@ -119,9 +114,9 @@ describe("Make requests", function() {
 
     var HttpManager = require('../src/http-manager');
     var request = Request.builder()
-      .withHost("such.api.wow")
+      .withHost('such.api.wow')
       .withPort(1337)
-      .withScheme("http")
+      .withScheme('http')
       .build();
 
     HttpManager.post(request, function(errorObject) {
@@ -129,8 +124,7 @@ describe("Make requests", function() {
     });
   });
 
-  it("Should make a successful PUT request", function(done) {
-
+  it('Should make a successful PUT request', function(done) {
     useSuperagentMock('put', null, {
       data: 'some data',
       headers: {},
@@ -139,9 +133,9 @@ describe("Make requests", function() {
 
     var HttpManager = require('../src/http-manager');
     var request = Request.builder()
-      .withHost("such.api.wow")
+      .withHost('such.api.wow')
       .withPort(1337)
-      .withScheme("http")
+      .withScheme('http')
       .build();
 
     HttpManager.put(request, function(errorObject) {
@@ -149,8 +143,7 @@ describe("Make requests", function() {
     });
   });
 
-  it("Should make a successful DELETE request", function(done) {
-
+  it('Should make a successful DELETE request', function(done) {
     useSuperagentMock('del', null, {
       data: 'some data',
       headers: {},
@@ -159,9 +152,9 @@ describe("Make requests", function() {
 
     var HttpManager = require('../src/http-manager');
     var request = Request.builder()
-      .withHost("such.api.wow")
+      .withHost('such.api.wow')
       .withPort(1337)
-      .withScheme("http")
+      .withScheme('http')
       .build();
 
     HttpManager.del(request, function(errorObject) {

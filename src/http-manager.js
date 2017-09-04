@@ -1,21 +1,22 @@
 'use strict';
 
 var superagent = require('superagent'),
-    WebApiError = require('./webapi-error');
+  WebApiError = require('./webapi-error');
 
 var HttpManager = {};
 
 /* Create superagent options from the base request */
 var _getParametersFromRequest = function(request) {
-
   var options = {};
 
   if (request.getQueryParameters()) {
     options.query = request.getQueryParameters();
   }
 
-  if (request.getHeaders() &&
-      request.getHeaders()['Content-Type'] === 'application/json') {
+  if (
+    request.getHeaders() &&
+    request.getHeaders()['Content-Type'] === 'application/json'
+  ) {
     options.data = JSON.stringify(request.getBodyParameters());
   } else if (request.getBodyParameters()) {
     options.data = request.getBodyParameters();
@@ -42,13 +43,16 @@ var _getErrorObject = function(defaultMessage, err) {
     // Serialized JSON error
     try {
       var parsedError = JSON.parse(err);
-      errorObject = new WebApiError(parsedError.error.message, parsedError.error.status);
+      errorObject = new WebApiError(
+        parsedError.error.message,
+        parsedError.error.status
+      );
     } catch (err) {
       // Error not JSON formatted
     }
   }
 
-  if(!errorObject) {
+  if (!errorObject) {
     // Unexpected format
     errorObject = new WebApiError(defaultMessage + ': ' + JSON.stringify(err));
   }
@@ -64,7 +68,10 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
     req.query(options.query);
   }
 
-  if (options.data && (!options.headers || options.headers['Content-Type'] !== 'application/json')) {
+  if (
+    options.data &&
+    (!options.headers || options.headers['Content-Type'] !== 'application/json')
+  ) {
     req.type('form');
     req.send(options.data);
   } else if (options.data) {
@@ -75,7 +82,7 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
     req.set(options.headers);
   }
 
-  req.end(function (err, response) {
+  req.end(function(err, response) {
     if (err) {
       var errorObject = _getErrorObject('Request error', {
         error: err
@@ -109,7 +116,6 @@ HttpManager.get = function(request, callback) {
  * @param {Function} The callback function.
  */
 HttpManager.post = function(request, callback) {
-
   var options = _getParametersFromRequest(request);
   var method = superagent.post;
 
@@ -122,7 +128,6 @@ HttpManager.post = function(request, callback) {
  * @param {Function} The callback function.
  */
 HttpManager.del = function(request, callback) {
-
   var options = _getParametersFromRequest(request);
   var method = superagent.del;
 
@@ -135,7 +140,6 @@ HttpManager.del = function(request, callback) {
  * @param {Function} The callback function.
  */
 HttpManager.put = function(request, callback) {
-
   var options = _getParametersFromRequest(request);
   var method = superagent.put;
 

@@ -1,4 +1,4 @@
-var SpotifyWebApi = require("../");
+var SpotifyWebApi = require('../');
 
 /**
  * This example demonstrates adding tracks to a specified position in a playlist.
@@ -21,21 +21,31 @@ var authorizationCode = '<insert authorization code>';
  * https://developer.spotify.com/my-applications
  */
 var spotifyApi = new SpotifyWebApi({
-  clientId : '<insert client id>',
-  clientSecret : '<insert client secret>',
-  redirectUri : '<insert redirect URI>'
+  clientId: '<insert client id>',
+  clientSecret: '<insert client secret>',
+  redirectUri: '<insert redirect URI>'
 });
 
 // First retrieve an access token
-spotifyApi.authorizationCodeGrant(authorizationCode)
+spotifyApi
+  .authorizationCodeGrant(authorizationCode)
   .then(function(data) {
     spotifyApi.setAccessToken(data.body['access_token']);
-    return spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"],
+    return spotifyApi.addTracksToPlaylist(
+      'thelinmichael',
+      '5ieJqeLJjjI8iJWaxeBLuK',
+      [
+        'spotify:track:4iV5W9uYEdYUVa79Axb7Rh',
+        'spotify:track:1301WleyT98MSxVHPZCA6M'
+      ],
       {
-        position : 10
-      })
-  }).then(function(data) {
+        position: 10
+      }
+    );
+  })
+  .then(function(data) {
     console.log('Added tracks to the playlist!');
-  }).catch(function(err) {
+  })
+  .catch(function(err) {
     console.log('Something went wrong!', err.message);
   });
