@@ -1306,7 +1306,7 @@ describe('Spotify Web API', function() {
       uri.should.equal('https://api.spotify.com/v1/me/player');
       JSON.parse(options.data).should.eql({
         'device_ids': ['deviceId'],
-        'play': true,
+        'play': true
       });
       should.not.exist(options.query);
       callback();
