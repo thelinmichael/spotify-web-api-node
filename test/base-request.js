@@ -151,4 +151,16 @@ describe("Create Requests", function() {
 
     request.getQueryParameterString().should.equal("?one=1&two=true&three=world");
   });
+
+  it("Should construct query paramaters string and exclude undefined values", function() {
+    var request = Request.builder()
+      .withQueryParameters({
+        "one" : 1,
+        "two" : undefined,
+        "three" : "world"
+      })
+      .build();
+
+    request.getQueryParameterString().should.equal("?one=1&three=world");
+  });
 });

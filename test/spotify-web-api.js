@@ -1250,6 +1250,239 @@ describe('Spotify Web API', function() {
       });
   });
 
+  it("should get user's devices:", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.get);
+      uri.should.equal('https://api.spotify.com/v1/me/player/devices');
+      options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
+      callback(null, {
+        body : {
+          devices: [ ]
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.getMyDevices()
+      .then(function(data) {
+        should.exist(data.body.devices);
+        done();
+      });
+  });
+
+  it("should get user's current playback status:", function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.get);
+      uri.should.equal('https://api.spotify.com/v1/me/player');
+      options.query.should.eql({
+        market : "GB"
+      });
+      options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
+      callback(null, {
+        body : {
+          device: { }
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken : 'someAccessToken'
+    });
+
+    api.getMyCurrentPlaybackState({ market : "GB"})
+      .then(function(data) {
+        should.exist(data.body.device);
+        done();
+      });
+  });
+
+  it('should transfer the user\'s playback', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player');
+      JSON.parse(options.data).should.eql({
+        'device_ids': ['deviceId'],
+        'play': true,
+      });
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.transferMyPlayback({
+      deviceIds: ['deviceId'],
+      play: true
+    })
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should resume the user\'s playback', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/play');
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.play()
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should pause the user\'s playback', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/pause');
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.pause()
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should skip the user\'s playback to next track', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.post);
+      uri.should.equal('https://api.spotify.com/v1/me/player/next');
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.skipToNext()
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should skip the user\'s playback to previous track', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.post);
+      uri.should.equal('https://api.spotify.com/v1/me/player/previous');
+      should.not.exist(options.query);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.skipToPrevious()
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should set the user\'s playback repeat mode', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/repeat');
+      should.exist(options.query);
+      should.not.exist(options.body);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.setRepeat({state: 'off'})
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should set the user\'s playback shuffle mode', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/shuffle');
+      should.exist(options.query);
+      should.not.exist(options.body);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.setShuffle({state: 'false'})
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
   it.skip("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
@@ -1349,6 +1582,22 @@ describe('Spotify Web API', function() {
   });
 
   it('should create authorization URL', function() {
+    var scopes = ['user-read-private', 'user-read-email'],
+        redirectUri = 'https://example.com/callback',
+        clientId = '5fe01282e44241328a84e7c5cc169165',
+        state = 'some-state-of-my-choice',
+        showDialog = true;
+
+    var api = new SpotifyWebApi({
+        clientId : clientId,
+        redirectUri : redirectUri
+    });
+
+    var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog);
+    'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'.should.equal(authorizeURL);
+  });
+
+  it('should ignore entire show_dialog param if it is not included', function() {
     var scopes = ['user-read-private', 'user-read-email'],
         redirectUri = 'https://example.com/callback',
         clientId = '5fe01282e44241328a84e7c5cc169165',

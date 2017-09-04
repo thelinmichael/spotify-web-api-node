@@ -59,7 +59,9 @@ Request.prototype.getURL = function() {
 Request.prototype.getQueryParameterString = function() {
   var queryParameters = this.getQueryParameters();
   if (queryParameters) {
-    return '?' + Object.keys(queryParameters).map(function (key) {
+    return '?' + Object.keys(queryParameters).filter(function (key) {
+      return queryParameters[key] !== undefined;
+    }).map(function (key) {
       return key + '=' + queryParameters[key];
     }).join('&');
   }

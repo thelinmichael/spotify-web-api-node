@@ -797,9 +797,10 @@ SpotifyWebApi.prototype = {
    * Retrieve a URL where the user can give the application permissions.
    * @param {string[]} scopes The scopes corresponding to the permissions the application needs.
    * @param {string} state A parameter that you can use to maintain a value between the request and the callback to redirect_uri.It is useful to prevent CSRF exploits.
+   * @param {boolean} showDialog A parameter that you can use to force the user to approve the app on each login rather than being automatically redirected.
    * @returns {string} The URL where the user can give application permissions.
    */
-  createAuthorizeURL: function(scopes, state) {
+  createAuthorizeURL: function(scopes, state, showDialog) {
     return AuthenticationRequest.builder()
       .withPath('/authorize')
       .withQueryParameters({
@@ -807,7 +808,8 @@ SpotifyWebApi.prototype = {
         'response_type' : 'code',
         'redirect_uri' : this.getRedirectURI(),
         'scope' : scopes.join('%20'),
-        'state' : state
+        'state' : state,
+        'show_dialog': showDialog && !!showDialog
       })
       .build()
       .getURL();
@@ -988,6 +990,167 @@ SpotifyWebApi.prototype = {
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback);
+  },
+
+  /**
+   * Get the Current User's Connect Devices
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  getMyDevices: function(callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/devices')
+      .build()
+      .execute(HttpManager.get, callback);
+  },
+
+
+  /**
+   * Get the Current User's Currently Playing Track.
+   * @param {Object} [options] Options, being market.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  getMyCurrentPlayingTrack: function(options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/currently-playing')
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback);
+  },
+
+  /**
+   * Get the Current User's Current Playback State
+   * @param {Object} [options] Options, being market.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  getMyCurrentPlaybackState: function(options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player')
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback);
+  },
+
+  /**
+   * Transfer a User's Playback
+   * @param {Object} [options] Options, being market.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  transferMyPlayback: function(options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters({
+        'device_ids': options.deviceIds,
+        'play': !!options.play
+      })
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
+   * Starts o Resumes the Current User's Playback
+   * @param {Object} [options] Options, being context_uri, offset, uris.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  play: function(options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/play')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withBodyParameters(options)
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
+   * Pauses the Current User's Playback
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackPause().then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  pause: function(callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/pause')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
+   * Skip the Current User's Playback To Previous Track
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackPrevious().then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  skipToPrevious: function(callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/previous')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .build()
+      .execute(HttpManager.post, callback);
+  },
+
+  /**
+   * Skip the Current User's Playback To Next Track
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackNext().then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  skipToNext: function(callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/next')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .build()
+      .execute(HttpManager.post, callback);
+  },
+
+  /**
+   * Set Repeat Mode On The Current User's Playback
+   * @param {Object} [options] Options, being state (track, context, off).
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackRepeat({state: 'context'}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  setRepeat: function(options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/repeat')
+      .withQueryParameters({
+        'state': options.state || 'off'
+      })
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
+   * Set Shuffle Mode On The Current User's Playback
+   * @param {Object} [options] Options, being state (true, false).
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackShuffle({state: 'false'}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  setShuffle: function(options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/shuffle')
+      .withQueryParameters({
+        'state': options.state || 'false'
+      })
+      .build()
+      .execute(HttpManager.put, callback);
   },
 
   /**
