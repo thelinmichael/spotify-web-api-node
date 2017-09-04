@@ -1689,6 +1689,7 @@ SpotifyWebApi.prototype = {
       })
       .build();
 
+    delete options.deviceIds;
     this._addAccessToken(request, this.getAccessToken());
     this._addBodyParameters(request, options);
 
