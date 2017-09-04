@@ -1,5 +1,12 @@
 ## Change log
 
+#### 2.5.0 (4 Sep 2017)
+- Change README to reflect new authorization. Thanks [@arirawr](https://github.com/arirawr) for the [PR](https://github.com/thelinmichael/spotify-web-api-node/pull/146).
+- Add support for 'show_dialog' parameter when creating authorization url. Thanks [@ajhaupt7](https://github.com/ajhaupt7) for [the PR](https://github.com/thelinmichael/spotify-web-api-node/pull/101).
+- Add support for playback control (play, pause, prev, next), shuffle and repeat. Thanks [@JoseMCO](https://github.com/JoseMCO) for [the PR](https://github.com/thelinmichael/spotify-web-api-node/pull/150).
+- Add support for currently playing. Thanks [@dustinblackman](https://github.com/dustinblackman) for [the PR](https://github.com/thelinmichael/spotify-web-api-node/pull/145).
+- Fix to remove unnecessary deviceIds parameter from request to transfer playback. Thanks [@philnash](https://github.com/philnash) for [the PR](https://github.com/thelinmichael/spotify-web-api-node/pull/154).
+
 #### 2.4.0 (2 May 2017)
 - Change `addTracksToPlaylist` to pass the data in the body, preventing an issue with a long URL when passing many tracks. Thanks [@dolcalmi](https://github.com/dolcalmi) for [the PR](https://github.com/thelinmichael/spotify-web-api-node/pull/117)
 - Add support for fetching [recently played tracks](https://developer.spotify.com/web-api/console/get-recently-played/). Thanks [@jeremyboles](https://github.com/jeremyboles) for [the PR](https://github.com/thelinmichael/spotify-web-api-node/pull/111).
