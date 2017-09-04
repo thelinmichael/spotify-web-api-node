@@ -1,5 +1,6 @@
 ## Change log
 
+
 #### 2.5.0 (4 Sep 2017)
 - Change README to reflect new authorization. Thanks [@arirawr](https://github.com/arirawr) for the [PR](https://github.com/thelinmichael/spotify-web-api-node/pull/146).
 - Add support for 'show_dialog' parameter when creating authorization url. Thanks [@ajhaupt7](https://github.com/ajhaupt7) for [the PR](https://github.com/thelinmichael/spotify-web-api-node/pull/101).

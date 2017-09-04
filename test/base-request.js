@@ -32,6 +32,43 @@ describe("Create Requests", function() {
     request.getQueryParameters().thirdParameter.should.equal("hello");
   });
 
+  it("Should add query parameters (multiple calls)", function() {
+    var request = Request.builder()
+      .withHost("such.api.wow")
+      .withPort(1337)
+      .withScheme("http")
+      .withQueryParameters({
+        "oneParameter" : 1,
+        "anotherParameter" : true
+      })
+      .withQueryParameters({
+        "thirdParameter" : "hello"
+      })
+      .build();
+
+    request.getQueryParameters().oneParameter.should.equal(1);
+    request.getQueryParameters().anotherParameter.should.equal(true);
+    request.getQueryParameters().thirdParameter.should.equal("hello");
+  });
+
+  it("Should add query parameters (combine calls)", function() {
+    var request = Request.builder()
+      .withHost("such.api.wow")
+      .withPort(1337)
+      .withScheme("http")
+      .withQueryParameters({
+        "oneParameter" : 1,
+        "anotherParameter" : true
+      }, {
+        "thirdParameter" : "hello"
+      })
+      .build();
+
+    request.getQueryParameters().oneParameter.should.equal(1);
+    request.getQueryParameters().anotherParameter.should.equal(true);
+    request.getQueryParameters().thirdParameter.should.equal("hello");
+  });
+
   it("Should add body parameters", function() {
     var request = Request.builder()
       .withHost("such.api.wow")
@@ -85,4 +122,45 @@ describe("Create Requests", function() {
     request.getURI().should.equal("https://such.api.wow:1337/v1/users/meriosweg");
   });
 
+  it("Should construct empty query paramaters string", function() {
+    var request = Request.builder()
+      .withQueryParameters({})
+      .build();
+
+    should.not.exist(request.getQueryParameterString());
+  });
+
+  it("Should construct query paramaters string for one parameter", function() {
+    var request = Request.builder()
+      .withQueryParameters({
+        "one" : 1
+      })
+      .build();
+
+    request.getQueryParameterString().should.equal("?one=1");
+  });
+
+  it("Should construct query paramaters string for multiple parameters", function() {
+    var request = Request.builder()
+      .withQueryParameters({
+        "one" : 1,
+        "two" : true,
+        "three" : "world"
+      })
+      .build();
+
+    request.getQueryParameterString().should.equal("?one=1&two=true&three=world");
+  });
+
+  it("Should construct query paramaters string and exclude undefined values", function() {
+    var request = Request.builder()
+      .withQueryParameters({
+        "one" : 1,
+        "two" : undefined,
+        "three" : "world"
+      })
+      .build();
+
+    request.getQueryParameterString().should.equal("?one=1&three=world");
+  });
 });
