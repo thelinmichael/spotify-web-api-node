@@ -1056,6 +1056,44 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+   * Set volume of the Current User's Playback
+   * @param {int} volume percentage 0 - 100
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  volume: function(volume, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/volume')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters({
+        'volume_percent': volume
+      })
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+   /**
+   * Set seek poistion (ms) of the Current User's Playback
+   * @param {int} Position (ms) to seek
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  seek: function(position, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/seek')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters({
+        'position_ms': position
+      })
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
    * Starts o Resumes the Current User's Playback
    * @param {Object} [options] Options, being context_uri, offset, uris.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
