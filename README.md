@@ -647,7 +647,20 @@ spotifyApi.getPlaylistsForCategory('party', {
   }, function(err) {
     console.log("Something went wrong!", err);
   });
+  
+  
+  
+/* Player */
 
+// Get information about current playing song for signed in user
+spotifyApi.getMyCurrentPlaybackState({
+  })
+  .then(function(data) {
+    // Output items
+    console.log("Now Playing: ",data.body);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
 /* Get Recommendations Based on Seeds */
 // TBD
 
