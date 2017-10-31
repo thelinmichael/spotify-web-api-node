@@ -1057,7 +1057,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Starts o Resumes the Current User's Playback
-   * @param {Object} [options] Options, being context_uri, offset, uris.
+   * @param {Object} [options] Options, being context_uri, offset, uris, device_id.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
