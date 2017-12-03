@@ -586,6 +586,23 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+   * Replace the image used to represent a specific playlist.
+   * @param {string} userId The playlist's owner's user ID
+   * @param {string} playlistId The playlist's ID
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example uploadCustomPlaylistCoverImage('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK', ' data:image/jpeg;base64,...').then(...)
+   * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
+   * it contains an error object. Not returned if a callback is given.
+   */
+  uploadCustomPlaylistCoverImage: function(userId, playlistId, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/users/' + encodeURIComponent(userId) + '/playlists/' + playlistId + '/images')
+      .withHeaders({ 'Content-Type' : 'image/jpeg' })
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
    * Add tracks to a playlist.
    * @param {string} userId The playlist's owner's user ID
    * @param {string} playlistId The playlist's ID
