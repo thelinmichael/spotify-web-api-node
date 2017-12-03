@@ -430,7 +430,7 @@ spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
   });
 
 // Upload a custom playlist cover image
-spotifyApi.uploadCustomPlaylistCoverImage('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK','data:image/jpeg;base64,...')
+spotifyApi.uploadCustomPlaylistCoverImage('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK','longbase64uri')
   .then(function(data) {
      console.log('Playlsit cover image uploaded!');
   }, function(err) {
