@@ -1134,7 +1134,7 @@ describe('Spotify Web API', function() {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/images');
-      (options.data).should.eql('data:image/jpeg;base64,...')
+      (options.data).should.eql('longbase64uri')
       callback(null, { statusCode : 202 });
       should.not.exist(options.query);
     });
@@ -1142,7 +1142,7 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.setAccessToken('long-access-token');
 
-    api.uploadCustomPlaylistCoverImage('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', 'data:image/jpeg;base64,...')
+    api.uploadCustomPlaylistCoverImage('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', 'longbase64uri')
     .then(function(data) {
       (202).should.equal(data.statusCode);
       done();
