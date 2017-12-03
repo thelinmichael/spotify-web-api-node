@@ -591,7 +591,7 @@ SpotifyWebApi.prototype = {
    * @param {string} playlistId The playlist's ID
    * @param {string} base64URI Base64 encoded JPEG image data, maximum payload size is 256 KB
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example uploadCustomPlaylistCoverImage('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK', ' data:image/jpeg;base64,...').then(...)
+   * @example uploadCustomPlaylistCoverImage('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK', 'longbase64uri').then(...)
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
