@@ -1057,16 +1057,35 @@ SpotifyWebApi.prototype = {
 
   /**
    * Starts o Resumes the Current User's Playback
-   * @param {Object} [options] Options, being context_uri, offset, uris.
+   * @param {Object} [options] Options, being context_uri, offset, uris, device_id.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
   play: function(options, callback) {
+    var actualCallback, actualOptions, queryOptions = {};
+    if (!options && !callback) {
+      actualOptions = {};
+    } else if (typeof options === 'function' && !callback) {
+      actualCallback = options;
+      actualOptions = {};
+    } else {
+      actualCallback = callback;
+      actualOptions = options;
+    }
+
+    if (actualOptions.deviceId) {
+      queryOptions = {
+        'device_id': actualOptions.deviceId
+      };
+      delete actualOptions.deviceId;
+    }
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/play')
       .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters(queryOptions)
       .withBodyParameters(options)
       .build()
       .execute(HttpManager.put, callback);
