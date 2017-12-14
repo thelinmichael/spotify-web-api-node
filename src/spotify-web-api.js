@@ -1075,9 +1075,17 @@ SpotifyWebApi.prototype = {
       actualOptions = options;
     }
 
+    if (actualOptions.deviceId) {
+      queryOptions = {
+        'device_id': actualOptions.deviceId
+      };
+      delete actualOptions.deviceId;
+    }
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/play')
       .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters(queryOptions)
       .withBodyParameters(options)
       .build()
       .execute(HttpManager.put, callback);
