@@ -1064,6 +1064,17 @@ SpotifyWebApi.prototype = {
    *          otherwise an error. Not returned if a callback is given.
    */
   play: function(options, callback) {
+    var actualCallback, actualOptions, queryOptions = {};
+    if (!options && !callback) {
+      actualOptions = {};
+    } else if (typeof options === 'function' && !callback) {
+      actualCallback = options;
+      actualOptions = {};
+    } else {
+      actualCallback = callback;
+      actualOptions = options;
+    }
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/play')
       .withHeaders({ 'Content-Type' : 'application/json' })
