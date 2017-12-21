@@ -1118,6 +1118,7 @@ SpotifyWebApi.prototype = {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/previous')
       .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters(actualOptions)
       .build()
       .execute(HttpManager.post, callback);
   },
@@ -1153,6 +1154,7 @@ SpotifyWebApi.prototype = {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/next')
       .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters(actualOptions)
       .build()
       .execute(HttpManager.post, callback);
   },
