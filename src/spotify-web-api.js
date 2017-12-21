@@ -1089,6 +1089,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Skip the Current User's Playback To Previous Track
+   * @param {Object} [options] The possible options, currently only device_id.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackPrevious().then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
@@ -1104,6 +1105,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Skip the Current User's Playback To Next Track
+   * @param {Object} [options] The possible options, currently only device_id.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackNext().then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
