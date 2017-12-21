@@ -1095,7 +1095,26 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToPrevious: function(callback) {
+  skipToPrevious: function(options, callback) {
+    // In case someone is using a version where options parameter did not exist.
+    var actualCallback, actualOptions;
+    if (!options && !callback) {
+      actualOptions = {};
+    } else if (typeof options === 'function' && !callback) {
+      actualCallback = options;
+      actualOptions = {};
+    } else {
+      actualCallback = callback;
+      actualOptions = options;
+    }
+
+    if (actualOptions.deviceId) {
+      actualOptions = {
+        'device_id': actualOptions.deviceId
+      };
+      delete actualOptions.deviceId;
+    }
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/previous')
       .withHeaders({ 'Content-Type' : 'application/json' })
@@ -1111,7 +1130,26 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToNext: function(callback) {
+  skipToNext: function(options, callback) {
+    // In case someone is using a version where options parameter did not exist.
+    var actualCallback, actualOptions;
+    if (!options && !callback) {
+      actualOptions = {};
+    } else if (typeof options === 'function' && !callback) {
+      actualCallback = options;
+      actualOptions = {};
+    } else {
+      actualCallback = callback;
+      actualOptions = options;
+    }
+
+    if (actualOptions.deviceId) {
+      actualOptions = {
+        'device_id': actualOptions.deviceId
+      };
+      delete actualOptions.deviceId;
+    }
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/next')
       .withHeaders({ 'Content-Type' : 'application/json' })
