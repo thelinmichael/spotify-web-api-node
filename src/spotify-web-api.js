@@ -798,14 +798,15 @@ SpotifyWebApi.prototype = {
    * @param {string[]} scopes The scopes corresponding to the permissions the application needs.
    * @param {string} state A parameter that you can use to maintain a value between the request and the callback to redirect_uri.It is useful to prevent CSRF exploits.
    * @param {boolean} showDialog A parameter that you can use to force the user to approve the app on each login rather than being automatically redirected.
+   * @param {boolean} isImplicit A parameter that specifies creating a URL for implicit grant flow.
    * @returns {string} The URL where the user can give application permissions.
    */
-  createAuthorizeURL: function(scopes, state, showDialog) {
+  createAuthorizeURL: function(scopes, state, showDialog, isImplicit) {
     return AuthenticationRequest.builder()
       .withPath('/authorize')
       .withQueryParameters({
         'client_id' : this.getClientId(),
-        'response_type' : 'code',
+        'response_type' : isImplicit && !!isImplicit ? 'token' : 'code',
         'redirect_uri' : this.getRedirectURI(),
         'scope' : scopes.join('%20'),
         'state' : state,
