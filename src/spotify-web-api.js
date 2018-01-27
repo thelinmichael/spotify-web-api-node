@@ -1077,15 +1077,19 @@ SpotifyWebApi.prototype = {
 
   /**
    * Pauses the Current User's Playback
+   * @param {Object} [options] Options, being device_id.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackPause().then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  pause: function(callback) {
+  pause: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/pause')
       .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters({
+        'device_id': options.deviceId,
+      })
       .build()
       .execute(HttpManager.put, callback);
   },
