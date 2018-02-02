@@ -1066,6 +1066,8 @@ SpotifyWebApi.prototype = {
   play: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/play')
+      /*jshint camelcase: false */
+      .withQueryParameters(options && options.device_id ? {device_id: options.device_id} : null)
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withBodyParameters(options)
       .build()
