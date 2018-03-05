@@ -1130,25 +1130,6 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it('should upload playlist cover image', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/images');
-      (options.data).should.eql('longbase64uri')
-      callback(null, { statusCode : 202 });
-      should.not.exist(options.query);
-    });
-
-    var api = new SpotifyWebApi();
-    api.setAccessToken('long-access-token');
-
-    api.uploadCustomPlaylistCoverImage('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', 'longbase64uri')
-    .then(function(data) {
-      (202).should.equal(data.statusCode);
-      done();
-    });
-  });
-
   it('should add tracks to playlist', function(done) {
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.post);
@@ -1375,12 +1356,18 @@ describe('Spotify Web API', function() {
 
   });
 
-  it('should resume the user\'s playback with a device id', function(done) {
+  it('should resume the user\'s playback with options', function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player/play');
       options.query.should.eql({device_id: 'my_device_id'});
+      JSON.parse(options.data).should.eql({
+        context_uri: 'my_context',
+        offset: {
+          position: 5
+        }
+      });
       callback();
     });
 
@@ -1390,7 +1377,7 @@ describe('Spotify Web API', function() {
       accessToken : accessToken
     });
 
-    api.play({device_id: 'my_device_id'})
+    api.play({device_id: 'my_device_id', context_uri: 'my_context', offset: {'position': 5}})
       .then(function(data) {
         done();
       }, function(err) {
