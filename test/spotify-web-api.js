@@ -1412,6 +1412,31 @@ describe('Spotify Web API', function() {
 
   });
 
+  it('should pause the user\'s playback with options', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/pause');
+      options.query.should.eql({device_id: 'my_device_id'});
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.pause({device_id: 'my_device_id'})
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
   it('should skip the user\'s playback to next track', function(done) {
 
     sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
