@@ -429,6 +429,14 @@ spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
     console.log('Something went wrong!', err);
   });
 
+// Upload a custom playlist cover image
+spotifyApi.uploadCustomPlaylistCoverImage('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK','longbase64uri')
+  .then(function(data) {
+     console.log('Playlsit cover image uploaded!');
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
 // Follow a playlist (privately)
 spotifyApi.followPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
   {
