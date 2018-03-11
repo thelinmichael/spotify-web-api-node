@@ -6,7 +6,7 @@ declare class SpotifyWebApi {
     // Authentication and authorization methods
     authorizationCodeGrant(code: any, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
     clientCredentialsGrant(options?: any, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    createAuthorizeURL(scopes: any, state: any, showDialog: any): Promise<SpotifyResponse<any>> | undefined;
+    createAuthorizeURL(scopes: any, state: any, showDialog: any): string;
     getAccessToken(): string;
     getClientId(): string;
     getClientSecret(): string;
@@ -53,7 +53,7 @@ declare class SpotifyWebApi {
     getUserPlaylists(userId: SpotifyUserId, options?: any, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
 
     // Following methods
-    getFollowedArtists(options?: string, callback?: SpotifyCallback<SpotifyArtist[]>): Promise<SpotifyResponse<SpotifyArtist[]>> | undefined;
+    getFollowedArtists(options?: any, callback?: SpotifyCallback<SpotifyArtist[]>): Promise<SpotifyResponse<SpotifyArtist[]>> | undefined;
     isFollowingArtists(artistIds: SpotifyArtistId[], callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
     followArtists(artists: SpotifyArtistId[], callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
     unfollowArtists(artistIds: SpotifyArtistId[], callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
