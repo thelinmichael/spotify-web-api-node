@@ -129,7 +129,7 @@ type SpotifyArtistId = string;
 type SpotifyUserId = string;
 type SpotifyPlaylistId = string;
 
-type SpotifyCallback<T> = (error: any, response: SpotifyResponse<T>) => void;
+type SpotifyCallback<T> = (error: Error, response: SpotifyResponse<T>) => void;
 
 interface SpotifyResponse<T> {
     body: T,
