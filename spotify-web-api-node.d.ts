@@ -133,7 +133,7 @@ type SpotifyCallback<T> = (error: any, response: SpotifyResponse<T>) => void;
 
 interface SpotifyResponse<T> {
     body: T,
-    headers: object,
+    headers: any,
     statusCode: number,
 }
 
