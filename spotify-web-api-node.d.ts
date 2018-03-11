@@ -1,7 +1,7 @@
 export = SpotifyWebApi;
 
 declare class SpotifyWebApi {
-    constructor(credentials: SpotifyWebApiCredentials);
+    constructor(credentials?: SpotifyWebApiCredentials);
 
     // Authentication and authorization methods
     authorizationCodeGrant(code: any, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
@@ -162,7 +162,7 @@ interface SpotifyTrack {
 }
 
 interface SpotifyWebApiCredentials {
-    clientId: string,
-    clientSecret: string,
-    redirectUri: string,
+    clientId?: string,
+    clientSecret?: string,
+    redirectUri?: string,
 }
