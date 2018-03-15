@@ -1,6 +1,8 @@
 Spotify Web API Node
 ==================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/JMPerez/spotify-web-api-node.svg)](https://greenkeeper.io/)
+
 [![Tests](https://travis-ci.org/thelinmichael/spotify-web-api-node.svg?branch=master)](https://travis-ci.org/thelinmichael/spotify-web-api-node)
 [![Coverage Status](https://coveralls.io/repos/thelinmichael/spotify-web-api-node/badge.svg)](https://coveralls.io/r/thelinmichael/spotify-web-api-node)
 
