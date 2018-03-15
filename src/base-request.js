@@ -128,6 +128,9 @@ Builder.prototype.withAuth = function(accessToken) {
 };
 
 Builder.prototype._assign = function(src, obj) {
+  if (obj && Array.isArray(obj)) {
+    return Object.assign(src || [], obj);
+  }
   if (obj && Object.keys(obj).length > 0) {
     return Object.assign(src || {}, obj);
   }
