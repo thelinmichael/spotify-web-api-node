@@ -41,7 +41,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should retrieve track metadata", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
       should.not.exist(options.data);
@@ -61,7 +61,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should retrieve error when retrieving track metadata", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
       should.not.exist(options.data);
@@ -80,7 +80,7 @@ describe('Spotify Web API', function() {
     });
 
   it("should get track for Swedish market", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
       options.query.market.should.equal('SE');
@@ -98,7 +98,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should retrieve track metadata using callback", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK');
       should.not.exist(options.data);
@@ -114,7 +114,7 @@ describe('Spotify Web API', function() {
 
   it("should fail for non existing track id", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       callback(new WebApiError('non existing id', 400));
     });
@@ -132,7 +132,7 @@ describe('Spotify Web API', function() {
 
   it("should fail for non existing track id using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       callback(new WebApiError('non existing id', 400), null);
     });
@@ -148,7 +148,7 @@ describe('Spotify Web API', function() {
 
   it('should fail for empty track id', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       callback(new WebApiError('Fail', 400), null);
     });
@@ -165,7 +165,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for several tracks", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/tracks');
       options.query.ids.should.equal('0eGsygTp906u18L0Oimnem,1lDWb6b6ieDQ2xT7ewTC3G');
@@ -184,7 +184,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for several tracks using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/tracks');
       options.query.ids.should.equal('0eGsygTp906u18L0Oimnem,1lDWb6b6ieDQ2xT7ewTC3G');
@@ -201,7 +201,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for an album", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj');
       should.not.exist(options.data);
@@ -221,7 +221,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for an album for a market ", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj');
       should.not.exist(options.data);
@@ -242,7 +242,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for an album using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj');
       should.not.exist(options.data);
@@ -260,7 +260,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for several albums", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/albums');
       options.query.ids.should.equal('41MnTivkwTO3UUJ8DrqEJJ,6JWc4iAiJ9FjyK0B59ABb4');
@@ -285,7 +285,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for several albums using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/albums');
       options.query.ids.should.equal('41MnTivkwTO3UUJ8DrqEJJ,6JWc4iAiJ9FjyK0B59ABb4');
@@ -308,7 +308,7 @@ describe('Spotify Web API', function() {
 
   it("should retrive metadata for an artist", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists/0LcJLqbBmaGUft1e9Mm8HV');
       should.not.exist(options.data);
@@ -327,7 +327,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for an artist using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists/0LcJLqbBmaGUft1e9Mm8HV');
       should.not.exist(options.data);
@@ -344,7 +344,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for several artists", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists');
       options.query.ids.should.equal('0oSGxfWSnnOXhD2fKuz2Gy,3dBVyJ7JuOMt4GE9607Qin');
@@ -369,7 +369,7 @@ describe('Spotify Web API', function() {
 
   it("should retrieve metadata for several artists using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists');
       options.query.ids.should.equal('0oSGxfWSnnOXhD2fKuz2Gy,3dBVyJ7JuOMt4GE9607Qin');
@@ -392,7 +392,7 @@ describe('Spotify Web API', function() {
 
   it("should search for an album using limit and offset", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/search/');
       options.query.should.eql({
@@ -430,7 +430,7 @@ describe('Spotify Web API', function() {
 
   it("should search for an album using limit and offset using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/search/');
       options.query.should.eql({
@@ -458,7 +458,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should search for playlists", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/search/');
       options.query.should.eql({
@@ -490,7 +490,7 @@ describe('Spotify Web API', function() {
 
   it("should search for an artist using limit and offset", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/search/');
       options.query.should.eql({
@@ -521,7 +521,7 @@ describe('Spotify Web API', function() {
 
   it("should search for an artist using limit and offset using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/search/');
       options.query.should.eql({
@@ -550,7 +550,7 @@ describe('Spotify Web API', function() {
 
   it("should search for a track using limit and offset", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/search/');
       options.query.should.eql({
@@ -582,7 +582,7 @@ describe('Spotify Web API', function() {
 
   it("should search for a track using limit and offset using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/search/');
       options.query.should.eql({
@@ -611,7 +611,7 @@ describe('Spotify Web API', function() {
 
   it("should search for several types using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/search/');
       options.query.should.eql({
@@ -640,7 +640,7 @@ describe('Spotify Web API', function() {
 
   it("should get artists albums", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums');
       options.query.should.eql({
@@ -670,7 +670,7 @@ describe('Spotify Web API', function() {
 
   it("should get artists albums using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums');
       options.query.should.eql({
@@ -697,7 +697,7 @@ describe('Spotify Web API', function() {
 
   it("should get tracks from album", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks');
       options.query.should.eql({
@@ -724,7 +724,7 @@ describe('Spotify Web API', function() {
 
   it("should get tracks from album using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks');
       options.query.should.eql({
@@ -749,7 +749,7 @@ describe('Spotify Web API', function() {
 
   it("should get top tracks for artist", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/top-tracks');
       options.query.should.eql({
@@ -771,7 +771,7 @@ describe('Spotify Web API', function() {
 
   it("should get top tracks for artist", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/top-tracks');
       options.query.should.eql({
@@ -791,7 +791,7 @@ describe('Spotify Web API', function() {
 
   it("should get similar artists", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists/0qeei9KQnptjwb8MgkqEoy/related-artists');
       should.not.exist(options.data);
@@ -815,7 +815,7 @@ describe('Spotify Web API', function() {
 
   it("should get similar artists using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/artists/0qeei9KQnptjwb8MgkqEoy/related-artists');
       should.not.exist(options.data);
@@ -836,7 +836,7 @@ describe('Spotify Web API', function() {
 
   it("should get a user", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/users/petteralexis');
       should.not.exist(options.data);
@@ -861,7 +861,7 @@ describe('Spotify Web API', function() {
 
   it("should get a user with a '#' character and encode it properly", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/users/%23matze23');
       should.not.exist(options.data);
@@ -886,7 +886,7 @@ describe('Spotify Web API', function() {
 
   it("should get a user using callback", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/users/petteralexis');
       should.not.exist(options.data);
@@ -908,7 +908,7 @@ describe('Spotify Web API', function() {
 
   it("should get the authenticated user's information", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me');
       options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
@@ -932,7 +932,7 @@ describe('Spotify Web API', function() {
 
   it("should get the authenticated user's information with accesstoken set on the api object", function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me');
       options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
@@ -955,7 +955,7 @@ describe('Spotify Web API', function() {
 
   it('should fail if no token is provided for a request that requires an access token', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me');
       if (!options.headers || !options.headers.Authorization) {
@@ -977,7 +977,7 @@ describe('Spotify Web API', function() {
 
   it('should fail if no token is provided for a request that requires an access token using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me');
       if (!options.headers || !options.headers.Authorization) {
@@ -996,7 +996,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should get a users playlists', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists');
       should.not.exist(options.query);
@@ -1019,7 +1019,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should get the current users playlists', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/playlists');
       should.not.exist(options.query);
@@ -1042,7 +1042,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should get a playlist', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK');
       should.not.exist(options.query);
@@ -1073,7 +1073,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should create a private playlist using callback', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists');
       JSON.parse(options.data).should.eql({ name : 'My Cool Playlist', 'public' : false });
@@ -1091,7 +1091,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should create a playlist using callback without options', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists');
       JSON.parse(options.data).should.eql({ name : 'My Cool Playlist' })
@@ -1107,7 +1107,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should change playlist details', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK');
       JSON.parse(options.data).should.eql({
@@ -1131,7 +1131,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should add tracks to playlist', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
       should.not.exist(options.query);
@@ -1150,7 +1150,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should add tracks to playlist with specified index', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       JSON.parse(options.data)["uris"].should.be.an.instanceOf(Array).and.have.lengthOf(2);
       options.query.should.eql({
@@ -1173,7 +1173,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get user's top artists", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/top/artists');
       options.query.should.eql({
@@ -1199,7 +1199,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get user's top tracks", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/top/tracks');
       options.query.should.eql({
@@ -1225,7 +1225,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get user's recently played tracks:", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/player/recently-played');
       options.query.should.eql({
@@ -1251,7 +1251,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get user's devices:", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/player/devices');
       options.headers.should.eql({Authorization: 'Bearer someAccessToken'});
@@ -1274,7 +1274,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get user's current playback status:", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/player');
       options.query.should.eql({
@@ -1301,7 +1301,7 @@ describe('Spotify Web API', function() {
 
   it('should transfer the user\'s playback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player');
       JSON.parse(options.data).should.eql({
@@ -1333,7 +1333,7 @@ describe('Spotify Web API', function() {
 
   it('should resume the user\'s playback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player/play');
       should.not.exist(options.query);
@@ -1358,7 +1358,7 @@ describe('Spotify Web API', function() {
 
   it('should resume the user\'s playback with options', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player/play');
       options.query.should.eql({device_id: 'my_device_id'});
@@ -1389,7 +1389,7 @@ describe('Spotify Web API', function() {
 
   it('should pause the user\'s playback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player/pause');
       should.not.exist(options.query);
@@ -1414,7 +1414,7 @@ describe('Spotify Web API', function() {
 
   it('should pause the user\'s playback with options', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player/pause');
       options.query.should.eql({device_id: 'my_device_id'});
@@ -1439,7 +1439,7 @@ describe('Spotify Web API', function() {
 
   it('should skip the user\'s playback to next track', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/me/player/next');
       should.not.exist(options.query);
@@ -1464,7 +1464,7 @@ describe('Spotify Web API', function() {
 
   it('should skip the user\'s playback to previous track', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/me/player/previous');
       should.not.exist(options.query);
@@ -1489,7 +1489,7 @@ describe('Spotify Web API', function() {
 
   it('should set the user\'s playback repeat mode', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player/repeat');
       should.exist(options.query);
@@ -1515,7 +1515,7 @@ describe('Spotify Web API', function() {
 
   it('should set the user\'s playback shuffle mode', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/player/shuffle');
       should.exist(options.query);
@@ -1607,7 +1607,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should refresh an access token', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://accounts.spotify.com/api/token');
       options.data.should.eql({ grant_type : 'refresh_token', refresh_token : 'someLongRefreshToken' });
@@ -1765,7 +1765,7 @@ describe('Spotify Web API', function() {
 
   it('should remove tracks in the users library', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.del);
       JSON.parse(options.data).should.eql(["3VNWq8rTnQG6fM1eldSpZ0"]);
       uri.should.equal('https://api.spotify.com/v1/me/tracks');
@@ -1791,7 +1791,7 @@ describe('Spotify Web API', function() {
 
   it('should remove albums in the users library', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.del);
       JSON.parse(options.data).should.eql(["27cZdqrQiKt3IT00338dws"]);
       uri.should.equal('https://api.spotify.com/v1/me/albums');
@@ -1817,7 +1817,7 @@ describe('Spotify Web API', function() {
 
   it('should add albums to the users library', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       JSON.parse(options.data).should.eql(["27cZdqrQiKt3IT00338dws"]);
       uri.should.equal('https://api.spotify.com/v1/me/albums');
@@ -1842,7 +1842,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should get albums in the users library', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/albums');
       options.headers.Authorization.should.equal('Bearer myAccessToken');
@@ -1873,7 +1873,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should determine if an album is in the users library', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/albums/contains');
       options.headers.Authorization.should.equal('Bearer myAccessToken');
@@ -1900,7 +1900,7 @@ describe('Spotify Web API', function() {
 
 
   it('should follow a playlist', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       JSON.parse(options.data).should.eql({ public: false });
       should.not.exist(options.query);
@@ -1924,7 +1924,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should unfollow a playlist', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.del);
       should.not.exist(options.data);
       should.not.exist(options.query);
@@ -1949,7 +1949,7 @@ describe('Spotify Web API', function() {
 
   it('should follow several users', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -1978,7 +1978,7 @@ describe('Spotify Web API', function() {
 
   it('should follow several users using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -2004,7 +2004,7 @@ describe('Spotify Web API', function() {
 
   it('should follow several artists', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -2033,7 +2033,7 @@ describe('Spotify Web API', function() {
 
   it('should follow several artists using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -2058,7 +2058,7 @@ describe('Spotify Web API', function() {
 
   it('should unfollow several users', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.del);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -2087,7 +2087,7 @@ describe('Spotify Web API', function() {
 
   it('should unfollow several users using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.del);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -2112,7 +2112,7 @@ describe('Spotify Web API', function() {
 
   it('should unfollow several artists', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.del);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -2141,7 +2141,7 @@ describe('Spotify Web API', function() {
 
   it('should unfollow several artists using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.del);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -2167,7 +2167,7 @@ describe('Spotify Web API', function() {
 
   it('should check whether the current user follows several other users', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/following/contains');
       options.query.should.eql({
@@ -2199,7 +2199,7 @@ describe('Spotify Web API', function() {
 
   it('should check whether the current user follows several other users using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/following/contains');
       options.query.should.eql({
@@ -2227,7 +2227,7 @@ describe('Spotify Web API', function() {
 
   it('should check whether the current user follows several artists', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/following/contains');
       options.query.should.eql({
@@ -2258,7 +2258,7 @@ describe('Spotify Web API', function() {
 
   it('should check whether the current user follows several artists using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/following/contains');
       options.query.should.eql({
@@ -2285,7 +2285,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should get a user\'s followed artists using callback', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -2313,7 +2313,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should get a user\'s followed artists using callback', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/me/following');
       options.query.should.eql({
@@ -2340,7 +2340,7 @@ describe('Spotify Web API', function() {
 
   it('should check whether users follows a playlist', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/users/spotify_germany/playlists/2nKFnGNFvHX9hG5Kv7Bm3G/followers/contains');
       options.query.should.eql({
@@ -2371,7 +2371,7 @@ describe('Spotify Web API', function() {
 
   it('should add tracks to playlist', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
       should.not.exist(options.query);
@@ -2394,7 +2394,7 @@ describe('Spotify Web API', function() {
 
   it('should add tracks to playlist using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.post);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
       should.not.exist(options.query);
@@ -2412,7 +2412,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should remove tracks from a playlist by position", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.del);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
       should.not.exist(options.query);
@@ -2437,7 +2437,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should reorder tracks from a playlist by position", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       uri.should.equal('https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks');
       should.not.exist(options.query);
@@ -2470,7 +2470,7 @@ describe('Spotify Web API', function() {
 
   it('should add tracks to the users library', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       JSON.parse(options.data).should.eql(["3VNWq8rTnQG6fM1eldSpZ0"]);
       uri.should.equal('https://api.spotify.com/v1/me/tracks');
@@ -2496,7 +2496,7 @@ describe('Spotify Web API', function() {
 
   it('should add tracks to the users library using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.put);
       JSON.parse(options.data).should.eql(["3VNWq8rTnQG6fM1eldSpZ0"]);
       uri.should.equal('https://api.spotify.com/v1/me/tracks');
@@ -2518,7 +2518,7 @@ describe('Spotify Web API', function() {
 
   it('handles expired tokens', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
 
       method.should.equal(superagent.put);
       JSON.parse(options.data).should.eql(["3VNWq8rTnQG6fM1eldSpZ0"]);
@@ -2547,7 +2547,7 @@ describe('Spotify Web API', function() {
 
   it('handles expired tokens using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
 
       method.should.equal(superagent.put);
       JSON.parse(options.data).should.eql(["3VNWq8rTnQG6fM1eldSpZ0"]);
@@ -2573,7 +2573,7 @@ describe('Spotify Web API', function() {
 
   it('should get new releases', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/browse/new-releases');
       options.query.should.eql({
@@ -2614,7 +2614,7 @@ describe('Spotify Web API', function() {
 
   it('should get new releases', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/browse/new-releases');
       options.query.should.eql({
@@ -2656,7 +2656,7 @@ describe('Spotify Web API', function() {
 
   it('should get featured playlists', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/browse/featured-playlists');
       options.query.should.eql({
@@ -2705,7 +2705,7 @@ describe('Spotify Web API', function() {
 
   it('should get featured playlists using callback', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/browse/featured-playlists');
       options.query.should.eql({
@@ -2751,7 +2751,7 @@ describe('Spotify Web API', function() {
 
   it('should get browse categories', function(done) {
 
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/browse/categories');
       options.query.should.eql({
@@ -2794,7 +2794,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should get a browse category', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/browse/categories/party');
       options.query.should.eql({
@@ -2830,7 +2830,7 @@ describe('Spotify Web API', function() {
   });
 
   it('should get a playlists for a browse category', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/browse/categories/party/playlists');
       options.query.should.eql({
@@ -2875,7 +2875,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get the audio features for a track", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/audio-features/3Qm86XLflmIXVm1wcwkgDK');
       should.not.exist(options.query);
@@ -2900,7 +2900,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get the audio features for a several tracks", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/audio-features');
       options.query.should.eql({
@@ -2926,7 +2926,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get recommendations", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/recommendations');
       options.query.should.eql({
@@ -2963,7 +2963,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get recommendations using an array of seeds", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/recommendations');
       options.query.should.eql({
@@ -3000,7 +3000,7 @@ describe('Spotify Web API', function() {
   });
 
   it("should get available genre seeds", function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(method, options, uri, callback) {
       method.should.equal(superagent.get);
       uri.should.equal('https://api.spotify.com/v1/recommendations/available-genre-seeds');
       should.not.exist(options.query);
