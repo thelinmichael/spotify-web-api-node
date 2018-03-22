@@ -774,7 +774,7 @@ spotifyApi.authorizationCodeGrant(code)
   });
 ```
 
-Since the access token was set on the api object in the previous success callback, **it's going to be used in future calls**. As it was retrieved using the Authorization Code flow, it can also be refreshed unless it has expired.
+Since the access token was set on the api object in the previous success callback, **it's going to be used in future calls**. As it was retrieved using the Authorization Code flow, it can also be refreshed.
 
 ```javascript
 // clientId, clientSecret and refreshToken has been set on the api object previous to this call.
