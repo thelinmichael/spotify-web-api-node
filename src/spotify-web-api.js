@@ -1150,6 +1150,28 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+   * Seeks to the given position in the user’s currently playing track.
+   * @param {int} position_ms (ms) to seek
+   * @param {Object} [options] Options, being device_id
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example seek(25000,{device_id: ''}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  seek: function(position_ms,options, callback) {
+    /*jshint camelcase: false */
+    var _options = options || {};
+    var queryParams = { 'position_ms': position_ms };
+    _options.device_id ? queryParams['device_id'] = _options.device_id : null
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/seek')
+      .withQueryParameters(queryParams)
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
    * Set Repeat Mode On The Current User's Playback
    * @param {Object} [options] Options, being state (track, context, off).
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
