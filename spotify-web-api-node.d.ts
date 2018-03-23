@@ -1,22 +1,22 @@
 export = SpotifyWebApi;
 
 declare class SpotifyWebApi {
-    constructor(credentials?: SpotifyWebApiCredentials);
+    constructor(credentials?: SpotifyWebApi.Credentials);
 
     // Authentication and authorization methods
-    authorizationCodeGrant(code: any, callback?: SpotifyCallback<SpotifyAuthorizationGrant>): Promise<SpotifyResponse<SpotifyAuthorizationGrant>> | undefined;
-    clientCredentialsGrant(options?: any, callback?: SpotifyCallback<SpotifyAuthorizationGrant>): Promise<SpotifyResponse<SpotifyAuthorizationGrant>> | undefined;
+    authorizationCodeGrant(code: any, callback?: SpotifyWebApi.Callback<SpotifyWebApi.AuthorizationGrant>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AuthorizationGrant>> | undefined;
+    clientCredentialsGrant(options?: any, callback?: SpotifyWebApi.Callback<SpotifyWebApi.AuthorizationGrant>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AuthorizationGrant>> | undefined;
     createAuthorizeURL(scopes: string[], state: string, showDialog: boolean): string;
     getAccessToken(): string;
     getClientId(): string;
     getClientSecret(): string;
-    getCredentials(): SpotifyWebApiCredentials;
+    getCredentials(): SpotifyWebApi.Credentials;
     getRedirectURI(): string;
     getRefreshToken(): string;
     setAccessToken(accessToken: string): void;
     setClientId(clientId: string): void;
     setClientSecret(clientSecret: string): void;
-    setCredentials(credentials: SpotifyWebApiCredentials): void;
+    setCredentials(credentials: SpotifyWebApi.Credentials): void;
     setRedirectURI(redirectUri: string): void;
     setRefreshToken(refreshToken: string): void;
     resetAccessToken(): void;
@@ -25,500 +25,503 @@ declare class SpotifyWebApi {
     resetCredentials(): void;
     resetRedirectURI(): void;
     resetRefreshToken(): void;
-    refreshAccessToken(callback?: SpotifyCallback<SpotifyAuthorizationGrant>): Promise<SpotifyResponse<SpotifyAuthorizationGrant>> | undefined;
+    refreshAccessToken(callback?: SpotifyWebApi.Callback<SpotifyWebApi.AuthorizationGrant>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AuthorizationGrant>> | undefined;
 
     // Metadata methods
-    getAudioAnalysisForTrack(trackId: SpotifyTrackId, callback?: SpotifyCallback<SpotifyAudioAnalysis>): Promise<SpotifyResponse<SpotifyAudioAnalysis>> | undefined;
-    getAudioFeaturesForTrack(trackId: SpotifyTrackId, callback?: SpotifyCallback<SpotifyAudioFeatures>): Promise<SpotifyResponse<SpotifyAudioFeatures>> | undefined;
-    getAudioFeaturesForTracks(trackIds: SpotifyTrackId[], callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getAvailableGenreSeeds(callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getCategories(options?: SpotifyGetCategoriesOptions, callback?: SpotifyCallback<SpotifyCategory>): Promise<SpotifyResponse<SpotifyCategory>> | undefined;
-    getCategory(categoryId: SpotifyCategoryId, options?: SpotifyGetCategoryOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getNewReleases(options?: SpotifyPlaylistSearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getRecommendations(options?: any, callback?: SpotifyCallback<SpotifyRecommendations>): Promise<SpotifyResponse<SpotifyRecommendations>> | undefined;
+    getAudioAnalysisForTrack(trackId: SpotifyWebApi.TrackId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.AudioAnalysis>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AudioAnalysis>> | undefined;
+    getAudioFeaturesForTrack(trackId: SpotifyWebApi.TrackId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.AudioFeatures>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AudioFeatures>> | undefined;
+    getAudioFeaturesForTracks(trackIds: SpotifyWebApi.TrackId[], callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getAvailableGenreSeeds(callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getCategories(options?: SpotifyWebApi.GetCategoriesOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Category>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Category>> | undefined;
+    getCategory(categoryId: SpotifyWebApi.CategoryId, options?: SpotifyWebApi.GetCategoryOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getNewReleases(options?: SpotifyWebApi.PlaylistSearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getRecommendations(options?: any, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Recommendations>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Recommendations>> | undefined;
 
     // My methods
-    getMe(callback?: SpotifyCallback<any>): Promise<SpotifyResponse<SpotifyPrivateUser>> | undefined;
-    getMyCurrentPlaybackState(options?: SpotifyGetTrackOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getMyCurrentPlayingTrack(options?: SpotifyGetTrackOptions, callback?: SpotifyCallback<SpotifyTrack>): Promise<SpotifyResponse<SpotifyTrack>> | undefined;
-    getMyDevices(callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getMyRecentlyPlayedTracks(options?: SpotifyRecentlyPlayedOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getMySavedAlbums(options?: SpotifySearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getMySavedTracks(options?: SpotifySearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getMyTopArtists(options?: SpotifyMyTopOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getMyTopTracks(options?: SpotifyMyTopOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
+    getMe(callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PrivateUser>> | undefined;
+    getMyCurrentPlaybackState(options?: SpotifyWebApi.GetTrackOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getMyCurrentPlayingTrack(options?: SpotifyWebApi.GetTrackOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Track>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Track>> | undefined;
+    getMyDevices(callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getMyRecentlyPlayedTracks(options?: SpotifyWebApi.RecentlyPlayedOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getMySavedAlbums(options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getMySavedTracks(options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getMyTopArtists(options?: SpotifyWebApi.MyTopOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getMyTopTracks(options?: SpotifyWebApi.MyTopOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
 
     // User methods
-    getUser(userId: SpotifyUserId, callback?: SpotifyCallback<SpotifyPublicUser>): Promise<SpotifyResponse<SpotifyPublicUser>> | undefined;
-    getUserPlaylists(userId: SpotifyUserId, options?: SpotifyGetPlaylistOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
+    getUser(userId: SpotifyWebApi.UserId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.PublicUser>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PublicUser>> | undefined;
+    getUserPlaylists(userId: SpotifyWebApi.UserId, options?: SpotifyWebApi.GetPlaylistOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
 
     // Following methods
-    getFollowedArtists(options?: SpotifyGetFollowedArtistsOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    isFollowingArtists(artistIds: SpotifyArtistId[], callback?: SpotifyCallback<boolean>): Promise<SpotifyResponse<boolean>> | undefined;
-    followArtists(artists: SpotifyArtistId[], callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    unfollowArtists(artistIds: SpotifyArtistId[], callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    isFollowingUsers(userIds: SpotifyUserId[], callback?: SpotifyCallback<boolean>): Promise<SpotifyResponse<boolean>> | undefined;
-    followUsers(userIds: SpotifyUserId[], callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    unfollowUsers(userIds: SpotifyUserId[], callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    followPlaylist(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, options?: SpotifyFollowPlaylistOptions, callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    areFollowingPlaylist(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, followerIds: SpotifyUserId[], callback?: SpotifyCallback<boolean>): Promise<SpotifyResponse<boolean>> | undefined | undefined;
-    unfollowPlaylist(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
+    getFollowedArtists(options?: SpotifyWebApi.GetFollowedArtistsOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    isFollowingArtists(artistIds: SpotifyWebApi.ArtistId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<SpotifyWebApi.Response<boolean>> | undefined;
+    followArtists(artists: SpotifyWebApi.ArtistId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    unfollowArtists(artistIds: SpotifyWebApi.ArtistId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    isFollowingUsers(userIds: SpotifyWebApi.UserId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<SpotifyWebApi.Response<boolean>> | undefined;
+    followUsers(userIds: SpotifyWebApi.UserId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    unfollowUsers(userIds: SpotifyWebApi.UserId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    followPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.FollowPlaylistOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    areFollowingPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, followerIds: SpotifyWebApi.UserId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<SpotifyWebApi.Response<boolean>> | undefined | undefined;
+    unfollowPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
 
     // Saved tracks and albums
-    addToMySavedAlbums(albumIds: SpotifyAlbumId[], callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    addToMySavedTracks(trackIds: SpotifyTrackId[], callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    removeFromMySavedAlbums(albumIds: SpotifyAlbumId[], callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    removeFromMySavedTracks(trackIds: SpotifyTrackId[], callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    containsMySavedAlbums(albumIds: SpotifyAlbumId[], callback?: SpotifyCallback<boolean>): Promise<boolean> | undefined;
-    containsMySavedTracks(trackIds: SpotifyTrackId[], callback?: SpotifyCallback<boolean>): Promise<boolean> | undefined;
+    addToMySavedAlbums(albumIds: SpotifyWebApi.AlbumId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    addToMySavedTracks(trackIds: SpotifyWebApi.TrackId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    removeFromMySavedAlbums(albumIds: SpotifyWebApi.AlbumId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    removeFromMySavedTracks(trackIds: SpotifyWebApi.TrackId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    containsMySavedAlbums(albumIds: SpotifyWebApi.AlbumId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<boolean> | undefined;
+    containsMySavedTracks(trackIds: SpotifyWebApi.TrackId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<boolean> | undefined;
 
 
     // Track methods
-    getTrack(trackId: SpotifyTrackId, options?: SpotifyGetTrackOptions, callback?: SpotifyCallback<SpotifyTrack>): Promise<SpotifyResponse<SpotifyTrack>> | undefined;
-    getTracks(trackIds: SpotifyTrackId[], options?: SpotifyGetTrackOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
+    getTrack(trackId: SpotifyWebApi.TrackId, options?: SpotifyWebApi.GetTrackOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Track>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Track>> | undefined;
+    getTracks(trackIds: SpotifyWebApi.TrackId[], options?: SpotifyWebApi.GetTrackOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
 
     // Album methods
-    getAlbum(albumId: SpotifyAlbumId, options?: SpotifyGetAlbumOptions, callback?: SpotifyCallback<SpotifyAlbum>): Promise<SpotifyResponse<SpotifyAlbum>> | undefined;
-    getAlbums(albumIds: SpotifyAlbumId[], options?: SpotifyGetAlbumOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getAlbumTracks(albumId: SpotifyAlbumId, options?: SpotifySearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
+    getAlbum(albumId: SpotifyWebApi.AlbumId, options?: SpotifyWebApi.GetAlbumOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Album>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Album>> | undefined;
+    getAlbums(albumIds: SpotifyWebApi.AlbumId[], options?: SpotifyWebApi.GetAlbumOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getAlbumTracks(albumId: SpotifyWebApi.AlbumId, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
 
     // Artist methods
-    getArtist(artistId: SpotifyArtistId, callback?: SpotifyCallback<SpotifyArtist>): Promise<SpotifyResponse<SpotifyArtist>> | undefined;
-    getArtists(artists: SpotifyArtistId[], callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getArtistAlbums(artistId: SpotifyArtistId, options?: SpotifyArtistsAlbumsOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getArtistRelatedArtists(artistId: SpotifyArtistId, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getArtistTopTracks(artistId: SpotifyArtistId, country: string, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
+    getArtist(artistId: SpotifyWebApi.ArtistId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Artist>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Artist>> | undefined;
+    getArtists(artists: SpotifyWebApi.ArtistId[], callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getArtistAlbums(artistId: SpotifyWebApi.ArtistId, options?: SpotifyWebApi.ArtistsAlbumsOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getArtistRelatedArtists(artistId: SpotifyWebApi.ArtistId, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getArtistTopTracks(artistId: SpotifyWebApi.ArtistId, country: string, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
 
     // Playlist methods
-    getPlaylist(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, options?: SpotifyGetPlaylistOptions, callback?: SpotifyCallback<SpotifyPlaylist>): Promise<SpotifyResponse<SpotifyPlaylist>> | undefined;
-    getPlaylistTracks(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, options?: SpotifyGetPlaylistTracksOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    removeTracksFromPlaylist(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, tracks: SpotifyTrackId[], options?: SpotifyRemoveTrackFromPlaylistOptions, callback?: SpotifyCallback<SpotfiyPlaylistSnapshotId>): Promise<SpotifyResponse<SpotfiyPlaylistSnapshotId>> | undefined;
-    removeTracksFromPlaylistByPosition(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, positions: number[], snapshotId: SpotfiyPlaylistSnapshotId, callback?: SpotifyCallback<SpotfiyPlaylistSnapshotId>): Promise<SpotifyResponse<SpotfiyPlaylistSnapshotId>> | undefined;
-    reorderTracksInPlaylist(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, rangeStart: number, insertBefore: number, options?: SpotifyReorderPlaylistOptions, callback?: SpotifyCallback<SpotfiyPlaylistSnapshotId>): Promise<SpotifyResponse<SpotfiyPlaylistSnapshotId>> | undefined;
-    replaceTracksInPlaylist(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, uris: string[], callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    createPlaylist(userId: SpotifyUserId, playlistName: string, options?: SpotifyPlaylistOptions, callback?: SpotifyCallback<SpotifyPlaylist>): Promise<SpotifyResponse<SpotifyPlaylist>> | undefined;
-    addTracksToPlaylist(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, tracks: SpotifyTrackId[], options?: SpotifyAddTrackToPlaylistOptions, callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    changePlaylistDetails(userId: SpotifyUserId, playlistId: SpotifyPlaylistId, options?: SpotifyPlaylistOptions, callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    getFeaturedPlaylists(options?: SpotifyFeaturedPlaylistOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    getPlaylistsForCategory(categoryId: SpotifyCategoryId, options?: SpotifyPlaylistSearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
+    getPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.GetPlaylistOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Playlist>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Playlist>> | undefined;
+    getPlaylistTracks(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.GetPlaylistTracksOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    removeTracksFromPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, tracks: SpotifyWebApi.TrackId[], options?: SpotifyWebApi.RemoveTrackFromPlaylistOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.PlaylistSnapshotId>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PlaylistSnapshotId>> | undefined;
+    removeTracksFromPlaylistByPosition(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, positions: number[], snapshotId: SpotifyWebApi.PlaylistSnapshotId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.PlaylistSnapshotId>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PlaylistSnapshotId>> | undefined;
+    reorderTracksInPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, rangeStart: number, insertBefore: number, options?: SpotifyWebApi.ReorderPlaylistOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.PlaylistSnapshotId>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PlaylistSnapshotId>> | undefined;
+    replaceTracksInPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, uris: string[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    createPlaylist(userId: SpotifyWebApi.UserId, playlistName: string, options?: SpotifyWebApi.PlaylistOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Playlist>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Playlist>> | undefined;
+    addTracksToPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, tracks: SpotifyWebApi.TrackId[], options?: SpotifyWebApi.AddTrackToPlaylistOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    changePlaylistDetails(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.PlaylistOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    getFeaturedPlaylists(options?: SpotifyWebApi.FeaturedPlaylistOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    getPlaylistsForCategory(categoryId: SpotifyWebApi.CategoryId, options?: SpotifyWebApi.PlaylistSearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
 
     // Search methods
-    search(query: string, types: SpotifyObjectType[], options?: SpotifySearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    searchAlbums(query: string, options?: SpotifySearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    searchTracks(query: string, options?: SpotifySearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    searchArtists(query: string, options?: SpotifySearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
-    searchPlaylists(query: string, options?: SpotifySearchOptions, callback?: SpotifyCallback<any>): Promise<SpotifyResponse<any>> | undefined;
+    search(query: string, types: SpotifyWebApi.ObjectType[], options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    searchAlbums(query: string, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    searchTracks(query: string, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    searchArtists(query: string, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    searchPlaylists(query: string, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
 
 
     // Playback control methods
-    pause(options?: SpotifyPauseOptions, callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    play(options?: SpotifyPlayOptions, callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    setRepeat(options?: SpotifyRepeatOptions, callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    setShuffle(options?: SpotifyShuffleOptions, callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    skipToNext(callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    skipToPrevious(callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
-    transferMyPlayback(options?: SpotifyTransferPlaybackOptions, callback?: SpotifyCallback<void>): Promise<SpotifyResponse<void>> | undefined;
+    pause(options?: SpotifyWebApi.PauseOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    play(options?: SpotifyWebApi.PlayOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    setRepeat(options?: SpotifyWebApi.RepeatOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    setShuffle(options?: SpotifyWebApi.ShuffleOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    skipToNext(callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    skipToPrevious(callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    transferMyPlayback(options?: SpotifyWebApi.TransferPlaybackOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
 
 }
 
-type SpotifyObjectType = "track" | "playlist" | "album" | "artist" | "audio_features" | "user";
-type SpotifyAlbumType = "album" | "single" | "compilation";
-type SpotifyContextType = "artist" | "playlist" | "album";
-type SpotifyRecommendationsSeedType = "artist" | "track" | "genre";
-type SpotifyReleaseDatePrecision = "day" | "month" | "year";
+declare namespace SpotifyWebApi {
 
-type SpotifySearchResult = SpotifyTrack | SpotifyAlbum | SpotifyArtist | SpotifyPlaylist;
-type SpotifyCategoryId = string;
-type SpotifyTrackId = string;
-type SpotifyAlbumId = string;
-type SpotifyArtistId = string;
-type SpotifyUserId = string;
-type SpotifyPlaylistId = string;
-type SpotfiyPlaylistSnapshotId = string;
-type SpotifyAudioAnalysis = any;
+    type ObjectType = "track" | "playlist" | "album" | "artist" | "audio_features" | "user";
+    type AlbumType = "album" | "single" | "compilation";
+    type ContextType = "artist" | "playlist" | "album";
+    type RecommendationsSeedType = "artist" | "track" | "genre";
+    type ReleaseDatePrecision = "day" | "month" | "year";
 
-type SpotifyCallback<T> = (error: Error, response: SpotifyResponse<T>) => void;
+    type SearchResult = Track | Album | Artist | Playlist;
+    type CategoryId = string;
+    type TrackId = string;
+    type AlbumId = string;
+    type ArtistId = string;
+    type UserId = string;
+    type PlaylistId = string;
+    type PlaylistSnapshotId = string;
+    type AudioAnalysis = any;
 
-interface SpotifyResponse<T> {
-    body: T,
-    headers: any,
-    statusCode: number,
+    type Callback<T> = (error: Error, response: Response<T>) => void;
+
+    export interface Response<T> {
+        body: T,
+        headers: any,
+        statusCode: number,
+    }
+
+
+    // Type definitions as per  Object Model
+    // https://developer.spotify.com/web-api/object-model/
+
+    export interface SimplifiedArtist {
+        external_urls: ExternalUrl,
+        href: string,
+        id: string,
+        name: string,
+        type: ObjectType,
+        uri: string,
+    }
+
+    export interface Artist extends SimplifiedArtist {
+        followers: Followers,
+        genres: string[],
+        images: Image[],
+        popularity: number,
+    }
+
+    export interface SimplifiedAlbum {
+        album_type: AlbumType,
+        artists: SimplifiedArtist[],
+        available_markets: string[],
+        external_urls: ExternalUrl,
+        href: string,
+        id: string,
+        images: Image[],
+        name: string,
+        type: ObjectType,
+        release_date: string,
+        release_date_precision: ReleaseDatePrecision,
+        uri: string,
+    }
+
+    export interface Album extends SimplifiedAlbum {
+        copyrights: Copyright[],
+        external_ids: ExternalId,
+        genres: string[],
+        label: string,
+        popularity: number,
+        tracks: Page<SimplifiedTrack>,
+    }
+
+    export interface AudioFeatures {
+        acousticness: number,
+        analysis_url: string,
+        danceability: number,
+        duration_ms: number,
+        energy: number,
+        id: string,
+        instrumentalness: number,
+        key: number,
+        liveness: number,
+        loudness: number,
+        mode: number,
+        speechiness: number,
+        tempo: number,
+        time_signature: number,
+        track_href: string,
+        type: ObjectType,
+        uri: string,
+        valence: number,
+    }
+
+    export interface Category {
+        href: string,
+        icons: Image[],
+        id: string,
+        name: string,
+    }
+
+    export interface Copyright {
+        text: string,
+        type: string,
+    }
+
+    export interface Cursor {
+        after: string,
+    }
+
+    export interface Device {
+        id: string,
+        is_active: boolean,
+        is_restricted: boolean,
+        name: string,
+        type: string,
+        volume_percent: number,
+    }
+
+    export interface Error {
+        status: number,
+        message: string,
+    }
+
+    // to be defined
+    type ExternalId = any;
+
+    // to be defined
+    type ExternalUrl = any;
+
+    export interface Followers {
+        href: string,
+        total: number,
+    }
+
+    export interface Image {
+        height?: number,
+        url: string,
+        width?: number,
+    }
+
+    export interface Page<T> {
+        href: string,
+        items: T[],
+        limit: number,
+        next?: string,
+        offset: number,
+        previous?: string,
+        total: number,
+    }
+
+    export interface CursorBasedPage<T> {
+        href: string,
+        items: T[],
+        limit: number,
+        next?: string,
+        cursors: Cursor,
+        total: number,
+    }
+
+    export interface SimplifiedPlaylist {
+        collaborative: boolean,
+        external_urls: ExternalUrl,
+        href: string,
+        id: string,
+        images: Image[],
+        name: string,
+        owner: PublicUser,
+        public?: boolean,
+        snapshot_id: PlaylistSnapshotId,
+        //TODO: Revisit the inheritence here... Possible inconsistencies in the API
+        tracks: Page<PlaylistTrack>,
+        type: string,
+        uri: string,
+    }
+
+    export interface Playlist extends SimplifiedPlaylist {
+        description: string,
+        followers: Followers,
+    }
+
+    export interface PlaylistTrack {
+        added_at?: Date,
+        added_by?: PublicUser,
+        is_local: boolean,
+        track: Track,
+    }
+
+    export interface Recommendations {
+        seeds: RecommendationsSeed[],
+        tracks: SimplifiedTrack[],
+    }
+
+    export interface RecommendationsSeed {
+        afterFilteringSize: number,
+        afterRelinkingSize: number,
+        href?: string,
+        id: string,
+        initialPoolSize: number,
+        type: RecommendationsSeedType,
+    }
+
+    export interface Restriction {
+        reason: string,
+    }
+
+    export interface SavedTrack {
+        added_at: Date,
+        track: Track,
+    }
+
+    export interface SavedAlbum {
+        added_at: Date,
+        track: Album,
+    }
+
+    export interface Track extends SimplifiedTrack {
+        album: SimplifiedAlbum,
+        external_ids: ExternalId,
+        restrictions: Restriction,
+        popularity: number,
+    }
+
+    export interface SimplifiedTrack {
+        artists: SimplifiedArtist[],
+        available_markets: string[],
+        disc_number: number,
+        duration_ms: number,
+        explicit: boolean,
+        external_urls: ExternalUrl,
+        href: string,
+        id: string,
+        is_playable: boolean,
+        linked_from: TrackLink,
+        name: string,
+        preview_url?: string,
+        track_number: number,
+        type: string,
+        uri: number,
+    }
+
+    export interface TrackLink {
+        external_urls: ExternalUrl,
+        href: string,
+        id: string,
+        type: string,
+        uri: string,
+    }
+
+    export interface PrivateUser extends PublicUser {
+        birthdate?: string,
+        country?: string,
+        email?: string,
+        product?: string,
+    }
+
+    export interface PublicUser {
+        display_name: string,
+        external_urls: ExternalUrl,
+        followers: Followers,
+        href: string,
+        id: string,
+        images: Image[],
+        type: string,
+        uri: string,
+    }
+
+    export interface PlayHistory {
+        track: SimplifiedTrack,
+        played_at: Date,
+        context: Context,
+    }
+
+    export interface Context {
+        type: ContextType,
+        href: string,
+        external_urls: ExternalUrl,
+        uri: string,
+    }
+
+    export interface Credentials {
+        clientId?: string,
+        clientSecret?: string,
+        redirectUri?: string,
+    }
+
+    export interface AuthorizationGrant {
+        access_token: string,
+        refresh_token: string,
+        expires_in: number,
+    }
+
+    // Option Definitions
+    export interface PauseOptions {
+        device_id?: string,
+    }
+
+    export interface PlayOptions {
+        device_id?: string,
+        context_uri: string,
+        uris: string[],
+        offset: any,
+    }
+
+    export interface ShuffleOptions {
+        state: boolean,
+        deviceId?: string,
+    }
+
+    export interface RepeatOptions {
+        state: "track" | "context" | "off",
+        deviceId?: string
+    }
+
+    export interface TransferPlaybackOptions {
+        device_ids: string[],
+        play?: boolean,
+    }
+
+    export interface SearchOptions {
+        market?: string,
+        limit?: number,
+        offset?: number,
+    }
+
+    export interface PlaylistSearchOptions {
+        country?: string,
+        limit?: number,
+        offset?: number,
+    }
+
+    export interface GetCategoriesOptions extends PlaylistSearchOptions {
+        locale?: string,
+    }
+
+    export interface GetCategoryOptions {
+        country?: string,
+        locale?: string,
+    }
+
+    export interface FeaturedPlaylistOptions extends PlaylistSearchOptions {
+        timestamp?: Date,
+        locale?: string,
+    }
+
+    export interface PlaylistOptions {
+        name?: string,
+        public?: boolean,
+        collaborative?: boolean,
+        description?: string,
+    }
+
+    export interface AddTrackToPlaylistOptions {
+        position?: number,
+    }
+
+    export interface ReorderPlaylistOptions {
+        range_length?: number,
+        snapshot_id?: PlaylistSnapshotId,
+    }
+
+    export interface RemoveTrackFromPlaylistOptions {
+        snapshot_id?: PlaylistSnapshotId,
+    }
+    export interface GetPlaylistTracksOptions extends SearchOptions {
+        fields?: string[],
+    }
+
+    export interface GetPlaylistOptions {
+        limit?: number,
+        offset?: number,
+    }
+
+    export interface ArtistsAlbumsOptions extends SearchOptions {
+        album_type?: string,
+    }
+
+    export interface GetAlbumOptions {
+        marekt?: string,
+    }
+
+    export interface GetTrackOptions {
+        marekt?: string,
+    }
+
+    export interface FollowPlaylistOptions {
+        public?: boolean,
+    }
+
+    export interface GetFollowedArtistsOptions {
+        limit?: number,
+        after?: string,
+    }
+
+    export interface MyTopOptions {
+        limit?: number,
+        offset?: number,
+        time_range?: "long_term" | "medium_term" | "short_term",
+    }
+
+    export interface RecentlyPlayedOptions {
+        limit?: number,
+        before?: number,
+        after?: number,
+    }
+
 }
-
-
-// Type definitions as per Spotify Object Model
-// https://developer.spotify.com/web-api/object-model/
-
-interface SpotifySimplifiedArtist {
-    external_urls: SpotifyExternalUrl,
-    href: string,
-    id: string,
-    name: string,
-    type: SpotifyObjectType,
-    uri: string,
-}
-
-interface SpotifyArtist extends SpotifySimplifiedArtist {
-    followers: SpotifyFollowers,
-    genres: string[],
-    images: SpotifyImage[],
-    popularity: number,
-}
-
-interface SpotifySimplifiedAlbum {
-    album_type: SpotifyAlbumType,
-    artists: SpotifySimplifiedArtist[],
-    available_markets: string[],
-    external_urls: SpotifyExternalUrl,
-    href: string,
-    id: string,
-    images: SpotifyImage[],
-    name: string,
-    type: SpotifyObjectType,
-    release_date: string,
-    release_date_precision: SpotifyReleaseDatePrecision,
-    uri: string,
-}
-
-interface SpotifyAlbum extends SpotifySimplifiedAlbum {
-    copyrights: SpotifyCopyright[],
-    external_ids: SpotifyExternalId,
-    genres: string[],
-    label: string,
-    popularity: number,
-    tracks: SpotifyPage<SpotifySimplifiedTrack>,
-}
-
-interface SpotifyAudioFeatures {
-    acousticness: number,
-    analysis_url: string,
-    danceability: number,
-    duration_ms: number,
-    energy: number,
-    id: string,
-    instrumentalness: number,
-    key: number,
-    liveness: number,
-    loudness: number,
-    mode: number,
-    speechiness: number,
-    tempo: number,
-    time_signature: number,
-    track_href: string,
-    type: SpotifyObjectType,
-    uri: string,
-    valence: number,
-}
-
-interface SpotifyCategory {
-    href: string,
-    icons: SpotifyImage[],
-    id: string,
-    name: string,
-}
-
-interface SpotifyCopyright {
-    text: string,
-    type: string,
-}
-
-interface SpotifyCursor {
-    after: string,
-}
-
-interface SpotifyDevice {
-    id: string,
-    is_active: boolean,
-    is_restricted: boolean,
-    name: string,
-    type: string,
-    volume_percent: number,
-}
-
-interface SpotifyError {
-    status: number,
-    message: string,
-}
-
-// to be defined
-type SpotifyExternalId = any;
-
-// to be defined
-type SpotifyExternalUrl = any;
-
-interface SpotifyFollowers {
-    href: string,
-    total: number,
-}
-
-interface SpotifyImage {
-    height?: number,
-    url: string,
-    width?: number,
-}
-
-interface SpotifyPage<T> {
-    href: string,
-    items: T[],
-    limit: number,
-    next?: string,
-    offset: number,
-    previous?: string,
-    total: number,
-}
-
-interface SpotifyCursorBasedPage<T> {
-    href: string,
-    items: T[],
-    limit: number,
-    next?: string,
-    cursors: SpotifyCursor,
-    total: number,
-}
-
-interface SpotifySimplifiedPlaylist {
-    collaborative: boolean,
-    external_urls: SpotifyExternalUrl,
-    href: string,
-    id: string,
-    images: SpotifyImage[],
-    name: string,
-    owner: SpotifyPublicUser,
-    public?: boolean,
-    snapshot_id: string,
-    //TODO: Revisit the inheritence here... Possible inconsistencies in the API
-    tracks: SpotifyPage<SpotifyPlaylistTrack>,
-    type: string,
-    uri: string,
-}
-
-interface SpotifyPlaylist extends SpotifySimplifiedPlaylist {
-    description: string,
-    followers: SpotifyFollowers,
-}
-
-interface SpotifyPlaylistTrack {
-    added_at?: Date,
-    added_by?: SpotifyPublicUser,
-    is_local: boolean,
-    track: SpotifyTrack,
-}
-
-interface SpotifyRecommendations {
-    seeds: SpotifyRecommendationsSeed[],
-    tracks: SpotifySimplifiedTrack[],
-}
-
-interface SpotifyRecommendationsSeed {
-    afterFilteringSize: number,
-    afterRelinkingSize: number,
-    href?: string,
-    id: string,
-    initialPoolSize: number,
-    type: SpotifyRecommendationsSeedType,
-}
-
-interface SpotifyRestriction {
-    reason: string,
-}
-
-interface SpotifySavedTrack {
-    added_at: Date,
-    track: SpotifyTrack,
-}
-
-interface SpotifySavedAlbum {
-    added_at: Date,
-    track: SpotifyAlbum,
-}
-
-interface SpotifyTrack extends SpotifySimplifiedTrack {
-    album: SpotifySimplifiedAlbum,
-    external_ids: SpotifyExternalId,
-    restrictions: SpotifyRestriction,
-    popularity: number,
-}
-
-interface SpotifySimplifiedTrack {
-    artists: SpotifySimplifiedArtist[],
-    available_markets: string[],
-    disc_number: number,
-    duration_ms: number,
-    explicit: boolean,
-    external_urls: SpotifyExternalUrl,
-    href: string,
-    id: string,
-    is_playable: boolean,
-    linked_from: SpotifyTrackLink,
-    name: string,
-    preview_url?: string,
-    track_number: number,
-    type: string,
-    uri: number,
-}
-
-interface SpotifyTrackLink {
-    external_urls: SpotifyExternalUrl,
-    href: string,
-    id: string,
-    type: string,
-    uri: string,
-}
-
-interface SpotifyPrivateUser extends SpotifyPublicUser {
-    birthdate?: string,
-    country?: string,
-    email?: string,
-    product?: string,
-}
-
-interface SpotifyPublicUser {
-    display_name: string,
-    external_urls: SpotifyExternalUrl,
-    followers: SpotifyFollowers,
-    href: string,
-    id: string,
-    images: SpotifyImage[],
-    type: string,
-    uri: string,
-}
-
-interface SpotifyPlayHistory {
-    track: SpotifySimplifiedTrack,
-    played_at: Date,
-    context: SpotifyContext,
-}
-
-interface SpotifyContext {
-    type: SpotifyContextType,
-    href: string,
-    external_urls: SpotifyExternalUrl,
-    uri: string,
-}
-
-interface SpotifyWebApiCredentials {
-    clientId?: string,
-    clientSecret?: string,
-    redirectUri?: string,
-}
-
-interface SpotifyAuthorizationGrant {
-    access_token: string,
-    refresh_token: string,
-    expires_in: number,
-}
-
-// Option Definitions
-interface SpotifyPauseOptions {
-    device_id?: string,
-}
-
-interface SpotifyPlayOptions {
-    device_id?: string,
-    context_uri: string,
-    uris: string[],
-    offset: any,
-}
-
-interface SpotifyShuffleOptions {
-    state: boolean,
-    deviceId?: string,
-}
-
-interface SpotifyRepeatOptions {
-    state: "track" | "context" | "off",
-    deviceId?: string
-}
-
-interface SpotifyTransferPlaybackOptions {
-    device_ids: string[],
-    play?: boolean,
-}
-
-interface SpotifySearchOptions {
-    market?: string,
-    limit?: number,
-    offset?: number,
-}
-
-interface SpotifyPlaylistSearchOptions {
-    country?: string,
-    limit?: number,
-    offset?: number,
-}
-
-interface SpotifyGetCategoriesOptions extends SpotifyPlaylistSearchOptions {
-    locale?: string,
-}
-
-interface SpotifyGetCategoryOptions {
-    country?: string,
-    locale?: string,
-}
-
-interface SpotifyFeaturedPlaylistOptions extends SpotifyPlaylistSearchOptions {
-    timestamp?: Date,
-    locale?: string,
-}
-
-interface SpotifyPlaylistOptions {
-    name?: string,
-    public?: boolean,
-    collaborative?: boolean,
-    description?: string,
-}
-
-interface SpotifyAddTrackToPlaylistOptions {
-    position?: number,
-}
-
-interface SpotifyReorderPlaylistOptions {
-    range_length?: number,
-    snapshot_id?: SpotfiyPlaylistSnapshotId,
-}
-
-interface SpotifyRemoveTrackFromPlaylistOptions {
-    snapshot_id?: SpotfiyPlaylistSnapshotId,
-}
-interface SpotifyGetPlaylistTracksOptions extends SpotifySearchOptions {
-    fields?: string[],
-}
-
-interface SpotifyGetPlaylistOptions {
-    limit?: number,
-    offset?: number,
-}
-
-interface SpotifyArtistsAlbumsOptions extends SpotifySearchOptions {
-    album_type?: string,
-}
-
-interface SpotifyGetAlbumOptions {
-    marekt?: string,
-}
-
-interface SpotifyGetTrackOptions {
-    marekt?: string,
-}
-
-interface SpotifyFollowPlaylistOptions {
-    public?: boolean,
-}
-
-interface SpotifyGetFollowedArtistsOptions {
-    limit?: number,
-    after?: string,
-}
-
-interface SpotifyMyTopOptions {
-    limit?: number,
-    offset?: number,
-    time_range?: "long_term" | "medium_term" | "short_term",
-}
-
-interface SpotifyRecentlyPlayedOptions {
-    limit?: number,
-    before?: number,
-    after?: number,
-}
-
