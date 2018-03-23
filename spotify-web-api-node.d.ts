@@ -3,9 +3,14 @@ export = SpotifyWebApi;
 declare class SpotifyWebApi {
     constructor(credentials?: SpotifyWebApi.Credentials);
 
+    ///////////////////
     // Authentication and authorization methods
-    authorizationCodeGrant(code: any, callback?: SpotifyWebApi.Callback<SpotifyWebApi.AuthorizationGrant>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AuthorizationGrant>> | undefined;
-    clientCredentialsGrant(options?: any, callback?: SpotifyWebApi.Callback<SpotifyWebApi.AuthorizationGrant>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AuthorizationGrant>> | undefined;
+    ///////////////////
+    authorizationCodeGrant(code: string): Promise<SpotifyWebApi.Response<SpotifyWebApi.AuthorizationGrant>>;
+    authorizationCodeGrant(code: string, callback: SpotifyWebApi.Callback<SpotifyWebApi.AuthorizationGrant>);
+    // TODO: Add options type
+    clientCredentialsGrant(options?: any): Promise<SpotifyWebApi.Response<SpotifyWebApi.AuthorizationGrant>>;
+    clientCredentialsGrant(options: any, callback: SpotifyWebApi.Callback<SpotifyWebApi.AuthorizationGrant>);
     createAuthorizeURL(scopes: string[], state: string, showDialog: boolean): string;
     getAccessToken(): string;
     getClientId(): string;
@@ -25,99 +30,236 @@ declare class SpotifyWebApi {
     resetCredentials(): void;
     resetRedirectURI(): void;
     resetRefreshToken(): void;
-    refreshAccessToken(callback?: SpotifyWebApi.Callback<SpotifyWebApi.AuthorizationGrant>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AuthorizationGrant>> | undefined;
+    refreshAccessToken(): Promise<SpotifyWebApi.Response<SpotifyWebApi.AuthorizationGrant>>;
+    refreshAccessToken(callback: SpotifyWebApi.Callback<SpotifyWebApi.AuthorizationGrant>);
 
+    ///////////////////
     // Metadata methods
-    getAudioAnalysisForTrack(trackId: SpotifyWebApi.TrackId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.AudioAnalysis>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AudioAnalysis>> | undefined;
-    getAudioFeaturesForTrack(trackId: SpotifyWebApi.TrackId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.AudioFeatures>): Promise<SpotifyWebApi.Response<SpotifyWebApi.AudioFeatures>> | undefined;
-    getAudioFeaturesForTracks(trackIds: SpotifyWebApi.TrackId[], callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getAvailableGenreSeeds(callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getCategories(options?: SpotifyWebApi.GetCategoriesOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Category>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Category>> | undefined;
-    getCategory(categoryId: SpotifyWebApi.CategoryId, options?: SpotifyWebApi.GetCategoryOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getNewReleases(options?: SpotifyWebApi.PlaylistSearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getRecommendations(options?: any, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Recommendations>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Recommendations>> | undefined;
+    ///////////////////
+    getAudioAnalysisForTrack(trackId: SpotifyWebApi.TrackId): Promise<SpotifyWebApi.Response<SpotifyWebApi.AudioAnalysis>>;
+    getAudioAnalysisForTrack(trackId: SpotifyWebApi.TrackId, callback: SpotifyWebApi.Callback<SpotifyWebApi.AudioAnalysis>);
 
+    getAudioFeaturesForTrack(trackId: SpotifyWebApi.TrackId): Promise<SpotifyWebApi.Response<SpotifyWebApi.AudioFeatures>>;
+    getAudioFeaturesForTrack(trackId: SpotifyWebApi.TrackId, callback: SpotifyWebApi.Callback<SpotifyWebApi.AudioFeatures>);
+
+    getAudioFeaturesForTracks(trackIds: SpotifyWebApi.TrackId[]): Promise<SpotifyWebApi.Response<any>>;
+    getAudioFeaturesForTracks(trackIds: SpotifyWebApi.TrackId[], callback: SpotifyWebApi.Callback<any>);
+
+    getAvailableGenreSeeds(): Promise<SpotifyWebApi.Response<any>>;
+    getAvailableGenreSeeds(callback: SpotifyWebApi.Callback<any>);
+
+    getCategories(options: SpotifyWebApi.GetCategoriesOptions): Promise<SpotifyWebApi.Response<SpotifyWebApi.Category>>;
+    getCategories(options: SpotifyWebApi.GetCategoriesOptions, callback: SpotifyWebApi.Callback<SpotifyWebApi.Category>);
+
+    getCategory(categoryId: SpotifyWebApi.CategoryId, options?: SpotifyWebApi.GetCategoryOptions): Promise<SpotifyWebApi.Response<any>>;
+    getCategory(categoryId: SpotifyWebApi.CategoryId, options: SpotifyWebApi.GetCategoryOptions, callback: SpotifyWebApi.Callback<any>);
+
+    getNewReleases(options?: SpotifyWebApi.PlaylistSearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    getNewReleases(options: SpotifyWebApi.PlaylistSearchOptions, callback: SpotifyWebApi.Callback<any>);
+
+    // TODO: Add options type
+    getRecommendations(options?: any): Promise<SpotifyWebApi.Response<SpotifyWebApi.Recommendations>> | undefined;
+    getRecommendations(options?: any, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Recommendations>);
+
+    ///////////////////
     // My methods
-    getMe(callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PrivateUser>> | undefined;
-    getMyCurrentPlaybackState(options?: SpotifyWebApi.GetTrackOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getMyCurrentPlayingTrack(options?: SpotifyWebApi.GetTrackOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Track>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Track>> | undefined;
-    getMyDevices(callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getMyRecentlyPlayedTracks(options?: SpotifyWebApi.RecentlyPlayedOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getMySavedAlbums(options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getMySavedTracks(options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getMyTopArtists(options?: SpotifyWebApi.MyTopOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getMyTopTracks(options?: SpotifyWebApi.MyTopOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    ///////////////////
+    getMe(): Promise<SpotifyWebApi.Response<SpotifyWebApi.PrivateUser>>;
+    getMe(callback: SpotifyWebApi.Callback<SpotifyWebApi.PrivateUser>);
 
+    getMyRecentlyPlayedTracks(options?: SpotifyWebApi.RecentlyPlayedOptions): Promise<SpotifyWebApi.Response<any>>;
+    getMyRecentlyPlayedTracks(options: SpotifyWebApi.RecentlyPlayedOptions, callback: SpotifyWebApi.Callback<any>);
+
+    getMySavedAlbums(options?: SpotifyWebApi.SearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    getMySavedAlbums(options: SpotifyWebApi.SearchOptions, callback: SpotifyWebApi.Callback<any>);
+
+    getMySavedTracks(options?: SpotifyWebApi.SearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    getMySavedTracks(options: SpotifyWebApi.SearchOptions, callback: SpotifyWebApi.Callback<any>);
+
+    getMyTopArtists(options?: SpotifyWebApi.MyTopOptions): Promise<SpotifyWebApi.Response<any>>;
+    getMyTopArtists(options: SpotifyWebApi.MyTopOptions, callback: SpotifyWebApi.Callback<any>);
+
+    getMyTopTracks(options?: SpotifyWebApi.MyTopOptions): Promise<SpotifyWebApi.Response<any>>;
+    getMyTopTracks(options: SpotifyWebApi.MyTopOptions, callback: SpotifyWebApi.Callback<any>);
+
+    ///////////////////
     // User methods
-    getUser(userId: SpotifyWebApi.UserId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.PublicUser>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PublicUser>> | undefined;
-    getUserPlaylists(userId: SpotifyWebApi.UserId, options?: SpotifyWebApi.GetPlaylistOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    ///////////////////
+    getUser(userId: SpotifyWebApi.UserId): Promise<SpotifyWebApi.Response<SpotifyWebApi.PublicUser>>;
+    getUser(userId: SpotifyWebApi.UserId, callback: SpotifyWebApi.Callback<SpotifyWebApi.PublicUser>);
 
+    getUserPlaylists(userId: SpotifyWebApi.UserId, options?: SpotifyWebApi.GetPlaylistOptions): Promise<SpotifyWebApi.Response<any>>;
+    getUserPlaylists(userId: SpotifyWebApi.UserId, options: SpotifyWebApi.GetPlaylistOptions, callback: SpotifyWebApi.Callback<any>);
+
+    ///////////////////
     // Following methods
-    getFollowedArtists(options?: SpotifyWebApi.GetFollowedArtistsOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    isFollowingArtists(artistIds: SpotifyWebApi.ArtistId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<SpotifyWebApi.Response<boolean>> | undefined;
-    followArtists(artists: SpotifyWebApi.ArtistId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    unfollowArtists(artistIds: SpotifyWebApi.ArtistId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    isFollowingUsers(userIds: SpotifyWebApi.UserId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<SpotifyWebApi.Response<boolean>> | undefined;
-    followUsers(userIds: SpotifyWebApi.UserId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    unfollowUsers(userIds: SpotifyWebApi.UserId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    followPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.FollowPlaylistOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    areFollowingPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, followerIds: SpotifyWebApi.UserId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<SpotifyWebApi.Response<boolean>> | undefined | undefined;
-    unfollowPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    ///////////////////
+    getFollowedArtists(options?: SpotifyWebApi.GetFollowedArtistsOptions): Promise<SpotifyWebApi.Response<any>>;
+    getFollowedArtists(options: SpotifyWebApi.GetFollowedArtistsOptions, callback: SpotifyWebApi.Callback<any>);
+
+    isFollowingArtists(artistIds: SpotifyWebApi.ArtistId[]): Promise<SpotifyWebApi.Response<boolean>>;
+    isFollowingArtists(artistIds: SpotifyWebApi.ArtistId[], callback: SpotifyWebApi.Callback<boolean>);
+
+    followArtists(artists: SpotifyWebApi.ArtistId[]): Promise<SpotifyWebApi.Response<void>>;
+    followArtists(artists: SpotifyWebApi.ArtistId[], callback: SpotifyWebApi.Callback<void>);
+
+    unfollowArtists(artistIds: SpotifyWebApi.ArtistId[]): Promise<SpotifyWebApi.Response<void>>;
+    unfollowArtists(artistIds: SpotifyWebApi.ArtistId[], callback: SpotifyWebApi.Callback<void>);
+
+    isFollowingUsers(userIds: SpotifyWebApi.UserId[]): Promise<SpotifyWebApi.Response<boolean>>;
+    isFollowingUsers(userIds: SpotifyWebApi.UserId[], callback: SpotifyWebApi.Callback<boolean>);
+
+    followUsers(userIds: SpotifyWebApi.UserId[]): Promise<SpotifyWebApi.Response<void>>;
+    followUsers(userIds: SpotifyWebApi.UserId[], callback: SpotifyWebApi.Callback<void>);
+
+    unfollowUsers(userIds: SpotifyWebApi.UserId[]): Promise<SpotifyWebApi.Response<void>>;
+    unfollowUsers(userIds: SpotifyWebApi.UserId[], callback: SpotifyWebApi.Callback<void>);
+
+    followPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.FollowPlaylistOptions): Promise<SpotifyWebApi.Response<void>>;
+    followPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options: SpotifyWebApi.FollowPlaylistOptions, callback: SpotifyWebApi.Callback<void>);
+
+    areFollowingPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, followerIds: SpotifyWebApi.UserId[]): Promise<SpotifyWebApi.Response<boolean>>;
+    areFollowingPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, followerIds: SpotifyWebApi.UserId[], callback: SpotifyWebApi.Callback<boolean>);
+
+    unfollowPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId): Promise<SpotifyWebApi.Response<void>>;
+    unfollowPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, callback: SpotifyWebApi.Callback<void>);
 
     // Saved tracks and albums
-    addToMySavedAlbums(albumIds: SpotifyWebApi.AlbumId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    addToMySavedTracks(trackIds: SpotifyWebApi.TrackId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    removeFromMySavedAlbums(albumIds: SpotifyWebApi.AlbumId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    removeFromMySavedTracks(trackIds: SpotifyWebApi.TrackId[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    containsMySavedAlbums(albumIds: SpotifyWebApi.AlbumId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<boolean> | undefined;
-    containsMySavedTracks(trackIds: SpotifyWebApi.TrackId[], callback?: SpotifyWebApi.Callback<boolean>): Promise<boolean> | undefined;
+    addToMySavedAlbums(albumIds: SpotifyWebApi.AlbumId[]): Promise<SpotifyWebApi.Response<void>>;
+    addToMySavedTracks(trackIds: SpotifyWebApi.TrackId[], callback: SpotifyWebApi.Callback<void>);
+
+    removeFromMySavedAlbums(albumIds: SpotifyWebApi.AlbumId[]): Promise<SpotifyWebApi.Response<void>>;
+    removeFromMySavedTracks(trackIds: SpotifyWebApi.TrackId[], callback: SpotifyWebApi.Callback<void>);
+
+    containsMySavedAlbums(albumIds: SpotifyWebApi.AlbumId[]): Promise<boolean>;
+    containsMySavedTracks(trackIds: SpotifyWebApi.TrackId[], callback: SpotifyWebApi.Callback<boolean>);
 
 
+    ///////////////////
     // Track methods
-    getTrack(trackId: SpotifyWebApi.TrackId, options?: SpotifyWebApi.GetTrackOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Track>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Track>> | undefined;
-    getTracks(trackIds: SpotifyWebApi.TrackId[], options?: SpotifyWebApi.GetTrackOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    ///////////////////
+    getTrack(trackId: SpotifyWebApi.TrackId, options?: SpotifyWebApi.GetTrackOptions): Promise<SpotifyWebApi.Response<SpotifyWebApi.Track>>;
+    getTrack(trackId: SpotifyWebApi.TrackId, options: SpotifyWebApi.GetTrackOptions, callback: SpotifyWebApi.Callback<SpotifyWebApi.Track>);
 
+    getTracks(trackIds: SpotifyWebApi.TrackId[], options?: SpotifyWebApi.GetTrackOptions): Promise<SpotifyWebApi.Response<any>>;
+    getTracks(trackIds: SpotifyWebApi.TrackId[], options: SpotifyWebApi.GetTrackOptions, callback: SpotifyWebApi.Callback<any>);
+
+    ///////////////////
     // Album methods
-    getAlbum(albumId: SpotifyWebApi.AlbumId, options?: SpotifyWebApi.GetAlbumOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Album>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Album>> | undefined;
-    getAlbums(albumIds: SpotifyWebApi.AlbumId[], options?: SpotifyWebApi.GetAlbumOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getAlbumTracks(albumId: SpotifyWebApi.AlbumId, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    ///////////////////
+    getAlbum(albumId: SpotifyWebApi.AlbumId, options?: SpotifyWebApi.GetAlbumOptions): Promise<SpotifyWebApi.Response<SpotifyWebApi.Album>>;
+    getAlbum(albumId: SpotifyWebApi.AlbumId, options: SpotifyWebApi.GetAlbumOptions, callback: SpotifyWebApi.Callback<SpotifyWebApi.Album>);
 
+    getAlbums(albumIds: SpotifyWebApi.AlbumId[], options?: SpotifyWebApi.GetAlbumOptions): Promise<SpotifyWebApi.Response<any>>;
+    getAlbums(albumIds: SpotifyWebApi.AlbumId[], options: SpotifyWebApi.GetAlbumOptions, callback: SpotifyWebApi.Callback<any>);
+
+    getAlbumTracks(albumId: SpotifyWebApi.AlbumId, options?: SpotifyWebApi.SearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    getAlbumTracks(albumId: SpotifyWebApi.AlbumId, options: SpotifyWebApi.SearchOptions, callback: SpotifyWebApi.Callback<any>);
+
+    ///////////////////
     // Artist methods
-    getArtist(artistId: SpotifyWebApi.ArtistId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Artist>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Artist>> | undefined;
-    getArtists(artists: SpotifyWebApi.ArtistId[], callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getArtistAlbums(artistId: SpotifyWebApi.ArtistId, options?: SpotifyWebApi.ArtistsAlbumsOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getArtistRelatedArtists(artistId: SpotifyWebApi.ArtistId, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getArtistTopTracks(artistId: SpotifyWebApi.ArtistId, country: string, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    ///////////////////
+    getArtist(artistId: SpotifyWebApi.ArtistId): Promise<SpotifyWebApi.Response<SpotifyWebApi.Artist>>;
+    getArtist(artistId: SpotifyWebApi.ArtistId, callback: SpotifyWebApi.Callback<SpotifyWebApi.Artist>);
 
+    getArtists(artists: SpotifyWebApi.ArtistId[]): Promise<SpotifyWebApi.Response<any>>;
+    getArtists(artists: SpotifyWebApi.ArtistId[], callback: SpotifyWebApi.Callback<any>);
+
+    getArtistAlbums(artistId: SpotifyWebApi.ArtistId, options?: SpotifyWebApi.ArtistsAlbumsOptions): Promise<SpotifyWebApi.Response<any>>;
+    getArtistAlbums(artistId: SpotifyWebApi.ArtistId, options: SpotifyWebApi.ArtistsAlbumsOptions, callback: SpotifyWebApi.Callback<any>);
+
+    getArtistRelatedArtists(artistId: SpotifyWebApi.ArtistId): Promise<SpotifyWebApi.Response<any>>;
+    getArtistRelatedArtists(artistId: SpotifyWebApi.ArtistId, callback: SpotifyWebApi.Callback<any>);
+
+    getArtistTopTracks(artistId: SpotifyWebApi.ArtistId, country: string): Promise<SpotifyWebApi.Response<any>>;
+    getArtistTopTracks(artistId: SpotifyWebApi.ArtistId, country: string, callback: SpotifyWebApi.Callback<any>);
+
+    ///////////////////
     // Playlist methods
-    getPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.GetPlaylistOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Playlist>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Playlist>> | undefined;
-    getPlaylistTracks(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.GetPlaylistTracksOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    removeTracksFromPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, tracks: SpotifyWebApi.TrackId[], options?: SpotifyWebApi.RemoveTrackFromPlaylistOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.PlaylistSnapshotId>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PlaylistSnapshotId>> | undefined;
-    removeTracksFromPlaylistByPosition(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, positions: number[], snapshotId: SpotifyWebApi.PlaylistSnapshotId, callback?: SpotifyWebApi.Callback<SpotifyWebApi.PlaylistSnapshotId>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PlaylistSnapshotId>> | undefined;
-    reorderTracksInPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, rangeStart: number, insertBefore: number, options?: SpotifyWebApi.ReorderPlaylistOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.PlaylistSnapshotId>): Promise<SpotifyWebApi.Response<SpotifyWebApi.PlaylistSnapshotId>> | undefined;
-    replaceTracksInPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, uris: string[], callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    createPlaylist(userId: SpotifyWebApi.UserId, playlistName: string, options?: SpotifyWebApi.PlaylistOptions, callback?: SpotifyWebApi.Callback<SpotifyWebApi.Playlist>): Promise<SpotifyWebApi.Response<SpotifyWebApi.Playlist>> | undefined;
-    addTracksToPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, tracks: SpotifyWebApi.TrackId[], options?: SpotifyWebApi.AddTrackToPlaylistOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    changePlaylistDetails(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.PlaylistOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    getFeaturedPlaylists(options?: SpotifyWebApi.FeaturedPlaylistOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    getPlaylistsForCategory(categoryId: SpotifyWebApi.CategoryId, options?: SpotifyWebApi.PlaylistSearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    ///////////////////
+    getPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.GetPlaylistOptions): Promise<SpotifyWebApi.Response<SpotifyWebApi.Playlist>>;
+    getPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options: SpotifyWebApi.GetPlaylistOptions, callback: SpotifyWebApi.Callback<SpotifyWebApi.Playlist>);
 
+    getPlaylistTracks(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.GetPlaylistTracksOptions): Promise<SpotifyWebApi.Response<any>>;
+    getPlaylistTracks(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options: SpotifyWebApi.GetPlaylistTracksOptions, callback: SpotifyWebApi.Callback<any>);
+
+    removeTracksFromPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, tracks: SpotifyWebApi.TrackId[], options?: SpotifyWebApi.RemoveTrackFromPlaylistOptions): Promise<SpotifyWebApi.Response<SpotifyWebApi.PlaylistSnapshotId>>;
+    removeTracksFromPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, tracks: SpotifyWebApi.TrackId[], options: SpotifyWebApi.RemoveTrackFromPlaylistOptions, callback: SpotifyWebApi.Callback<SpotifyWebApi.PlaylistSnapshotId>);
+
+    removeTracksFromPlaylistByPosition(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, positions: number[], snapshotId: SpotifyWebApi.PlaylistSnapshotId): Promise<SpotifyWebApi.Response<SpotifyWebApi.PlaylistSnapshotId>>;
+    removeTracksFromPlaylistByPosition(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, positions: number[], snapshotId: SpotifyWebApi.PlaylistSnapshotId, callback: SpotifyWebApi.Callback<SpotifyWebApi.PlaylistSnapshotId>);
+
+    reorderTracksInPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, rangeStart: number, insertBefore: number, options?: SpotifyWebApi.ReorderPlaylistOptions): Promise<SpotifyWebApi.Response<SpotifyWebApi.PlaylistSnapshotId>>;
+    reorderTracksInPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, rangeStart: number, insertBefore: number, options: SpotifyWebApi.ReorderPlaylistOptions, callback: SpotifyWebApi.Callback<SpotifyWebApi.PlaylistSnapshotId>);
+
+    replaceTracksInPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, uris: string[]): Promise<SpotifyWebApi.Response<void>>;
+    replaceTracksInPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, uris: string[], callback: SpotifyWebApi.Callback<void>);
+
+    createPlaylist(userId: SpotifyWebApi.UserId, playlistName: string, options?: SpotifyWebApi.PlaylistOptions): Promise<SpotifyWebApi.Response<SpotifyWebApi.Playlist>>;
+    createPlaylist(userId: SpotifyWebApi.UserId, playlistName: string, options: SpotifyWebApi.PlaylistOptions, callback: SpotifyWebApi.Callback<SpotifyWebApi.Playlist>);
+
+    addTracksToPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, tracks: SpotifyWebApi.TrackId[], options?: SpotifyWebApi.AddTrackToPlaylistOptions): Promise<SpotifyWebApi.Response<void>>;
+    addTracksToPlaylist(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, tracks: SpotifyWebApi.TrackId[], options: SpotifyWebApi.AddTrackToPlaylistOptions, callback: SpotifyWebApi.Callback<void>);
+
+    changePlaylistDetails(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options?: SpotifyWebApi.PlaylistOptions): Promise<SpotifyWebApi.Response<void>>;
+    changePlaylistDetails(userId: SpotifyWebApi.UserId, playlistId: SpotifyWebApi.PlaylistId, options: SpotifyWebApi.PlaylistOptions, callback: SpotifyWebApi.Callback<void>);
+
+    getFeaturedPlaylists(options?: SpotifyWebApi.FeaturedPlaylistOptions): Promise<SpotifyWebApi.Response<any>>;
+    getFeaturedPlaylists(options: SpotifyWebApi.FeaturedPlaylistOptions, callback: SpotifyWebApi.Callback<any>);
+
+    getPlaylistsForCategory(categoryId: SpotifyWebApi.CategoryId, options?: SpotifyWebApi.PlaylistSearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    getPlaylistsForCategory(categoryId: SpotifyWebApi.CategoryId, options: SpotifyWebApi.PlaylistSearchOptions, callback: SpotifyWebApi.Callback<any>);
+
+    ///////////////////
     // Search methods
-    search(query: string, types: SpotifyWebApi.ObjectType[], options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    searchAlbums(query: string, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    searchTracks(query: string, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    searchArtists(query: string, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
-    searchPlaylists(query: string, options?: SpotifyWebApi.SearchOptions, callback?: SpotifyWebApi.Callback<any>): Promise<SpotifyWebApi.Response<any>> | undefined;
+    ///////////////////
+    search(query: string, types: SpotifyWebApi.ObjectType[], options?: SpotifyWebApi.SearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    search(query: string, types: SpotifyWebApi.ObjectType[], options: SpotifyWebApi.SearchOptions, callback: SpotifyWebApi.Callback<any>);
 
+    searchAlbums(query: string, options?: SpotifyWebApi.SearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    searchAlbums(query: string, options: SpotifyWebApi.SearchOptions, callback: SpotifyWebApi.Callback<any>);
 
+    searchTracks(query: string, options?: SpotifyWebApi.SearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    searchTracks(query: string, options: SpotifyWebApi.SearchOptions, callback: SpotifyWebApi.Callback<any>);
+
+    searchArtists(query: string, options?: SpotifyWebApi.SearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    searchArtists(query: string, options: SpotifyWebApi.SearchOptions, callback: SpotifyWebApi.Callback<any>);
+
+    searchPlaylists(query: string, options?: SpotifyWebApi.SearchOptions): Promise<SpotifyWebApi.Response<any>>;
+    searchPlaylists(query: string, options: SpotifyWebApi.SearchOptions, callback: SpotifyWebApi.Callback<any>);
+
+    ///////////////////
     // Playback control methods
-    pause(options?: SpotifyWebApi.PauseOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    play(options?: SpotifyWebApi.PlayOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    setRepeat(options?: SpotifyWebApi.RepeatOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    setShuffle(options?: SpotifyWebApi.ShuffleOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    skipToNext(callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    skipToPrevious(callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
-    transferMyPlayback(options?: SpotifyWebApi.TransferPlaybackOptions, callback?: SpotifyWebApi.Callback<void>): Promise<SpotifyWebApi.Response<void>> | undefined;
+    ///////////////////
+    pause(options?: SpotifyWebApi.PauseOptions): Promise<SpotifyWebApi.Response<void>>;
+    pause(options: SpotifyWebApi.PauseOptions, callback: SpotifyWebApi.Callback<void>);
+
+    play(options?: SpotifyWebApi.PlayOptions): Promise<SpotifyWebApi.Response<void>>;
+    play(options: SpotifyWebApi.PlayOptions, callback: SpotifyWebApi.Callback<void>);
+
+    setRepeat(options?: SpotifyWebApi.RepeatOptions): Promise<SpotifyWebApi.Response<void>>;
+    setRepeat(options: SpotifyWebApi.RepeatOptions, callback: SpotifyWebApi.Callback<void>);
+
+    setShuffle(options?: SpotifyWebApi.ShuffleOptions): Promise<SpotifyWebApi.Response<void>>;
+    setShuffle(options: SpotifyWebApi.ShuffleOptions, callback: SpotifyWebApi.Callback<void>);
+
+    skipToNext(): Promise<SpotifyWebApi.Response<void>>;
+    skipToNext(callback: SpotifyWebApi.Callback<void>);
+
+    skipToPrevious(): Promise<SpotifyWebApi.Response<void>>;
+    skipToPrevious(callback: SpotifyWebApi.Callback<void>);
+
+    transferMyPlayback(options?: SpotifyWebApi.TransferPlaybackOptions): Promise<SpotifyWebApi.Response<void>>;
+    transferMyPlayback(options: SpotifyWebApi.TransferPlaybackOptions, callback: SpotifyWebApi.Callback<void>);
+
+    getMyCurrentPlaybackState(options?: SpotifyWebApi.GetTrackOptions): Promise<SpotifyWebApi.Response<any>>;
+    getMyCurrentPlaybackState(options: SpotifyWebApi.GetTrackOptions, callback: SpotifyWebApi.Callback<any>);
+
+    getMyCurrentPlayingTrack(options?: SpotifyWebApi.GetTrackOptions): Promise<SpotifyWebApi.Response<SpotifyWebApi.Track>>;
+    getMyCurrentPlayingTrack(options: SpotifyWebApi.GetTrackOptions, callback: SpotifyWebApi.Callback<SpotifyWebApi.Track>);
+
+    getMyDevices(): Promise<SpotifyWebApi.Response<any>>;
+    getMyDevices(callback: SpotifyWebApi.Callback<any>);
 
 }
 
