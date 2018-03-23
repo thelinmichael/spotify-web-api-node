@@ -4,6 +4,7 @@
   "homepage": "https://github.com/thelinmichael/spotify-web-api-node",
   "description": "A Node.js wrapper for Spotify's Web API",
   "main": "./src/server.js",
+  "types": "./spotify-web-api-node.d.ts",
   "author": "Michael Thelin",
   "license": "MIT",
   "repository": {
