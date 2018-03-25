@@ -1086,7 +1086,7 @@ SpotifyWebApi.prototype = {
   volume: function(volume, options, callback) {
     /*jshint camelcase: false */
     var _options = options || {};
-    var queryParams = _options.device_id ? {device_id: _options.device_id} : null;
+    var queryParams = _options.device_id ? {device_id: _options.device_id} : {};
     queryParams.volume_percent = volume;
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/volume')
@@ -1108,7 +1108,7 @@ SpotifyWebApi.prototype = {
   seek: function(position, options, callback) {
     /*jshint camelcase: false */
     var _options = options || {};
-    var queryParams = _options.device_id ? {device_id: _options.device_id} : null;
+    var queryParams = _options.device_id ? {device_id: _options.device_id} : {};
     queryParams.position_ms = position;
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/seek')
