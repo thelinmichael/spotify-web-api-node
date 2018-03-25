@@ -1084,6 +1084,7 @@ SpotifyWebApi.prototype = {
     *          otherwise an error. Not returned if a callback is given.
     */
   volume: function(volume, options, callback) {
+    /*jshint camelcase: false */
     var _options = options || {};
     var queryParams = _options.device_id ? {device_id: _options.device_id} : null;
     queryParams.volume_percent = volume;
@@ -1092,7 +1093,7 @@ SpotifyWebApi.prototype = {
       .withHeaders({ 'Content-Type' : 'application/json' })
       .withQueryParameters(queryParams)
       .build()
-      .execute(HttpManager.put, actualCallback);
+      .execute(HttpManager.put, callback);
   },
 
    /**
@@ -1105,6 +1106,7 @@ SpotifyWebApi.prototype = {
    *          otherwise an error. Not returned if a callback is given.
    */
   seek: function(position, options, callback) {
+    /*jshint camelcase: false */
     var _options = options || {};
     var queryParams = _options.device_id ? {device_id: _options.device_id} : null;
     queryParams.position_ms = position;
