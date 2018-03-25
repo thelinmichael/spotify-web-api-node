@@ -1074,40 +1074,44 @@ SpotifyWebApi.prototype = {
       .execute(HttpManager.put, callback);
   },
 
-  /**
-   * Set volume of the Current User's Playback
-   * @param {int} volume percentage 0 - 100
-   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
-   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
-   *          otherwise an error. Not returned if a callback is given.
-   */
-  volume: function(volume, callback) {
+   /**
+    * Set volume of the Current User's Playback
+    * @param {int} volume percentage 0 - 100
+    * @param {Object} [options] Options, being device ID
+    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+    * @example volume(50).then(...)
+    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+    *          otherwise an error. Not returned if a callback is given.
+    */
+  volume: function(volume, options, callback) {
+    var _options = options || {};
+    var queryParams = _options.device_id ? {device_id: _options.device_id} : null;
+    queryParams.volume_percent = volume;
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/volume')
       .withHeaders({ 'Content-Type' : 'application/json' })
-      .withQueryParameters({
-        'volume_percent': volume
-      })
+      .withQueryParameters(queryParams)
       .build()
-      .execute(HttpManager.put, callback);
+      .execute(HttpManager.put, actualCallback);
   },
 
    /**
    * Set seek poistion (ms) of the Current User's Playback
    * @param {int} Position (ms) to seek
+   * @param {Object} [options] Options, being device ID
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
+   * @example seek(5000).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  seek: function(position, callback) {
+  seek: function(position, options, callback) {
+    var _options = options || {};
+    var queryParams = _options.device_id ? {device_id: _options.device_id} : null;
+    queryParams.position_ms = position;
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/seek')
       .withHeaders({ 'Content-Type' : 'application/json' })
-      .withQueryParameters({
-        'position_ms': position
-      })
+      .withQueryParameters(queryParams)
       .build()
       .execute(HttpManager.put, callback);
   },
