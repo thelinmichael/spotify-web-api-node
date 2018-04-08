@@ -5,6 +5,10 @@ var AuthenticationRequest = require('./authentication-request'),
     HttpManager = require('./http-manager');
 
 function SpotifyWebApi(credentials) {
+  if (!(this instanceof SpotifyWebApi)) {
+    return new SpotifyWebApi(credentials);
+  }
+
   this._credentials = credentials || {};
 }
 
