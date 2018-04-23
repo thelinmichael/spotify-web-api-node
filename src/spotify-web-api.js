@@ -1433,7 +1433,6 @@ SpotifyWebApi.prototype = {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(`/v1/me/player/volume?volume_percent=${percent}`)
       .withHeaders({ 'Content-Type' : 'application/json' })
-      .withBodyParameters(postData)
       .build()
       .execute(HttpManager.put, callback);
   }
