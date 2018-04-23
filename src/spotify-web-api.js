@@ -1430,11 +1430,13 @@ SpotifyWebApi.prototype = {
    *          otherwise an error. Not returned if a callback is given.
    */
   SetVolume: function(percent, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
+    const request = WebApiRequest.builder()
       .withPath(`/v1/me/player/volume?volume_percent=${percent}`)
       .withHeaders({ 'Content-Type' : 'application/json' })
-      .build()
-      .execute(HttpManager.put, callback);
+      .build();
+    this._addAccessToken(request, this.getAccessToken());
+    const promise = this._performRequest(HttpManager.put, request);
+    return promise;
   }
 };
 
