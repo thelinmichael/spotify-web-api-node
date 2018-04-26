@@ -2,7 +2,7 @@
 
 function WebapiError(message, statusCode) {
   this.name = 'WebapiError';
-  this.message = (message || '');
+  this.message = message || '';
   this.statusCode = statusCode;
 }
 

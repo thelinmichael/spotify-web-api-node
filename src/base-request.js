@@ -14,8 +14,10 @@ var Request = function(builder) {
   this.path = builder.path;
 };
 
-Request.prototype._getter = function (key) {
-  return function () { return this[key]; };
+Request.prototype._getter = function(key) {
+  return function() {
+    return this[key];
+  };
 };
 
 Request.prototype.getHost = Request.prototype._getter('host');
@@ -26,9 +28,13 @@ Request.prototype.getScheme = Request.prototype._getter('scheme');
 
 Request.prototype.getPath = Request.prototype._getter('path');
 
-Request.prototype.getQueryParameters = Request.prototype._getter('queryParameters');
+Request.prototype.getQueryParameters = Request.prototype._getter(
+  'queryParameters'
+);
 
-Request.prototype.getBodyParameters = Request.prototype._getter('bodyParameters');
+Request.prototype.getBodyParameters = Request.prototype._getter(
+  'bodyParameters'
+);
 
 Request.prototype.getHeaders = Request.prototype._getter('headers');
 
@@ -37,8 +43,10 @@ Request.prototype.getURI = function() {
     throw new Error('Missing components necessary to construct URI');
   }
   var uri = this.scheme + '://' + this.host;
-  if (this.scheme === 'http' && this.port !== 80 ||
-    this.scheme === 'https' && this.port !== 443) {
+  if (
+    (this.scheme === 'http' && this.port !== 80) ||
+    (this.scheme === 'https' && this.port !== 443)
+  ) {
     uri += ':' + this.port;
   }
   if (this.path) {
@@ -59,15 +67,21 @@ Request.prototype.getURL = function() {
 Request.prototype.getQueryParameterString = function() {
   var queryParameters = this.getQueryParameters();
   if (queryParameters) {
-    return '?' + Object.keys(queryParameters).filter(function (key) {
-      return queryParameters[key] !== undefined;
-    }).map(function (key) {
-      return key + '=' + queryParameters[key];
-    }).join('&');
+    return (
+      '?' +
+      Object.keys(queryParameters)
+        .filter(function(key) {
+          return queryParameters[key] !== undefined;
+        })
+        .map(function(key) {
+          return key + '=' + queryParameters[key];
+        })
+        .join('&')
+    );
   }
 };
 
-Request.prototype.execute = function (method, callback) {
+Request.prototype.execute = function(method, callback) {
   if (callback) {
     method(this, callback);
     return;
@@ -85,11 +99,10 @@ Request.prototype.execute = function (method, callback) {
   });
 };
 
-var Builder = function() {
-};
+var Builder = function() {};
 
-Builder.prototype._setter = function (key) {
-  return function (value) {
+Builder.prototype._setter = function(key) {
+  return function(value) {
     this[key] = value;
     return this;
   };
@@ -103,8 +116,8 @@ Builder.prototype.withScheme = Builder.prototype._setter('scheme');
 
 Builder.prototype.withPath = Builder.prototype._setter('path');
 
-Builder.prototype._assigner = function (key) {
-  return function () {
+Builder.prototype._assigner = function(key) {
+  return function() {
     for (var i = 0; i < arguments.length; i++) {
       this[key] = this._assign(this[key], arguments[i]);
     }
@@ -112,24 +125,26 @@ Builder.prototype._assigner = function (key) {
   };
 };
 
-Builder.prototype.withQueryParameters = Builder.prototype._assigner('queryParameters');
+Builder.prototype.withQueryParameters = Builder.prototype._assigner(
+  'queryParameters'
+);
 
-Builder.prototype.withBodyParameters = Builder.prototype._assigner('bodyParameters');
+Builder.prototype.withBodyParameters = Builder.prototype._assigner(
+  'bodyParameters'
+);
 
 Builder.prototype.withHeaders = Builder.prototype._assigner('headers');
 
 Builder.prototype.withAuth = function(accessToken) {
   if (accessToken) {
-    this.withHeaders(
-      {'Authorization' : 'Bearer ' + accessToken}
-    );
+    this.withHeaders({ Authorization: 'Bearer ' + accessToken });
   }
   return this;
 };
 
 Builder.prototype._assign = function(src, obj) {
   if (obj && Object.keys(obj).length > 0) {
-    return Object.assign(src || {}, obj);
+    return Object.assign(src || {}, obj);
   }
   return src;
 };

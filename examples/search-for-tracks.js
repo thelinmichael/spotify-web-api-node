@@ -1,4 +1,4 @@
-var SpotifyWebApi = require("../");
+var SpotifyWebApi = require('../');
 
 /*
  * This example shows how to search for a track. The endpoint is documented here:
