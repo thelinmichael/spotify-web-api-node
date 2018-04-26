@@ -67,6 +67,8 @@ It includes helper functions to do the following:
  - Skip a user's playback to previous track
  - Set a user's shuffle mode
  - Set a user's repeat mode
+ - Set volume
+ - Seek playback to a given position
 
 All methods require authentication, which can be done using these flows:
 
