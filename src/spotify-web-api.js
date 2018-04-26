@@ -1150,6 +1150,31 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+   * Seeks to the given position in the user’s currently playing track.
+   *
+   * @param {number} positionMs The position in milliseconds to seek to. Must be a positive number.
+   * @param {Object} options A JSON object with options that can be passed.
+   * @param {function(Object,Object)} callback An optional callback that receives 2 parameters. The first
+   * one is the error object (null if no error), and the second is the value if the request succeeded.
+   * @return {Object} Null if a callback is provided, a `Promise` object otherwise
+   */
+  seek: function(positionMs, options, callback) {
+    var params = {
+      /* jshint camelcase: false */
+      position_ms: positionMs
+    };
+    if (options && 'device_id' in options) {
+      /* jshint camelcase: false */
+      params.device_id = options.device_id;
+    }
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/seek')
+      .withQueryParameters(params)
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
    * Set Repeat Mode On The Current User's Playback
    * @param {Object} [options] Options, being state (track, context, off).
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -1181,6 +1206,31 @@ SpotifyWebApi.prototype = {
       .withQueryParameters({
         'state': options.state || 'false'
       })
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
+   * Set the volume for the user’s current playback device.
+   *
+   * @param {number} volumePercent The volume to set. Must be a value from 0 to 100 inclusive.
+   * @param {Object} options A JSON object with options that can be passed.
+   * @param {function(Object,Object)} callback An optional callback that receives 2 parameters. The first
+   * one is the error object (null if no error), and the second is the value if the request succeeded.
+   * @return {Object} Null if a callback is provided, a `Promise` object otherwise
+   */
+  setVolume: function(volumePercent, options, callback) {
+    var params = {
+      /* jshint camelcase: false */
+      volume_percent: volumePercent
+    };
+    if (options && 'device_id' in options) {
+      /* jshint camelcase: false */
+      params.device_id = options.device_id;
+    }
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/volume')
+      .withQueryParameters(params)
       .build()
       .execute(HttpManager.put, callback);
   },

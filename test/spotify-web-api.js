@@ -1539,6 +1539,85 @@ describe('Spotify Web API', function() {
 
   });
 
+
+  it('should set the user\'s playback volume', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/volume');
+      options.query.should.eql({volume_percent:80, device_id: 'my_device_id'});
+      should.not.exist(options.body);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.setVolume(80, { device_id: 'my_device_id' })
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should seek', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/seek');
+      options.query.should.eql({position_ms: 2000});
+      should.not.exist(options.body);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.seek(2000)
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
+  it('should seek on a certain device', function(done) {
+
+    sinon.stub(HttpManager, '_makeRequest', function(method, options, uri, callback) {
+      method.should.equal(superagent.put);
+      uri.should.equal('https://api.spotify.com/v1/me/player/seek');
+      options.query.should.eql({position_ms: 2000, device_id: 'my_device_id'});
+      should.not.exist(options.body);
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken : accessToken
+    });
+
+    api.seek(2000, { device_id: 'my_device_id' })
+      .then(function(data) {
+        done();
+      }, function(err) {
+        console.log(err);
+        done(err);
+      });
+
+  });
+
   it.skip("should retrieve an access token using the client credentials flow", function(done) {
     var clientId = 'someClientId',
         clientSecret = 'someClientSecret';
