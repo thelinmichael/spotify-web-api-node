@@ -1,128 +1,132 @@
-var Request = require("../src/base-request"),
-    should = require("should");
+var Request = require('../src/base-request'),
+  should = require('should');
 
-describe("Create Requests", function() {
-
-  it("Should create host, port, and scheme", function() {
+describe('Create Requests', function() {
+  it('Should create host, port, and scheme', function() {
     var request = Request.builder()
-      .withHost("such.api.wow")
+      .withHost('such.api.wow')
       .withPort(1337)
-      .withScheme("http")
+      .withScheme('http')
       .build();
 
-    request.getHost().should.equal("such.api.wow");
+    request.getHost().should.equal('such.api.wow');
     request.getPort().should.equal(1337);
-    request.getScheme().should.equal("http");
+    request.getScheme().should.equal('http');
   });
 
-  it("Should add query parameters", function() {
+  it('Should add query parameters', function() {
     var request = Request.builder()
-      .withHost("such.api.wow")
+      .withHost('such.api.wow')
       .withPort(1337)
-      .withScheme("http")
+      .withScheme('http')
       .withQueryParameters({
-        "oneParameter" : 1,
-        "anotherParameter" : true,
-        "thirdParameter" : "hello"
+        oneParameter: 1,
+        anotherParameter: true,
+        thirdParameter: 'hello'
       })
       .build();
 
     request.getQueryParameters().oneParameter.should.equal(1);
     request.getQueryParameters().anotherParameter.should.equal(true);
-    request.getQueryParameters().thirdParameter.should.equal("hello");
+    request.getQueryParameters().thirdParameter.should.equal('hello');
   });
 
-  it("Should add query parameters (multiple calls)", function() {
+  it('Should add query parameters (multiple calls)', function() {
     var request = Request.builder()
-      .withHost("such.api.wow")
+      .withHost('such.api.wow')
       .withPort(1337)
-      .withScheme("http")
+      .withScheme('http')
       .withQueryParameters({
-        "oneParameter" : 1,
-        "anotherParameter" : true
+        oneParameter: 1,
+        anotherParameter: true
       })
       .withQueryParameters({
-        "thirdParameter" : "hello"
-      })
-      .build();
-
-    request.getQueryParameters().oneParameter.should.equal(1);
-    request.getQueryParameters().anotherParameter.should.equal(true);
-    request.getQueryParameters().thirdParameter.should.equal("hello");
-  });
-
-  it("Should add query parameters (combine calls)", function() {
-    var request = Request.builder()
-      .withHost("such.api.wow")
-      .withPort(1337)
-      .withScheme("http")
-      .withQueryParameters({
-        "oneParameter" : 1,
-        "anotherParameter" : true
-      }, {
-        "thirdParameter" : "hello"
+        thirdParameter: 'hello'
       })
       .build();
 
     request.getQueryParameters().oneParameter.should.equal(1);
     request.getQueryParameters().anotherParameter.should.equal(true);
-    request.getQueryParameters().thirdParameter.should.equal("hello");
+    request.getQueryParameters().thirdParameter.should.equal('hello');
   });
 
-  it("Should add body parameters", function() {
+  it('Should add query parameters (combine calls)', function() {
     var request = Request.builder()
-      .withHost("such.api.wow")
+      .withHost('such.api.wow')
       .withPort(1337)
-      .withScheme("http")
+      .withScheme('http')
+      .withQueryParameters(
+        {
+          oneParameter: 1,
+          anotherParameter: true
+        },
+        {
+          thirdParameter: 'hello'
+        }
+      )
+      .build();
+
+    request.getQueryParameters().oneParameter.should.equal(1);
+    request.getQueryParameters().anotherParameter.should.equal(true);
+    request.getQueryParameters().thirdParameter.should.equal('hello');
+  });
+
+  it('Should add body parameters', function() {
+    var request = Request.builder()
+      .withHost('such.api.wow')
+      .withPort(1337)
+      .withScheme('http')
       .withBodyParameters({
-        "one" : 1,
-        "two" : true,
-        "three" : "world"
+        one: 1,
+        two: true,
+        three: 'world'
       })
       .build();
 
     request.getBodyParameters().one.should.equal(1);
     request.getBodyParameters().two.should.equal(true);
-    request.getBodyParameters().three.should.equal("world");
+    request.getBodyParameters().three.should.equal('world');
   });
 
-  it("Should add header parameters", function() {
+  it('Should add header parameters', function() {
     var request = Request.builder()
-      .withHost("such.api.wow")
+      .withHost('such.api.wow')
       .withPort(1337)
-      .withScheme("http")
+      .withScheme('http')
       .withHeaders({
-        "Authorization" : "Basic WOOP",
-        "Content-Type" : "application/lol"
+        Authorization: 'Basic WOOP',
+        'Content-Type': 'application/lol'
       })
       .build();
 
-    request.getHeaders().Authorization.should.equal("Basic WOOP");
-    request.getHeaders()["Content-Type"].should.equal("application/lol");
+    request.getHeaders().Authorization.should.equal('Basic WOOP');
+    request.getHeaders()['Content-Type'].should.equal('application/lol');
   });
 
-  it("Should add path", function() {
+  it('Should add path', function() {
     var request = Request.builder()
-      .withHost("such.api.wow")
+      .withHost('such.api.wow')
       .withPort(1337)
-      .withPath("/v1/users/meriosweg")
+      .withPath('/v1/users/meriosweg')
       .build();
 
-    request.getPath().should.equal("/v1/users/meriosweg");
+    request.getPath().should.equal('/v1/users/meriosweg');
   });
 
-  it("Should build URI", function() {
+  it('Should build URI', function() {
     var request = Request.builder()
-      .withHost("such.api.wow")
-      .withScheme("https")
+      .withHost('such.api.wow')
+      .withScheme('https')
       .withPort(1337)
-      .withPath("/v1/users/meriosweg")
+      .withPath('/v1/users/meriosweg')
       .build();
 
-    request.getURI().should.equal("https://such.api.wow:1337/v1/users/meriosweg");
+    request
+      .getURI()
+      .should.equal('https://such.api.wow:1337/v1/users/meriosweg');
   });
 
-  it("Should construct empty query paramaters string", function() {
+  it('Should construct empty query paramaters string', function() {
     var request = Request.builder()
       .withQueryParameters({})
       .build();
@@ -130,37 +134,39 @@ describe("Create Requests", function() {
     should.not.exist(request.getQueryParameterString());
   });
 
-  it("Should construct query paramaters string for one parameter", function() {
+  it('Should construct query paramaters string for one parameter', function() {
     var request = Request.builder()
       .withQueryParameters({
-        "one" : 1
+        one: 1
       })
       .build();
 
-    request.getQueryParameterString().should.equal("?one=1");
+    request.getQueryParameterString().should.equal('?one=1');
   });
 
-  it("Should construct query paramaters string for multiple parameters", function() {
+  it('Should construct query paramaters string for multiple parameters', function() {
     var request = Request.builder()
       .withQueryParameters({
-        "one" : 1,
-        "two" : true,
-        "three" : "world"
+        one: 1,
+        two: true,
+        three: 'world'
       })
       .build();
 
-    request.getQueryParameterString().should.equal("?one=1&two=true&three=world");
+    request
+      .getQueryParameterString()
+      .should.equal('?one=1&two=true&three=world');
   });
 
-  it("Should construct query paramaters string and exclude undefined values", function() {
+  it('Should construct query paramaters string and exclude undefined values', function() {
     var request = Request.builder()
       .withQueryParameters({
-        "one" : 1,
-        "two" : undefined,
-        "three" : "world"
+        one: 1,
+        two: undefined,
+        three: 'world'
       })
       .build();
 
-    request.getQueryParameterString().should.equal("?one=1&three=world");
+    request.getQueryParameterString().should.equal('?one=1&three=world');
   });
 });

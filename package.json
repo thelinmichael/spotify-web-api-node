@@ -20,20 +20,26 @@
     }
   },
   "scripts": {
-    "lint": "grunt jshint",
-    "test": "npm run lint && ./node_modules/.bin/mocha --bail",
-    "coveralls": "./node_modules/.bin/mocha -r blanket -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "./node_modules/.bin/mocha --bail",
+    "coveralls":
+      "./node_modules/.bin/mocha -r blanket -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": ["prettier --single-quote --write", "git add"]
   },
   "devDependencies": {
     "blanket": "^1.1.7",
     "coveralls": "^2.11.2",
     "grunt": "^1.0.1",
-    "grunt-contrib-jshint": "~0.11.0",
     "grunt-contrib-watch": "~0.6",
     "grunt-simple-mocha": "0.4.x",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.5",
     "mocha": "~1.20.1",
     "mocha-lcov-reporter": "0.0.2",
     "mockery": "^1.4.0",
+    "prettier": "1.12.1",
     "should": "~3.0",
     "sinon": "~1.12.2",
     "xunit-file": "0.0.5"

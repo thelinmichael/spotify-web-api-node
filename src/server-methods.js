@@ -16,11 +16,15 @@ module.exports = {
     return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
-        'grant_type' : 'client_credentials'
+        grant_type: 'client_credentials'
       })
       .withBodyParameters(options)
       .withHeaders({
-        Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
+        Authorization:
+          'Basic ' +
+          new Buffer(
+            this.getClientId() + ':' + this.getClientSecret()
+          ).toString('base64')
       })
       .build()
       .execute(HttpManager.post, callback);
@@ -39,11 +43,11 @@ module.exports = {
     return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
-        'grant_type' : 'authorization_code',
-        'redirect_uri' : this.getRedirectURI(),
-        'code' : code,
-        'client_id' : this.getClientId(),
-        'client_secret' : this.getClientSecret()
+        grant_type: 'authorization_code',
+        redirect_uri: this.getRedirectURI(),
+        code: code,
+        client_id: this.getClientId(),
+        client_secret: this.getClientSecret()
       })
       .build()
       .execute(HttpManager.post, callback);
@@ -61,11 +65,15 @@ module.exports = {
     return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
-        'grant_type' : 'refresh_token',
-        'refresh_token' : this.getRefreshToken()
+        grant_type: 'refresh_token',
+        refresh_token: this.getRefreshToken()
       })
       .withHeaders({
-        Authorization : ('Basic ' + new Buffer(this.getClientId() + ':' + this.getClientSecret()).toString('base64'))
+        Authorization:
+          'Basic ' +
+          new Buffer(
+            this.getClientId() + ':' + this.getClientSecret()
+          ).toString('base64')
       })
       .build()
       .execute(HttpManager.post, callback);
