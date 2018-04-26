@@ -1074,6 +1074,50 @@ SpotifyWebApi.prototype = {
       .execute(HttpManager.put, callback);
   },
 
+   /**
+    * Set volume of the Current User's Playback
+    * @param {int} volume percentage 0 - 100
+    * @param {Object} [options] Options, being device ID
+    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+    * @example volume(50).then(...)
+    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+    *          otherwise an error. Not returned if a callback is given.
+    */
+  volume: function(volume, options, callback) {
+    /*jshint camelcase: false */
+    var _options = options || {};
+    var queryParams = _options.device_id ? {device_id: _options.device_id} : {};
+    queryParams.volume_percent = volume;
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/volume')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters(queryParams)
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+   /**
+   * Set seek poistion (ms) of the Current User's Playback
+   * @param {int} Position (ms) to seek
+   * @param {Object} [options] Options, being device ID
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example seek(5000).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  seek: function(position, options, callback) {
+    /*jshint camelcase: false */
+    var _options = options || {};
+    var queryParams = _options.device_id ? {device_id: _options.device_id} : {};
+    queryParams.position_ms = position;
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/seek')
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .withQueryParameters(queryParams)
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
   /**
    * Starts o Resumes the Current User's Playback
    * @param {Object} [options] Options, being device_id, context_uri, offset, uris.
