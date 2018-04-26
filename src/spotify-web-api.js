@@ -1469,6 +1469,24 @@ SpotifyWebApi.prototype = {
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback);
+  },
+    
+  /**
+   * Set volume to current device
+   * @param [percent] Volume in percent.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example SetVolume(90).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  SetVolume: function(percent, callback) {
+    const request = WebApiRequest.builder()
+      .withPath(`/v1/me/player/volume?volume_percent=${percent}`)
+      .withHeaders({ 'Content-Type' : 'application/json' })
+      .build();
+    this._addAccessToken(request, this.getAccessToken());
+    const promise = this._performRequest(HttpManager.put, request);
+    return promise;
   }
 };
 
