@@ -1,5 +1,7 @@
 ## Change log
 
+#### 2.6.0 (26 Apr 2018)
+- Added support for seeking and setting volume. Thanks to [@isokar](https://github.com/isokar), [@jamesemwallis](https://github.com/jamesemwallis), [@ashthespy](https://github.com/ashthespy), and [@vanderlin](https://github.com/vanderlin) for your PRs.
 
 #### 2.5.0 (4 Sep 2017)
 - Change README to reflect new authorization. Thanks [@arirawr](https://github.com/arirawr) for the [PR](https://github.com/thelinmichael/spotify-web-api-node/pull/146).
