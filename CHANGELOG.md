@@ -1,7 +1,13 @@
 ## Change log
 
-#### 2.6.0 (26 Apr 2018)
+#### 3.1.0 (26 Apr 2018)
 - Added support for seeking and setting volume. Thanks to [@isokar](https://github.com/isokar), [@jamesemwallis](https://github.com/jamesemwallis), [@ashthespy](https://github.com/ashthespy), and [@vanderlin](https://github.com/vanderlin) for your PRs.
+
+#### 3.0.0 (8 Mar 2018)
+- @DalerAsrorov added support for uploading a custom image to a playlist in [this PR](https://github.com/thelinmichael/spotify-web-api-node/pull/169).
+- You can now pass a `device_id` when playing and pausing playback. @pfftdammitchris started [a PR to add device_id to the play() method](https://github.com/thelinmichael/spotify-web-api-node/pull/185). The changes served to another PR where we included the functionality. Thanks!
+- Added documentation in the README for `getMyCurrentPlaybackState()`. Thanks @PanMan for [your PR](https://github.com/thelinmichael/spotify-web-api-node/pull/160)!
+- @brodin realized we there was a lot of duplicated code and refactored it in a [great PR](https://github.com/thelinmichael/spotify-web-api-node/pull/123).
 
 #### 2.5.0 (4 Sep 2017)
 - Change README to reflect new authorization. Thanks [@arirawr](https://github.com/arirawr) for the [PR](https://github.com/thelinmichael/spotify-web-api-node/pull/146).
