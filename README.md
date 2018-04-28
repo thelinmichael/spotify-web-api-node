@@ -66,6 +66,7 @@ It includes helper functions to do the following:
 * Check if users are following a Playlist
 
 #### Player
+
 * Get a user's available devices
 * Get information about the user's current playback
 * Transfer a user's playback
@@ -76,7 +77,6 @@ It includes helper functions to do the following:
 * Set a user's repeat mode
 * Set volume
 * Seek playback to a given position
-
 
 All methods require authentication, which can be done using these flows:
 
@@ -969,4 +969,4 @@ See something you think can be improved? [Open an issue](https://github.com/thel
 
 ### Running tests
 
-You can run the unit tests executing `mocha` and get a test coverage report running `mocha -r blanket -R html-cov > coverage.html`.
+You can run the unit tests executing `npm test` and get a test coverage report running `npm test -- --coverage`.

@@ -3,6 +3,5 @@ node_js:
   - 'node'
   - '7'
   - '6'
-  - '5.11'
 after_success:
-  - npm run coveralls
+  - npm run travis

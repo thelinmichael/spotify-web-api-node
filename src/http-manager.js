@@ -62,7 +62,7 @@ var _getErrorObject = function(defaultMessage, err) {
 
 /* Make the request to the Web API */
 HttpManager._makeRequest = function(method, options, uri, callback) {
-  var req = method(uri);
+  var req = method.bind(superagent)(uri);
 
   if (options.query) {
     req.query(options.query);
