@@ -13,36 +13,22 @@
   "dependencies": {
     "superagent": "^2.0.0"
   },
-  "config": {
-    "blanket": {
-      "pattern": "src",
-      "data-cover-never": "node_modules"
-    }
-  },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --bail",
-    "coveralls":
-      "./node_modules/.bin/mocha -r blanket -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "jest",
+    "travis":
+      "npm test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,json,css,md}": ["prettier --single-quote --write", "git add"]
   },
   "devDependencies": {
-    "blanket": "^1.1.7",
-    "coveralls": "^2.11.2",
-    "grunt": "^1.0.1",
-    "grunt-contrib-watch": "~0.6",
-    "grunt-simple-mocha": "0.4.x",
+    "coveralls": "^2.13.3",
     "husky": "^0.14.3",
+    "jest": "^22.4.3",
     "lint-staged": "^7.0.5",
-    "mocha": "~1.20.1",
-    "mocha-lcov-reporter": "0.0.2",
-    "mockery": "^1.4.0",
     "prettier": "1.12.1",
-    "should": "~3.0",
-    "sinon": "~1.12.2",
-    "xunit-file": "0.0.5"
+    "sinon": "~1.12.2"
   },
   "keywords": [
     "spotify",

@@ -2,26 +2,23 @@ var superagent = require('superagent'),
   HttpManager = require('../src/http-manager'),
   sinon = require('sinon'),
   SpotifyWebApi = require('../src/server'),
-  WebApiError = require('../src/webapi-error'),
-  should = require('should');
+  WebApiError = require('../src/webapi-error');
 
 ('use strict');
 
-describe('Spotify Web API', function() {
-  beforeEach(function(done) {
+describe('Spotify Web API', () => {
+  beforeEach(done => {
     done();
   });
 
-  afterEach(function(done) {
+  afterEach(done => {
     if (typeof HttpManager._makeRequest.restore == 'function') {
       HttpManager._makeRequest.restore();
     }
     done();
   });
 
-  this.timeout(5000);
-
-  it('should set clientId, clientSecret and redirectUri', function() {
+  test('should set clientId, clientSecret and redirectUri', () => {
     var credentials = {
       clientId: 'someClientId',
       clientSecret: 'someClientSecret',
@@ -32,25 +29,25 @@ describe('Spotify Web API', function() {
 
     var api = new SpotifyWebApi(credentials);
 
-    api.getCredentials().clientId.should.equal(credentials.clientId);
-    api.getCredentials().clientSecret.should.equal(credentials.clientSecret);
-    api.getCredentials().redirectUri.should.equal(credentials.redirectUri);
-    api.getCredentials().accessToken.should.equal(credentials.accessToken);
-    api.getCredentials().refreshToken.should.equal(credentials.refreshToken);
+    expect(api.getCredentials().clientId).toBe(credentials.clientId);
+    expect(api.getCredentials().clientSecret).toBe(credentials.clientSecret);
+    expect(api.getCredentials().redirectUri).toBe(credentials.redirectUri);
+    expect(api.getCredentials().accessToken).toBe(credentials.accessToken);
+    expect(api.getCredentials().refreshToken).toBe(credentials.refreshToken);
   });
 
-  it('should retrieve track metadata', function(done) {
+  test('should retrieve track metadata', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: { uri: 'spotify:track:3Qm86XLflmIXVm1wcwkgDK' },
         headers: { 'cache-control': 'public, max-age=7200' },
@@ -61,9 +58,9 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.getTrack('3Qm86XLflmIXVm1wcwkgDK').then(
       function(data) {
-        data.body.uri.should.equal('spotify:track:3Qm86XLflmIXVm1wcwkgDK');
-        data.statusCode.should.equal(200);
-        data.headers['cache-control'].should.equal('public, max-age=7200');
+        expect(data.body.uri).toBe('spotify:track:3Qm86XLflmIXVm1wcwkgDK');
+        expect(data.statusCode).toBe(200);
+        expect(data.headers['cache-control']).toBe('public, max-age=7200');
         done();
       },
       function(err) {
@@ -72,18 +69,18 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should retrieve error when retrieving track metadata', function(done) {
+  test('should retrieve error when retrieving track metadata', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(new WebApiError('Do NOT do that again!', 400));
     });
 
@@ -93,26 +90,26 @@ describe('Spotify Web API', function() {
         done(new Error('Test failed!'));
       },
       function(err) {
-        err.statusCode.should.equal(400);
-        err.message.should.equal('Do NOT do that again!');
+        expect(err.statusCode).toBe(400);
+        expect(err.message).toBe('Do NOT do that again!');
         done();
       }
     );
   });
 
-  it('should get track for Swedish market', function(done) {
+  test('should get track for Swedish market', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK'
       );
-      options.query.market.should.equal('SE');
-      should.not.exist(options.data);
+      expect(options.query.market).toBe('SE');
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -127,36 +124,36 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should retrieve track metadata using callback', function(done) {
+  test('should retrieve track metadata using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
     var api = new SpotifyWebApi();
     api.getTrack('3Qm86XLflmIXVm1wcwkgDK', function(err, data) {
-      should.not.exist(err);
+      expect(err).toBeFalsy();
       done(err);
     });
   });
 
-  it('should fail for non existing track id', function(done) {
+  test('should fail for non existing track id', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
+      expect(method).toBe(superagent.get);
       callback(new WebApiError('non existing id', 400));
     });
 
@@ -166,40 +163,40 @@ describe('Spotify Web API', function() {
         done(new Error('Should have failed'));
       },
       function(err) {
-        'non existing id'.should.equal(err.message);
+        expect(err.message).toBe('non existing id');
         done();
       }
     );
   });
 
-  it('should fail for non existing track id using callback', function(done) {
+  test('should fail for non existing track id using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
+      expect(method).toBe(superagent.get);
       callback(new WebApiError('non existing id', 400), null);
     });
 
     var api = new SpotifyWebApi();
     api.getTrack('idontexist', function(err, data) {
-      should.not.exist(data);
-      should.exist(err);
-      'non existing id'.should.equal(err.message);
+      expect(data).toBeFalsy();
+      expect(err).toBeTruthy();
+      expect(err.message).toBe('non existing id');
       done();
     });
   });
 
-  it('should fail for empty track id', function(done) {
+  test('should fail for empty track id', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
+      expect(method).toBe(superagent.get);
       callback(new WebApiError('Fail', 400), null);
     });
 
@@ -209,25 +206,25 @@ describe('Spotify Web API', function() {
         done(new Error('Should have failed'));
       },
       function(err) {
-        should.exist(err);
+        expect(err).toBeTruthy();
         done();
       }
     );
   });
 
-  it('should retrieve metadata for several tracks', function(done) {
+  test('should retrieve metadata for several tracks', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/tracks');
-      options.query.ids.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/tracks');
+      expect(options.query.ids).toBe(
         '0eGsygTp906u18L0Oimnem,1lDWb6b6ieDQ2xT7ewTC3G'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -242,19 +239,19 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should retrieve metadata for several tracks using callback', function(done) {
+  test('should retrieve metadata for several tracks using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/tracks');
-      options.query.ids.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/tracks');
+      expect(options.query.ids).toBe(
         '0eGsygTp906u18L0Oimnem,1lDWb6b6ieDQ2xT7ewTC3G'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -262,24 +259,24 @@ describe('Spotify Web API', function() {
     api.getTracks(
       ['0eGsygTp906u18L0Oimnem', '1lDWb6b6ieDQ2xT7ewTC3G'],
       function(err, data) {
-        should.not.exist(err);
+        expect(err).toBeFalsy();
         done();
       }
     );
   });
 
-  it('should retrieve metadata for an album', function(done) {
+  test('should retrieve metadata for an album', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: { uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj' },
         statusCode: 200
@@ -289,8 +286,8 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj').then(
       function(data) {
-        'spotify:album:0sNOF9WDwhWunNAHPD3Baj'.should.equal(data.body.uri);
-        (200).should.equal(data.statusCode);
+        expect('spotify:album:0sNOF9WDwhWunNAHPD3Baj').toBe(data.body.uri);
+        expect(data.statusCode).toBe(200);
         done();
       },
       function(err) {
@@ -299,19 +296,19 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should retrieve metadata for an album for a market ', function(done) {
+  test('should retrieve metadata for an album for a market ', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj'
       );
-      should.not.exist(options.data);
-      options.query.market.should.equal('SE');
+      expect(options.data).toBeFalsy();
+      expect(options.query.market).toBe('SE');
       callback(null, {
         body: { uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj' },
         statusCode: 200
@@ -321,8 +318,8 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', { market: 'SE' }).then(
       function(data) {
-        'spotify:album:0sNOF9WDwhWunNAHPD3Baj'.should.equal(data.body.uri);
-        (200).should.equal(data.statusCode);
+        expect('spotify:album:0sNOF9WDwhWunNAHPD3Baj').toBe(data.body.uri);
+        expect(data.statusCode).toBe(200);
         done();
       },
       function(err) {
@@ -331,18 +328,18 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should retrieve metadata for an album using callback', function(done) {
+  test('should retrieve metadata for an album using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: { uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj' },
         statusCode: 200
@@ -351,26 +348,26 @@ describe('Spotify Web API', function() {
 
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', function(err, data) {
-      should.not.exist(err);
-      'spotify:album:0sNOF9WDwhWunNAHPD3Baj'.should.equal(data.body.uri);
-      (200).should.equal(data.statusCode);
+      expect(err).toBeFalsy();
+      expect('spotify:album:0sNOF9WDwhWunNAHPD3Baj').toBe(data.body.uri);
+      expect(data.statusCode).toBe(200);
       done();
     });
   });
 
-  it('should retrieve metadata for several albums', function(done) {
+  test('should retrieve metadata for several albums', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/albums');
-      options.query.ids.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/albums');
+      expect(options.query.ids).toBe(
         '41MnTivkwTO3UUJ8DrqEJJ,6JWc4iAiJ9FjyK0B59ABb4'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           albums: [
@@ -385,13 +382,13 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.getAlbums(['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4']).then(
       function(data) {
-        'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'.should.equal(
-          data.body.albums[0].uri
+        expect(data.body.albums[0].uri).toBe(
+          'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'
         );
-        'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'.should.equal(
-          data.body.albums[1].uri
+        expect(data.body.albums[1].uri).toBe(
+          'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'
         );
-        (200).should.equal(data.statusCode);
+        expect(data.statusCode).toBe(200);
         done();
       },
       function(err) {
@@ -400,19 +397,19 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should retrieve metadata for several albums using callback', function(done) {
+  test('should retrieve metadata for several albums using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/albums');
-      options.query.ids.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/albums');
+      expect(options.query.ids).toBe(
         '41MnTivkwTO3UUJ8DrqEJJ,6JWc4iAiJ9FjyK0B59ABb4'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           albums: [
@@ -428,31 +425,31 @@ describe('Spotify Web API', function() {
     api.getAlbums(
       ['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4'],
       function(err, data) {
-        should.not.exist(err);
-        'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'.should.equal(
-          data.body.albums[0].uri
+        expect(err).toBeNull();
+        expect(data.body.albums[0].uri).toBe(
+          'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'
         );
-        'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'.should.equal(
-          data.body.albums[1].uri
+        expect(data.body.albums[1].uri).toBe(
+          'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'
         );
-        (200).should.equal(data.statusCode);
+        expect(data.statusCode).toBe(200);
         done();
       }
     );
   });
 
-  it('should retrive metadata for an artist', function(done) {
+  test('should retrive metadata for an artist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/artists/0LcJLqbBmaGUft1e9Mm8HV'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: { uri: 'spotify:artist:0LcJLqbBmaGUft1e9Mm8HV' }
       });
@@ -461,7 +458,7 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.getArtist('0LcJLqbBmaGUft1e9Mm8HV').then(
       function(data) {
-        'spotify:artist:0LcJLqbBmaGUft1e9Mm8HV'.should.equal(data.body.uri);
+        expect('spotify:artist:0LcJLqbBmaGUft1e9Mm8HV').toBe(data.body.uri);
         done();
       },
       function(err) {
@@ -470,18 +467,18 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should retrieve metadata for an artist using callback', function(done) {
+  test('should retrieve metadata for an artist using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/artists/0LcJLqbBmaGUft1e9Mm8HV'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: { uri: 'spotify:artist:0LcJLqbBmaGUft1e9Mm8HV' }
       });
@@ -489,25 +486,25 @@ describe('Spotify Web API', function() {
 
     var api = new SpotifyWebApi();
     api.getArtist('0LcJLqbBmaGUft1e9Mm8HV', function(err, data) {
-      should.not.exist(err);
-      'spotify:artist:0LcJLqbBmaGUft1e9Mm8HV'.should.equal(data.body.uri);
+      expect(err).toBeFalsy();
+      expect('spotify:artist:0LcJLqbBmaGUft1e9Mm8HV').toBe(data.body.uri);
       done();
     });
   });
 
-  it('should retrieve metadata for several artists', function(done) {
+  test('should retrieve metadata for several artists', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/artists');
-      options.query.ids.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/artists');
+      expect(options.query.ids).toBe(
         '0oSGxfWSnnOXhD2fKuz2Gy,3dBVyJ7JuOMt4GE9607Qin'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           artists: [
@@ -522,13 +519,13 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.getArtists(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(
       function(data) {
-        'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'.should.equal(
-          data.body.artists[0].uri
+        expect(data.body.artists[0].uri).toBe(
+          'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'
         );
-        'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'.should.equal(
-          data.body.artists[1].uri
+        expect(data.body.artists[1].uri).toBe(
+          'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'
         );
-        (200).should.equal(data.statusCode);
+        expect(data.statusCode).toBe(200);
         done();
       },
       function(err) {
@@ -537,19 +534,19 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should retrieve metadata for several artists using callback', function(done) {
+  test('should retrieve metadata for several artists using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/artists');
-      options.query.ids.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/artists');
+      expect(options.query.ids).toBe(
         '0oSGxfWSnnOXhD2fKuz2Gy,3dBVyJ7JuOMt4GE9607Qin'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           artists: [
@@ -565,35 +562,35 @@ describe('Spotify Web API', function() {
     api.getArtists(
       ['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin'],
       function(err, data) {
-        should.not.exist(err);
-        'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'.should.equal(
-          data.body.artists[0].uri
+        expect(err).toBeFalsy();
+        expect(data.body.artists[0].uri).toBe(
+          'spotify:artist:0oSGxfWSnnOXhD2fKuz2Gy'
         );
-        'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'.should.equal(
-          data.body.artists[1].uri
+        expect(data.body.artists[1].uri).toBe(
+          'spotify:artist:3dBVyJ7JuOMt4GE9607Qin'
         );
-        (200).should.equal(data.statusCode);
+        expect(data.statusCode).toBe(200);
         done();
       }
     );
   });
 
-  it('should search for an album using limit and offset', function(done) {
+  test('should search for an album using limit and offset', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/search/');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/search/');
+      expect(options.query).toEqual({
         limit: 3,
         offset: 2,
         q: 'The Best of Keane',
         type: 'album'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           albums: {
@@ -611,11 +608,11 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchAlbums('The Best of Keane', { limit: 3, offset: 2 }).then(
       function(data) {
-        'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'.should.equal(
-          data.body.albums.href
+        expect(data.body.albums.href).toBe(
+          'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
         );
-        (200).should.equal(data.statusCode);
-        'value'.should.equal(data.headers.test);
+        expect(data.statusCode).toBe(200);
+        expect('value').toBe(data.headers.test);
         done();
       },
       function(err) {
@@ -625,22 +622,22 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should search for an album using limit and offset using callback', function(done) {
+  test('should search for an album using limit and offset using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/search/');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/search/');
+      expect(options.query).toEqual({
         limit: 3,
         offset: 2,
         q: 'The Best of Keane',
         type: 'album'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           albums: {
@@ -656,30 +653,30 @@ describe('Spotify Web API', function() {
       err,
       data
     ) {
-      should.not.exist(err);
-      'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'.should.equal(
-        data.body.albums.href
+      expect(err).toBeFalsy();
+      expect(data.body.albums.href).toBe(
+        'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
       );
       done();
     });
   });
 
-  it('should search for playlists', function(done) {
+  test('should search for playlists', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/search/');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/search/');
+      expect(options.query).toEqual({
         limit: 1,
         offset: 0,
         q: 'workout',
         type: 'playlist'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           playlists: {
@@ -693,8 +690,8 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchPlaylists('workout', { limit: 1, offset: 0 }).then(
       function(data) {
-        'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'.should.equal(
-          data.body.playlists.href
+        expect(data.body.playlists.href).toBe(
+          'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'
         );
         done();
       },
@@ -705,22 +702,22 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should search for an artist using limit and offset', function(done) {
+  test('should search for an artist using limit and offset', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/search/');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/search/');
+      expect(options.query).toEqual({
         limit: 5,
         offset: 1,
         q: 'David Bowie',
         type: 'artist'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           artists: {
@@ -734,8 +731,8 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchArtists('David Bowie', { limit: 5, offset: 1 }).then(
       function(data) {
-        'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'.should.equal(
-          data.body.artists.href
+        expect(data.body.artists.href).toBe(
+          'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
         );
         done();
       },
@@ -745,22 +742,22 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should search for an artist using limit and offset using callback', function(done) {
+  test('should search for an artist using limit and offset using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/search/');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/search/');
+      expect(options.query).toEqual({
         limit: 5,
         offset: 1,
         q: 'David Bowie',
         type: 'artist'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           artists: {
@@ -776,30 +773,30 @@ describe('Spotify Web API', function() {
       err,
       data
     ) {
-      should.not.exist(err);
-      'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'.should.equal(
-        data.body.artists.href
+      expect(err).toBeFalsy();
+      expect(data.body.artists.href).toBe(
+        'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
       );
       done();
     });
   });
 
-  it('should search for a track using limit and offset', function(done) {
+  test('should search for a track using limit and offset', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/search/');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/search/');
+      expect(options.query).toEqual({
         limit: 3,
         offset: 2,
         q: 'Mr. Brightside',
         type: 'track'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           tracks: {
@@ -813,8 +810,8 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.searchTracks('Mr. Brightside', { limit: 3, offset: 2 }).then(
       function(data) {
-        'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'.should.equal(
-          data.body.tracks.href
+        expect(data.body.tracks.href).toBe(
+          'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
         );
         done();
       },
@@ -825,22 +822,22 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should search for a track using limit and offset using callback', function(done) {
+  test('should search for a track using limit and offset using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/search/');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/search/');
+      expect(options.query).toEqual({
         limit: 3,
         offset: 2,
         q: 'Mr. Brightside',
         type: 'track'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           tracks: {
@@ -856,30 +853,30 @@ describe('Spotify Web API', function() {
       err,
       data
     ) {
-      should.not.exist(err);
-      'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'.should.equal(
-        data.body.tracks.href
+      expect(err).toBeFalsy();
+      expect(data.body.tracks.href).toBe(
+        'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
       );
       done();
     });
   });
 
-  it('should search for several types using callback', function(done) {
+  test('should search for several types using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/search/');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/search/');
+      expect(options.query).toEqual({
         limit: 3,
         offset: 2,
         q: 'Mr. Brightside',
         type: 'track,album'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           tracks: {
@@ -896,33 +893,33 @@ describe('Spotify Web API', function() {
       ['track', 'album'],
       { limit: 3, offset: 2 },
       function(err, data) {
-        should.not.exist(err);
-        'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track,album'.should.equal(
-          data.body.tracks.href
+        expect(err).toBeFalsy();
+        expect(data.body.tracks.href).toBe(
+          'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track,album'
         );
         done();
       }
     );
   });
 
-  it('should get artists albums', function(done) {
+  test('should get artists albums', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums'
       );
-      options.query.should.eql({
+      expect(options.query).toEqual({
         album_type: 'album',
         country: 'GB',
         limit: 2,
         offset: 5
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           href:
@@ -941,8 +938,8 @@ describe('Spotify Web API', function() {
       })
       .then(
         function(data) {
-          'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'.should.equal(
-            data.body.href
+          expect(data.body.href).toBe(
+            'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
           );
           done();
         },
@@ -953,24 +950,24 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should get artists albums using callback', function(done) {
+  test('should get artists albums using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums'
       );
-      options.query.should.eql({
+      expect(options.query).toEqual({
         album_type: 'album',
         country: 'GB',
         limit: 2,
         offset: 5
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           href:
@@ -984,31 +981,31 @@ describe('Spotify Web API', function() {
       '0oSGxfWSnnOXhD2fKuz2Gy',
       { album_type: 'album', country: 'GB', limit: 2, offset: 5 },
       function(err, data) {
-        should.not.exist(err);
-        'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'.should.equal(
-          data.body.href
+        expect(err).toBeFalsy();
+        expect(data.body.href).toBe(
+          'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums?offset=5&limit=2&album_type=album&market=GB'
         );
         done();
       }
     );
   });
 
-  it('should get tracks from album', function(done) {
+  test('should get tracks from album', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks'
       );
-      options.query.should.eql({
+      expect(options.query).toEqual({
         offset: 1,
         limit: 5
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           href:
@@ -1020,8 +1017,8 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
     api.getAlbumTracks('41MnTivkwTO3UUJ8DrqEJJ', { limit: 5, offset: 1 }).then(
       function(data) {
-        'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'.should.equal(
-          data.body.href
+        expect(data.body.href).toBe(
+          'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
         );
         done();
       },
@@ -1031,22 +1028,22 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should get tracks from album using callback', function(done) {
+  test('should get tracks from album using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks'
       );
-      options.query.should.eql({
+      expect(options.query).toEqual({
         offset: 1,
         limit: 5
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           href:
@@ -1060,30 +1057,30 @@ describe('Spotify Web API', function() {
       '41MnTivkwTO3UUJ8DrqEJJ',
       { limit: 5, offset: 1 },
       function(err, data) {
-        should.not.exist(err);
-        'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'.should.equal(
-          data.body.href
+        expect(err).toBeFalsy();
+        expect(data.body.href).toEqual(
+          'https://api.spotify.com/v1/albums/41MnTivkwTO3UUJ8DrqEJJ/tracks?offset=1&limit=5'
         );
         done();
       }
     );
   });
 
-  it('should get top tracks for artist', function(done) {
+  test('should get top tracks for artist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/top-tracks'
       );
-      options.query.should.eql({
+      expect(options.query).toEqual({
         country: 'GB'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -1099,44 +1096,44 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should get top tracks for artist', function(done) {
+  test('should get top tracks for artist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/top-tracks'
       );
-      options.query.should.eql({
+      expect(options.query).toEqual({
         country: 'GB'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
     var api = new SpotifyWebApi();
 
     api.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB', function(err, data) {
-      should.not.exist(err);
+      expect(err).toBeFalsy();
       done();
     });
   });
 
-  it('should get similar artists', function(done) {
+  test('should get similar artists', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/artists/0qeei9KQnptjwb8MgkqEoy/related-artists'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           artists: [{}]
@@ -1148,7 +1145,7 @@ describe('Spotify Web API', function() {
 
     api.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy').then(
       function(data) {
-        should.exist(data.body.artists);
+        expect(data.body.artists).toBeTruthy();
         done();
       },
       function(err) {
@@ -1157,18 +1154,18 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should get similar artists using callback', function(done) {
+  test('should get similar artists using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/artists/0qeei9KQnptjwb8MgkqEoy/related-artists'
       );
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           artists: [{}]
@@ -1179,21 +1176,21 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
 
     api.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy', function(err, data) {
-      should.exist(data.body.artists);
+      expect(data.body.artists).toBeTruthy();
       done();
     });
   });
 
-  it('should get a user', function(done) {
+  test('should get a user', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/users/petteralexis');
-      should.not.exist(options.data);
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/users/petteralexis');
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           uri: 'spotify:user:petteralexis'
@@ -1205,7 +1202,7 @@ describe('Spotify Web API', function() {
 
     api.getUser('petteralexis').then(
       function(data) {
-        'spotify:user:petteralexis'.should.equal(data.body.uri);
+        expect('spotify:user:petteralexis').toBe(data.body.uri);
         done();
       },
       function(err) {
@@ -1214,16 +1211,16 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it("should get a user with a '#' character and encode it properly", function(done) {
+  test("should get a user with a '#' character and encode it properly", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/users/%23matze23');
-      should.not.exist(options.data);
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/users/%23matze23');
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           uri: 'spotify:user:%23matze23'
@@ -1235,7 +1232,7 @@ describe('Spotify Web API', function() {
 
     api.getUser('#matze23').then(
       function(data) {
-        'spotify:user:%23matze23'.should.equal(data.body.uri);
+        expect('spotify:user:%23matze23').toBe(data.body.uri);
         done();
       },
       function(err) {
@@ -1244,16 +1241,16 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should get a user using callback', function(done) {
+  test('should get a user using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/users/petteralexis');
-      should.not.exist(options.data);
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/users/petteralexis');
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           uri: 'spotify:user:petteralexis'
@@ -1264,21 +1261,23 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
 
     api.getUser('petteralexis', function(err, data) {
-      'spotify:user:petteralexis'.should.equal(data.body.uri);
+      expect('spotify:user:petteralexis').toBe(data.body.uri);
       done();
     });
   });
 
-  it("should get the authenticated user's information", function(done) {
+  test("should get the authenticated user's information", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me');
-      options.headers.should.eql({ Authorization: 'Bearer someAccessToken' });
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me');
+      expect(options.headers).toEqual({
+        Authorization: 'Bearer someAccessToken'
+      });
       callback(null, {
         body: {
           uri: 'spotify:user:thelinmichael'
@@ -1291,21 +1290,23 @@ describe('Spotify Web API', function() {
     });
 
     api.getMe().then(function(data) {
-      'spotify:user:thelinmichael'.should.equal(data.body.uri);
+      expect('spotify:user:thelinmichael').toBe(data.body.uri);
       done();
     });
   });
 
-  it("should get the authenticated user's information with accesstoken set on the api object", function(done) {
+  test("should get the authenticated user's information with accesstoken set on the api object", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me');
-      options.headers.should.eql({ Authorization: 'Bearer someAccessToken' });
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me');
+      expect(options.headers).toEqual({
+        Authorization: 'Bearer someAccessToken'
+      });
       callback(null, {
         body: {
           uri: 'spotify:user:thelinmichael'
@@ -1317,20 +1318,20 @@ describe('Spotify Web API', function() {
     api.setAccessToken('someAccessToken');
 
     api.getMe().then(function(data) {
-      'spotify:user:thelinmichael'.should.equal(data.body.uri);
+      expect('spotify:user:thelinmichael').toBe(data.body.uri);
       done();
     });
   });
 
-  it('should fail if no token is provided for a request that requires an access token', function(done) {
+  test('should fail if no token is provided for a request that requires an access token', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me');
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me');
       if (!options.headers || !options.headers.Authorization) {
         callback(new WebApiError('No token', 401), null);
       }
@@ -1343,22 +1344,22 @@ describe('Spotify Web API', function() {
         done(new Error('Should have failed!'));
       },
       function(err) {
-        'No token'.should.equal(err.message);
-        (401).should.equal(err.statusCode);
+        expect(err.message).toBe('No token');
+        expect(err.statusCode).toBe(401);
         done();
       }
     );
   });
 
-  it('should fail if no token is provided for a request that requires an access token using callback', function(done) {
+  test('should fail if no token is provided for a request that requires an access token using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me');
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me');
       if (!options.headers || !options.headers.Authorization) {
         callback(new WebApiError('No token', 401), null);
       }
@@ -1367,25 +1368,25 @@ describe('Spotify Web API', function() {
     var api = new SpotifyWebApi();
 
     api.getMe(function(err) {
-      'No token'.should.equal(err.message);
-      (401).should.equal(err.statusCode);
-      should.exist(err);
+      expect(err.message).toBe('No token');
+      expect(err.statusCode).toBe(401);
+      expect(err).toBeTruthy();
       done();
     });
   });
 
-  it('should get a users playlists', function(done) {
+  test('should get a users playlists', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists'
       );
-      should.not.exist(options.query);
+      expect(options.query).toBeFalsy();
       callback(null, {
         body: {
           items: [
@@ -1405,22 +1406,22 @@ describe('Spotify Web API', function() {
     api.setAccessToken('myVeryLongAccessToken');
 
     api.getUserPlaylists('thelinmichael').then(function(data) {
-      (2).should.equal(data.body.items.length);
-      (200).should.equal(data.statusCode);
+      expect(2).toBe(data.body.items.length);
+      expect(data.statusCode).toBe(200);
       done();
     });
   });
 
-  it('should get the current users playlists', function(done) {
+  test('should get the current users playlists', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/playlists');
-      should.not.exist(options.query);
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/playlists');
+      expect(options.query).toBeFalsy();
       callback(null, {
         body: {
           items: [
@@ -1440,24 +1441,24 @@ describe('Spotify Web API', function() {
     api.setAccessToken('myVeryLongAccessToken');
 
     api.getUserPlaylists().then(function(data) {
-      (2).should.equal(data.body.items.length);
-      (200).should.equal(data.statusCode);
+      expect(2).toBe(data.body.items.length);
+      expect(data.statusCode).toBe(200);
       done();
     });
   });
 
-  it('should get a playlist', function(done) {
+  test('should get a playlist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK'
       );
-      should.not.exist(options.query);
+      expect(options.query).toBeFalsy();
       callback(null, {
         body: {
           uri: 'spotify:user:thelinmichael:playlist:5ieJqeLJjjI8iJWaxeBLuK'
@@ -1473,15 +1474,15 @@ describe('Spotify Web API', function() {
       err,
       data
     ) {
-      'spotify:user:thelinmichael:playlist:5ieJqeLJjjI8iJWaxeBLuK'.should.equal(
-        data.body.uri
+      expect(data.body.uri).toBe(
+        'spotify:user:thelinmichael:playlist:5ieJqeLJjjI8iJWaxeBLuK'
       );
-      (200).should.equal(data.statusCode);
+      expect(data.statusCode).toBe(200);
       done();
     });
   });
 
-  it.skip('should create a playlist', function(done) {
+  test.skip('should create a playlist', function(done) {
     var api = new SpotifyWebApi();
     api.setAccessToken('long-access-token');
 
@@ -1498,22 +1499,22 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should create a private playlist using callback', function(done) {
+  test('should create a private playlist using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.post);
-      uri.should.equal(
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists'
       );
-      JSON.parse(options.data).should.eql({
+      expect(JSON.parse(options.data)).toEqual({
         name: 'My Cool Playlist',
         public: false
       });
-      should.not.exist(options.query);
+      expect(options.query).toBeFalsy();
       callback(null, {
         body: { name: 'My Cool Playlist', public: false },
         statusCode: 200
@@ -1527,27 +1528,27 @@ describe('Spotify Web API', function() {
       'My Cool Playlist',
       { public: false },
       function(err, data) {
-        'My Cool Playlist'.should.equal(data.body.name);
-        (200).should.equal(data.statusCode);
+        expect(data.body.name).toBe('My Cool Playlist');
+        expect(data.statusCode).toBe(200);
         done();
       }
     );
   });
 
-  it('should create a playlist using callback without options', function(done) {
+  test('should create a playlist using callback without options', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.post);
-      uri.should.equal(
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists'
       );
-      JSON.parse(options.data).should.eql({ name: 'My Cool Playlist' });
+      expect(JSON.parse(options.data)).toEqual({ name: 'My Cool Playlist' });
       callback(null, { body: { name: 'My Cool Playlist' } });
-      should.not.exist(options.query);
+      expect(options.query).toBeFalsy();
     });
 
     var api = new SpotifyWebApi();
@@ -1560,24 +1561,24 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it('should change playlist details', function(done) {
+  test('should change playlist details', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal(
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK'
       );
-      JSON.parse(options.data).should.eql({
+      expect(JSON.parse(options.data)).toEqual({
         name:
           'This is a new name for my Cool Playlist, and will become private',
         public: false
       });
       callback(null, { statusCode: 200 });
-      should.not.exist(options.query);
+      expect(options.query).toBeFalsy();
     });
 
     var api = new SpotifyWebApi();
@@ -1590,26 +1591,25 @@ describe('Spotify Web API', function() {
         public: false
       })
       .then(function(data) {
-        (200).should.equal(data.statusCode);
+        expect(data.statusCode).toBe(200);
         done();
       });
   });
 
-  it('should add tracks to playlist', function(done) {
+  test('should add tracks to playlist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.post);
-      uri.should.equal(
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
       );
-      should.not.exist(options.query);
-      JSON.parse(options.data)
-        ['uris'].should.be.an.instanceOf(Array)
-        .and.have.lengthOf(2);
+      expect(options.query).toBeFalsy();
+      expect(JSON.parse(options.data)['uris']).toBeInstanceOf(Array);
+      expect(JSON.parse(options.data)['uris']).toHaveLength(2);
       callback(null, { body: { snapshot_id: 'aSnapshotId' }, statusCode: 201 });
     });
 
@@ -1622,23 +1622,22 @@ describe('Spotify Web API', function() {
         'spotify:track:1301WleyT98MSxVHPZCA6M'
       ])
       .then(function(data) {
-        (201).should.equal(data.statusCode);
+        expect(201).toBe(data.statusCode);
         done();
       });
   });
 
-  it('should add tracks to playlist with specified index', function(done) {
+  test('should add tracks to playlist with specified index', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.post);
-      JSON.parse(options.data)
-        ['uris'].should.be.an.instanceOf(Array)
-        .and.have.lengthOf(2);
-      options.query.should.eql({
+      expect(method).toBe(superagent.post);
+      expect(JSON.parse(options.data)['uris']).toBeInstanceOf(Array);
+      expect(JSON.parse(options.data)['uris']).toHaveLength(2);
+      expect(options.query).toEqual({
         position: 10
       });
       callback(null, { body: { snapshot_id: 'aSnapshotId' }, statusCode: 201 });
@@ -1664,19 +1663,21 @@ describe('Spotify Web API', function() {
       });
   });
 
-  it("should get user's top artists", function(done) {
+  test("should get user's top artists", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/top/artists');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/top/artists');
+      expect(options.query).toEqual({
         limit: 5
       });
-      options.headers.should.eql({ Authorization: 'Bearer someAccessToken' });
+      expect(options.headers).toEqual({
+        Authorization: 'Bearer someAccessToken'
+      });
       callback(null, {
         body: {
           items: []
@@ -1689,24 +1690,26 @@ describe('Spotify Web API', function() {
     });
 
     api.getMyTopArtists({ limit: 5 }).then(function(data) {
-      should.exist(data.body.items);
+      expect(data.body.items).toBeTruthy();
       done();
     });
   });
 
-  it("should get user's top tracks", function(done) {
+  test("should get user's top tracks", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/top/tracks');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/top/tracks');
+      expect(options.query).toEqual({
         limit: 5
       });
-      options.headers.should.eql({ Authorization: 'Bearer someAccessToken' });
+      expect(options.headers).toEqual({
+        Authorization: 'Bearer someAccessToken'
+      });
       callback(null, {
         body: {
           items: []
@@ -1719,24 +1722,26 @@ describe('Spotify Web API', function() {
     });
 
     api.getMyTopTracks({ limit: 5 }).then(function(data) {
-      should.exist(data.body.items);
+      expect(data.body.items).toBeTruthy();
       done();
     });
   });
 
-  it("should get user's recently played tracks:", function(done) {
+  test("should get user's recently played tracks:", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/player/recently-played');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/recently-played');
+      expect(options.query).toEqual({
         limit: 5
       });
-      options.headers.should.eql({ Authorization: 'Bearer someAccessToken' });
+      expect(options.headers).toEqual({
+        Authorization: 'Bearer someAccessToken'
+      });
       callback(null, {
         body: {
           items: []
@@ -1749,21 +1754,23 @@ describe('Spotify Web API', function() {
     });
 
     api.getMyRecentlyPlayedTracks({ limit: 5 }).then(function(data) {
-      should.exist(data.body.items);
+      expect(data.body.items).toBeTruthy();
       done();
     });
   });
 
-  it("should get user's devices:", function(done) {
+  test("should get user's devices:", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/player/devices');
-      options.headers.should.eql({ Authorization: 'Bearer someAccessToken' });
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/devices');
+      expect(options.headers).toEqual({
+        Authorization: 'Bearer someAccessToken'
+      });
       callback(null, {
         body: {
           devices: []
@@ -1776,24 +1783,26 @@ describe('Spotify Web API', function() {
     });
 
     api.getMyDevices().then(function(data) {
-      should.exist(data.body.devices);
+      expect(data.body.devices).toBeTruthy();
       done();
     });
   });
 
-  it("should get user's current playback status:", function(done) {
+  test("should get user's current playback status:", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/player');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player');
+      expect(options.query).toEqual({
         market: 'GB'
       });
-      options.headers.should.eql({ Authorization: 'Bearer someAccessToken' });
+      expect(options.headers).toEqual({
+        Authorization: 'Bearer someAccessToken'
+      });
       callback(null, {
         body: {
           device: {}
@@ -1806,25 +1815,25 @@ describe('Spotify Web API', function() {
     });
 
     api.getMyCurrentPlaybackState({ market: 'GB' }).then(function(data) {
-      should.exist(data.body.device);
+      expect(data.body.device).toBeTruthy();
       done();
     });
   });
 
-  it("should transfer the user's playback", function(done) {
+  test("should transfer the user's playback", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player');
-      JSON.parse(options.data).should.eql({
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player');
+      expect(JSON.parse(options.data)).toEqual({
         device_ids: ['deviceId'],
         play: true
       });
-      should.not.exist(options.query);
+      expect(options.query).toBeFalsy();
       callback();
     });
 
@@ -1850,16 +1859,16 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it("should resume the user's playback", function(done) {
+  test("should resume the user's playback", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player/play');
-      should.not.exist(options.query);
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/play');
+      expect(options.query).toBeFalsy();
       callback();
     });
 
@@ -1880,17 +1889,17 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it("should resume the user's playback with options", function(done) {
+  test("should resume the user's playback with options", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player/play');
-      options.query.should.eql({ device_id: 'my_device_id' });
-      JSON.parse(options.data).should.eql({
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/play');
+      expect(options.query).toEqual({ device_id: 'my_device_id' });
+      expect(JSON.parse(options.data)).toEqual({
         context_uri: 'my_context',
         offset: {
           position: 5
@@ -1922,16 +1931,16 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it("should pause the user's playback", function(done) {
+  test("should pause the user's playback", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player/pause');
-      should.not.exist(options.query);
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/pause');
+      expect(options.query).toBeFalsy();
       callback();
     });
 
@@ -1952,16 +1961,16 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it("should pause the user's playback with options", function(done) {
+  test("should pause the user's playback with options", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player/pause');
-      options.query.should.eql({ device_id: 'my_device_id' });
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/pause');
+      expect(options.query).toEqual({ device_id: 'my_device_id' });
       callback();
     });
 
@@ -1982,16 +1991,16 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it("should skip the user's playback to next track", function(done) {
+  test("should skip the user's playback to next track", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.post);
-      uri.should.equal('https://api.spotify.com/v1/me/player/next');
-      should.not.exist(options.query);
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/next');
+      expect(options.query).toBeFalsy();
       callback();
     });
 
@@ -2012,16 +2021,16 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it("should skip the user's playback to previous track", function(done) {
+  test("should skip the user's playback to previous track", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.post);
-      uri.should.equal('https://api.spotify.com/v1/me/player/previous');
-      should.not.exist(options.query);
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/previous');
+      expect(options.query).toBeFalsy();
       callback();
     });
 
@@ -2042,17 +2051,17 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it("should set the user's playback repeat mode", function(done) {
+  test("should set the user's playback repeat mode", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player/repeat');
-      should.exist(options.query);
-      should.not.exist(options.body);
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/repeat');
+      expect(options.query).toBeTruthy();
+      expect(options.body).toBeFalsy();
       callback();
     });
 
@@ -2073,17 +2082,17 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it("should set the user's playback shuffle mode", function(done) {
+  test("should set the user's playback shuffle mode", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player/shuffle');
-      should.exist(options.query);
-      should.not.exist(options.body);
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/shuffle');
+      expect(options.query).toBeTruthy();
+      expect(options.body).toBeFalsy();
       callback();
     });
 
@@ -2104,20 +2113,20 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it("should set the user's playback volume", function(done) {
+  test("should set the user's playback volume", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player/volume');
-      options.query.should.eql({
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/volume');
+      expect(options.query).toEqual({
         volume_percent: 80,
         device_id: 'my_device_id'
       });
-      should.not.exist(options.body);
+      expect(options.body).toBeFalsy();
       callback();
     });
 
@@ -2138,17 +2147,17 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should seek', function(done) {
+  test('should seek', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player/seek');
-      options.query.should.eql({ position_ms: 2000 });
-      should.not.exist(options.body);
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/seek');
+      expect(options.query).toEqual({ position_ms: 2000 });
+      expect(options.body).toBeFalsy();
       callback();
     });
 
@@ -2169,20 +2178,20 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should seek on a certain device', function(done) {
+  test('should seek on a certain device', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/player/seek');
-      options.query.should.eql({
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/seek');
+      expect(options.query).toEqual({
         position_ms: 2000,
         device_id: 'my_device_id'
       });
-      should.not.exist(options.body);
+      expect(options.body).toBeFalsy();
       callback();
     });
 
@@ -2203,7 +2212,7 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it.skip('should retrieve an access token using the client credentials flow', function(done) {
+  test.skip('should retrieve an access token using the client credentials flow', function(done) {
     var clientId = 'someClientId',
       clientSecret = 'someClientSecret';
 
@@ -2214,9 +2223,9 @@ describe('Spotify Web API', function() {
 
     api.clientCredentialsGrant().then(
       function(data) {
-        'Bearer'.should.equal(data['token_type']);
-        (3600).should.equal(data['expires_in']);
-        should.exist(data['access_token']);
+        expect('Bearer').toBe(data['token_type']);
+        expect(3600).toBe(data['expires_in']);
+        expect(data['access_token']).toBeTruthy();
         done();
       },
       function(err) {
@@ -2225,7 +2234,7 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it.skip('should retrieve an access token with scopes', function(done) {
+  test.skip('should retrieve an access token with scopes', function(done) {
     var clientId = 'fcecfc79122e4cd299473677a17cbd4d',
       clientSecret = 'f6338737c9bb4bc9a71924cb2940adss';
 
@@ -2243,9 +2252,9 @@ describe('Spotify Web API', function() {
       .then(
         function(data) {
           console.log(data);
-          'Bearer'.should.equal(data['token_type']);
-          (3600).should.equal(data['expires_in']);
-          should.exist(data['access_token']);
+          expect('Bearer').toBe(data['token_type']);
+          expect(3600).toBe(data['expires_in']);
+          expect(data['access_token']).toBeTruthy();
           done();
         },
         function(err) {
@@ -2254,7 +2263,7 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it.skip('should retrieve an access token using the authorization code flow', function(done) {
+  test.skip('should retrieve an access token using the authorization code flow', function(done) {
     var credentials = {
       clientId: 'someClientId',
       clientSecret: 'someClientSecret',
@@ -2265,10 +2274,10 @@ describe('Spotify Web API', function() {
 
     api.authorizationCodeGrant('mySuperLongCode').then(
       function(data) {
-        'Bearer'.should.equal(data['token_type']);
-        (3600).should.equal(data['expires_in']);
-        should.exist(data['access_token']);
-        should.exist(data['refresh_token']);
+        expect('Bearer').toBe(data['token_type']);
+        expect(3600).toBe(data['expires_in']);
+        expect(data['access_token']).toBeTruthy();
+        expect(data['refresh_token']).toBeTruthy();
         done();
       },
       function(err) {
@@ -2278,21 +2287,21 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should refresh an access token', function(done) {
+  test('should refresh an access token', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.post);
-      uri.should.equal('https://accounts.spotify.com/api/token');
-      options.data.should.eql({
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe('https://accounts.spotify.com/api/token');
+      expect(options.data).toEqual({
         grant_type: 'refresh_token',
         refresh_token: 'someLongRefreshToken'
       });
-      should.not.exist(options.query);
-      options.headers.should.eql({
+      expect(options.query).toBeFalsy();
+      expect(options.headers).toEqual({
         Authorization: 'Basic c29tZUNsaWVudElkOnNvbWVDbGllbnRTZWNyZXQ='
       });
       callback(null, {
@@ -2320,7 +2329,7 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it('should create authorization URL', function() {
+  test('should create authorization URL', () => {
     var scopes = ['user-read-private', 'user-read-email'],
       redirectUri = 'https://example.com/callback',
       clientId = '5fe01282e44241328a84e7c5cc169165',
@@ -2333,12 +2342,12 @@ describe('Spotify Web API', function() {
     });
 
     var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog);
-    'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'.should.equal(
-      authorizeURL
+    expect(authorizeURL).toBe(
+      'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
     );
   });
 
-  it('should ignore entire show_dialog param if it is not included', function() {
+  test('should ignore entire show_dialog param if it is not included', () => {
     var scopes = ['user-read-private', 'user-read-email'],
       redirectUri = 'https://example.com/callback',
       clientId = '5fe01282e44241328a84e7c5cc169165',
@@ -2350,34 +2359,34 @@ describe('Spotify Web API', function() {
     });
 
     var authorizeURL = api.createAuthorizeURL(scopes, state);
-    'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'.should.equal(
-      authorizeURL
+    expect(authorizeURL).toBe(
+      'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'
     );
   });
 
-  it('should set, get and reset credentials successfully', function() {
+  test('should set, get and reset credentials successfully', () => {
     var api = new SpotifyWebApi({
       clientId: 'myClientId',
       clientSecret: 'myClientSecret'
     });
 
-    api.getClientId().should.equal('myClientId');
-    api.getClientSecret().should.equal('myClientSecret');
+    expect(api.getClientId()).toBe('myClientId');
+    expect(api.getClientSecret()).toBe('myClientSecret');
 
     api.resetClientId();
-    should.not.exist(api.getClientId());
+    expect(api.getClientId()).toBeFalsy();
 
     api.setClientId('woopwoop');
-    api.getClientId().should.equal('woopwoop');
+    expect(api.getClientId()).toBe('woopwoop');
 
     api.resetClientSecret();
-    should.not.exist(api.getClientSecret());
+    expect(api.getClientSecret()).toBeFalsy();
 
     api.setClientSecret('aNewClientSecret');
-    api.getClientSecret().should.equal('aNewClientSecret');
+    expect(api.getClientSecret()).toBe('aNewClientSecret');
   });
 
-  it.skip('should get tracks in a playlist', function(done) {
+  test.skip('should get tracks in a playlist', function(done) {
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -2397,7 +2406,7 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it.skip('should get tracks in a playlist with fields option', function(done) {
+  test.skip('should get tracks in a playlist with fields option', function(done) {
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -2409,8 +2418,8 @@ describe('Spotify Web API', function() {
       })
       .then(
         function(data) {
-          should.exist(data.items);
-          should.not.exist(data.href);
+          expect(data.items).toBeTruthy();
+          expect(data.href).toBeFalsy();
           done();
         },
         function(err) {
@@ -2421,7 +2430,7 @@ describe('Spotify Web API', function() {
   });
 
   /* Run this test with a valid access token with the user-library-read scope */
-  it.skip('should get tracks in the users library', function(done) {
+  test.skip('should get tracks in the users library', function(done) {
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -2447,7 +2456,7 @@ describe('Spotify Web API', function() {
   });
 
   /* Run this test with a valid access token with the user-library-read scope */
-  it.skip('should determine if a track is in the users library', function(done) {
+  test.skip('should determine if a track is in the users library', function(done) {
     var accessToken = 'myAccessToken';
 
     var api = new SpotifyWebApi({
@@ -2455,9 +2464,9 @@ describe('Spotify Web API', function() {
     });
     api.containsMySavedTracks(['5ybJm6GczjQOgTqmJ0BomP']).then(
       function(data) {
-        Object.prototype.toString.call(data).should.equal('[object Array]');
-        data.length.should.equal(1);
-        data[0].should.equal(false);
+        expect(Object.prototype.toString.call(data)).toBe('[object Array]');
+        expect(data.length).toBe(1);
+        expect(data[0]).toBe(false);
         done();
       },
       function(err) {
@@ -2467,17 +2476,17 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should remove tracks in the users library', function(done) {
+  test('should remove tracks in the users library', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.del);
-      JSON.parse(options.data).should.eql(['3VNWq8rTnQG6fM1eldSpZ0']);
-      uri.should.equal('https://api.spotify.com/v1/me/tracks');
-      should.not.exist(options.query);
+      expect(method).toBe(superagent.del);
+      expect(JSON.parse(options.data)).toEqual(['3VNWq8rTnQG6fM1eldSpZ0']);
+      expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
+      expect(options.query).toBeFalsy();
       callback();
     });
 
@@ -2498,17 +2507,17 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should remove albums in the users library', function(done) {
+  test('should remove albums in the users library', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.del);
-      JSON.parse(options.data).should.eql(['27cZdqrQiKt3IT00338dws']);
-      uri.should.equal('https://api.spotify.com/v1/me/albums');
-      should.not.exist(options.query);
+      expect(method).toBe(superagent.del);
+      expect(JSON.parse(options.data)).toEqual(['27cZdqrQiKt3IT00338dws']);
+      expect(uri).toBe('https://api.spotify.com/v1/me/albums');
+      expect(options.query).toBeFalsy();
       callback();
     });
 
@@ -2529,18 +2538,18 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should add albums to the users library', function(done) {
+  test('should add albums to the users library', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      JSON.parse(options.data).should.eql(['27cZdqrQiKt3IT00338dws']);
-      uri.should.equal('https://api.spotify.com/v1/me/albums');
-      should.not.exist(options.query);
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(method).toBe(superagent.put);
+      expect(JSON.parse(options.data)).toEqual(['27cZdqrQiKt3IT00338dws']);
+      expect(uri).toBe('https://api.spotify.com/v1/me/albums');
+      expect(options.query).toBeFalsy();
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback();
     });
 
@@ -2561,18 +2570,18 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should get albums in the users library', function(done) {
+  test('should get albums in the users library', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/albums');
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
-      options.query.limit.should.equal(2);
-      options.query.offset.should.equal(1);
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/albums');
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
+      expect(options.query.limit).toBe(2);
+      expect(options.query.offset).toBe(1);
       callback(null, {
         body: {
           href: 'https://api.spotify.com/v1/me/albums?offset=1&limit=2',
@@ -2596,10 +2605,10 @@ describe('Spotify Web API', function() {
       })
       .then(
         function(data) {
-          data.body.href.should.equal(
+          expect(data.body.href).toBe(
             'https://api.spotify.com/v1/me/albums?offset=1&limit=2'
           );
-          data.body.items[0]['added_at'].should.equal('2014-07-08T18:18:33Z');
+          expect(data.body.items[0]['added_at']).toBe('2014-07-08T18:18:33Z');
           done();
         },
         function(err) {
@@ -2609,17 +2618,17 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should determine if an album is in the users library', function(done) {
+  test('should determine if an album is in the users library', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/albums/contains');
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
-      options.query.ids.should.equal('27cZdqrQiKt3IT00338dws');
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/albums/contains');
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
+      expect(options.query.ids).toBe('27cZdqrQiKt3IT00338dws');
       callback(null, { body: [true] });
     });
 
@@ -2630,11 +2639,11 @@ describe('Spotify Web API', function() {
     });
     api.containsMySavedAlbums(['27cZdqrQiKt3IT00338dws']).then(
       function(data) {
-        Object.prototype.toString
-          .call(data.body)
-          .should.equal('[object Array]');
-        data.body.length.should.equal(1);
-        data.body[0].should.equal(true);
+        expect(Object.prototype.toString.call(data.body)).toBe(
+          '[object Array]'
+        );
+        expect(data.body.length).toBe(1);
+        expect(data.body[0]).toBe(true);
         done();
       },
       function(err) {
@@ -2644,17 +2653,17 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should follow a playlist', function(done) {
+  test('should follow a playlist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      JSON.parse(options.data).should.eql({ public: false });
-      should.not.exist(options.query);
-      uri.should.equal(
+      expect(method).toBe(superagent.put);
+      expect(JSON.parse(options.data)).toEqual({ public: false });
+      expect(options.query).toBeFalsy();
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/jmperezperez/playlists/7p9EIC2KW0NNkTEOnTUZJl/followers'
       );
       callback();
@@ -2681,17 +2690,17 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should unfollow a playlist', function(done) {
+  test('should unfollow a playlist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.del);
-      should.not.exist(options.data);
-      should.not.exist(options.query);
-      uri.should.equal(
+      expect(method).toBe(superagent.del);
+      expect(options.data).toBeFalsy();
+      expect(options.query).toBeFalsy();
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/jmperezperez/playlists/7p9EIC2KW0NNkTEOnTUZJl/followers'
       );
       callback();
@@ -2714,20 +2723,20 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should follow several users', function(done) {
+  test('should follow several users', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'user',
         ids: 'thelinmichael,wizzler'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -2748,20 +2757,20 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should follow several users using callback', function(done) {
+  test('should follow several users using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'user',
         ids: 'thelinmichael,wizzler'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -2772,25 +2781,25 @@ describe('Spotify Web API', function() {
     });
 
     api.followUsers(['thelinmichael', 'wizzler'], function(err, data) {
-      should.not.exist(err);
+      expect(err).toBeFalsy();
       done();
     });
   });
 
-  it('should follow several artists', function(done) {
+  test('should follow several artists', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'artist',
         ids: '137W8MRPWKqSmrBGDBFSop'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -2811,20 +2820,20 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should follow several artists using callback', function(done) {
+  test('should follow several artists using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'artist',
         ids: '137W8MRPWKqSmrBGDBFSop'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -2839,20 +2848,20 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it('should unfollow several users', function(done) {
+  test('should unfollow several users', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.del);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.del);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'user',
         ids: 'thelinmichael,wizzler'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -2873,20 +2882,20 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should unfollow several users using callback', function(done) {
+  test('should unfollow several users using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.del);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.del);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'user',
         ids: 'thelinmichael,wizzler'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -2901,20 +2910,20 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it('should unfollow several artists', function(done) {
+  test('should unfollow several artists', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.del);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.del);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'artist',
         ids: '137W8MRPWKqSmrBGDBFSop'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback();
     });
 
@@ -2935,20 +2944,20 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should unfollow several artists using callback', function(done) {
+  test('should unfollow several artists using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.del);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.del);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'artist',
         ids: '137W8MRPWKqSmrBGDBFSop'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, { statusCode: 200 });
     });
 
@@ -2959,25 +2968,25 @@ describe('Spotify Web API', function() {
     });
 
     api.unfollowArtists(['137W8MRPWKqSmrBGDBFSop'], function(err, data) {
-      (200).should.equal(data.statusCode);
+      expect(data.statusCode).toBe(200);
       done();
     });
   });
 
-  it('should check whether the current user follows several other users', function(done) {
+  test('should check whether the current user follows several other users', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/following/contains');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following/contains');
+      expect(options.query).toEqual({
         type: 'user',
         ids: 'thelinmichael,wizzler'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, { body: [true, false] });
     });
 
@@ -2989,9 +2998,7 @@ describe('Spotify Web API', function() {
 
     api.isFollowingUsers(['thelinmichael', 'wizzler']).then(
       function(data) {
-        data.body.should.be.an.instanceOf(Array).and.have.lengthOf(2);
-        data.body[0].should.eql(true);
-        data.body[1].should.eql(false);
+        expect(data.body).toEqual([true, false]);
         done();
       },
       function(err) {
@@ -3001,20 +3008,20 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should check whether the current user follows several other users using callback', function(done) {
+  test('should check whether the current user follows several other users using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/following/contains');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following/contains');
+      expect(options.query).toEqual({
         type: 'user',
         ids: 'thelinmichael,wizzler'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, { body: [true, false] });
     });
 
@@ -3025,28 +3032,26 @@ describe('Spotify Web API', function() {
     });
 
     api.isFollowingUsers(['thelinmichael', 'wizzler'], function(err, data) {
-      should.not.exist(err);
-      data.body.should.be.an.instanceOf(Array).and.have.lengthOf(2);
-      data.body[0].should.eql(true);
-      data.body[1].should.eql(false);
+      expect(err).toBeFalsy();
+      expect(data.body).toEqual([true, false]);
       done();
     });
   });
 
-  it('should check whether the current user follows several artists', function(done) {
+  test('should check whether the current user follows several artists', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/following/contains');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following/contains');
+      expect(options.query).toEqual({
         type: 'artist',
         ids: '137W8MRPWKqSmrBGDBFSop'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, { body: [false] });
     });
 
@@ -3058,8 +3063,7 @@ describe('Spotify Web API', function() {
 
     api.isFollowingArtists(['137W8MRPWKqSmrBGDBFSop']).then(
       function(data) {
-        data.body.should.be.an.instanceOf(Array).and.have.lengthOf(1);
-        data.body[0].should.eql(false);
+        expect(data.body).toEqual([false]);
         done();
       },
       function(err) {
@@ -3069,20 +3073,20 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should check whether the current user follows several artists using callback', function(done) {
+  test('should check whether the current user follows several artists using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/following/contains');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following/contains');
+      expect(options.query).toEqual({
         type: 'artist',
         ids: '137W8MRPWKqSmrBGDBFSop'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, { body: [false] });
     });
 
@@ -3093,28 +3097,27 @@ describe('Spotify Web API', function() {
     });
 
     api.isFollowingArtists(['137W8MRPWKqSmrBGDBFSop'], function(err, data) {
-      should.not.exist(err);
-      data.body.should.be.an.instanceOf(Array).and.have.lengthOf(1);
-      data.body[0].should.eql(false);
+      expect(err).toBeFalsy();
+      expect(data.body).toEqual([false]);
       done();
     });
   });
 
-  it("should get a user's followed artists using callback", function(done) {
+  test("should get a user's followed artists using callback", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'artist',
         after: '6tbXwhqy3WAFqanusCLvEU',
         limit: 3
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, { body: { artists: { items: [] } } });
     });
 
@@ -3126,7 +3129,7 @@ describe('Spotify Web API', function() {
 
     api.getFollowedArtists({ after: '6tbXwhqy3WAFqanusCLvEU', limit: 3 }).then(
       function(data) {
-        should.exist(data.body.artists);
+        expect(data.body.artists).toBeTruthy();
         done();
       },
       function(err) {
@@ -3135,21 +3138,21 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it("should get a user's followed artists using callback", function(done) {
+  test("should get a user's followed artists using callback", done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/me/following');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/following');
+      expect(options.query).toEqual({
         type: 'artist',
         after: '6tbXwhqy3WAFqanusCLvEU',
         limit: 3
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, { body: { artists: { items: [] } } });
     });
 
@@ -3162,28 +3165,28 @@ describe('Spotify Web API', function() {
     api.getFollowedArtists(
       { after: '6tbXwhqy3WAFqanusCLvEU', limit: 3 },
       function(err, data) {
-        should.not.exist(err);
-        should.exist(data.body.artists);
+        expect(err).toBeFalsy();
+        expect(data.body.artists).toBeTruthy();
         done();
       }
     );
   });
 
-  it('should check whether users follows a playlist', function(done) {
+  test('should check whether users follows a playlist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/spotify_germany/playlists/2nKFnGNFvHX9hG5Kv7Bm3G/followers/contains'
       );
-      options.query.should.eql({
+      expect(options.query).toEqual({
         ids: 'thelinmichael,ella'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, { body: [true, false] });
     });
 
@@ -3200,9 +3203,7 @@ describe('Spotify Web API', function() {
       ])
       .then(
         function(data) {
-          data.body.should.be.an.instanceOf(Array).and.have.lengthOf(2);
-          data.body[0].should.eql(true);
-          data.body[1].should.eql(false);
+          expect(data.body).toEqual([true, false]);
           done();
         },
         function(err) {
@@ -3212,22 +3213,21 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should add tracks to playlist', function(done) {
+  test('should add tracks to playlist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.post);
-      uri.should.equal(
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
       );
-      should.not.exist(options.query);
-      JSON.parse(options.data)
-        ['uris'].should.be.an.instanceOf(Array)
-        .and.have.lengthOf(2);
-      options.headers.Authorization.should.equal('Bearer long-access-token');
+      expect(options.query).toBeFalsy();
+      expect(JSON.parse(options.data)['uris']).toBeInstanceOf(Array);
+      expect(JSON.parse(options.data)['uris']).toHaveLength(2);
+      expect(options.headers.Authorization).toBe('Bearer long-access-token');
       callback();
     });
 
@@ -3250,22 +3250,21 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should add tracks to playlist using callback', function(done) {
+  test('should add tracks to playlist using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.post);
-      uri.should.equal(
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
       );
-      should.not.exist(options.query);
-      JSON.parse(options.data)
-        ['uris'].should.be.an.instanceOf(Array)
-        .and.have.lengthOf(2);
-      options.headers.Authorization.should.equal('Bearer long-access-token');
+      expect(options.query).toBeFalsy();
+      expect(JSON.parse(options.data)['uris']).toBeInstanceOf(Array);
+      expect(JSON.parse(options.data)['uris']).toHaveLength(2);
+      expect(options.headers.Authorization).toBe('Bearer long-access-token');
       callback();
     });
 
@@ -3286,24 +3285,21 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should remove tracks from a playlist by position', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      method.should.equal(superagent.del);
-      uri.should.equal(
+  test('should remove tracks from a playlist by position', done => {
+    sinon.stub(HttpManager, 'del', function(request, callback) {
+      expect(request.getURI()).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
       );
-      should.not.exist(options.query);
-      JSON.parse(options.data).positions[0].should.equal(0);
-      JSON.parse(options.data).positions[1].should.equal(2);
-      JSON.parse(options.data)['snapshot_id'].should.equal(
+      expect(request.getQueryParameters()).toBeFalsy();
+      var data = request.getBodyParameters();
+      expect(data.positions[0]).toBe(0);
+      expect(data.positions[1]).toBe(2);
+      expect(data['snapshot_id']).toBe(
         '0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9'
       );
-      options.headers.Authorization.should.equal('Bearer long-access-token');
+      expect(request.getHeaders().Authorization).toBe(
+        'Bearer long-access-token'
+      );
       callback();
     });
 
@@ -3325,25 +3321,25 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should reorder tracks from a playlist by position', function(done) {
+  test('should reorder tracks from a playlist by position', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      uri.should.equal(
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/users/thelinmichael/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
       );
-      should.not.exist(options.query);
-      JSON.parse(options.data)['range_start'].should.equal(5);
-      JSON.parse(options.data)['range_length'].should.equal(1);
-      JSON.parse(options.data)['insert_before'].should.equal(1512);
-      JSON.parse(options.data)['snapshot_id'].should.equal(
+      expect(options.query).toBeFalsy();
+      expect(JSON.parse(options.data)['range_start']).toBe(5);
+      expect(JSON.parse(options.data)['range_length']).toBe(1);
+      expect(JSON.parse(options.data)['insert_before']).toBe(1512);
+      expect(JSON.parse(options.data)['snapshot_id']).toBe(
         '0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9'
       );
-      options.headers.Authorization.should.equal('Bearer long-access-token');
+      expect(options.headers.Authorization).toBe('Bearer long-access-token');
 
       callback();
     });
@@ -3373,18 +3369,18 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should add tracks to the users library', function(done) {
+  test('should add tracks to the users library', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      JSON.parse(options.data).should.eql(['3VNWq8rTnQG6fM1eldSpZ0']);
-      uri.should.equal('https://api.spotify.com/v1/me/tracks');
-      should.not.exist(options.query);
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(method).toBe(superagent.put);
+      expect(JSON.parse(options.data)).toEqual(['3VNWq8rTnQG6fM1eldSpZ0']);
+      expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
+      expect(options.query).toBeFalsy();
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback();
     });
 
@@ -3405,18 +3401,18 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should add tracks to the users library using callback', function(done) {
+  test('should add tracks to the users library using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      JSON.parse(options.data).should.eql(['3VNWq8rTnQG6fM1eldSpZ0']);
-      uri.should.equal('https://api.spotify.com/v1/me/tracks');
-      should.not.exist(options.query);
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(method).toBe(superagent.put);
+      expect(JSON.parse(options.data)).toEqual(['3VNWq8rTnQG6fM1eldSpZ0']);
+      expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
+      expect(options.query).toBeFalsy();
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback();
     });
 
@@ -3431,18 +3427,18 @@ describe('Spotify Web API', function() {
     });
   });
 
-  it('handles expired tokens', function(done) {
+  test('handles expired tokens', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      JSON.parse(options.data).should.eql(['3VNWq8rTnQG6fM1eldSpZ0']);
-      uri.should.equal('https://api.spotify.com/v1/me/tracks');
-      should.not.exist(options.query);
-      options.headers.Authorization.should.equal(
+      expect(method).toBe(superagent.put);
+      expect(JSON.parse(options.data)).toEqual(['3VNWq8rTnQG6fM1eldSpZ0']);
+      expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
+      expect(options.query).toBeFalsy();
+      expect(options.headers.Authorization).toBe(
         'Bearer BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g'
       );
 
@@ -3461,25 +3457,25 @@ describe('Spotify Web API', function() {
         done(new Error('should have failed'));
       },
       function(err) {
-        'The access token expired'.should.equal(err.message);
-        (401).should.equal(err.statusCode);
+        expect(err.message).toBe('The access token expired');
+        expect(err.statusCode).toBe(401);
         done();
       }
     );
   });
 
-  it('handles expired tokens using callback', function(done) {
+  test('handles expired tokens using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.put);
-      JSON.parse(options.data).should.eql(['3VNWq8rTnQG6fM1eldSpZ0']);
-      uri.should.equal('https://api.spotify.com/v1/me/tracks');
-      should.not.exist(options.query);
-      options.headers.Authorization.should.equal(
+      expect(method).toBe(superagent.put);
+      expect(options.data).toEqual(JSON.stringify(['3VNWq8rTnQG6fM1eldSpZ0']));
+      expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
+      expect(options.query).toBeFalsy();
+      expect(options.headers.Authorization).toBe(
         'Bearer BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g'
       );
 
@@ -3494,27 +3490,27 @@ describe('Spotify Web API', function() {
     });
 
     api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0'], function(err, data) {
-      'The access token expired'.should.equal(err.message);
-      (401).should.equal(err.statusCode);
+      expect(err.message).toBe('The access token expired');
+      expect(err.statusCode).toBe(401);
       done();
     });
   });
 
-  it('should get new releases', function(done) {
+  test('should get new releases', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/browse/new-releases');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/browse/new-releases');
+      expect(options.query).toEqual({
         limit: 5,
         offset: 0,
         country: 'SE'
       });
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback(null, {
         body: {
           albums: {
@@ -3540,10 +3536,10 @@ describe('Spotify Web API', function() {
       })
       .then(
         function(data) {
-          data.body.albums.href.should.equal(
+          expect(data.body.albums.href).toBe(
             'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5'
           );
-          data.body.albums.items.length.should.equal(5);
+          expect(data.body.albums.items.length).toBe(5);
           done();
         },
         function(err) {
@@ -3552,21 +3548,21 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should get new releases', function(done) {
+  test('should get new releases', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/browse/new-releases');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/browse/new-releases');
+      expect(options.query).toEqual({
         limit: 5,
         offset: 0,
         country: 'SE'
       });
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback(null, {
         body: {
           albums: {
@@ -3592,34 +3588,34 @@ describe('Spotify Web API', function() {
         country: 'SE'
       },
       function(err, data) {
-        should.not.exist(err);
-        data.body.albums.href.should.equal(
+        expect(err).toBeFalsy();
+        expect(data.body.albums.href).toBe(
           'https://api.spotify.com/v1/browse/new-releases?country=SE&offset=0&limit=5'
         );
-        data.body.albums.items.length.should.equal(5);
-        (200).should.equal(data.statusCode);
+        expect(data.body.albums.items.length).toBe(5);
+        expect(data.statusCode).toBe(200);
         done();
       }
     );
   });
 
-  it('should get featured playlists', function(done) {
+  test('should get featured playlists', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/browse/featured-playlists');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/browse/featured-playlists');
+      expect(options.query).toEqual({
         limit: 3,
         offset: 1,
         country: 'SE',
         locale: 'sv_SE',
         timestamp: '2014-10-23T09:00:00'
       });
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback(null, {
         body: {
           playlists: {
@@ -3648,11 +3644,11 @@ describe('Spotify Web API', function() {
       })
       .then(
         function(data) {
-          data.body.playlists.href.should.equal(
+          expect(data.body.playlists.href).toBe(
             'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3'
           );
-          data.body.playlists.items.length.should.equal(3);
-          (200).should.equal(data.statusCode);
+          expect(data.body.playlists.items.length).toBe(3);
+          expect(data.statusCode).toBe(200);
           done();
         },
         function(err) {
@@ -3662,23 +3658,23 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should get featured playlists using callback', function(done) {
+  test('should get featured playlists using callback', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/browse/featured-playlists');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/browse/featured-playlists');
+      expect(options.query).toEqual({
         limit: 3,
         offset: 1,
         country: 'SE',
         locale: 'sv_SE',
         timestamp: '2014-10-23T09:00:00'
       });
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback(null, {
         body: {
           playlists: {
@@ -3706,33 +3702,33 @@ describe('Spotify Web API', function() {
         timestamp: '2014-10-23T09:00:00'
       },
       function(err, data) {
-        should.not.exist(err);
-        data.body.playlists.href.should.equal(
+        expect(err).toBeFalsy();
+        expect(data.body.playlists.href).toBe(
           'https://api.spotify.com/v1/browse/featured-playlists?country=SE&locale=sv_SE&timestamp=2014-10-23T09:00:00&offset=1&limit=3'
         );
-        data.body.playlists.items.length.should.equal(3);
-        (200).should.equal(data.statusCode);
+        expect(data.body.playlists.items.length).toBe(3);
+        expect(data.statusCode).toBe(200);
         done();
       }
     );
   });
 
-  it('should get browse categories', function(done) {
+  test('should get browse categories', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/browse/categories');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/browse/categories');
+      expect(options.query).toEqual({
         limit: 2,
         offset: 4,
         country: 'SE',
         locale: 'sv_SE'
       });
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback(null, {
         body: {
           items: [
@@ -3758,34 +3754,34 @@ describe('Spotify Web API', function() {
         locale: 'sv_SE'
       },
       function(err, data) {
-        should.not.exist(err);
-        data.body.items[0].href.should.equal(
+        expect(err).toBeFalsy();
+        expect(data.body.items[0].href).toBe(
           'https://api.spotify.com/v1/browse/categories/party'
         );
-        data.body.items[1].href.should.equal(
+        expect(data.body.items[1].href).toBe(
           'https://api.spotify.com/v1/browse/categories/pop'
         );
-        data.body.items.length.should.equal(2);
-        (200).should.equal(data.statusCode);
+        expect(data.body.items.length).toBe(2);
+        expect(data.statusCode).toBe(200);
         done();
       }
     );
   });
 
-  it('should get a browse category', function(done) {
+  test('should get a browse category', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/browse/categories/party');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/browse/categories/party');
+      expect(options.query).toEqual({
         country: 'SE',
         locale: 'sv_SE'
       });
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback(null, {
         body: {
           href: 'https://api.spotify.com/v1/browse/categories/party',
@@ -3808,34 +3804,34 @@ describe('Spotify Web API', function() {
         locale: 'sv_SE'
       },
       function(err, data) {
-        should.not.exist(err);
-        data.body.href.should.equal(
+        expect(err).toBeFalsy();
+        expect(data.body.href).toBe(
           'https://api.spotify.com/v1/browse/categories/party'
         );
-        data.body.name.should.equal('Party');
-        (200).should.equal(data.statusCode);
+        expect(data.body.name).toBe('Party');
+        expect(data.statusCode).toBe(200);
         done();
       }
     );
   });
 
-  it('should get a playlists for a browse category', function(done) {
+  test('should get a playlists for a browse category', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/browse/categories/party/playlists'
       );
-      options.query.should.eql({
+      expect(options.query).toEqual({
         country: 'SE',
         limit: 2,
         offset: 1
       });
-      options.headers.Authorization.should.equal('Bearer myAccessToken');
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
       callback(null, {
         body: {
           playlists: {
@@ -3869,36 +3865,36 @@ describe('Spotify Web API', function() {
         offset: 1
       },
       function(err, data) {
-        should.not.exist(err);
-        data.body.playlists.items[0].href.should.equal(
+        expect(err).toBeFalsy();
+        expect(data.body.playlists.items[0].href).toBe(
           'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4k7EZPI3uKMz4aRRrLVfen'
         );
-        data.body.playlists.items[1].href.should.equal(
+        expect(data.body.playlists.items[1].href).toBe(
           'https://api.spotify.com/v1/users/spotifybrazilian/playlists/4HZh0C9y80GzHDbHZyX770'
         );
-        data.body.playlists.items.length.should.equal(2);
-        (200).should.equal(data.statusCode);
+        expect(data.body.playlists.items.length).toBe(2);
+        expect(data.statusCode).toBe(200);
         done();
       }
     );
   });
 
-  it('should get the audio features for a track', function(done) {
+  test('should get the audio features for a track', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/audio-features/3Qm86XLflmIXVm1wcwkgDK'
       );
-      should.not.exist(options.query);
-      should.not.exist(options.data);
+      expect(options.query).toBeFalsy();
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
-          danceability: 0,
+          danceability: 20,
           energy: 0
         }
       });
@@ -3908,7 +3904,7 @@ describe('Spotify Web API', function() {
 
     api.getAudioFeaturesForTrack('3Qm86XLflmIXVm1wcwkgDK').then(
       function(data) {
-        should.exist(data.body.danceability);
+        expect(data.body.danceability).toBe(20);
         done();
       },
       function(err) {
@@ -3917,19 +3913,19 @@ describe('Spotify Web API', function() {
     );
   });
 
-  it('should get the audio features for a several tracks', function(done) {
+  test('should get the audio features for a several tracks', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/audio-features');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/audio-features');
+      expect(options.query).toEqual({
         ids: '3Qm86XLflmIXVm1wcwkgDK,1lDWb6b6ieDQ2xT7ewTC3G'
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           audio_features: []
@@ -3946,7 +3942,7 @@ describe('Spotify Web API', function() {
       ])
       .then(
         function(data) {
-          should.exist(data.body.audio_features);
+          expect(data.body.audio_features).toBeTruthy();
           done();
         },
         function(err) {
@@ -3955,23 +3951,23 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should get recommendations', function(done) {
+  test('should get recommendations', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/recommendations');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/recommendations');
+      expect(options.query).toEqual({
         min_energy: 0.4,
         market: 'ES',
         seed_artists: '6mfK6Q2tzLMEchAr0e9Uzu,4DYFVNKZ1uixa6SQTvzQwJ',
         limit: 5,
         min_popularity: 50
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           tracks: [{}],
@@ -3992,7 +3988,7 @@ describe('Spotify Web API', function() {
       })
       .then(
         function(data) {
-          should.exist(data.body.tracks);
+          expect(data.body.tracks).toBeTruthy();
           done();
         },
         function(err) {
@@ -4001,23 +3997,23 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should get recommendations using an array of seeds', function(done) {
+  test('should get recommendations using an array of seeds', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal('https://api.spotify.com/v1/recommendations');
-      options.query.should.eql({
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/recommendations');
+      expect(options.query).toEqual({
         min_energy: 0.4,
         market: 'ES',
         seed_artists: '6mfK6Q2tzLMEchAr0e9Uzu,4DYFVNKZ1uixa6SQTvzQwJ',
         limit: 5,
         min_popularity: 50
       });
-      should.not.exist(options.data);
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           tracks: [{}],
@@ -4038,7 +4034,7 @@ describe('Spotify Web API', function() {
       })
       .then(
         function(data) {
-          should.exist(data.body.tracks);
+          expect(data.body.tracks).toBeTruthy();
           done();
         },
         function(err) {
@@ -4047,19 +4043,19 @@ describe('Spotify Web API', function() {
       );
   });
 
-  it('should get available genre seeds', function(done) {
+  test('should get available genre seeds', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
       uri,
       callback
     ) {
-      method.should.equal(superagent.get);
-      uri.should.equal(
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
         'https://api.spotify.com/v1/recommendations/available-genre-seeds'
       );
-      should.not.exist(options.query);
-      should.not.exist(options.data);
+      expect(options.query).toBeFalsy();
+      expect(options.data).toBeFalsy();
       callback(null, {
         body: {
           genres: []
@@ -4071,7 +4067,7 @@ describe('Spotify Web API', function() {
 
     api.getAvailableGenreSeeds().then(
       function(data) {
-        should.exist(data.body.genres);
+        expect(data.body.genres).toBeTruthy();
         done();
       },
       function(err) {
