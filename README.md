@@ -8,7 +8,14 @@ This is a universal wrapper/client for the [Spotify Web API](https://developer.s
 
 Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez), with help from [a lot of awesome contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members).
 
-It includes helper functions to do the following:
+## Table of contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Development](#development)
+
+## Features
+The library includes helper functions to do the following:
 
 #### Music metadata
 
