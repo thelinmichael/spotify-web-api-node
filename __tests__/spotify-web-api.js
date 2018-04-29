@@ -2484,7 +2484,9 @@ describe('Spotify Web API', () => {
       callback
     ) {
       expect(method).toBe(superagent.del);
-      expect(JSON.parse(options.data)).toEqual(['3VNWq8rTnQG6fM1eldSpZ0']);
+      expect(JSON.parse(options.data)).toEqual({
+        ids: ['3VNWq8rTnQG6fM1eldSpZ0']
+      });
       expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
       expect(options.query).toBeFalsy();
       callback();
@@ -3377,7 +3379,9 @@ describe('Spotify Web API', () => {
       callback
     ) {
       expect(method).toBe(superagent.put);
-      expect(JSON.parse(options.data)).toEqual(['3VNWq8rTnQG6fM1eldSpZ0']);
+      expect(JSON.parse(options.data)).toEqual({
+        ids: ['3VNWq8rTnQG6fM1eldSpZ0']
+      });
       expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
       expect(options.query).toBeFalsy();
       expect(options.headers.Authorization).toBe('Bearer myAccessToken');
@@ -3409,7 +3413,9 @@ describe('Spotify Web API', () => {
       callback
     ) {
       expect(method).toBe(superagent.put);
-      expect(JSON.parse(options.data)).toEqual(['3VNWq8rTnQG6fM1eldSpZ0']);
+      expect(JSON.parse(options.data)).toEqual({
+        ids: ['3VNWq8rTnQG6fM1eldSpZ0']
+      });
       expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
       expect(options.query).toBeFalsy();
       expect(options.headers.Authorization).toBe('Bearer myAccessToken');
@@ -3435,7 +3441,9 @@ describe('Spotify Web API', () => {
       callback
     ) {
       expect(method).toBe(superagent.put);
-      expect(JSON.parse(options.data)).toEqual(['3VNWq8rTnQG6fM1eldSpZ0']);
+      expect(JSON.parse(options.data)).toEqual({
+        ids: ['3VNWq8rTnQG6fM1eldSpZ0']
+      });
       expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
       expect(options.query).toBeFalsy();
       expect(options.headers.Authorization).toBe(
@@ -3472,7 +3480,9 @@ describe('Spotify Web API', () => {
       callback
     ) {
       expect(method).toBe(superagent.put);
-      expect(options.data).toEqual(JSON.stringify(['3VNWq8rTnQG6fM1eldSpZ0']));
+      expect(options.data).toEqual(
+        JSON.stringify({ ids: ['3VNWq8rTnQG6fM1eldSpZ0'] })
+      );
       expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
       expect(options.query).toBeFalsy();
       expect(options.headers.Authorization).toBe(
