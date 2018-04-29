@@ -43,7 +43,6 @@ It includes helper functions to do the following:
 #### Personalization
 
 * Get a user’s top artists and tracks based on calculated affinity
-* Get current user’s recently played tracks
 
 #### Browse
 
@@ -69,6 +68,7 @@ It includes helper functions to do the following:
 
 * Get a user's available devices
 * Get information about the user's current playback
+* Get current user’s recently played tracks
 * Transfer a user's playback
 * Resume a user's playback
 * Skip a user's playback to next track
