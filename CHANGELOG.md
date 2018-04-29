@@ -1,5 +1,9 @@
 ## Change log
 
+#### 3.1.1 (29 Apr 2018)
+- Modernized stack for a better developer experience. Integrated [prettier](https://github.com/thelinmichael/spotify-web-api-node/pull/205) and [jest](https://github.com/thelinmichael/spotify-web-api-node/pull/206). This simplifies the amount of dev dependencies.
+- Improved calls to save and remove saved tracks by adding a key as specified in the Spotify docs (See [PR](https://github.com/thelinmichael/spotify-web-api-node/pull/207)). Thanks to [@yanniz0r](https://github.com/yanniz0r) and [@adcar](https://github.com/adcar) for bringing it up.
+
 #### 3.1.0 (26 Apr 2018)
 - Added support for seeking and setting volume. Thanks to [@isokar](https://github.com/isokar), [@jamesemwallis](https://github.com/jamesemwallis), [@ashthespy](https://github.com/ashthespy), and [@vanderlin](https://github.com/vanderlin) for your PRs.
 
