@@ -1,6 +1,6 @@
 {
   "name": "spotify-web-api-node",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "homepage": "https://github.com/thelinmichael/spotify-web-api-node",
   "description": "A Node.js wrapper for Spotify's Web API",
   "main": "./src/server.js",

@@ -5,6 +5,7 @@ var superagent = require('superagent'),
 
 var HttpManager = {};
 
+
 /* Create superagent options from the base request */
 var _getParametersFromRequest = function(request) {
   var options = {};
@@ -33,11 +34,11 @@ var _getErrorObject = function(defaultMessage, err) {
   var errorObject;
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
     // Web API Error format
-    errorObject = new WebApiError(err.error.message, err.error.status);
+    errorObject = new WebApiError(err.error.message, err.error.status, err.headers);
   } else if (typeof err.error === 'string') {
     // Authorization Error format
     /* jshint ignore:start */
-    errorObject = new WebApiError(err.error + ': ' + err['error_description']);
+    errorObject = new WebApiError(err.error + ': ' + err['error_description'], null,  err.headers);
     /* jshint ignore:end */
   } else if (typeof err === 'string') {
     // Serialized JSON error
@@ -45,11 +46,15 @@ var _getErrorObject = function(defaultMessage, err) {
       var parsedError = JSON.parse(err);
       errorObject = new WebApiError(
         parsedError.error.message,
-        parsedError.error.status
+        parsedError.error.status,
+        parsedError.headers,
       );
     } catch (err) {
       // Error not JSON formatted
     }
+
+
+
   }
 
   if (!errorObject) {
@@ -83,18 +88,37 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
   }
 
   req.end(function(err, response) {
-    if (err) {
-      var errorObject = _getErrorObject('Request error', {
-        error: err
-      });
-      return callback(errorObject);
-    }
 
-    return callback(null, {
-      body: response.body,
-      headers: response.headers,
-      statusCode: response.statusCode
-    });
+
+
+    if (err) {
+
+      if (response.statusCode === 429) {
+
+        if(response.headers && response.headers['retry-after']) {
+          setTimeout(() => {
+            return HttpManager._makeRequest(method, options, uri, callback);
+          }, response.headers['retry-after'] * 1000)
+        }
+        
+      } else {
+
+        var errorObject = _getErrorObject('Request error', {
+          error: err,
+          headers: (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
+        });
+        return callback(errorObject);
+      }
+
+    } else {
+
+      return callback(null, {
+        body: response.body,
+        headers: response.headers,
+        statusCode: response.statusCode
+      });
+
+    }
   });
 };
 
