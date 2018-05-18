@@ -94,8 +94,8 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
 
   req.end(function(err, response) {
 
-
     if (response.statusCode === 429) {
+      console.log(`Retrying after ${response.headers.retry-after} seconds`)
       _timeout(response.headers.retry-after * 1000);
       return HttpManager._makeRequest(method, options, uri, callback);
     }
