@@ -98,7 +98,7 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
 
       setTimeout(() => {
         return HttpManager._makeRequest(method, options, uri, callback);
-      }, response.headers.retry-after * 1000)
+      }, response.headers['retry-after'] * 1000)
 
     } else if (err) {
 
@@ -107,7 +107,7 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
         headers: (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
       });
       return callback(errorObject);
-      
+
     } else {
 
       return callback(null, {
