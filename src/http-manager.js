@@ -96,24 +96,27 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
 
     if (response.statusCode === 429) {
 
-      await _timeout(response.headers.retry-after * 1000);
-      return HttpManager._makeRequest(method, options, uri, callback);
-    }
-  
-    if (err) {
+      setTimeout(() => {
+        return HttpManager._makeRequest(method, options, uri, callback);
+      }, response.headers.retry-after * 1000)
+
+    } else if (err) {
 
       var errorObject = _getErrorObject('Request error', {
         error: err,
         headers: (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
       });
       return callback(errorObject);
-    }
+      
+    } else {
 
-    return callback(null, {
-      body: response.body,
-      headers: response.headers,
-      statusCode: response.statusCode
-    });
+      return callback(null, {
+        body: response.body,
+        headers: response.headers,
+        statusCode: response.statusCode
+      });
+
+    }
   });
 };
 
