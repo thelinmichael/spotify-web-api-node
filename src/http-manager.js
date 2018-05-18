@@ -5,6 +5,12 @@ var superagent = require('superagent'),
 
 var HttpManager = {};
 
+
+/* Simple delay function using promises */
+const _timeout = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
 /* Create superagent options from the base request */
 var _getParametersFromRequest = function(request) {
   var options = {};
@@ -87,7 +93,15 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
   }
 
   req.end(function(err, response) {
+
+
+    if (response.statusCode === 429) {
+      _timeout(response.headers.retry-after * 1000);
+      return HttpManager._makeRequest(method, options, uri, callback);
+    }
+  
     if (err) {
+
       var errorObject = _getErrorObject('Request error', {
         error: err,
         headers: (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
