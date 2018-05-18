@@ -85,7 +85,8 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
   req.end(function(err, response) {
     if (err) {
       var errorObject = _getErrorObject('Request error', {
-        error: err
+        error: err,
+        headers: (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
       });
       return callback(errorObject);
     }
