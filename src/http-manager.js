@@ -100,8 +100,9 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
             return HttpManager._makeRequest(method, options, uri, callback);
           }, response.headers['retry-after'] * 1000)
         }
-      } else {
         
+      } else {
+
         var errorObject = _getErrorObject('Request error', {
           error: err,
           headers: (response != null && typeof response != 'undefined' && typeof response.headers != 'undefined') ? response.headers : null
