@@ -3,6 +3,15 @@
 var superagent = require('superagent'),
   WebApiError = require('./webapi-error');
 
+const Throttle = require('superagent-throttle');
+
+let throttle = new Throttle({
+  active: true,     // set false to pause queue
+  rate: 10,          // how many requests can be sent every `ratePer`
+  ratePer: 1000,   // number of ms in which `rate` requests may be sent
+  concurrent: 2     // how many requests can be sent concurrently
+})
+
 var HttpManager = {};
 
 /* Create superagent options from the base request */
@@ -63,6 +72,8 @@ var _getErrorObject = function(defaultMessage, err) {
 /* Make the request to the Web API */
 HttpManager._makeRequest = function(method, options, uri, callback) {
   var req = method.bind(superagent)(uri);
+
+  req.use(throttle.plugin());
 
   if (options.query) {
     req.query(options.query);
