@@ -680,10 +680,24 @@ spotifyApi.getMyCurrentPlaybackState({
  */
 
 /* Get a User’s Top Artists and Tracks */
-// TBD
 
-Get a User’s Top Artists and Tracks
-```
+/// Get a User’s Top Artists
+spotifyApi.getMyTopArtists({})
+  .then(function(data) {
+    // Output items
+    console.log("Top Artist: ", data.body.items[0].name);
+  }, function(err) {
+    console.log("Something went wrong!", err);
+  });
+  
+// Get a User's Top Tracks
+spotifyApi.getMyTopTracks({})
+  .then(function(data) {
+    // Output items
+    console.log("Top Track: ", data.body.items[0].name);
+  }, function(err) {
+    console.log("Something went wrong!", err);
+  });
 
 ### Nesting calls
 ```javascript
