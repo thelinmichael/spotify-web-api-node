@@ -9,12 +9,14 @@ This is a universal wrapper/client for the [Spotify Web API](https://developer.s
 Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez), with help from [a lot of awesome contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members).
 
 ## Table of contents
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Development](#development)
+
+* [Features](#features)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Development](#development)
 
 ## Features
+
 The library includes helper functions to do the following:
 
 #### Music metadata
@@ -383,7 +385,7 @@ spotifyApi.getMe()
  */
 
 // Get a playlist
-spotifyApi.getPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
+spotifyApi.getPlaylist('5ieJqeLJjjI8iJWaxeBLuK')
   .then(function(data) {
     console.log('Some information about this playlist', data.body);
   }, function(err) {
@@ -399,7 +401,7 @@ spotifyApi.getUserPlaylists('thelinmichael')
   });
 
 // Create a private playlist
-spotifyApi.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false })
+spotifyApi.createPlaylist('My Cool Playlist', { 'public' : false })
   .then(function(data) {
     console.log('Created playlist!');
   }, function(err) {
@@ -407,7 +409,7 @@ spotifyApi.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : fals
   });
 
 // Add tracks to a playlist
-spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"])
+spotifyApi.addTracksToPlaylist('5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"])
   .then(function(data) {
     console.log('Added tracks to playlist!');
   }, function(err) {
@@ -415,7 +417,7 @@ spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spot
   });
 
 // Add tracks to a specific position in a playlist
-spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"],
+spotifyApi.addTracksToPlaylist('5ieJqeLJjjI8iJWaxeBLuK', ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"],
   {
     position : 5
   })
@@ -426,7 +428,7 @@ spotifyApi.addTracksToPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ["spot
   });
 
 // Remove tracks from a playlist at a specific position
-spotifyApi.removeTracksFromPlaylistByPosition('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', [0, 2, 130], "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9")
+spotifyApi.removeTracksFromPlaylistByPosition('5ieJqeLJjjI8iJWaxeBLuK', [0, 2, 130], "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9")
   .then(function(data) {
     console.log('Tracks removed from playlist!');
   }, function(err) {
@@ -436,7 +438,7 @@ spotifyApi.removeTracksFromPlaylistByPosition('thelinmichael', '5ieJqeLJjjI8iJWa
 // Remove all occurrence of a track
 var tracks = [{ uri : "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" }];
 var options = { snapshot_id : "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9" };
-spotifyApi.removeTracksFromPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', tracks, options)
+spotifyApi.removeTracksFromPlaylist('5ieJqeLJjjI8iJWaxeBLuK', tracks, options)
   .then(function(data) {
     console.log('Tracks removed from playlist!');
   }, function(err) {
@@ -445,7 +447,7 @@ spotifyApi.removeTracksFromPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', t
 
 // Reorder the first two tracks in a playlist to the place before the track at the 10th position
 var options = { "range_length" : 2 };
-spotifyApi.reorderTracksInPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', 0, 10, options)
+spotifyApi.reorderTracksInPlaylist('5ieJqeLJjjI8iJWaxeBLuK', 0, 10, options)
   .then(function(data) {
     console.log('Tracks reordered in playlist!');
   }, function(err) {
@@ -453,7 +455,7 @@ spotifyApi.reorderTracksInPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', 0,
   });
 
 // Change playlist details
-spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
+spotifyApi.changePlaylistDetails('5ieJqeLJjjI8iJWaxeBLuK',
   {
     name: 'This is a new name for my Cool Playlist, and will become private',
     'public' : false
@@ -464,7 +466,7 @@ spotifyApi.changePlaylistDetails('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
   });
 
 // Upload a custom playlist cover image
-spotifyApi.uploadCustomPlaylistCoverImage('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK','longbase64uri')
+spotifyApi.uploadCustomPlaylistCoverImage('5ieJqeLJjjI8iJWaxeBLuK','longbase64uri')
   .then(function(data) {
      console.log('Playlsit cover image uploaded!');
   }, function(err) {
@@ -472,7 +474,7 @@ spotifyApi.uploadCustomPlaylistCoverImage('thelinmichael', '5ieJqeLJjjI8iJWaxeBL
   });
 
 // Follow a playlist (privately)
-spotifyApi.followPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
+spotifyApi.followPlaylist('5ieJqeLJjjI8iJWaxeBLuK',
   {
     'public' : false
   }).then(function(data) {
@@ -482,7 +484,7 @@ spotifyApi.followPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK',
   });
 
 // Unfollow a playlist
-spotifyApi.unfollowPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
+spotifyApi.unfollowPlaylist('5ieJqeLJjjI8iJWaxeBLuK')
   .then(function(data) {
      console.log('Playlist successfully unfollowed!');
   }, function(err) {
@@ -490,7 +492,7 @@ spotifyApi.unfollowPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK')
   });
 
 // Check if Users are following a Playlist
-spotifyApi.areFollowingPlaylist('thelinmichael', '5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella'])
+spotifyApi.areFollowingPlaylist('5ieJqeLJjjI8iJWaxeBLuK', ['thelinmichael', 'ella'])
  .then(function(data) {
     data.body.forEach(function(isFollowing) {
       console.log("User is following: " + isFollowing);
