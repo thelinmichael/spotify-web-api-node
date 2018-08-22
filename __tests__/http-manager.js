@@ -27,7 +27,15 @@ describe('Make requests', () => {
     });
 
     test('Should process an error GET request', done => {
-      superagent.__setMockError(new Error('GET request error'));
+      superagent.__setMockError({
+        name: 'Error',
+        message: 'GET request error',
+        response: {
+          request: {
+            url: 'https://api.spotify.com'
+          }
+        }
+      });
 
       var HttpManager = require('../src/http-manager');
       var request = Request.builder()
@@ -44,9 +52,15 @@ describe('Make requests', () => {
     });
 
     test('Should process an error GET request with an error message', done => {
-      superagent.__setMockError(
-        new Error('There is a problem in your request')
-      );
+      superagent.__setMockError({
+        name: 'Error',
+        message: 'There is a problem in your request',
+        response: {
+          request: {
+            url: 'https://api.spotify.com'
+          }
+        }
+      });
 
       var HttpManager = require('../src/http-manager');
       var request = Request.builder()
