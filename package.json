@@ -41,5 +41,8 @@
   ],
   "browser": {
     "./src/server.js": "./src/client.js"
+  },
+  "jest": {
+    "testURL": "http://localhost/"
   }
 }
