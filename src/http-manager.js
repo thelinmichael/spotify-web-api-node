@@ -33,7 +33,7 @@ var _getErrorObject = function(defaultMessage, err) {
   var errorObject;
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
     // Web API Error format
-    errorObject = new WebApiError(err.error.message, err.error.status);
+    errorObject = new WebApiError(err.error.message, err.error.status, err.error.response.request.url);
   } else if (typeof err.error === 'string') {
     // Authorization Error format
     /* jshint ignore:start */
