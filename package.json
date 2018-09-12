@@ -19,6 +19,10 @@
       "npm test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "precommit": "lint-staged"
   },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  },
   "lint-staged": {
     "*.{js,json,css,md}": ["prettier --single-quote --write", "git add"]
   },
