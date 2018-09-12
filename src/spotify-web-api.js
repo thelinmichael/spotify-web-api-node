@@ -457,7 +457,11 @@ SpotifyWebApi.prototype = {
     var path;
     if (typeof userId === 'string') {
       path = '/v1/users/' + encodeURIComponent(userId) + '/playlists';
-    } else {
+    } else if (typeof userId === 'object') {
+      callback = options;
+      options = userId;
+      path = '/v1/me/playlists';
+    } /* undefined */ else {
       path = '/v1/me/playlists';
     }
 
