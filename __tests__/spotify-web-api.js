@@ -1447,6 +1447,41 @@ describe('Spotify Web API', () => {
     });
   });
 
+  test('should get the current users playlists with options', done => {
+    sinon.stub(HttpManager, '_makeRequest', function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/playlists');
+      expect(options.query).toEqual({ limit: 27, offset: 7 });
+      callback(null, {
+        body: {
+          items: [
+            {
+              uri: 'spotify:user:thelinmichael:playlist:5ieJqeLJjjI8iJWaxeBLuK'
+            },
+            {
+              uri: 'spotify:user:thelinmichael:playlist:3EsfV6XzCHU8SPNdbnFogK'
+            }
+          ]
+        },
+        statusCode: 200
+      });
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('myVeryLongAccessToken');
+
+    api.getUserPlaylists({ limit: 27, offset: 7 }).then(function(data) {
+      expect(2).toBe(data.body.items.length);
+      expect(data.statusCode).toBe(200);
+      done();
+    });
+  });
+
   test('should get a playlist', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
