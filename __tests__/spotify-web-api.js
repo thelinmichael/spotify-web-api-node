@@ -595,7 +595,7 @@ describe('Spotify Web API', () => {
         body: {
           albums: {
             href:
-              'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
+              'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
           }
         },
         headers: {
@@ -609,7 +609,7 @@ describe('Spotify Web API', () => {
     api.searchAlbums('The Best of Keane', { limit: 3, offset: 2 }).then(
       function(data) {
         expect(data.body.albums.href).toBe(
-          'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
+          'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
         );
         expect(data.statusCode).toBe(200);
         expect('value').toBe(data.headers.test);
@@ -642,7 +642,7 @@ describe('Spotify Web API', () => {
         body: {
           albums: {
             href:
-              'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
+              'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
           }
         }
       });
@@ -655,7 +655,7 @@ describe('Spotify Web API', () => {
     ) {
       expect(err).toBeFalsy();
       expect(data.body.albums.href).toBe(
-        'https://api.spotify.com/v1/search?query=The+Best+of+Keane&offset=2&limit=3&type=album'
+        'https://api.spotify.com/v1/search?q=The+Best+of+Keane&offset=2&limit=3&type=album'
       );
       done();
     });
@@ -681,7 +681,7 @@ describe('Spotify Web API', () => {
         body: {
           playlists: {
             href:
-              'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'
+              'https://api.spotify.com/v1/search?q=workout&offset=0&limit=1&type=playlist'
           }
         }
       });
@@ -691,7 +691,7 @@ describe('Spotify Web API', () => {
     api.searchPlaylists('workout', { limit: 1, offset: 0 }).then(
       function(data) {
         expect(data.body.playlists.href).toBe(
-          'https://api.spotify.com/v1/search?query=workout&offset=0&limit=1&type=playlist'
+          'https://api.spotify.com/v1/search?q=workout&offset=0&limit=1&type=playlist'
         );
         done();
       },
@@ -722,7 +722,7 @@ describe('Spotify Web API', () => {
         body: {
           artists: {
             href:
-              'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
+              'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
           }
         }
       });
@@ -732,7 +732,7 @@ describe('Spotify Web API', () => {
     api.searchArtists('David Bowie', { limit: 5, offset: 1 }).then(
       function(data) {
         expect(data.body.artists.href).toBe(
-          'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
+          'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
         );
         done();
       },
@@ -762,7 +762,7 @@ describe('Spotify Web API', () => {
         body: {
           artists: {
             href:
-              'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
+              'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
           }
         }
       });
@@ -775,7 +775,7 @@ describe('Spotify Web API', () => {
     ) {
       expect(err).toBeFalsy();
       expect(data.body.artists.href).toBe(
-        'https://api.spotify.com/v1/search?query=David+Bowie&offset=1&limit=5&type=artist'
+        'https://api.spotify.com/v1/search?q=David+Bowie&offset=1&limit=5&type=artist'
       );
       done();
     });
@@ -801,7 +801,7 @@ describe('Spotify Web API', () => {
         body: {
           tracks: {
             href:
-              'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
+              'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
           }
         }
       });
@@ -811,7 +811,7 @@ describe('Spotify Web API', () => {
     api.searchTracks('Mr. Brightside', { limit: 3, offset: 2 }).then(
       function(data) {
         expect(data.body.tracks.href).toBe(
-          'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
+          'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
         );
         done();
       },
@@ -842,7 +842,7 @@ describe('Spotify Web API', () => {
         body: {
           tracks: {
             href:
-              'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
+              'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
           }
         }
       });
@@ -855,7 +855,7 @@ describe('Spotify Web API', () => {
     ) {
       expect(err).toBeFalsy();
       expect(data.body.tracks.href).toBe(
-        'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track'
+        'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track'
       );
       done();
     });
@@ -881,7 +881,7 @@ describe('Spotify Web API', () => {
         body: {
           tracks: {
             href:
-              'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track,album'
+              'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track,album'
           }
         }
       });
@@ -895,7 +895,7 @@ describe('Spotify Web API', () => {
       function(err, data) {
         expect(err).toBeFalsy();
         expect(data.body.tracks.href).toBe(
-          'https://api.spotify.com/v1/search?query=Mr.+Brightside&offset=2&limit=3&type=track,album'
+          'https://api.spotify.com/v1/search?q=Mr.+Brightside&offset=2&limit=3&type=track,album'
         );
         done();
       }
