@@ -1,4 +1,4 @@
-var SpotifyWebApi = require('../');
+const SpotifyWebApi = require('../');
 
 /**
  * This example retrieves information about the 'current' user. The current user is the user that has
@@ -12,13 +12,13 @@ var SpotifyWebApi = require('../');
  * Scopes are documented here:
  * https://developer.spotify.com/spotify-web-api/using-scopes/
  */
-var authorizationCode =
+const authorizationCode =
   'AQAgjS78s64u1axMCBCRA0cViW_ZDDU0pbgENJ_-WpZr3cEO7V5O-JELcEPU6pGLPp08SfO3dnHmu6XJikKqrU8LX9W6J11NyoaetrXtZFW-Y58UGeV69tuyybcNUS2u6eyup1EgzbTEx4LqrP_eCHsc9xHJ0JUzEhi7xcqzQG70roE4WKM_YrlDZO-e7GDRMqunS9RMoSwF_ov-gOMpvy9OMb7O58nZoc3LSEdEwoZPCLU4N4TTJ-IF6YsQRhQkEOJK';
 
-/* Set the credentials given on Spotify's My Applications page.
- * https://developer.spotify.com/my-applications
+/* Get the credentials from Spotify's Dashboard page.
+ * https://developer.spotify.com/dashboard/applications
  */
-var spotifyApi = new SpotifyWebApi({
+const spotifyApi = new SpotifyWebApi({
   clientId: '<insert client id>',
   clientSecret: '<insert client secret>',
   redirectUri: '<insert redirect URI>'
