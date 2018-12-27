@@ -2375,7 +2375,29 @@ describe('Spotify Web API', () => {
       'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
     );
   });
+  test('should create authorization URL with token if requested', () => {
+    var scopes = ['user-read-private', 'user-read-email'],
+      redirectUri = 'https://example.com/callback',
+      clientId = '5fe01282e44241328a84e7c5cc169165',
+      state = 'some-state-of-my-choice',
+      showDialog = true,
+      requestToken = true;
 
+    var api = new SpotifyWebApi({
+      clientId: clientId,
+      redirectUri: redirectUri
+    });
+
+    var authorizeURL = api.createAuthorizeURL(
+      scopes,
+      state,
+      showDialog,
+      requestToken
+    );
+    expect(authorizeURL).toBe(
+      'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=token&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
+    );
+  });
   test('should ignore entire show_dialog param if it is not included', () => {
     var scopes = ['user-read-private', 'user-read-email'],
       redirectUri = 'https://example.com/callback',
