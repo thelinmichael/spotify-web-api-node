@@ -1,7 +1,10 @@
 'use strict';
 
 var superagent = require('superagent'),
-  WebApiError = require('./webapi-error');
+  WebApiError = require('./webapi-error'),
+  ProxyHelper = require('./proxy-helper');
+
+require('superagent-proxy')(superagent);
 
 var HttpManager = {};
 
@@ -67,6 +70,8 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
   if (options.query) {
     req.query(options.query);
   }
+
+  req.proxy(ProxyHelper.getProxyFromURI(uri));
 
   if (
     options.data &&
