@@ -123,7 +123,7 @@ describe('Make requests', () => {
     const NO_PROXY = 'without.proxy';
 
     beforeAll(() => {
-      process.env = { ...OLD_ENV };
+      process.env = Object.assign({}, OLD_ENV);
       process.env.http_proxy = HTTP_PROXY;
       process.env.https_proxy = HTTPS_PROXY;
       process.env.no_proxy = NO_PROXY;
