@@ -1090,7 +1090,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Starts o Resumes the Current User's Playback
-   * @param {Object} [options] Options, being device_id, context_uri, offset, uris.
+   * @param {Object} [options] Options, being device_id, context_uri, offset, uris, position_ms.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
@@ -1103,7 +1103,7 @@ SpotifyWebApi.prototype = {
       ? { device_id: _options.device_id }
       : null;
     var postData = {};
-    ['context_uri', 'uris', 'offset'].forEach(function(field) {
+    ['context_uri', 'uris', 'offset', 'position_ms'].forEach(function(field) { // KEI EDIT
       if (field in _options) {
         postData[field] = _options[field];
       }
