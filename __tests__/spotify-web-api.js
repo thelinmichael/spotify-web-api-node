@@ -1517,7 +1517,7 @@ describe('Spotify Web API', () => {
     api.setAccessToken('long-access-token');
 
     api
-      .createPlaylist('thelinmichael', 'My Cool Playlist', { public: true })
+      .createPlaylist('My Cool Playlist', { public: true })
       .then(
         function(data) {
           done();
@@ -1538,7 +1538,7 @@ describe('Spotify Web API', () => {
     ) {
       expect(method).toBe(superagent.post);
       expect(uri).toBe(
-        'https://api.spotify.com/v1/users/thelinmichael/playlists'
+        'https://api.spotify.com/v1/playlists'
       );
       expect(JSON.parse(options.data)).toEqual({
         name: 'My Cool Playlist',
@@ -1554,7 +1554,6 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.createPlaylist(
-      'thelinmichael',
       'My Cool Playlist',
       { public: false },
       function(err, data) {
@@ -1574,7 +1573,7 @@ describe('Spotify Web API', () => {
     ) {
       expect(method).toBe(superagent.post);
       expect(uri).toBe(
-        'https://api.spotify.com/v1/users/thelinmichael/playlists'
+        'https://api.spotify.com/v1/playlists'
       );
       expect(JSON.parse(options.data)).toEqual({ name: 'My Cool Playlist' });
       callback(null, { body: { name: 'My Cool Playlist' } });
@@ -1583,7 +1582,7 @@ describe('Spotify Web API', () => {
 
     var api = new SpotifyWebApi();
 
-    api.createPlaylist('thelinmichael', 'My Cool Playlist', function(
+    api.createPlaylist('My Cool Playlist', function(
       err,
       data
     ) {
