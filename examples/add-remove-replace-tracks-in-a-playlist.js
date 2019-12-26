@@ -39,7 +39,6 @@ spotifyApi
 
     // Create a playlist
     return spotifyApi.createPlaylist(
-      'thelinmichael',
       'My New Awesome Playlist'
     );
   })
