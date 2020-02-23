@@ -33,7 +33,6 @@ var _getErrorObject = function(defaultMessage, err) {
   var errorObject;
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
     // Web API Error format
-    console.log(err.error);
     var webApiErrorObject = err.error.response && err.error.response.body;
     // Use detailed Web API error object only if message and status exist
     // reason can be undefined, we still benefit from a more detailed error message
