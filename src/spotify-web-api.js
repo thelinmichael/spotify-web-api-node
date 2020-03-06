@@ -1255,6 +1255,27 @@ SpotifyWebApi.prototype = {
       .execute(HttpManager.put, callback);
   },
 
+      /**
+    * Add a song to the user queue.
+    * @param {Object} [options] Options, being uri, device_id.
+    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+    * @example queue({uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
+    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+    *          otherwise an error. Not returned if a callback is given.
+    */
+  addToQueue: function (songUri, options, callback) {
+    var params = {
+      uri: songUri
+    }
+    options && options.device_id ? params.device_id = options.device_id : null
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/queue')
+      .withHeaders({ 'Content-Type': 'application/json' })
+      .withQueryParameters(params)
+      .build()
+      .execute(HttpManager.post, callback);
+  },
+
   /**
    * Add the current user as a follower of one or more other Spotify users.
    * @param {string[]} userIds The IDs of the users to be followed.
