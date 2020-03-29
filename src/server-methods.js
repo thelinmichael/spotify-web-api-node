@@ -65,8 +65,8 @@ module.exports = {
     return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
-        grant_type: 'refresh_token',
-        refresh_token: this.getRefreshToken()
+        grant_type: 'client_credentials',
+        code: this.getRefreshToken()
       })
       .withHeaders({
         Authorization:
