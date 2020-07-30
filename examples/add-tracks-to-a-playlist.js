@@ -32,7 +32,6 @@ spotifyApi
   .then(function(data) {
     spotifyApi.setAccessToken(data.body['access_token']);
     return spotifyApi.addTracksToPlaylist(
-      'thelinmichael',
       '5ieJqeLJjjI8iJWaxeBLuK',
       [
         'spotify:track:4iV5W9uYEdYUVa79Axb7Rh',

@@ -48,7 +48,7 @@ spotifyApi
     playlistId = data.body['id'];
 
     // Add tracks to the playlist
-    return spotifyApi.addTracksToPlaylist('thelinmichael', playlistId, [
+    return spotifyApi.addTracksToPlaylist(playlistId, [
       'spotify:track:4iV5W9uYEdYUVa79Axb7Rh',
       'spotify:track:6tcfwoGcDjxnSc6etAkDRR',
       'spotify:track:4iV5W9uYEdYUVa79Axb7Rh'
