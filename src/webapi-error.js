@@ -1,11 +1,14 @@
 'use strict';
 
-function WebapiError(message, statusCode, reason) {
+function WebapiError(message, statusCode, reason, headers) {
   this.name = 'WebapiError';
   this.message = message || '';
   this.statusCode = statusCode;
   if (reason) {
     this.reason = reason;
+  }
+  if (headers) {
+    this.headers = headers;
   }
 }
 
