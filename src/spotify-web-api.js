@@ -1082,7 +1082,7 @@ SpotifyWebApi.prototype = {
       .withPath('/v1/me/player')
       .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters({
-        device_ids: options.deviceIds,
+        device_ids: options.device_ids,
         play: !!options.play
       })
       .build()
