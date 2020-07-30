@@ -1163,30 +1163,72 @@ SpotifyWebApi.prototype = {
 
   /**
    * Skip the Current User's Playback To Previous Track
+   * @param {Object} [options] The possible options, currently only device_id.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackPrevious().then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToPrevious: function(callback) {
+  skipToPrevious: function(options, callback) {
+    // In case someone is using a version where options parameter did not exist.
+    var actualCallback, actualOptions;
+    if (!options && !callback) {
+      actualOptions = {};
+    } else if (typeof options === 'function' && !callback) {
+      actualCallback = options;
+      actualOptions = {};
+    } else {
+      actualCallback = callback;
+      actualOptions = options;
+    }
+
+    if (actualOptions.deviceId) {
+      actualOptions = {
+        device_id: actualOptions.deviceId
+      };
+      delete actualOptions.deviceId;
+    }
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/previous')
       .withHeaders({ 'Content-Type': 'application/json' })
+      .withQueryParameters(actualOptions)
       .build()
       .execute(HttpManager.post, callback);
   },
 
   /**
    * Skip the Current User's Playback To Next Track
+   * @param {Object} [options] The possible options, currently only device_id.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackNext().then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToNext: function(callback) {
+  skipToNext: function(options, callback) {
+    // In case someone is using a version where options parameter did not exist.
+    var actualCallback, actualOptions;
+    if (!options && !callback) {
+      actualOptions = {};
+    } else if (typeof options === 'function' && !callback) {
+      actualCallback = options;
+      actualOptions = {};
+    } else {
+      actualCallback = callback;
+      actualOptions = options;
+    }
+
+    if (actualOptions.deviceId) {
+      actualOptions = {
+        device_id: actualOptions.deviceId
+      };
+      delete actualOptions.deviceId;
+    }
+
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/next')
       .withHeaders({ 'Content-Type': 'application/json' })
+      .withQueryParameters(actualOptions)
       .build()
       .execute(HttpManager.post, callback);
   },
