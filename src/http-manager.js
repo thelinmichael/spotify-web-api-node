@@ -34,9 +34,9 @@ var _getErrorObject = function(defaultMessage, err) {
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
     // Web API Error format
     errorObject = new WebApiError(
-      (err.error.response.body.error || {}).message || err.error.message,
-      (err.error.response.body.error || {}).status || err.error.status,
-      (err.error.response.body.error || {}).reason,
+      getSafe(() => err.error.response.body.error.message, err.error.message),
+      getSafe(() => err.error.response.body.error.status, err.error.status),
+      getSafe(() => err.error.response.body.error.reason),
       err.error.response && err.error.response.headers
     );
   } else if (typeof err.error === 'string') {
@@ -150,5 +150,13 @@ HttpManager.put = function(request, callback) {
 
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
+
+function getSafe(fn, defaultVal) {
+  try {
+    return fn();
+  } catch (e) {
+    return defaultVal;
+  }
+}
 
 module.exports = HttpManager;
