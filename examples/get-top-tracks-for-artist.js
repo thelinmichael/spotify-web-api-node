@@ -1,8 +1,8 @@
-var SpotifyWebApi = require('../');
+const SpotifyWebApi = require('../');
 
 /**
  * This example retrieves the top tracks for an artist.
- * https://developer.spotify.com/spotify-web-api/get-artists-top-tracks/
+ * https://developer.spotify.com/documentation/web-api/reference/artists/get-artists-top-tracks/
  */
 
 /**
@@ -11,9 +11,9 @@ var SpotifyWebApi = require('../');
  *
  * Since it's not necessary to get an access token connected to a specific user, this example
  * uses the Client Credentials flow. This flow uses only the client ID and the client secret.
- * https://developer.spotify.com/spotify-web-api/authorization-guide/#client_credentials_flow
+ * https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow
  */
-var spotifyApi = new SpotifyWebApi({
+const spotifyApi = new SpotifyWebApi({
   clientId: '<insert client id>',
   clientSecret: '<insert client secret>'
 });

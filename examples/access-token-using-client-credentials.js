@@ -1,19 +1,15 @@
-var SpotifyWebApi = require('../');
+const SpotifyWebApi = require('../');
 
 /**
- * This example retrives an access token using the Client Credentials Flow. It's well documented here:
- * https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow
- */
-
-/*
- * https://developer.spotify.com/spotify-web-api/using-scopes/
+ * This example retrieves an access token using the Client Credentials Flow, documented at:
+ * https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow
  */
 
 /**
- * Set the credentials given on Spotify's My Applications page.
- * https://developer.spotify.com/my-applications
+ * Get the credentials from Spotify's Dashboard page.
+ * https://developer.spotify.com/dashboard/applications
  */
-var spotifyApi = new SpotifyWebApi({
+const spotifyApi = new SpotifyWebApi({
   clientId: '<insert client id>',
   clientSecret: '<insert client secret>'
 });
