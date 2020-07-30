@@ -1899,7 +1899,7 @@ describe('Spotify Web API', () => {
 
     api
       .transferMyPlayback({
-        deviceIds: ['deviceId'],
+        device_ids: ['deviceId'],
         play: true
       })
       .then(
