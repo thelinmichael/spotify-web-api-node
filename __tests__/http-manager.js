@@ -1,5 +1,6 @@
 var Request = require('../src/base-request');
 var superagent = require('superagent');
+var WebApiError = require('../src/webapi-error');
 
 describe('Make requests', () => {
   afterEach(() => {
@@ -58,6 +59,35 @@ describe('Make requests', () => {
       HttpManager.get(request, function(errorObject) {
         expect(errorObject).toBeInstanceOf(Error);
         expect(errorObject.message).toBe('There is a problem in your request');
+        done();
+      });
+    });
+
+    test('Should process an error GET request with an error reason when detailed Web API error object is in response', done => {
+      superagent.__setMockError({
+        message: 'Generic Error Message',
+        response: {
+          body: {
+            error: {
+              message: 'Detailed Web API Error message',
+              status: 400,
+              reason: 'You messed up!'
+            }
+          }
+        }
+      });
+
+      var HttpManager = require('../src/http-manager');
+      var request = Request.builder()
+        .withHost('such.api.wow')
+        .withPort(1337)
+        .withScheme('http')
+        .build();
+
+      HttpManager.get(request, function(errorObject) {
+        expect(errorObject).toBeInstanceOf(Error);
+        expect(errorObject.message).toBe('Detailed Web API Error message');
+        expect(errorObject.reason).toBe('You messed up!');
         done();
       });
     });
