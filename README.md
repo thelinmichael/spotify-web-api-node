@@ -92,7 +92,7 @@ All methods require authentication, which can be done using these flows:
 
 * [Client credentials flow](http://tools.ietf.org/html/rfc6749#section-4.4) (Application-only authentication)
 * [Authorization code grant](http://tools.ietf.org/html/rfc6749#section-4.1) (Signed by user)
-* [Implicit grant flow](https://tools.ietf.org/html/rfc6749#section-4.2) (Signed by user)
+* [Implicit Grant Flow](https://tools.ietf.org/html/rfc6749#section-4.2) (Client-side Authentication)
 
 ##### Dependencies
 
@@ -759,7 +759,7 @@ spotifyApi
 
 ### Authorization
 
-Supplying an access token is required for all requests to the Spotify API. This wrapper supports two authorization flows - The Authorization Code flow (signed by a user), and the Client Credentials flow (application authentication - the user isn't involved). See Spotify's [Authorization guide](https://developer.spotify.com/spotify-web-api/authorization-guide/) for detailed information on these flows.
+Supplying an access token is required for all requests to the Spotify API. This wrapper supports all three authorization flows - The Authorization Code flow (signed by a user), the Client Credentials flow (application authentication - the user isn't involved), and the Implicit Grant Flow (For completely clientside applications). See Spotify's [Authorization guide](https://developer.spotify.com/spotify-web-api/authorization-guide/) for detailed information on these flows.
 
 **Important: If you are writing a universal/isomorphic web app using this library, you will not be able to use those methods that send a client secret to the Spotify authorization service. Client secrets should be kept server-side and not exposed. Never include your client secret in the public JS served to the browser.**
 
@@ -867,9 +867,55 @@ spotifyApi.clientCredentialsGrant().then(
 );
 ```
 
-#### Implicit Grant flow
+#### Implicit Grant
 
-See [Implicit Grant Flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) for official Spotify documentation on this flow. 
+The Implicit Grant can be used to allow users to login to your completely client-side application. This method still requires a registered application, but won't expose your client secret.
+This method of authentication won't return any refresh tokens, so you will need to fully reauthenticate the user everytime a token expires.
+
+```javascript
+var scopes = ['user-read-private', 'user-read-email'],
+  redirectUri = 'https://example.com/callback',
+  clientId = '5fe01282e44241328a84e7c5cc169165',
+  state = 'some-state-of-my-choice',
+  showDialog = true,
+  responseType = 'token';
+
+// Setting credentials can be done in the wrapper's constructor, or using the API object's setters.
+var spotifyApi = new SpotifyWebApi({
+  redirectUri: redirectUri,
+  clientId: clientId
+});
+
+// Create the authorization URL
+var authorizeURL = spotifyApi.createAuthorizeURL(
+  scopes,
+  state,
+  showDialog,
+  responseType
+);
+
+// https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=token&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true
+console.log(authorizeURL);
+```
+
+When the client returns, it will have a token we can directly pass to the library:
+
+```javascript
+// The code that's returned as a hash fragment query string parameter to the redirect URI
+var code = 'MQCbtKe23z7YzzS44KzZzZgjQa621hgSzHN';
+
+var credentials = {
+  clientId: 'someClientId',
+  clientSecret: 'someClientSecret',
+  //Either here
+  accessToken: code
+};
+
+var spotifyApi = new SpotifyWebApi(credentials);
+
+//Or with a method
+spotifyApi.setAccessToken(code);
+```
 
 #### Setting credentials
 

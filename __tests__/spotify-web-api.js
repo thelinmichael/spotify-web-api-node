@@ -2390,6 +2390,7 @@ describe('Spotify Web API', () => {
     });
 
     var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog, responseType);
+
     expect(authorizeURL).toBe(
       'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=token&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
     );
