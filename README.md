@@ -759,7 +759,6 @@ spotifyApi
 ```
 
 ### Authorization
-
 Supplying an access token is required for all requests to the Spotify API. This wrapper supports all three authorization flows - The Authorization Code flow (signed by a user), the Client Credentials flow (application authentication - the user isn't involved), and the Implicit Grant Flow (For completely clientside applications). See Spotify's [Authorization guide](https://developer.spotify.com/spotify-web-api/authorization-guide/) for detailed information on these flows.
 
 **Important: If you are writing a universal/isomorphic web app using this library, you will not be able to use those methods that send a client secret to the Spotify authorization service. Client secrets should be kept server-side and not exposed. Never include your client secret in the public JS served to the browser.**
@@ -904,7 +903,6 @@ When the client returns, it will have a token we can directly pass to the librar
 ```javascript
 // The code that's returned as a hash fragment query string parameter to the redirect URI
 var code = 'MQCbtKe23z7YzzS44KzZzZgjQa621hgSzHN';
-
 var credentials = {
   clientId: 'someClientId',
   clientSecret: 'someClientSecret',

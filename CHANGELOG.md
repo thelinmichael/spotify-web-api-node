@@ -3,7 +3,8 @@
 #### 5.0.0 (27 Sep 2020)
 
 * Bumped dependencies to resolve critical security issues. 
-* Added support for [Implicit Grant flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) - Thanks [https://github.com/gaganza](@gaganza)!
+* Added support for [Implicit Grant flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) - Thanks [@gaganza](https://github.com/gaganza) and [@noahp78](https://github.com/noahp78)!
+* `position_ms` added to `play` method. Thanks [@alqubo](https://github.com/alqubo), [@koflin](https://github.com/koflin), [@DoctorFishy](https://github.com/DoctorFishy).
 
 More coming before NPM release.
 
