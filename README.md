@@ -48,7 +48,7 @@ The library includes helper functions to do the following:
 #### Your Music library
 
 * Add, remove, and get tracks and albums that are in the signed in user's Your Music library
-* Check if a track or album is in the signed in user's Your Music library
+* Check if a track or album is in the signed in user's Your Music library 
 
 #### Personalization
 
@@ -63,6 +63,22 @@ The library includes helper functions to do the following:
 * Get a Category's Playlists
 * Get recommendations based on seeds
 * Get available genre seeds
+
+#### Player
+
+* Get a User's Available Devices
+* Get Information About The User's Current Playback State
+* Get Current User's Recently Played Tracks
+* Get the User's Currently Playing Track 
+* Pause a User's Playback
+* Seek To Position In Currently Playing Track
+* Set Repeat Mode On User’s Playback
+* Set Volume For User's Playback
+* Skip User’s Playback To Next Track
+* Skip User’s Playback To Previous Track 
+* Start/Resume a User's Playback 
+* Toggle Shuffle For User’s Playback
+* Transfer a User's Playback
 
 #### Follow
 
@@ -693,21 +709,69 @@ spotifyApi.getPlaylistsForCategory('party', {
     console.log("Something went wrong!", err);
   });
 
+// Get Recommendations Based on Seeds
+// TBD
 
+// Get available genre seeds
+// TBD
 
 /* Player */
 
-// Get information about current playing song for signed in user
-spotifyApi.getMyCurrentPlaybackState({
-  })
+// Get a User's Available Devices
+// TBD
+
+// Get Information About The User's Current Playback State
+spotifyApi.getMyCurrentPlaybackState()
   .then(function(data) {
     // Output items
-    console.log("Now Playing: ",data.body);
+    if (data.body && data.body.is_playing) {
+      console.log("User is currently playing something!");
+    } else {
+      console.log("User is not playing anything, or doing so in private.");
+    }
   }, function(err) {
     console.log('Something went wrong!', err);
   });
 
-/* Get Recommendations Based on Seeds */
+// Get Current User's Recently Played Tracks
+spotifyApi.getMyRecentlyPlayedTracks({
+  limit : 20
+}).then(function(data) {
+    // Output items
+    console.log("Your 20 most recently played tracks are:");
+    data.body.items.forEach(item => console.log(item.track));
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
+// Get the User's Currently Playing Track 
+// TBD
+
+// Pause a User's Playback
+// TBD
+
+// Seek To Position In Currently Playing Track
+// TBD
+
+// Set Repeat Mode On User’s Playback
+// TBD
+
+// Set Volume For User's Playback
+// TBD
+
+// Skip User’s Playback To Next Track
+// TBD
+
+// Skip User’s Playback To Previous Track 
+// TBD
+
+// Start/Resume a User's Playback 
+// TBD
+
+// Toggle Shuffle For User’s Playback
+// TBD
+
+// Transfer a User's Playback
 // TBD
 
 
