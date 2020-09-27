@@ -96,7 +96,7 @@ All methods require authentication, which can be done using these flows:
 
 ##### Dependencies
 
-This project depends on [superagent](https://github.com/visionmedia/superagent) to make HTTP requests, and [promise](https://github.com/then/promise) as its [Promises/A+](http://promises-aplus.github.io/promises-spec/) implementation.
+This project depends on [superagent](https://github.com/visionmedia/superagent) to make HTTP requests.
 
 ## Installation
 
