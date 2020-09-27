@@ -1151,7 +1151,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToPrevious: function(callback) {
+  skipToPrevious: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/previous')
       .withQueryParameters(
@@ -1170,7 +1170,7 @@ SpotifyWebApi.prototype = {
    * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToNext: function(callback) {
+  skipToNext: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/next')
       .withQueryParameters(
@@ -1211,7 +1211,7 @@ SpotifyWebApi.prototype = {
    * @param {string} [state] State (track, context, or off)
    * @param {Object} [options] Options, being device_id. If left empty will target the user's currently active device.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example setRepeat({state: 'context'}).then(...)
+   * @example setRepeat('context', {}).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
@@ -1232,7 +1232,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Set Shuffle Mode On The Current User's Playback
-   * @param {string} [state] State (true, false)
+   * @param {boolean} [state] State 
    * @param {Object} [options] Options, being device_id. If left empty will target the user's currently active device.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example setShuffle({state: 'false'}).then(...)

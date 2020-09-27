@@ -1859,7 +1859,7 @@ describe('Spotify Web API', () => {
       expect(method).toBe(superagent.put);
       expect(uri).toBe('https://api.spotify.com/v1/me/player');
       expect(JSON.parse(options.data)).toEqual({
-        device_ids: ['deviceId'],
+        device_ids : ['my-device-id'],
         play: true
       });
       expect(options.query).toBeFalsy();
@@ -1873,8 +1873,7 @@ describe('Spotify Web API', () => {
     });
 
     api
-      .transferMyPlayback({
-        deviceIds: ['deviceId'],
+      .transferMyPlayback(['my-device-id'], {
         play: true
       })
       .then(
@@ -2090,6 +2089,8 @@ describe('Spotify Web API', () => {
       expect(method).toBe(superagent.put);
       expect(uri).toBe('https://api.spotify.com/v1/me/player/repeat');
       expect(options.query).toBeTruthy();
+      expect(options.query.state).toEqual('off');
+      expect(options.query.device_id).toEqual('some-device-id');
       expect(options.body).toBeFalsy();
       callback();
     });
@@ -2100,7 +2101,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.setRepeat({ state: 'off' }).then(
+    api.setRepeat('off', { device_id: 'some-device-id' }).then(
       function(data) {
         done();
       },
@@ -2121,6 +2122,7 @@ describe('Spotify Web API', () => {
       expect(method).toBe(superagent.put);
       expect(uri).toBe('https://api.spotify.com/v1/me/player/shuffle');
       expect(options.query).toBeTruthy();
+      expect(options.query.state).toEqual(false)
       expect(options.body).toBeFalsy();
       callback();
     });
@@ -2131,7 +2133,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.setShuffle({ state: 'false' }).then(
+    api.setShuffle(false).then(
       function(data) {
         done();
       },
