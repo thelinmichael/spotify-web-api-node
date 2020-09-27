@@ -3,7 +3,9 @@
 #### 5.0.0 (27 Sep 2020)
 
 * Bumped dependencies to resolve critical security issues. 
+* Added support for [Implicit Grant flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) - Thanks [https://github.com/gaganza](@gaganza)!
 
+More coming before NPM release.
 
 #### 4.0.0 (14 Sep 2018)
 

@@ -92,6 +92,7 @@ All methods require authentication, which can be done using these flows:
 
 * [Client credentials flow](http://tools.ietf.org/html/rfc6749#section-4.4) (Application-only authentication)
 * [Authorization code grant](http://tools.ietf.org/html/rfc6749#section-4.1) (Signed by user)
+* [Implicit grant flow](https://tools.ietf.org/html/rfc6749#section-4.2) (Signed by user)
 
 ##### Dependencies
 
