@@ -1,5 +1,10 @@
 ## Change log
 
+#### 5.0.0 (27 Sep 2020)
+
+* Bumped dependencies to resolve critical security issues. 
+
+
 #### 4.0.0 (14 Sep 2018)
 
 * Modified functions that operate on playlists to drop the user id parameter. This is a breaking change. [PR](https://github.com/thelinmichael/spotify-web-api-node/pull/243)
