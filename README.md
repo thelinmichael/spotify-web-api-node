@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/thelinmichael/spotify-web-api-node/badge.svg)](https://coveralls.io/r/thelinmichael/spotify-web-api-node)
 [![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/spotify-web-api-node.svg)](https://bundlephobia.com/result?p=spotify-web-api-node)
 
-This is a universal wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/) that runs on Node.JS and the browser, using [browserify](http://browserify.org/)/[webpack](https://webpack.github.io/)/[rollup](http://rollupjs.org/). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/web-api/code-examples/).
+This is a universal wrapper/client for the [Spotify Web API](https://developer.spotify.com/web-api/) that runs on Node.JS and the browser, using [browserify](http://browserify.org/)/[webpack](https://webpack.github.io/)/[rollup](http://rollupjs.org/). A list of selected wrappers for different languages and environments is available at the Developer site's [Libraries page](https://developer.spotify.com/documentation/web-api/libraries/).
 
 Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez), with help from [a lot of awesome contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members).
 
@@ -19,7 +19,7 @@ Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPere
 
 The library includes helper functions to do the following:
 
-#### Music metadata
+#### Fetch music metadata
 
 * Albums, artists, and tracks
 * Audio features and analysis for tracks
@@ -117,7 +117,7 @@ var spotifyApi = new SpotifyWebApi({
 });
 ```
 
-If you've got an access token and want to use it for all calls, simply use the api object's set method. Handling credentials is described in detail in the Authorization section.
+If you've got an access token and want to use it for all calls, simply use the API object's set method. Handling credentials is described in detail in the Authorization section.
 
 ```javascript
 spotifyApi.setAccessToken('<your_access_token>');
@@ -174,7 +174,7 @@ spotifyApi
 
 ### Response body, statuscode, and headers
 
-To enable caching, this wrapper now exposes the response headers and not just the response body. Since version 2.0.0, the response object has the format
+To enable caching, this wrapper now exposes the response headers and not just the response body. Since version 2.0.0, the response object has the format:
 
 ```json
 {
@@ -192,7 +192,7 @@ In previous versions, the response object was the same as the response body.
 
 #### Example of a response
 
-Retrieving a track's metadata in `spotify-web-api-node` version 1.4.0 and later
+Retrieving a track's metadata in `spotify-web-api-node` version 1.4.0 and later:
 
 ```json
 {
@@ -214,7 +214,7 @@ Retrieving a track's metadata in `spotify-web-api-node` version 1.4.0 and later
 }
 ```
 
-The response object for the same request in earlier versions than to 2.0.0.
+The response object for the same request in versions earlier than 2.0.0:
 
 ```json
 {
@@ -706,6 +706,7 @@ spotifyApi.getMyCurrentPlaybackState({
   }, function(err) {
     console.log('Something went wrong!', err);
   });
+
 /* Get Recommendations Based on Seeds */
 // TBD
 
@@ -720,7 +721,7 @@ spotifyApi.getMyCurrentPlaybackState({
 Get a User’s Top Artists and Tracks
 ```
 
-### Nesting calls
+### Chaining calls
 
 ```javascript
 // track detail information for album tracks
@@ -769,7 +770,7 @@ The first thing you need to do is to [create an application](https://developer.s
 
 With the application created and its redirect URI set, the only thing necessary for the application to retrieve an **authorization code** is the user's permission. Which permissions you're able to ask for is documented in Spotify's [Using Scopes section](https://developer.spotify.com/spotify-web-api/using-scopes/).
 
-In order to get permissions, you need to direct the user to our Accounts service. Generate the URL by using the wrapper's authorization URL method.
+In order to get permissions, you need to direct the user to [Spotify's Accounts service](https://accounts.spotify.com). Generate the URL by using the wrapper's authorization URL method.
 
 ```javascript
 var scopes = ['user-read-private', 'user-read-email'],
@@ -821,7 +822,7 @@ spotifyApi.authorizationCodeGrant(code).then(
 );
 ```
 
-Since the access token was set on the api object in the previous success callback, **it's going to be used in future calls**. As it was retrieved using the Authorization Code flow, it can also be refreshed.
+Since the access token was set on the API object in the previous success callback, **it's going to be used in future calls**. As it was retrieved using the Authorization Code flow, it can also be refreshed.
 
 ```javascript
 // clientId, clientSecret and refreshToken has been set on the api object previous to this call.
