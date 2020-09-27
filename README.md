@@ -867,6 +867,10 @@ spotifyApi.clientCredentialsGrant().then(
 );
 ```
 
+#### Implicit Grant flow
+
+See [Implicit Grant Flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) for official Spotify documentation on this flow. 
+
 #### Setting credentials
 
 Credentials are either set when constructing the API object or set after the object has been created using setters. They can be set all at once or one at a time.
