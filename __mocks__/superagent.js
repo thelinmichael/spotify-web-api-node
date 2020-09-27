@@ -11,8 +11,8 @@ var mockResponse = {
   ok() {
     return true;
   },
-  get: jest.genMockFunction(),
-  toError: jest.genMockFunction()
+  get: jest.fn(),
+  toError: jest.fn()
 };
 
 var Request = {
@@ -46,7 +46,7 @@ var Request = {
   timeout() {
     return this;
   },
-  end: jest.genMockFunction().mockImplementation(function(callback) {
+  end: jest.fn().mockImplementation(function(callback) {
     if (mockDelay) {
       this.delayTimer = setTimeout(callback, 0, mockError, mockResponse);
       return;

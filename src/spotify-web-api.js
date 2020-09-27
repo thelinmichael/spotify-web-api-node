@@ -615,7 +615,7 @@ SpotifyWebApi.prototype = {
    * @param {string[]} tracks URIs of the tracks to add to the playlist.
    * @param {Object} [options] Options, position being the only one.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example addTracksToPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK',
+   * @example addTracksToPlaylist('3EsfV6XzCHU8SPNdbnFogK',
               '["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"]').then(...)
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
@@ -834,15 +834,15 @@ SpotifyWebApi.prototype = {
    * @param {string[]} scopes The scopes corresponding to the permissions the application needs.
    * @param {string} state A parameter that you can use to maintain a value between the request and the callback to redirect_uri.It is useful to prevent CSRF exploits.
    * @param {boolean} showDialog A parameter that you can use to force the user to approve the app on each login rather than being automatically redirected.
-   * @param {boolean} requestToken A parameter you can use to signal that you want a token instead of a code (if you want to use the Implicit Grant)
+   * @param {string} responseType An optional parameter that you can use to specify the code response based on the authentication type - can be set to 'code' or 'token'. Default 'code' to ensure backwards compatability.
    * @returns {string} The URL where the user can give application permissions.
    */
-  createAuthorizeURL: function(scopes, state, showDialog, requestToken) {
+  createAuthorizeURL: function(scopes, state, showDialog, responseType = 'code') {
     return AuthenticationRequest.builder()
       .withPath('/authorize')
       .withQueryParameters({
         client_id: this.getClientId(),
-        response_type: requestToken ? 'token' : 'code',
+        response_type: responseType,
         redirect_uri: this.getRedirectURI(),
         scope: scopes.join('%20'),
         state: state,
@@ -1091,7 +1091,7 @@ SpotifyWebApi.prototype = {
 
   /**
    * Starts o Resumes the Current User's Playback
-   * @param {Object} [options] Options, being device_id, context_uri, offset, uris.
+   * @param {Object} [options] Options, being device_id, context_uri, offset, uris, position_ms.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
@@ -1104,7 +1104,7 @@ SpotifyWebApi.prototype = {
       ? { device_id: _options.device_id }
       : null;
     var postData = {};
-    ['context_uri', 'uris', 'offset'].forEach(function(field) {
+    ['context_uri', 'uris', 'offset', 'position_ms'].forEach(function(field) {
       if (field in _options) {
         postData[field] = _options[field];
       }

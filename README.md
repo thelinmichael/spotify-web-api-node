@@ -402,7 +402,7 @@ spotifyApi.getUserPlaylists('thelinmichael')
   });
 
 // Create a private playlist
-spotifyApi.createPlaylist('My Cool Playlist', { 'public' : false })
+spotifyApi.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false })
   .then(function(data) {
     console.log('Created playlist!');
   }, function(err) {
@@ -878,7 +878,7 @@ var scopes = ['user-read-private', 'user-read-email'],
   clientId = '5fe01282e44241328a84e7c5cc169165',
   state = 'some-state-of-my-choice',
   showDialog = true,
-  requestToken = true;
+  responseType = 'token';
 
 // Setting credentials can be done in the wrapper's constructor, or using the API object's setters.
 var spotifyApi = new SpotifyWebApi({
@@ -891,7 +891,7 @@ var authorizeURL = spotifyApi.createAuthorizeURL(
   scopes,
   state,
   showDialog,
-  requestToken
+  responseType
 );
 
 // https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=token&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true
@@ -1009,7 +1009,7 @@ var spotifyApi = new SpotifyWebApi({
 
 // Get tracks in a playlist
 api
-  .getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', {
+  .getPlaylistTracks('3ktAYNcRHpazJ9qecm3ptn', {
     offset: 1,
     limit: 5,
     fields: 'items'
