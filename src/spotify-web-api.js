@@ -615,7 +615,7 @@ SpotifyWebApi.prototype = {
    * @param {string[]} tracks URIs of the tracks to add to the playlist.
    * @param {Object} [options] Options, position being the only one.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example addTracksToPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK',
+   * @example addTracksToPlaylist('3EsfV6XzCHU8SPNdbnFogK',
               '["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"]').then(...)
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.

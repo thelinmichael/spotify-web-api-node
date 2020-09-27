@@ -402,7 +402,7 @@ spotifyApi.getUserPlaylists('thelinmichael')
   });
 
 // Create a private playlist
-spotifyApi.createPlaylist('My Cool Playlist', { 'public' : false })
+spotifyApi.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false })
   .then(function(data) {
     console.log('Created playlist!');
   }, function(err) {
