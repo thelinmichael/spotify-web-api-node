@@ -508,20 +508,20 @@ SpotifyWebApi.prototype = {
 
   /**
    * Create a playlist.
-   * @param {Object} [options] Some possible options: name, description, public (currently only public).
+   * @param {string} [name] The name of the playlist.
+   * @param {Object} [options] The possible options, being description, collaborative and public.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example createPlaylist({'name': 'My playlist', 'description': 'My description', 'public': true}).then(...)
+   * @example createPlaylist('My playlist', {''description': 'My description', 'collaborative' : false, 'public': true}).then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing information about the
    *          created playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  createPlaylist: function(options, callback) {
-    // In case someone is using a version where options parameter did not exist.
-    var actualCallback;
-    if (typeof options === 'function' && !callback) {
-      actualCallback = options;
-    } else {
-      actualCallback = callback;
+  createPlaylist: function(name, options, callback) {
+    // In case someone is using a version where user id was required
+    if (typeof options === 'string') {
+      options = callback;
+      callback = arguments[3];
     }
+    options.name = name;
 
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/playlists')

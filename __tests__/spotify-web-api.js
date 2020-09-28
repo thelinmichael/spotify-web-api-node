@@ -1512,14 +1512,36 @@ describe('Spotify Web API', () => {
     });
   });
 
-  test.skip('should create a playlist', function(done) {
+  test('should create a playlist', function(done) {
+    sinon.stub(HttpManager, '_makeRequest', function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/me/playlists'
+      );
+      expect(JSON.parse(options.data)).toEqual({
+        name: 'My Cool Playlist'
+      });
+      expect(options.query).toBeFalsy();
+      callback(null, {
+        body: { name: 'My Cool Playlist' },
+        statusCode: 200
+      });
+    });
+
     var api = new SpotifyWebApi();
     api.setAccessToken('long-access-token');
 
     api
-      .createPlaylist('thelinmichael', 'My Cool Playlist', { public: true })
+      .createPlaylist('My Cool Playlist')
       .then(
         function(data) {
+          expect(data.body.name).toBe('My Cool Playlist');
+          expect(data.statusCode).toBe(200);
           done();
         },
         function(err) {
@@ -1538,15 +1560,16 @@ describe('Spotify Web API', () => {
     ) {
       expect(method).toBe(superagent.post);
       expect(uri).toBe(
-        'https://api.spotify.com/v1/users/thelinmichael/playlists'
+        'https://api.spotify.com/v1/me/playlists'
       );
       expect(JSON.parse(options.data)).toEqual({
         name: 'My Cool Playlist',
+        description: 'It\'s really cool',
         public: false
       });
       expect(options.query).toBeFalsy();
       callback(null, {
-        body: { name: 'My Cool Playlist', public: false },
+        body: { name: 'My Cool Playlist', description: 'It\s really cool', public: false },
         statusCode: 200
       });
     });
@@ -1554,18 +1577,20 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
 
     api.createPlaylist(
-      'thelinmichael',
       'My Cool Playlist',
+      { description: 'It\'s really cool' },
       { public: false },
       function(err, data) {
         expect(data.body.name).toBe('My Cool Playlist');
+        expect(data.body.description).toBe('It\s really cool');
+        expect(data.body.public).toBe(false);
         expect(data.statusCode).toBe(200);
         done();
       }
     );
   });
 
-  test('should create a playlist using callback without options', done => {
+  test('should create a playlist using callback with user id', done => {
     sinon.stub(HttpManager, '_makeRequest', function(
       method,
       options,
@@ -1574,19 +1599,19 @@ describe('Spotify Web API', () => {
     ) {
       expect(method).toBe(superagent.post);
       expect(uri).toBe(
-        'https://api.spotify.com/v1/users/thelinmichael/playlists'
+        'https://api.spotify.com/v1/me/playlists'
       );
       expect(JSON.parse(options.data)).toEqual({ name: 'My Cool Playlist' });
-      callback(null, { body: { name: 'My Cool Playlist' } });
+      callback(null, { body: { name: 'My Cool Playlist' }, statusCode: 200 });
       expect(options.query).toBeFalsy();
     });
 
     var api = new SpotifyWebApi();
 
-    api.createPlaylist('thelinmichael', 'My Cool Playlist', function(
-      err,
-      data
-    ) {
+    api.createPlaylist('thelinmichael', 'My Cool Playlist', {}, 
+    function(err, data) {
+      expect(data.body.name).toBe('My Cool Playlist');
+      expect(data.statusCode).toBe(200);
       done();
     });
   });
