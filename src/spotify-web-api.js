@@ -1029,6 +1029,28 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+
+   * Add track or episode to device queue
+   * @param {string} [uri] uri of the track or episode to add
+   * @param {Object} [options] Options, being device_id.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  addToQueue: function(uri, options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/queue')
+      .withQueryParameters(
+        {
+          uri: uri
+        },
+        options
+      )
+      .build()
+      .execute(HttpManager.post, callback);
+  },
+
+
    * Get the Current User's Available Devices
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves into an array of device objects,

@@ -1788,6 +1788,31 @@ describe('Spotify Web API', () => {
     });
   });
 
+  test("should add songs to the user's queue:", done => {
+    sinon.stub(HttpManager, '_makeRequest', function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/queue');
+      expect(options.query).toEqual({
+        uri: 'spotify:track:2jpDioAB9tlYXMdXDK3BGl'
+      });
+      expect(options.headers).toEqual({
+        Authorization: 'Bearer someAccessToken'
+      });
+      callback(null, null);
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken: 'someAccessToken'
+    });
+
+    api.addToQueue('spotify:track:2jpDioAB9tlYXMdXDK3BGl').then(done);
+  });
+
   test("should get user's devices:", done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
