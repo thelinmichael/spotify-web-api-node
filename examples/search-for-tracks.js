@@ -39,9 +39,7 @@ spotifyApi
 
     // Go through the first page of results
     var firstPage = data.body.tracks.items;
-    console.log(
-      'The tracks in the first page are.. (popularity in parentheses)'
-    );
+    console.log('The tracks in the first page are (popularity in parentheses):');
 
     /*
      * 0: All of Me (97)
@@ -52,7 +50,6 @@ spotifyApi
     firstPage.forEach(function(track, index) {
       console.log(index + ': ' + track.name + ' (' + track.popularity + ')');
     });
-  })
-  .catch(function(err) {
+  }).catch(function(err) {
     console.log('Something went wrong:', err.message);
   });

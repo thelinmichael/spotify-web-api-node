@@ -33,7 +33,23 @@ var _getErrorObject = function(defaultMessage, err) {
   var errorObject;
   if (typeof err.error === 'object' && typeof err.error.message === 'string') {
     // Web API Error format
-    errorObject = new WebApiError(err.error.message, err.error.status);
+    var webApiErrorObject = err.error.response && err.error.response.body;
+    // Use detailed Web API error object only if message and status exist
+    // reason can be undefined, we still benefit from a more detailed error message
+    if (
+      webApiErrorObject &&
+      webApiErrorObject.error &&
+      webApiErrorObject.error.message &&
+      webApiErrorObject.error.status
+    ) {
+      errorObject = new WebApiError(
+        webApiErrorObject.error.message,
+        webApiErrorObject.error.status,
+        webApiErrorObject.error.reason
+      );
+    } else {
+      errorObject = new WebApiError(err.error.message, err.error.status);
+    }
   } else if (typeof err.error === 'string') {
     // Authorization Error format
     /* jshint ignore:start */

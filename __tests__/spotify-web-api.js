@@ -37,7 +37,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve track metadata', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -70,7 +70,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve error when retrieving track metadata', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -98,7 +98,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get track for Swedish market', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -125,7 +125,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve track metadata using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -147,7 +147,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should fail for non existing track id', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -170,7 +170,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should fail for non existing track id using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -190,7 +190,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should fail for empty track id', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -213,7 +213,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for several tracks', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -240,7 +240,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for several tracks using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -266,7 +266,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for an album', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -297,7 +297,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for an album for a market ', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -329,7 +329,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for an album using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -356,7 +356,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for several albums', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -398,7 +398,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for several albums using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -439,7 +439,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrive metadata for an artist', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -468,7 +468,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for an artist using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -493,7 +493,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for several artists', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -535,7 +535,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should retrieve metadata for several artists using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -576,7 +576,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should search for an album using limit and offset', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -623,7 +623,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should search for an album using limit and offset using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -662,7 +662,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should search for playlists', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -703,7 +703,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should search for an artist using limit and offset', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -743,7 +743,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should search for an artist using limit and offset using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -782,7 +782,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should search for a track using limit and offset', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -823,7 +823,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should search for a track using limit and offset using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -862,7 +862,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should search for several types using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -903,7 +903,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get artists albums', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -951,7 +951,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get artists albums using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -991,7 +991,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get tracks from album', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1029,7 +1029,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get tracks from album using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1067,7 +1067,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get top tracks for artist', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1097,7 +1097,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get top tracks for artist', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1123,7 +1123,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get similar artists', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1155,7 +1155,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get similar artists using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1182,7 +1182,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get a user', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1212,7 +1212,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get a user with a '#' character and encode it properly", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1242,7 +1242,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get a user using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1267,7 +1267,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get the authenticated user's information", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1296,7 +1296,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get the authenticated user's information with accesstoken set on the api object", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1324,7 +1324,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should fail if no token is provided for a request that requires an access token', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1352,7 +1352,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should fail if no token is provided for a request that requires an access token using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1376,7 +1376,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get a users playlists', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1413,7 +1413,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get the current users playlists', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1448,7 +1448,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get the current users playlists with options', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1483,7 +1483,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get a playlist', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1530,7 +1530,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should create a private playlist using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1566,7 +1566,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should create a playlist using callback without options', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1592,7 +1592,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should change playlist details', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1627,7 +1627,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should add tracks to playlist', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1658,7 +1658,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should add tracks to playlist with specified index', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1693,7 +1693,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get user's top artists", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1725,7 +1725,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get user's top tracks", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1757,7 +1757,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get user's recently played tracks:", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1814,7 +1814,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get user's devices:", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1843,7 +1843,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get user's current playback status:", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1875,7 +1875,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should transfer the user's playback", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1884,7 +1884,7 @@ describe('Spotify Web API', () => {
       expect(method).toBe(superagent.put);
       expect(uri).toBe('https://api.spotify.com/v1/me/player');
       expect(JSON.parse(options.data)).toEqual({
-        device_ids: ['deviceId'],
+        device_ids : ['my-device-id'],
         play: true
       });
       expect(options.query).toBeFalsy();
@@ -1898,8 +1898,7 @@ describe('Spotify Web API', () => {
     });
 
     api
-      .transferMyPlayback({
-        deviceIds: ['deviceId'],
+      .transferMyPlayback(['my-device-id'], {
         play: true
       })
       .then(
@@ -1914,7 +1913,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should resume the user's playback", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1944,7 +1943,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should resume the user's playback with options", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1986,7 +1985,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should pause the user's playback", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2016,7 +2015,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should pause the user's playback with options", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2046,7 +2045,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should skip the user's playback to next track", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2076,7 +2075,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should skip the user's playback to previous track", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2106,7 +2105,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should set the user's playback repeat mode", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2115,6 +2114,8 @@ describe('Spotify Web API', () => {
       expect(method).toBe(superagent.put);
       expect(uri).toBe('https://api.spotify.com/v1/me/player/repeat');
       expect(options.query).toBeTruthy();
+      expect(options.query.state).toEqual('off');
+      expect(options.query.device_id).toEqual('some-device-id');
       expect(options.body).toBeFalsy();
       callback();
     });
@@ -2125,7 +2126,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.setRepeat({ state: 'off' }).then(
+    api.setRepeat('off', { device_id: 'some-device-id' }).then(
       function(data) {
         done();
       },
@@ -2137,7 +2138,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should set the user's playback shuffle mode", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2146,6 +2147,7 @@ describe('Spotify Web API', () => {
       expect(method).toBe(superagent.put);
       expect(uri).toBe('https://api.spotify.com/v1/me/player/shuffle');
       expect(options.query).toBeTruthy();
+      expect(options.query.state).toEqual(false)
       expect(options.body).toBeFalsy();
       callback();
     });
@@ -2156,7 +2158,7 @@ describe('Spotify Web API', () => {
       accessToken: accessToken
     });
 
-    api.setShuffle({ state: 'false' }).then(
+    api.setShuffle(false).then(
       function(data) {
         done();
       },
@@ -2168,7 +2170,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should set the user's playback volume", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2202,7 +2204,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should seek', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2233,7 +2235,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should seek on a certain device', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2342,7 +2344,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should refresh an access token', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2383,7 +2385,7 @@ describe('Spotify Web API', () => {
     });
   });
 
-  test('should create authorization URL', () => {
+  test('should create authorization URL with code based authentication', () => {
     var scopes = ['user-read-private', 'user-read-email'],
       redirectUri = 'https://example.com/callback',
       clientId = '5fe01282e44241328a84e7c5cc169165',
@@ -2398,6 +2400,26 @@ describe('Spotify Web API', () => {
     var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog);
     expect(authorizeURL).toBe(
       'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
+    );
+  });
+
+  test('should create authorization URL with token based authentication', () => {
+    var scopes = ['user-read-private', 'user-read-email'],
+      redirectUri = 'https://example.com/callback',
+      clientId = '5fe01282e44241328a84e7c5cc169165',
+      state = 'some-state-of-my-choice',
+      showDialog = true,
+      responseType = 'token'
+
+    var api = new SpotifyWebApi({
+      clientId: clientId,
+      redirectUri: redirectUri
+    });
+
+    var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog, responseType);
+
+    expect(authorizeURL).toBe(
+      'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=token&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
     );
   });
 
@@ -2531,7 +2553,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should remove tracks in the users library', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2564,7 +2586,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should remove albums in the users library', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2595,7 +2617,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should add albums to the users library', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2627,7 +2649,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get albums in the users library', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2675,7 +2697,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should determine if an album is in the users library', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2710,7 +2732,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should follow a playlist', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2747,7 +2769,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should unfollow a playlist', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2780,7 +2802,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should follow several users', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2814,7 +2836,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should follow several users using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2843,7 +2865,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should follow several artists', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2877,7 +2899,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should follow several artists using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2905,7 +2927,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should unfollow several users', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2939,7 +2961,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should unfollow several users using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -2967,7 +2989,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should unfollow several artists', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3001,7 +3023,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should unfollow several artists using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3030,7 +3052,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should check whether the current user follows several other users', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3065,7 +3087,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should check whether the current user follows several other users using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3095,7 +3117,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should check whether the current user follows several artists', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3130,7 +3152,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should check whether the current user follows several artists using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3160,7 +3182,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get a user's followed artists using callback", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3195,7 +3217,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should get a user's followed artists using callback", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3229,7 +3251,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should check whether users follows a playlist', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3270,7 +3292,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should add tracks to playlist', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3307,7 +3329,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should add tracks to playlist using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3341,7 +3363,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should remove tracks from a playlist by position', done => {
-    sinon.stub(HttpManager, 'del', function(request, callback) {
+    sinon.stub(HttpManager, 'del').callsFake(function(request, callback) {
       expect(request.getURI()).toBe(
         'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
       );
@@ -3376,7 +3398,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should reorder tracks from a playlist by position', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3423,7 +3445,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should add tracks to the users library', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3457,7 +3479,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should add tracks to the users library using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3485,7 +3507,7 @@ describe('Spotify Web API', () => {
   });
 
   test('handles expired tokens', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3524,7 +3546,7 @@ describe('Spotify Web API', () => {
   });
 
   test('handles expired tokens using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3558,7 +3580,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get new releases', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3610,7 +3632,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get new releases', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3661,7 +3683,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get featured playlists', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3720,7 +3742,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get featured playlists using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3775,7 +3797,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get browse categories', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3830,7 +3852,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get a browse category', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3877,7 +3899,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get a playlists for a browse category', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3941,7 +3963,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get the audio features for a track', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -3975,7 +3997,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get the audio features for a several tracks', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -4013,7 +4035,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get recommendations', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -4059,7 +4081,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get recommendations using an array of seeds', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -4105,7 +4127,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should get available genre seeds', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
