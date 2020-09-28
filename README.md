@@ -455,8 +455,9 @@ spotifyApi.removeTracksFromPlaylistByPosition('5ieJqeLJjjI8iJWaxeBLuK', [0, 2, 1
 
 // Remove all occurrence of a track
 var tracks = [{ uri : "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" }];
+var playlistId = '5ieJqeLJjjI8iJWaxeBLuK';
 var options = { snapshot_id : "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9" };
-spotifyApi.removeTracksFromPlaylist('5ieJqeLJjjI8iJWaxeBLuK', tracks, options)
+spotifyApi.removeTracksFromPlaylist(playlistId, tracks, options)
   .then(function(data) {
     console.log('Tracks removed from playlist!');
   }, function(err) {
