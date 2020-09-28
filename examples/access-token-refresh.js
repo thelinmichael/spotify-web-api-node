@@ -1,32 +1,33 @@
-var SpotifyWebApi = require('../');
+const SpotifyWebApi = require('../');
 
 /**
  * This example refreshes an access token. Refreshing access tokens is only possible access tokens received using the
  * Authorization Code flow, documented here: https://developer.spotify.com/spotify-web-api/authorization-guide/#authorization_code_flow
  */
 
-/* Retrieve a code as documented here:
- * https://developer.spotify.com/spotify-web-api/authorization-guide/#authorization_code_flow
+/* Retrieve an authorization code as documented here:
+ * https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow
+ * or in the Authorization section of the README.
  *
  * Codes are given for a set of scopes. For this example, the scopes are user-read-private and user-read-email.
  * Scopes are documented here:
- * https://developer.spotify.com/spotify-web-api/using-scopes/
+ * https://developer.spotify.com/documentation/general/guides/scopes/
  */
-var authorizationCode =
-  'AQAgjS78s64u1axMCBCRA0cViW_ZDDU0pbgENJ_-WpZr3cEO7V5O-JELcEPU6pGLPp08SfO3dnHmu6XJikKqrU8LX9W6J11NyoaetrXtZFW-Y58UGeV69tuyybcNUS2u6eyup1EgzbTEx4LqrP_eCHsc9xHJ0JUzEhi7xcqzQG70roE4WKM_YrlDZO-e7GDRMqunS9RMoSwF_ov-gOMpvy9OMb7O58nZoc3LSEdEwoZPCLU4N4TTJ-IF6YsQRhQkEOJK';
+const authorizationCode =
+  '<insert authorization code with user-read-private and user-read-email scopes>';
 
 /**
- * Set the credentials given on Spotify's My Applications page.
- * https://developer.spotify.com/my-applications
+ * Get the credentials from Spotify's Dashboard page.
+ * https://developer.spotify.com/dashboard/applications
  */
-var spotifyApi = new SpotifyWebApi({
+const spotifyApi = new SpotifyWebApi({
   clientId: '<insert client id>',
   clientSecret: '<insert client secret>',
   redirectUri: '<insert redirect URI>'
 });
 
 // When our access token will expire
-var tokenExpirationEpoch;
+let tokenExpirationEpoch;
 
 // First retrieve an access token
 spotifyApi.authorizationCodeGrant(authorizationCode).then(
@@ -53,7 +54,7 @@ spotifyApi.authorizationCodeGrant(authorizationCode).then(
 );
 
 // Continually print out the time left until the token expires..
-var numberOfTimesUpdated = 0;
+let numberOfTimesUpdated = 0;
 
 setInterval(function() {
   console.log(

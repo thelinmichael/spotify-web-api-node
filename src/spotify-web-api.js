@@ -606,7 +606,7 @@ SpotifyWebApi.prototype = {
    * @param {string[]} tracks URIs of the tracks to add to the playlist.
    * @param {Object} [options] Options, position being the only one.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example addTracksToPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK',
+   * @example addTracksToPlaylist('3EsfV6XzCHU8SPNdbnFogK',
               '["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"]').then(...)
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
    * it contains an error object. Not returned if a callback is given.
@@ -825,14 +825,15 @@ SpotifyWebApi.prototype = {
    * @param {string[]} scopes The scopes corresponding to the permissions the application needs.
    * @param {string} state A parameter that you can use to maintain a value between the request and the callback to redirect_uri.It is useful to prevent CSRF exploits.
    * @param {boolean} showDialog A parameter that you can use to force the user to approve the app on each login rather than being automatically redirected.
+   * @param {string} responseType An optional parameter that you can use to specify the code response based on the authentication type - can be set to 'code' or 'token'. Default 'code' to ensure backwards compatability.
    * @returns {string} The URL where the user can give application permissions.
    */
-  createAuthorizeURL: function(scopes, state, showDialog) {
+  createAuthorizeURL: function(scopes, state, showDialog, responseType = 'code') {
     return AuthenticationRequest.builder()
       .withPath('/authorize')
       .withQueryParameters({
         client_id: this.getClientId(),
-        response_type: 'code',
+        response_type: responseType,
         redirect_uri: this.getRedirectURI(),
         scope: scopes.join('%20'),
         state: state,
@@ -1006,8 +1007,9 @@ SpotifyWebApi.prototype = {
    * Get the Current User's Recently Played Tracks
    * @param {Object} [options] Options, being type, after, limit, before.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
-   *          otherwise an error. Not returned if a callback is given.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of play history objects,
+   *          otherwise an error. Not returned if a callback is given. Note that the response will be empty
+   *          in case the user has enabled private session.
    */
   getMyRecentlyPlayedTracks: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
@@ -1018,9 +1020,31 @@ SpotifyWebApi.prototype = {
   },
 
   /**
-   * Get the Current User's Connect Devices
+
+   * Add track or episode to device queue
+   * @param {string} [uri] uri of the track or episode to add
+   * @param {Object} [options] Options, being device_id.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   *          otherwise an error. Not returned if a callback is given.
+   */
+  addToQueue: function(uri, options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/queue')
+      .withQueryParameters(
+        {
+          uri: uri
+        },
+        options
+      )
+      .build()
+      .execute(HttpManager.post, callback);
+  },
+
+
+   * Get the Current User's Available Devices
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into an array of device objects,
    *          otherwise an error. Not returned if a callback is given.
    */
   getMyDevices: function(callback) {
@@ -1046,8 +1070,8 @@ SpotifyWebApi.prototype = {
   },
 
   /**
-   * Get the Current User's Current Playback State
-   * @param {Object} [options] Options, being market.
+   * Get Information About The User's Current Playback State
+   * @param {Object} [options] Options, being market and additional_types.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
    *          otherwise an error. Not returned if a callback is given.
@@ -1062,17 +1086,19 @@ SpotifyWebApi.prototype = {
 
   /**
    * Transfer a User's Playback
-   * @param {Object} [options] Options, being market.
+   * @param {string[]} [deviceIds] An _array_ containing a device ID on which playback should be started/transferred. 
+   * (NOTE: The API is currently only supporting a single device ID.)
+   * @param {Object} [options] Options, the only one being 'play'.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
-  transferMyPlayback: function(options, callback) {
+  transferMyPlayback: function(deviceIds, options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player')
       .withHeaders({ 'Content-Type': 'application/json' })
       .withBodyParameters({
-        device_ids: options.deviceIds,
+        device_ids: deviceIds,
         play: !!options.play
       })
       .build()
@@ -1081,10 +1107,10 @@ SpotifyWebApi.prototype = {
 
   /**
    * Starts o Resumes the Current User's Playback
-   * @param {Object} [options] Options, being device_id, context_uri, offset, uris.
+   * @param {Object} [options] Options, being device_id, context_uri, offset, uris, position_ms.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example playbackResume({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
-   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   * @example play({context_uri: 'spotify:album:5ht7ItJgpBH7W6vJ5BqpPr'}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
   play: function(options, callback) {
@@ -1094,7 +1120,7 @@ SpotifyWebApi.prototype = {
       ? { device_id: _options.device_id }
       : null;
     var postData = {};
-    ['context_uri', 'uris', 'offset'].forEach(function(field) {
+    ['context_uri', 'uris', 'offset', 'position_ms'].forEach(function(field) {
       if (field in _options) {
         postData[field] = _options[field];
       }
@@ -1110,10 +1136,10 @@ SpotifyWebApi.prototype = {
 
   /**
    * Pauses the Current User's Playback
-   * @param {Object} [options] Options, for now device_id,
+   * @param {Object} [options] Options, being device_id. If left empty will target the user's currently active device.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example playbackPause().then(...)
-   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   * @example pause().then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
   pause: function(options, callback) {
@@ -1132,14 +1158,18 @@ SpotifyWebApi.prototype = {
 
   /**
    * Skip the Current User's Playback To Previous Track
+   * @param {Object} [options] Options, being device_id. If left empty will target the user's currently active device.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example playbackPrevious().then(...)
-   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   * @example skipToPrevious().then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToPrevious: function(callback) {
+  skipToPrevious: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/previous')
+      .withQueryParameters(
+        options && options.device_id ? { device_id: options.device_id } : null
+      )
       .withHeaders({ 'Content-Type': 'application/json' })
       .build()
       .execute(HttpManager.post, callback);
@@ -1147,14 +1177,18 @@ SpotifyWebApi.prototype = {
 
   /**
    * Skip the Current User's Playback To Next Track
+   * @param {Object} [options] Options, being device_id. If left empty will target the user's currently active device.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example playbackNext().then(...)
-   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   * @example skipToNext().then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
-  skipToNext: function(callback) {
+  skipToNext: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/next')
+      .withQueryParameters(
+        options && options.device_id ? { device_id: options.device_id } : null
+      )
       .withHeaders({ 'Content-Type': 'application/json' })
       .build()
       .execute(HttpManager.post, callback);
@@ -1164,7 +1198,7 @@ SpotifyWebApi.prototype = {
    * Seeks to the given position in the user’s currently playing track.
    *
    * @param {number} positionMs The position in milliseconds to seek to. Must be a positive number.
-   * @param {Object} options A JSON object with options that can be passed.
+   * @param {Object} options Options, being device_id. If left empty will target the user's currently active device.
    * @param {function(Object,Object)} callback An optional callback that receives 2 parameters. The first
    * one is the error object (null if no error), and the second is the value if the request succeeded.
    * @return {Object} Null if a callback is provided, a `Promise` object otherwise
@@ -1187,45 +1221,56 @@ SpotifyWebApi.prototype = {
 
   /**
    * Set Repeat Mode On The Current User's Playback
-   * @param {Object} [options] Options, being state (track, context, off).
+   * @param {string} [state] State (track, context, or off)
+   * @param {Object} [options] Options, being device_id. If left empty will target the user's currently active device.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example playbackRepeat({state: 'context'}).then(...)
-   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   * @example setRepeat('context', {}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
-  setRepeat: function(options, callback) {
+  setRepeat: function(state, options, callback) {
+    var params = {
+      state: state
+    };
+    if (options && 'device_id' in options) {
+      /* jshint camelcase: false */
+      params.device_id = options.device_id;
+    }
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/repeat')
-      .withQueryParameters({
-        state: options.state || 'off'
-      })
+      .withQueryParameters(params)
       .build()
       .execute(HttpManager.put, callback);
   },
 
   /**
    * Set Shuffle Mode On The Current User's Playback
-   * @param {Object} [options] Options, being state (true, false).
+   * @param {boolean} [state] State 
+   * @param {Object} [options] Options, being device_id. If left empty will target the user's currently active device.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example playbackShuffle({state: 'false'}).then(...)
-   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of tracks,
+   * @example setShuffle({state: 'false'}).then(...)
+   * @returns {Promise|undefined} A promise that if successful, resolves into an empty response,
    *          otherwise an error. Not returned if a callback is given.
    */
-  setShuffle: function(options, callback) {
+  setShuffle: function(state, options, callback) {
+    var params = {
+      state: state
+    };
+    if (options && 'device_id' in options) {
+      /* jshint camelcase: false */
+      params.device_id = options.device_id;
+    }
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player/shuffle')
-      .withQueryParameters({
-        state: options.state || 'false'
-      })
+      .withQueryParameters(params)
       .build()
       .execute(HttpManager.put, callback);
   },
 
   /**
    * Set the volume for the user’s current playback device.
-   *
-   * @param {number} volumePercent The volume to set. Must be a value from 0 to 100 inclusive.
-   * @param {Object} options A JSON object with options that can be passed.
+   * @param {number} volumePercent The volume to set. Must be a value from 0 to 100.
+   * @param {Object} options Options, being device_id. If left empty will target the user's currently active device.
    * @param {function(Object,Object)} callback An optional callback that receives 2 parameters. The first
    * one is the error object (null if no error), and the second is the value if the request succeeded.
    * @return {Object} Null if a callback is provided, a `Promise` object otherwise
