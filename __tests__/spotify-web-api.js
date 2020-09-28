@@ -1513,7 +1513,7 @@ describe('Spotify Web API', () => {
   });
 
   test('should create a playlist', function(done) {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1578,8 +1578,7 @@ describe('Spotify Web API', () => {
 
     api.createPlaylist(
       'My Cool Playlist',
-      { description: 'It\'s really cool' },
-      { public: false },
+      { description: 'It\'s really cool', public: false },
       function(err, data) {
         expect(data.body.name).toBe('My Cool Playlist');
         expect(data.body.description).toBe('It\s really cool');
@@ -1590,8 +1589,8 @@ describe('Spotify Web API', () => {
     );
   });
 
-  test('should create a playlist using callback with user id', done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+  test('should create a playlist using callback with user id (backward compatability)', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
@@ -1601,19 +1600,21 @@ describe('Spotify Web API', () => {
       expect(uri).toBe(
         'https://api.spotify.com/v1/me/playlists'
       );
-      expect(JSON.parse(options.data)).toEqual({ name: 'My Cool Playlist' });
-      callback(null, { body: { name: 'My Cool Playlist' }, statusCode: 200 });
+      expect(JSON.parse(options.data)).toEqual({ name: 'My Cool Playlist', public : false });
+      callback(null, { body: { name: 'My Cool Playlist', public: false }, statusCode: 200 });
       expect(options.query).toBeFalsy();
     });
 
     var api = new SpotifyWebApi();
 
-    api.createPlaylist('thelinmichael', 'My Cool Playlist', {}, 
-    function(err, data) {
-      expect(data.body.name).toBe('My Cool Playlist');
-      expect(data.statusCode).toBe(200);
-      done();
-    });
+    api.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false }, 
+      function(err, data) {
+        expect(data.body.name).toBe('My Cool Playlist');
+        expect(data.body.description).toBeFalsy();
+        expect(data.body.public).toBe(false);
+        expect(data.statusCode).toBe(200);
+        done();
+      });
   });
 
   test('should change playlist details', done => {
@@ -1814,7 +1815,7 @@ describe('Spotify Web API', () => {
   });
 
   test("should add songs to the user's queue:", done => {
-    sinon.stub(HttpManager, '_makeRequest', function(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,

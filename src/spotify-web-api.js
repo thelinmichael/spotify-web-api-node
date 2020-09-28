@@ -517,16 +517,22 @@ SpotifyWebApi.prototype = {
    */
   createPlaylist: function(name, options, callback) {
     // In case someone is using a version where user id was required
+    var actualOptions = {};
+    var actualCallback = null;
     if (typeof options === 'string') {
-      options = callback;
-      callback = arguments[3];
+      actualOptions = callback || {};
+      actualOptions.name = options;
+      actualCallback = arguments[3];
+    } else {
+      actualOptions = options || {};
+      actualCallback = callback;
+      actualOptions.name = name;
     }
-    options.name = name;
-
+    
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/playlists')
       .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters(options)
+      .withBodyParameters(actualOptions)
       .build()
       .execute(HttpManager.post, actualCallback);
   },
@@ -1020,7 +1026,6 @@ SpotifyWebApi.prototype = {
   },
 
   /**
-
    * Add track or episode to device queue
    * @param {string} [uri] uri of the track or episode to add
    * @param {Object} [options] Options, being device_id.
@@ -1042,6 +1047,7 @@ SpotifyWebApi.prototype = {
   },
 
 
+  /** 
    * Get the Current User's Available Devices
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves into an array of device objects,

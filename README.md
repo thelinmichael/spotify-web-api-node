@@ -92,6 +92,7 @@ The library includes helper functions to do the following:
 
 #### Player
 
+* Add an Item to the User's Playback Queue
 * Get a user's available devices
 * Get information about the user's current playback
 * Get current user’s recently played tracks
@@ -716,6 +717,9 @@ spotifyApi.getPlaylistsForCategory('party', {
 // TBD
 
 /* Player */
+
+// Add an Item to the User's Playback Queue
+// TBD
 
 // Get a User's Available Devices
 // TBD
