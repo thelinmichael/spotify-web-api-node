@@ -2,12 +2,13 @@
 
 #### 5.0.0 (27 Sep 2020)
 
-* **BREAKING CHANGE**. Some methods controlling the player has changed. If a change has been made, a new primary argument has been added. This is because it's required by Spotify's API and should therefore not be placed in `options`.
+* **BREAKING CHANGE**. Some methods controlling the player has changed. If a change has been made, a new primary argument has been added as the method's first argument. This is because the argument is required by Spotify's API and should therefore not be placed in `options`.
 * Bumped dependencies to resolve critical security issues. 
 * Added support for [Implicit Grant flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) - Thanks [@gaganza](https://github.com/gaganza), [@reblws](https://github.com/reblws) and [@noahp78](https://github.com/noahp78)!
 * `position_ms` added to `play` method. Thanks [@alqubo](https://github.com/alqubo), [@koflin](https://github.com/koflin), [@DoctorFishy](https://github.com/DoctorFishy).
 * Documentation updates to keep up to date with ES6, thanks [@dandv](https://github.com/dandv)!
 * `reason` added to error object, which is returned by the [Player API](https://developer.spotify.com/documentation/web-api/reference/player/). Much appreciated [@konstantinjdobler](https://github.com/konstantinjdobler)!
+* Binding for [Add an Item to the User's Playback Queue](https://developer.spotify.com/documentation/web-api/reference/player/add-to-queue/) endpoint added. Thanks [@thattomperson](https://github.com/thattomperson)!
 
 More coming before NPM release.
 
