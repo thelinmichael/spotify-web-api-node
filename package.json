@@ -8,7 +8,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marinacrachi/spotify-web-api-node.git"
+    "url": "https://github.com/thelinmichael/spotify-web-api-node.git"
   },
   "dependencies": {
     "superagent": "^3.7.0"
