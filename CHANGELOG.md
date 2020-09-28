@@ -8,7 +8,7 @@
 * `position_ms` added to `play` method. Thanks [@alqubo](https://github.com/alqubo), [@koflin](https://github.com/koflin), [@DoctorFishy](https://github.com/DoctorFishy).
 * Documentation updates to keep up to date with ES6, thanks [@dandv](https://github.com/dandv)!
 * `reason` added to error object, which is returned by the [Player API](https://developer.spotify.com/documentation/web-api/reference/player/). Much appreciated [@konstantinjdobler](https://github.com/konstantinjdobler)!
-* Binding for [Add an Item to the User's Playback Queue](https://developer.spotify.com/documentation/web-api/reference/player/add-to-queue/) endpoint added. Thanks [@thattomperson](https://github.com/thattomperson)!
+* Binding for [Add an Item to the User's Playback Queue](https://developer.spotify.com/documentation/web-api/reference/player/add-to-queue/) endpoint added. Thanks [@thattomperson](https://github.com/thattomperson) and [@AriciducaZagaria](https://github.com/AriciducaZagaria)!
 
 More coming before NPM release.
 
