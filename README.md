@@ -83,7 +83,6 @@ The library includes helper functions to do the following:
 * Resume a user's playback
 * Skip a user's playback to next track
 * Skip a user's playback to previous track
-* Add tracks to a user's queue
 * Set a user's shuffle mode
 * Set a user's repeat mode
 * Set volume

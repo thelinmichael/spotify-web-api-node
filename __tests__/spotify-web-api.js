@@ -1810,7 +1810,7 @@ describe('Spotify Web API', () => {
       accessToken: 'someAccessToken'
     });
 
-    api.addTrackToQueue('spotify:track:2jpDioAB9tlYXMdXDK3BGl').then(done);
+    api.addToQueue('spotify:track:2jpDioAB9tlYXMdXDK3BGl').then(done);
   });
 
   test("should get user's devices:", done => {
