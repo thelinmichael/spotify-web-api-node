@@ -105,6 +105,12 @@ The library includes helper functions to do the following:
 * Set volume
 * Seek playback to a given position
 
+#### Shows
+
+* [Get a Show](https://developer.spotify.com/documentation/web-api/reference/shows/get-a-show/)
+
+### Authentication
+
 All methods require authentication, which can be done using these flows:
 
 * [Client credentials flow](http://tools.ietf.org/html/rfc6749#section-4.4) (Application-only authentication)
@@ -828,7 +834,7 @@ spotifyApi
 ```
 
 ### Authorization
-Supplying an access token is required for all requests to the Spotify API. This wrapper supports all three authorization flows - The Authorization Code flow (signed by a user), the Client Credentials flow (application authentication - the user isn't involved), and the Implicit Grant Flow (For completely clientside applications). See Spotify's [Authorization guide](https://developer.spotify.com/spotify-web-api/authorization-guide/) for detailed information on these flows.
+Supplying an access token is required for all requests to the Spotify API. This wrapper supports three authorization flows - The Authorization Code flow (signed by a user), the Client Credentials flow (application authentication - the user isn't involved), and the Implicit Grant Flow (For completely clientside applications). See Spotify's [Authorization guide](https://developer.spotify.com/spotify-web-api/authorization-guide/) for detailed information on these flows.
 
 **Important: If you are writing a universal/isomorphic web app using this library, you will not be able to use those methods that send a client secret to the Spotify authorization service. Client secrets should be kept server-side and not exposed. Never include your client secret in the public JS served to the browser.**
 

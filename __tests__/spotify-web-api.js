@@ -4184,4 +4184,54 @@ describe('Spotify Web API', () => {
       }
     );
   });
+
+  /**
+   * Shows
+   */
+
+   /* Get a Show */
+  test('should get a show', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/shows/123'
+      );
+      expect(options.query.market).toBe('SE');
+
+      callback(null, {
+        body: {
+          total_episodes : 3,
+          type : "show",
+          name : "The API show",
+          episodes : [{
+            items : [
+              {
+                "audio_preview_url" : "https://p.scdn.co/mp3-preview/7a785904a33e34b0b2bd382c82fca16be7060c36",
+                "duration_ms" : 2677448
+              }
+            ]
+          }]
+        },
+        statusCode: 200
+      })
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getShow('123', { market: 'SE' }).then(
+      function(data) {
+        expect(data.body.total_episodes).toBe(3);
+        expect(data.body.episodes[0].items[0].duration_ms).toBe(2677448);
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
 });

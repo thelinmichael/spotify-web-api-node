@@ -1538,8 +1538,224 @@ SpotifyWebApi.prototype = {
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback);
-  }
+  },
+
+  /**
+   * Get a show.
+   * @param {string} showId The show's ID.
+   * @param {Object} [options] The possible options, currently only market.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getShow('3Qm86XLflmIXVm1wcwkgDK').then(...)
+   * @returns {Promise|undefined} A promise that if successful, returns an object containing information
+   *          about the show. Not returned if a callback is given.
+   */
+  getShow: function(showId, options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+    .withPath('/v1/shows/' + showId)
+    .withQueryParameters(options)
+    .build()
+    .execute(HttpManager.get, callback);
+  },
+
+  /**
+   * Look up several shows.
+   * @param {string[]} showIds The IDs of the shows.
+   * @param {Object} [options] The possible options, currently only market.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getShows(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
+   * @returns {Promise|undefined} A promise that if successful, returns an object containing information
+   *          about the shows. Not returned if a callback is given.
+   */
+  getShows: function(showIds, options, callback) {
+    // In case someone is using a version where options parameter did not exist.
+    var actualCallback, actualOptions;
+    if (typeof options === 'function' && !callback) {
+      actualCallback = options;
+      actualOptions = {};
+    } else {
+      actualCallback = callback;
+      actualOptions = options;
+    }
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/shows')
+      .withQueryParameters(
+        {
+          ids: showIds.join(',')
+        },
+        actualOptions
+      )
+      .build()
+      .execute(HttpManager.get, actualCallback);
+  },
+
+  /**
+   * Check if one or more shows is already saved in the current Spotify user’s “Your Music” library.
+   * @param {string[]} showIds The show IDs
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into an array of booleans. The order
+   * of the returned array's elements correspond to the show ID in the request.
+   * The boolean value of true indicates that the show is part of the user's library, otherwise false.
+   * Not returned if a callback is given.
+   */
+  containsMySavedShows: function(showIds, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/shows/contains')
+      .withQueryParameters({
+        ids: showIds.join(',')
+      })
+      .build()
+      .execute(HttpManager.get, callback);
+  },
+
+  /**
+   * Remove an show from the authenticated user's Your Music library.
+   * @param {string[]} showIds The show IDs
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error.
+   * Not returned if a callback is given.
+   */
+  removeFromMySavedShows: function(showIds, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/shows')
+      .withHeaders({ 'Content-Type': 'application/json' })
+      .withBodyParameters(showIds)
+      .build()
+      .execute(HttpManager.del, callback);
+  },
+
+  /**
+   * Add a show from the authenticated user's Your Music library.
+   * @param {string[]} showIds The show IDs
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful returns null, otherwise an error. Not returned if a callback is given.
+   */
+  addToMySavedShows: function(showIds, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/shows')
+      .withHeaders({ 'Content-Type': 'application/json' })
+      .withBodyParameters(showIds)
+      .build()
+      .execute(HttpManager.put, callback);
+  },
+
+  /**
+   * Retrieve the shows that are saved to the authenticated users Your Music library.
+   * @param {Object} [options] Options, being market, limit, and/or offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which in turn contains
+   *          playlist show objects. Not returned if a callback is given.
+   */
+  getMySavedShows: function(options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/shows')
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback);
+  },
+
+  /**
+   * Get the episodes of an show.
+   * @param showId the show's ID.
+   * @options {Object} [options] The possible options, e.g. limit.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getShowEpisodes('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 }).then(...)
+   * @returns {Promise|undefined} A promise that if successful, returns an object containing the
+   *                    episodes in the album. The result is paginated. If the promise is rejected.
+   *                    it contains an error object. Not returned if a callback is given.
+   */
+  getShowEpisodes: function(showId, options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/shows/' + showId + '/episodes')
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback);
+  },
+
+  /**
+   * Search for a show.
+   * @param {string} query The search query.
+   * @param {Object} [options] The possible options, e.g. limit, offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example searchShows('Space Oddity', { limit : 5, offset : 1 }).then(...)
+   * @returns {Promise|undefined} A promise that if successful, returns an object containing the
+   *          search results. The result is paginated. If the promise is rejected,
+   *          it contains an error object. Not returned if a callback is given.
+   */
+  searchShows: function(query, options, callback) {
+    return this.search(query, ['show'], options, callback);
+  },
+
+  /**
+   * Search for an episode.
+   * @param {string} query The search query.
+   * @param {Object} [options] The possible options, e.g. limit, offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example searchEpisodes('Space Oddity', { limit : 5, offset : 1 }).then(...)
+   * @returns {Promise|undefined} A promise that if successful, returns an object containing the
+   *          search results. The result is paginated. If the promise is rejected,
+   *          it contains an error object. Not returned if a callback is given.
+   */
+  searchEpisodes: function(query, options, callback) {
+    return this.search(query, ['episode'], options, callback);
+  },
+
+ /**
+   * Look up an episode.
+   * @param {string} episodeId The episode's ID.
+   * @param {Object} [options] The possible options, currently only market.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getEpisode('3Qm86XLflmIXVm1wcwkgDK').then(...)
+   * @returns {Promise|undefined} A promise that if successful, returns an object containing information
+   *          about the episode. Not returned if a callback is given.
+   */
+  getEpisode: function(episodeId, options, callback) {
+    var actualCallback, actualOptions;
+    if (typeof options === 'function' && !callback) {
+      actualCallback = options;
+      actualOptions = {};
+    } else {
+      actualCallback = callback;
+      actualOptions = options;
+    }
+    return WebApiRequest.builder(this.getAccessToken())
+    .withPath('/v1/episodes/' + episodeId)
+    .withQueryParameters(actualOptions)
+    .build()
+    .execute(HttpManager.get, actualCallback);
+  },
+
+  /**
+   * Look up several episodes.
+   * @param {string[]} episodeIds The IDs of the episodes.
+   * @param {Object} [options] The possible options, currently only market.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @example getEpisodes(['0oSGxfWSnnOXhD2fKuz2Gy', '3dBVyJ7JuOMt4GE9607Qin']).then(...)
+   * @returns {Promise|undefined} A promise that if successful, returns an object containing information
+   *          about the episodes. Not returned if a callback is given.
+   */
+  getEpisodes: function(episodeIds, options, callback) {
+    // In case someone is using a version where options parameter did not exist.
+    var actualCallback, actualOptions;
+    if (typeof options === 'function' && !callback) {
+      actualCallback = options;
+      actualOptions = {};
+    } else {
+      actualCallback = callback;
+      actualOptions = options;
+    }
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/episodes')
+      .withQueryParameters(
+        {
+          ids: episodeIds.join(',')
+        },
+        actualOptions
+      )
+      .build()
+      .execute(HttpManager.get, actualCallback);
+  },
 };
+
 
 SpotifyWebApi._addMethods = function(methods) {
   for (var i in methods) {
