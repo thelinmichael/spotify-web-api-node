@@ -10,6 +10,7 @@
 * `reason` added to error object, which is returned by the [Player API](https://developer.spotify.com/documentation/web-api/reference/player/). Much appreciated [@konstantinjdobler](https://github.com/konstantinjdobler)!
 * Binding for [Add an Item to the User's Playback Queue](https://developer.spotify.com/documentation/web-api/reference/player/add-to-queue/) endpoint added. Thanks [@thattomperson](https://github.com/thattomperson) and [@AriciducaZagaria](https://github.com/AriciducaZagaria)!
 * Update the Create Playlist endpoint to avoid using `user_id` as it's no longer necessary. Cheers [@marinacrachi](https://github.com/marinacrachi)!
+* Add all Shows and Episodes endpoints. Thanks a _lot_ [@andyruwruw](https://github.com/andyruwruw)! 
 
 More coming before NPM release.
 
