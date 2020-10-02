@@ -261,7 +261,7 @@ SpotifyWebApi.prototype = {
    * Search for music entities of certain types.
    * @param {string} query The search query.
    * @param {string[]} types An array of item types to search across.
-   * Valid types are: 'album', 'artist', 'playlist', and 'track'.
+   * Valid types are: 'album', 'artist', 'playlist', 'track', 'show', and 'episode'.
    * @param {Object} [options] The possible options, e.g. limit, offset.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example search('Abba', ['track', 'playlist'], { limit : 5, offset : 1 }).then(...)
@@ -1567,25 +1567,16 @@ SpotifyWebApi.prototype = {
    *          about the shows. Not returned if a callback is given.
    */
   getShows: function(showIds, options, callback) {
-    // In case someone is using a version where options parameter did not exist.
-    var actualCallback, actualOptions;
-    if (typeof options === 'function' && !callback) {
-      actualCallback = options;
-      actualOptions = {};
-    } else {
-      actualCallback = callback;
-      actualOptions = options;
-    }
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/shows')
       .withQueryParameters(
         {
           ids: showIds.join(',')
         },
-        actualOptions
+        options
       )
       .build()
-      .execute(HttpManager.get, actualCallback);
+      .execute(HttpManager.get, callback);
   },
 
   /**
@@ -1656,7 +1647,7 @@ SpotifyWebApi.prototype = {
   /**
    * Get the episodes of an show.
    * @param showId the show's ID.
-   * @options {Object} [options] The possible options, e.g. limit.
+   * @options {Object} [options] The possible options, being limit, offset, and market.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getShowEpisodes('41MnTivkwTO3UUJ8DrqEJJ', { limit : 5, offset : 1 }).then(...)
    * @returns {Promise|undefined} A promise that if successful, returns an object containing the

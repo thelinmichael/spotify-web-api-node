@@ -4189,7 +4189,7 @@ describe('Spotify Web API', () => {
    * Shows
    */
 
-   /* Get a Show */
+  /* Get a Show */
   test('should get a show', done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
@@ -4204,19 +4204,6 @@ describe('Spotify Web API', () => {
       expect(options.query.market).toBe('SE');
 
       callback(null, {
-        body: {
-          total_episodes : 3,
-          type : "show",
-          name : "The API show",
-          episodes : [{
-            items : [
-              {
-                "audio_preview_url" : "https://p.scdn.co/mp3-preview/7a785904a33e34b0b2bd382c82fca16be7060c36",
-                "duration_ms" : 2677448
-              }
-            ]
-          }]
-        },
         statusCode: 200
       })
     });
@@ -4225,8 +4212,6 @@ describe('Spotify Web API', () => {
 
     api.getShow('123', { market: 'SE' }).then(
       function(data) {
-        expect(data.body.total_episodes).toBe(3);
-        expect(data.body.episodes[0].items[0].duration_ms).toBe(2677448);
         done();
       },
       function(err) {
@@ -4234,4 +4219,135 @@ describe('Spotify Web API', () => {
       }
     );
   });
+
+  /* Look up several shows */
+  test('should get several shows', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/shows'
+      );
+      expect(options.query.market).toBe('SE');
+      expect(options.query.ids).toBe('1,2,3');
+      callback(null, {
+        statusCode: 200
+      })
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getShows(['1', '2', '3'], { market: 'SE' }).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+  /* Check if one or more shows is already saved in the current Spotify user’s “Your Music” library. */
+  test('should see that show is already saved by user', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/me/shows/contains'
+      );
+      expect(options.query.ids).toBe('1,2,3');
+      callback(null, {
+        body: [ true, false, false ],
+        statusCode: 200
+      })
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.containsMySavedShows(['1', '2', '3']).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+  /* Get the episodes of an show. */
+  test('should retrieve the episodes of a show', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/shows/123/episodes'
+      );
+      expect(options.query.market).toBe('SE');
+      expect(options.query.limit).toBe(1);
+      expect(options.query.offset).toBe(2);
+      callback(null, {
+        body: {},
+        statusCode: 200
+      })
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getShowEpisodes('123', { 'market' : 'SE', 'limit' : 1, 'offset': 2}).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+  /* Search for a show. */
+  test('should search for a show', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/search/'
+      );
+      expect(options.query.q).toBe('kvartal');
+      expect(options.query.type).toBe('show');
+      expect(options.query.market).toBe('SE');
+      expect(options.query.limit).toBe(3);
+      expect(options.query.offset).toBe(1);
+      callback(null, {
+        body: {},
+        statusCode: 200
+      })
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.searchShows('kvartal', { 'market' : 'SE', 'limit' : 3, 'offset': 1}).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
 });
