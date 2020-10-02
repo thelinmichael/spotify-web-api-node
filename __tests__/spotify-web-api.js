@@ -2294,81 +2294,6 @@ describe('Spotify Web API', () => {
     );
   });
 
-  test.skip('should retrieve an access token using the client credentials flow', function(done) {
-    var clientId = 'someClientId',
-      clientSecret = 'someClientSecret';
-
-    var api = new SpotifyWebApi({
-      clientId: clientId,
-      clientSecret: clientSecret
-    });
-
-    api.clientCredentialsGrant().then(
-      function(data) {
-        expect('Bearer').toBe(data['token_type']);
-        expect(3600).toBe(data['expires_in']);
-        expect(data['access_token']).toBeTruthy();
-        done();
-      },
-      function(err) {
-        done(err);
-      }
-    );
-  });
-
-  test.skip('should retrieve an access token with scopes', function(done) {
-    var clientId = 'fcecfc79122e4cd299473677a17cbd4d',
-      clientSecret = 'f6338737c9bb4bc9a71924cb2940adss';
-
-    var api = new SpotifyWebApi({
-      clientId: clientId,
-      clientSecret: clientSecret
-    });
-
-    var scopes = ['playlist-read'];
-
-    api
-      .clientCredentialsGrant({
-        scope: scopes
-      })
-      .then(
-        function(data) {
-          console.log(data);
-          expect('Bearer').toBe(data['token_type']);
-          expect(3600).toBe(data['expires_in']);
-          expect(data['access_token']).toBeTruthy();
-          done();
-        },
-        function(err) {
-          done(err);
-        }
-      );
-  });
-
-  test.skip('should retrieve an access token using the authorization code flow', function(done) {
-    var credentials = {
-      clientId: 'someClientId',
-      clientSecret: 'someClientSecret',
-      redirectUri: 'http://www.michaelthelin.se/test-callback'
-    };
-
-    var api = new SpotifyWebApi(credentials);
-
-    api.authorizationCodeGrant('mySuperLongCode').then(
-      function(data) {
-        expect('Bearer').toBe(data['token_type']);
-        expect(3600).toBe(data['expires_in']);
-        expect(data['access_token']).toBeTruthy();
-        expect(data['refresh_token']).toBeTruthy();
-        done();
-      },
-      function(err) {
-        console.log(err);
-        done(err);
-      }
-    );
-  });
-
   test('should refresh an access token', done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
@@ -4442,6 +4367,119 @@ describe('Spotify Web API', () => {
         done();
       },
       function(err) {
+        done(err);
+      }
+    );
+  });
+
+  /**
+   * Authentication/Authorization
+   */
+  
+  /* Client credentials */
+  test('should retrieve an access token using the client credentials flow', function(done) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
+        'https://accounts.spotify.com/api/token'
+      );
+      expect(options.data.grant_type).toBe('client_credentials');
+      expect(options.headers).toStrictEqual({ Authorization: "Basic c29tZUNsaWVudElkOnNvbWVDbGllbnRTZWNyZXQ=" });
+      callback(null, {
+        statusCode: 200
+      })
+    });
+
+    var clientId = 'someClientId',
+        clientSecret = 'someClientSecret';
+
+    var api = new SpotifyWebApi({
+      clientId: clientId,
+      clientSecret: clientSecret
+    });
+
+    api.clientCredentialsGrant().then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+  test('should retrieve an access token using the authorization code flow', function(done) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
+        'https://accounts.spotify.com/api/token'
+      );
+      expect(options.data.grant_type).toBe('authorization_code');
+      expect(options.data.redirect_uri).toBe('http://www.michaelthelin.se/test-callback');
+      expect(options.data.code).toBe('mySuperLongCode');
+      expect(options.data.client_id).toBe('someClientId');
+      expect(options.data.client_secret).toBe('someClientSecret');
+      callback(null, {
+        statusCode: 200
+      })
+    });
+
+    var credentials = {
+      clientId: 'someClientId',
+      clientSecret: 'someClientSecret',
+      redirectUri: 'http://www.michaelthelin.se/test-callback'
+    };
+
+    var api = new SpotifyWebApi(credentials);
+
+    api.authorizationCodeGrant('mySuperLongCode').then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        console.log(err);
+        done(err);
+      }
+    );
+  });
+
+  test('should refresh token', function(done) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
+        'https://accounts.spotify.com/api/token'
+      );
+      expect(options.data.grant_type).toBe('refresh_token');
+      expect(options.data.refresh_token).toBe('myRefreshToken');
+      callback(null, {
+        statusCode: 200
+      })
+    });
+
+    var api = new SpotifyWebApi();
+    api.setRefreshToken('myRefreshToken');
+
+    api.refreshAccessToken().then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        console.log(err);
         done(err);
       }
     );
