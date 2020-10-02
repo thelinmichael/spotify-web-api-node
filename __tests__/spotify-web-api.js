@@ -4350,4 +4350,101 @@ describe('Spotify Web API', () => {
     );
   });
 
+  /* Search for an episode. */
+  test('should search for an episode', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/search/'
+      );
+      expect(options.query.q).toBe('hanif bali');
+      expect(options.query.type).toBe('episode');
+      expect(options.query.market).toBe('UK');
+      expect(options.query.limit).toBe(10);
+      expect(options.query.offset).toBe(11);
+      callback(null, {
+        body: {},
+        statusCode: 200
+      })
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.searchEpisodes('hanif bali', { 'market' : 'UK', 'limit' : 10, 'offset': 11}).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+  /* Look up an episode. */
+  test('should look up an episode', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/episodes/3Qm86XLflmIXVm1wcwkgDK'
+      );
+      expect(options.query.market).toBe('NO');
+      callback(null, {
+        body: {},
+        statusCode: 200
+      })
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getEpisode('3Qm86XLflmIXVm1wcwkgDK', { 'market' : 'NO' }).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+   /* Look up several episodes */
+   test('should get several episodes', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/episodes'
+      );
+      expect(options.query.market).toBe('DK');
+      expect(options.query.ids).toBe('3Qm86XLflmIXVm1wcwkgDK,66m86XLflmIXVm1wcwkg66');
+      callback(null, {
+        statusCode: 200
+      })
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getEpisodes(['3Qm86XLflmIXVm1wcwkgDK', '66m86XLflmIXVm1wcwkg66'], { market: 'DK' }).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
 });

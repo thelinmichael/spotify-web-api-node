@@ -1700,19 +1700,11 @@ SpotifyWebApi.prototype = {
    *          about the episode. Not returned if a callback is given.
    */
   getEpisode: function(episodeId, options, callback) {
-    var actualCallback, actualOptions;
-    if (typeof options === 'function' && !callback) {
-      actualCallback = options;
-      actualOptions = {};
-    } else {
-      actualCallback = callback;
-      actualOptions = options;
-    }
     return WebApiRequest.builder(this.getAccessToken())
-    .withPath('/v1/episodes/' + episodeId)
-    .withQueryParameters(actualOptions)
-    .build()
-    .execute(HttpManager.get, actualCallback);
+      .withPath('/v1/episodes/' + episodeId)
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback);
   },
 
   /**
@@ -1725,25 +1717,16 @@ SpotifyWebApi.prototype = {
    *          about the episodes. Not returned if a callback is given.
    */
   getEpisodes: function(episodeIds, options, callback) {
-    // In case someone is using a version where options parameter did not exist.
-    var actualCallback, actualOptions;
-    if (typeof options === 'function' && !callback) {
-      actualCallback = options;
-      actualOptions = {};
-    } else {
-      actualCallback = callback;
-      actualOptions = options;
-    }
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/episodes')
       .withQueryParameters(
         {
           ids: episodeIds.join(',')
         },
-        actualOptions
+        options
       )
       .build()
-      .execute(HttpManager.get, actualCallback);
+      .execute(HttpManager.get, callback);
   },
 };
 
