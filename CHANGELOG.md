@@ -5,12 +5,13 @@
 * **BREAKING CHANGE**. Some methods controlling the player has changed. If a change has been made, a new primary argument has been added as the method's first argument. This is because the argument is required by Spotify's API and should therefore not be placed in `options`.
 * Bumped dependencies to resolve critical security issues. 
 * Added support for [Implicit Grant flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) - Thanks [@gaganza](https://github.com/gaganza), [@reblws](https://github.com/reblws) and [@noahp78](https://github.com/noahp78)!
-* `position_ms` added to `play` method. Thanks [@alqubo](https://github.com/alqubo), [@koflin](https://github.com/koflin), [@DoctorFishy](https://github.com/DoctorFishy).
-* Documentation updates to keep up to date with ES6, thanks [@dandv](https://github.com/dandv)!
+* `position_ms` added to `play` method. Thanks [@alqubo](https://github.com/alqubo), [@koflin](https://github.com/koflin), [@DoctorFishy](https://github.com/DoctorFishy). Thanks [@carmilso](https://github.com/carmilso) for general improvements to the Player API methods.
+* Documentation updates to keep up to date with ES6, thanks [@dandv](https://github.com/dandv)! Other documentation improvements by [@terensu-desu](https://github.com/terensu-desu), thanks.
 * `reason` added to error object, which is returned by the [Player API](https://developer.spotify.com/documentation/web-api/reference/player/). Much appreciated [@konstantinjdobler](https://github.com/konstantinjdobler)!
 * Binding for [Add an Item to the User's Playback Queue](https://developer.spotify.com/documentation/web-api/reference/player/add-to-queue/) endpoint added. Thanks [@thattomperson](https://github.com/thattomperson) and [@AriciducaZagaria](https://github.com/AriciducaZagaria)!
 * Update the Create Playlist endpoint to avoid using `user_id` as it's no longer necessary. Cheers [@marinacrachi](https://github.com/marinacrachi)!
 * Add all Shows and Episodes endpoints. Thanks a _lot_ [@andyruwruw](https://github.com/andyruwruw)! 
+* My hat is off to [@dersimn](https://github.com/dersimn). Thanks for collecting all of the lingering PRs and merging them into his own fork. You really stepped up.
 
 More coming before NPM release.
 
