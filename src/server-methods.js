@@ -7,18 +7,16 @@ module.exports = {
   /**
    * Request an access token using the Client Credentials flow.
    * Requires that client ID and client secret has been set previous to the call.
-   * @param {Object} options Options.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, resolves into an object containing the access token,
    *          token type and time to expiration. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  clientCredentialsGrant: function(options, callback) {
+  clientCredentialsGrant: function(callback) {
     return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
         grant_type: 'client_credentials'
       })
-      .withBodyParameters(options)
       .withHeaders({
         Authorization:
           'Basic ' +

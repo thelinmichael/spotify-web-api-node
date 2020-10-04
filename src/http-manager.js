@@ -1,7 +1,12 @@
 'use strict';
 
 var superagent = require('superagent'),
-  WebApiError = require('./webapi-error');
+  { TimeoutError, 
+    WebapiError, 
+    WebapiRegularError, 
+    WebapiAuthenticationError,
+    WebapiPlayerError 
+  } =  require('./response-error');
 
 var HttpManager = {};
 
@@ -28,52 +33,21 @@ var _getParametersFromRequest = function(request) {
   return options;
 };
 
-/* Create an error object from an error returned from the Web API */
-var _getErrorObject = function(defaultMessage, err) {
-  var errorObject;
-  if (typeof err.error === 'object' && typeof err.error.message === 'string') {
-    // Web API Error format
-    var webApiErrorObject = err.error.response && err.error.response.body;
-    // Use detailed Web API error object only if message and status exist
-    // reason can be undefined, we still benefit from a more detailed error message
-    if (
-      webApiErrorObject &&
-      webApiErrorObject.error &&
-      webApiErrorObject.error.message &&
-      webApiErrorObject.error.status
-    ) {
-      errorObject = new WebApiError(
-        webApiErrorObject.error.message,
-        webApiErrorObject.error.status,
-        webApiErrorObject.error.reason
-      );
-    } else {
-      errorObject = new WebApiError(err.error.message, err.error.status);
-    }
-  } else if (typeof err.error === 'string') {
-    // Authorization Error format
-    /* jshint ignore:start */
-    errorObject = new WebApiError(err.error + ': ' + err['error_description']);
-    /* jshint ignore:end */
-  } else if (typeof err === 'string') {
-    // Serialized JSON error
-    try {
-      var parsedError = JSON.parse(err);
-      errorObject = new WebApiError(
-        parsedError.error.message,
-        parsedError.error.status
-      );
-    } catch (err) {
-      // Error not JSON formatted
-    }
+var _toError = function(response) {
+  if (typeof response.body === 'object' && response.body.error && typeof response.body.error === 'object' && response.body.error.reason) {
+    return new WebapiPlayerError(response.body, response.headers, response.statusCode);
   }
 
-  if (!errorObject) {
-    // Unexpected format
-    errorObject = new WebApiError(defaultMessage + ': ' + JSON.stringify(err));
+  if (typeof response.body === 'object' && response.body.error && typeof response.body.error === 'object') {
+    return new WebapiRegularError(response.body, response.headers, response.statusCode);
   }
 
-  return errorObject;
+  if (typeof response.body === 'object' && response.body.error && typeof response.body.error === 'string') {
+    return new WebapiAuthenticationError(response.body, response.headers, response.statusCode);
+  }
+  
+  /* Other type of error, or unhandled Web API error format */
+  return new WebapiError(response.body, response.headers, response.statusCode, response.body);
 };
 
 /* Make the request to the Web API */
@@ -100,10 +74,11 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
 
   req.end(function(err, response) {
     if (err) {
-      var errorObject = _getErrorObject('Request error', {
-        error: err
-      });
-      return callback(errorObject);
+      if (err.timeout) {
+        return callback(new TimeoutError());
+      } else {
+        return callback(_toError(err.response));
+      }
     }
 
     return callback(null, {

@@ -2,7 +2,12 @@ var superagent = require('superagent'),
   HttpManager = require('../src/http-manager'),
   sinon = require('sinon'),
   SpotifyWebApi = require('../src/server'),
-  WebApiError = require('../src/webapi-error');
+  { TimeoutError, 
+    WebapiError, 
+    WebapiRegularError, 
+    WebapiAuthenticationError,
+    WebapiPlayerError 
+  } =  require('../src/response-error');
 
 ('use strict');
 
@@ -35,19 +40,14 @@ describe('Spotify Web API', () => {
     expect(api.getCredentials().accessToken).toBe(credentials.accessToken);
     expect(api.getCredentials().refreshToken).toBe(credentials.refreshToken);
   });
-
-  test('should retrieve track metadata', done => {
+  
+  test('response should contain body, headers and status code', done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
       uri,
       callback
     ) {
-      expect(method).toBe(superagent.get);
-      expect(uri).toBe(
-        'https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK'
-      );
-      expect(options.data).toBeFalsy();
       callback(null, {
         body: { uri: 'spotify:track:3Qm86XLflmIXVm1wcwkgDK' },
         headers: { 'cache-control': 'public, max-age=7200' },
@@ -64,12 +64,12 @@ describe('Spotify Web API', () => {
         done();
       },
       function(err) {
-        done(err);
+        done(new Error('Test failed!'));
       }
     );
   });
 
-  test('should retrieve error when retrieving track metadata', done => {
+  test('should retrieve track metadata', done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
@@ -81,7 +81,44 @@ describe('Spotify Web API', () => {
         'https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK'
       );
       expect(options.data).toBeFalsy();
-      callback(new WebApiError('Do NOT do that again!', 400));
+      callback(null, {});
+    });
+
+    var api = new SpotifyWebApi();
+    api.getTrack('3Qm86XLflmIXVm1wcwkgDK').then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(new Error('Test failed!'));
+      }
+    );
+  });
+
+  test('error response should contain body, headers and status code', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/tracks/3Qm86XLflmIXVm1wcwkgDK'
+      );
+      expect(options.data).toBeFalsy();
+      callback(new WebapiRegularError(
+        { 
+          error : {
+            message : 'Do NOT do that again!',
+            status : 400
+          }
+        },
+        {
+          'Content-Type' : 'application/json'
+        },
+        400
+      ));
     });
 
     var api = new SpotifyWebApi();
@@ -90,8 +127,10 @@ describe('Spotify Web API', () => {
         done(new Error('Test failed!'));
       },
       function(err) {
+        expect(err.body.error.message).toBe('Do NOT do that again!');
+        expect(err.body.error.status).toBe(400);
+        expect(err.headers['Content-Type']).toBe('application/json');
         expect(err.statusCode).toBe(400);
-        expect(err.message).toBe('Do NOT do that again!');
         done();
       }
     );
@@ -119,7 +158,7 @@ describe('Spotify Web API', () => {
         done();
       },
       function(err) {
-        done(err);
+        done(new Error('Test failed!'));
       }
     );
   });
@@ -146,72 +185,6 @@ describe('Spotify Web API', () => {
     });
   });
 
-  test('should fail for non existing track id', done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.get);
-      callback(new WebApiError('non existing id', 400));
-    });
-
-    var api = new SpotifyWebApi();
-    api.getTrack('idontexist').then(
-      function(data) {
-        done(new Error('Should have failed'));
-      },
-      function(err) {
-        expect(err.message).toBe('non existing id');
-        done();
-      }
-    );
-  });
-
-  test('should fail for non existing track id using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.get);
-      callback(new WebApiError('non existing id', 400), null);
-    });
-
-    var api = new SpotifyWebApi();
-    api.getTrack('idontexist', function(err, data) {
-      expect(data).toBeFalsy();
-      expect(err).toBeTruthy();
-      expect(err.message).toBe('non existing id');
-      done();
-    });
-  });
-
-  test('should fail for empty track id', done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.get);
-      callback(new WebApiError('Fail', 400), null);
-    });
-
-    var api = new SpotifyWebApi();
-    api.getTrack().then(
-      function(data) {
-        done(new Error('Should have failed'));
-      },
-      function(err) {
-        expect(err).toBeTruthy();
-        done();
-      }
-    );
-  });
-
   test('should retrieve metadata for several tracks', done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
@@ -234,33 +207,7 @@ describe('Spotify Web API', () => {
         done();
       },
       function(err) {
-        done(err);
-      }
-    );
-  });
-
-  test('should retrieve metadata for several tracks using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.get);
-      expect(uri).toBe('https://api.spotify.com/v1/tracks');
-      expect(options.query.ids).toBe(
-        '0eGsygTp906u18L0Oimnem,1lDWb6b6ieDQ2xT7ewTC3G'
-      );
-      expect(options.data).toBeFalsy();
-      callback();
-    });
-
-    var api = new SpotifyWebApi();
-    api.getTracks(
-      ['0eGsygTp906u18L0Oimnem', '1lDWb6b6ieDQ2xT7ewTC3G'],
-      function(err, data) {
-        expect(err).toBeFalsy();
-        done();
+        done(new Error('Test failed!'));
       }
     );
   });
@@ -286,12 +233,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj').then(
       function(data) {
-        expect('spotify:album:0sNOF9WDwhWunNAHPD3Baj').toBe(data.body.uri);
-        expect(data.statusCode).toBe(200);
         done();
       },
       function(err) {
-        done(err);
+        done(new Error('Test failed!'));
       }
     );
   });
@@ -318,12 +263,10 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', { market: 'SE' }).then(
       function(data) {
-        expect('spotify:album:0sNOF9WDwhWunNAHPD3Baj').toBe(data.body.uri);
-        expect(data.statusCode).toBe(200);
         done();
       },
       function(err) {
-        done(err);
+        done(new Error('Test failed!'));
       }
     );
   });
@@ -340,18 +283,12 @@ describe('Spotify Web API', () => {
         'https://api.spotify.com/v1/albums/0sNOF9WDwhWunNAHPD3Baj'
       );
       expect(options.data).toBeFalsy();
-      callback(null, {
-        body: { uri: 'spotify:album:0sNOF9WDwhWunNAHPD3Baj' },
-        statusCode: 200
-      });
+      callback(null, {});
     });
 
     var api = new SpotifyWebApi();
     api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', function(err, data) {
-      expect(err).toBeFalsy();
-      expect('spotify:album:0sNOF9WDwhWunNAHPD3Baj').toBe(data.body.uri);
-      expect(data.statusCode).toBe(200);
-      done();
+      done(err);
     });
   });
 
@@ -368,31 +305,16 @@ describe('Spotify Web API', () => {
         '41MnTivkwTO3UUJ8DrqEJJ,6JWc4iAiJ9FjyK0B59ABb4'
       );
       expect(options.data).toBeFalsy();
-      callback(null, {
-        body: {
-          albums: [
-            { uri: 'spotify:album:41MnTivkwTO3UUJ8DrqEJJ' },
-            { uri: 'spotify:album:6JWc4iAiJ9FjyK0B59ABb4' }
-          ]
-        },
-        statusCode: 200
-      });
+      callback(null, {});
     });
 
     var api = new SpotifyWebApi();
     api.getAlbums(['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4']).then(
       function(data) {
-        expect(data.body.albums[0].uri).toBe(
-          'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'
-        );
-        expect(data.body.albums[1].uri).toBe(
-          'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'
-        );
-        expect(data.statusCode).toBe(200);
         done();
       },
       function(err) {
-        done(err);
+        done(new Error('Test failed!'));
       }
     );
   });
@@ -425,15 +347,7 @@ describe('Spotify Web API', () => {
     api.getAlbums(
       ['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4'],
       function(err, data) {
-        expect(err).toBeNull();
-        expect(data.body.albums[0].uri).toBe(
-          'spotify:album:41MnTivkwTO3UUJ8DrqEJJ'
-        );
-        expect(data.body.albums[1].uri).toBe(
-          'spotify:album:6JWc4iAiJ9FjyK0B59ABb4'
-        );
-        expect(data.statusCode).toBe(200);
-        done();
+        done(err);
       }
     );
   });
@@ -458,7 +372,6 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.getArtist('0LcJLqbBmaGUft1e9Mm8HV').then(
       function(data) {
-        expect('spotify:artist:0LcJLqbBmaGUft1e9Mm8HV').toBe(data.body.uri);
         done();
       },
       function(err) {
@@ -487,7 +400,6 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.getArtist('0LcJLqbBmaGUft1e9Mm8HV', function(err, data) {
       expect(err).toBeFalsy();
-      expect('spotify:artist:0LcJLqbBmaGUft1e9Mm8HV').toBe(data.body.uri);
       done();
     });
   });
@@ -1319,58 +1231,6 @@ describe('Spotify Web API', () => {
 
     api.getMe().then(function(data) {
       expect('spotify:user:thelinmichael').toBe(data.body.uri);
-      done();
-    });
-  });
-
-  test('should fail if no token is provided for a request that requires an access token', done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.get);
-      expect(uri).toBe('https://api.spotify.com/v1/me');
-      if (!options.headers || !options.headers.Authorization) {
-        callback(new WebApiError('No token', 401), null);
-      }
-    });
-
-    var api = new SpotifyWebApi();
-
-    api.getMe().then(
-      function(data) {
-        done(new Error('Should have failed!'));
-      },
-      function(err) {
-        expect(err.message).toBe('No token');
-        expect(err.statusCode).toBe(401);
-        done();
-      }
-    );
-  });
-
-  test('should fail if no token is provided for a request that requires an access token using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.get);
-      expect(uri).toBe('https://api.spotify.com/v1/me');
-      if (!options.headers || !options.headers.Authorization) {
-        callback(new WebApiError('No token', 401), null);
-      }
-    });
-
-    var api = new SpotifyWebApi();
-
-    api.getMe(function(err) {
-      expect(err.message).toBe('No token');
-      expect(err.statusCode).toBe(401);
-      expect(err).toBeTruthy();
       done();
     });
   });
@@ -3453,79 +3313,6 @@ describe('Spotify Web API', () => {
     });
 
     api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0'], function(err, data) {
-      done();
-    });
-  });
-
-  test('handles expired tokens', done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.put);
-      expect(JSON.parse(options.data)).toEqual({
-        ids: ['3VNWq8rTnQG6fM1eldSpZ0']
-      });
-      expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
-      expect(options.query).toBeFalsy();
-      expect(options.headers.Authorization).toBe(
-        'Bearer BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g'
-      );
-
-      // simulate token expired
-      callback(new WebApiError('The access token expired', 401), null);
-    });
-
-    var accessToken =
-      'BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g';
-    var api = new SpotifyWebApi({
-      accessToken: accessToken
-    });
-
-    api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0']).then(
-      function(data) {
-        done(new Error('should have failed'));
-      },
-      function(err) {
-        expect(err.message).toBe('The access token expired');
-        expect(err.statusCode).toBe(401);
-        done();
-      }
-    );
-  });
-
-  test('handles expired tokens using callback', done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.put);
-      expect(options.data).toEqual(
-        JSON.stringify({ ids: ['3VNWq8rTnQG6fM1eldSpZ0'] })
-      );
-      expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
-      expect(options.query).toBeFalsy();
-      expect(options.headers.Authorization).toBe(
-        'Bearer BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g'
-      );
-
-      // simulate token expired
-      callback(new WebApiError('The access token expired', 401), null);
-    });
-
-    var accessToken =
-      'BQAGn9m9tRK96oUcc7962erAWydSShZ-geyZ1mcHSmDSfsoRKmhsz_g2ZZwBDlbRuKTUAb4RjGFFybDm0Kvv-7UNR608ff7nk0u9YU4nM6f9HeRhYXprgmZXQHhBKFfyxaVetvNnPMCBctf05vJcHbpiZBL3-WLQhScTrMExceyrfQ7g';
-    var api = new SpotifyWebApi({
-      accessToken: accessToken
-    });
-
-    api.addToMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0'], function(err, data) {
-      expect(err.message).toBe('The access token expired');
-      expect(err.statusCode).toBe(401);
       done();
     });
   });
