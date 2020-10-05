@@ -1,3 +1,4 @@
+const { stub } = require('sinon');
 var superagent = require('superagent'),
   HttpManager = require('../src/http-manager'),
   sinon = require('sinon'),
@@ -1542,6 +1543,60 @@ describe('Spotify Web API', () => {
       .then(function(data) {
         done();
       });
+  });
+
+  /* Get a Playlist's Items */
+  test('should get a playlist items', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/playlists/3iV5W9uYEdYUVa79Axb7Rh/tracks');
+      expect(options.query).toEqual({
+        limit: 5,
+        offset: 1,
+        market: 'SE',
+        additional_types : 'episode',
+        fields : 'total'
+      });
+      callback(null, {
+        body: {}
+      });
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getPlaylistTracks('3iV5W9uYEdYUVa79Axb7Rh', { limit: 5, offset: 1, market: 'SE', additional_types: 'episode', fields : 'total' }).then(function(data) {
+      done();
+    });
+  });
+
+  /* Upload a Custom Playlist Cover Image */
+  test('should upload custom playlist cover image', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/playlists/3iV5W9uYEdYUVa79Axb7Rh/images');
+      expect(options.headers['Content-Type']).toBe('image/jpeg');
+      expect(options.data).toEqual('longbase64uri');
+      
+      callback(null, {
+        body: {}
+      });
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.uploadCustomPlaylistCoverImage('3iV5W9uYEdYUVa79Axb7Rh', 'longbase64uri').then(function(data) {
+      done();
+    });
   });
 
   test("should get user's top artists", done => {

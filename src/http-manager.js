@@ -18,10 +18,7 @@ var _getParametersFromRequest = function(request) {
     options.query = request.getQueryParameters();
   }
 
-  if (
-    request.getHeaders() &&
-    request.getHeaders()['Content-Type'] === 'application/json'
-  ) {
+  if (request.getHeaders() && request.getHeaders()['Content-Type'] === 'application/json') {
     options.data = JSON.stringify(request.getBodyParameters());
   } else if (request.getBodyParameters()) {
     options.data = request.getBodyParameters();
@@ -58,13 +55,14 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
     req.query(options.query);
   }
 
-  if (
-    options.data &&
-    (!options.headers || options.headers['Content-Type'] !== 'application/json')
-  ) {
-    req.type('form');
-    req.send(options.data);
-  } else if (options.data) {
+  if (options.data) {
+    if (options.headers && options.headers['Content-Type'] == 'image/jpeg') {
+      req.type('image/jpeg');
+    } else if (!options.headers || options.headers['Content-Type'] !== 'application/json') {
+      req.type('form'); // Assumptions are dangerous
+    } else {
+      req.type('json');
+    }
     req.send(options.data);
   }
 

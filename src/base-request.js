@@ -121,6 +121,7 @@ Builder.prototype._assigner = function(key) {
     for (var i = 0; i < arguments.length; i++) {
       this[key] = this._assign(this[key], arguments[i]);
     }
+    
     return this;
   };
 };
@@ -144,6 +145,9 @@ Builder.prototype.withAuth = function(accessToken) {
 
 Builder.prototype._assign = function(src, obj) {
   if (obj && Array.isArray(obj)) {
+    return obj;
+  }
+  if (obj && typeof obj === 'string') {
     return obj;
   }
   if (obj && Object.keys(obj).length > 0) {
