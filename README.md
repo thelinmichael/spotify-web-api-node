@@ -177,9 +177,9 @@ spotifyApi.getArtistAlbums(
 );
 ```
 
-The functions that fetch data from the API also accept a JSON object with a set of options. For example, limit and offset can be used in functions that returns paginated results, such as search and retrieving an artist's albums.
+The functions that fetch data from the API also accept a JSON object with a set of options. For example, `limit` and `offset` can be used in functions that returns paginated results, such as search and retrieving an artist's albums.
 
-Note that the **options** parameter is currently **required if you're using callback methods**.
+Note that the **options** parameter is **required if you're using a callback method.**, even if it's empty.
 
 ```javascript
 // Passing a callback - get Elvis' albums in range [20...29]
@@ -195,9 +195,9 @@ spotifyApi
   );
 ```
 
-### Response body, statuscode, and headers
+### Responses and errors
 
-To enable caching, this wrapper now exposes the response headers and not just the response body. Since version 2.0.0, the response object has the format:
+This exposes the response headers, status code and body. 
 
 ```json
 {
@@ -211,7 +211,8 @@ To enable caching, this wrapper now exposes the response headers and not just th
 }
 ```
 
-In previous versions, the response object was the same as the response body.
+Errors have same fields, as well as a human readable `message`. This is especially useful since 
+Spotify's Web API returns different types of error objects depending on the endpoint being called.
 
 #### Example of a response
 
@@ -237,30 +238,26 @@ Retrieving a track's metadata in `spotify-web-api-node` version 1.4.0 and later:
 }
 ```
 
-The response object for the same request in versions earlier than 2.0.0:
-
-```json
-{
-  "name": "Golpe Maestro",
-  "popularity": 42,
-  "preview_url":
-    "https://p.scdn.co/mp3-preview/4ac44a56e3a4b7b354c1273d7550bbad38c51f5d",
-  "track_number": 1,
-  "type": "track",
-  "uri": "spotify:track:3Qm86XLflmIXVm1wcwkgDK"
-}
-```
-
 ### More examples
 
-Below are examples for all helper functions. Longer examples of some requests can be found in the [examples folder](examples/).
-
-Please note that since version 1.3.2 all methods accept an optional callback method as their last parameter. These examples however only use promises.
+Below are examples for all helper functions. Longer examples of some requests can be found in the [examples folder](examples/). 
 
 ```javascript
 var SpotifyWebApi = require('spotify-web-api-node');
 
 var spotifyApi = new SpotifyWebApi();
+
+/**
+ * Get metadata of tracks, albums, artists, shows, and episodes
+ */
+
+// Get album
+spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm')
+  .then(function(data) {
+    console.log('Album information', data.body);
+  }, function(err) {
+    console.error(err);
+  });
 
 // Get multiple albums
 spotifyApi.getAlbums(['5U4W9E5WsYb2jUQWePT8Xm', '3KyVcddATClQKIdtaap4bV'])
@@ -973,7 +970,7 @@ spotifyApi
 ### Authorization
 Supplying an access token is required for all requests to the Spotify API. This wrapper supports three authorization flows - The Authorization Code flow (signed by a user), the Client Credentials flow (application authentication - the user isn't involved), and the Implicit Grant Flow (For completely clientside applications). See Spotify's [Authorization guide](https://developer.spotify.com/spotify-web-api/authorization-guide/) for detailed information on these flows.
 
-**Important: If you are writing a universal/isomorphic web app using this library, you will not be able to use those methods that send a client secret to the Spotify authorization service. Client secrets should be kept server-side and not exposed. Never include your client secret in the public JS served to the browser.**
+**Important: If you are writing a universal/isomorphic web app using this library, you will not be able to use  methods that send a client secret to the Spotify authorization service. Client secrets should be kept server-side and not exposed to client browsers. Never include your client secret in the public JS served to the browser.**
 
 The first thing you need to do is to [create an application](https://developer.spotify.com/my-applications/). A step-by-step tutorial is offered by Spotify in this [tutorial](https://developer.spotify.com/spotify-web-api/tutorial/).
 
@@ -1079,7 +1076,7 @@ spotifyApi.clientCredentialsGrant().then(
 );
 ```
 
-#### Implicit Grant
+#### Implicit Grant flow
 
 The Implicit Grant can be used to allow users to login to your completely client-side application. This method still requires a registered application, but won't expose your client secret.
 This method of authentication won't return any refresh tokens, so you will need to fully reauthenticate the user everytime a token expires.
