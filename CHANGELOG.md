@@ -9,10 +9,11 @@
     * Skip to Previous (`skipToPrevious`) method takes an `options` object as its first argument.
     * Skip to Next (`skipToNext`) method takes an `options` object as its first argument.
     * Set Repeat Mode on the Current User's Playback (`setRepeat`) method takes a `state` string as its first argument.
-    * Set Shuffle Mode on the Current User's Playback (`setShuffle`) method takes a `state string as its first argument.
+    * Set Shuffle Mode on the Current User's Playback (`setShuffle`) method takes a `state` string as its first argument.
     
     Cheers [@marinacrachi](https://github.com/marinacrachi) for the createPlaylist update.
   * Removed legacy support for not passing an `options` object while providing a callback method. This was only supported on a few of the older endpoints, and could lead to tricky bugs. The affected endpoints are `getTrack`, `getTracks`, `getAlbum`, `getAlbums`, and  `createPlaylist`. Again, check the `README.md` for examples on how these methods can be used if needed.
+  * Removed `options` argument for retrieving an access token using the Client Credentials flow, `clientCredentialsGrant`.
   * API errors come in five different flavours.
     * WebapiRegularError - For errors returned by most API endpoints.
     * WebapiPlayerError - For errors returned by the Player API. These contain a bit more information. 
