@@ -4272,4 +4272,47 @@ describe('Spotify Web API', () => {
     );
   });
 
+  test('should set, get and reset credentials', function(done) {
+    var api = new SpotifyWebApi();
+
+    expect(api.getAccessToken()).toBeFalsy();
+    expect(api.getRefreshToken()).toBeFalsy();
+    expect(api.getRedirectURI()).toBeFalsy();
+    expect(api.getClientId()).toBeFalsy();
+    expect(api.getClientSecret()).toBeFalsy();
+
+    api.setCredentials({
+      accessToken : 'my-access-token',
+      refreshToken : 'my-refresh-token',
+      redirectUri : 'my-redirect-uri',
+      clientSecret : 'my-client-secret',
+      clientId : 'my-client-id'
+    });
+
+    expect(api.getAccessToken()).toBe('my-access-token');
+    expect(api.getRefreshToken()).toBe('my-refresh-token');
+    expect(api.getRedirectURI()).toBe('my-redirect-uri');
+    expect(api.getClientSecret()).toBe('my-client-secret');
+    expect(api.getClientId()).toBe('my-client-id');
+
+    api.resetAccessToken();
+
+    expect(api.getAccessToken()).toBeFalsy();
+    expect(api.getRefreshToken()).toBe('my-refresh-token');
+
+    api.resetRefreshToken();
+    api.resetRedirectURI();
+
+    expect(api.getRefreshToken()).toBeFalsy();
+    expect(api.getRedirectURI()).toBeFalsy();
+
+    api.setRedirectURI('my-redirect-uri');
+    expect(api.getRedirectURI()).toBe('my-redirect-uri');
+
+    api.resetCredentials();
+    expect(api.getRedirectURI()).toBeFalsy();
+
+    done();
+  });
+
 });
