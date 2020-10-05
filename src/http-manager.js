@@ -55,19 +55,12 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
     req.query(options.query);
   }
 
-  if (options.data) {
-    if (options.headers && options.headers['Content-Type'] == 'image/jpeg') {
-      req.type('image/jpeg');
-    } else if (!options.headers || options.headers['Content-Type'] !== 'application/json') {
-      req.type('form'); // Assumptions are dangerous
-    } else {
-      req.type('json');
-    }
-    req.send(options.data);
-  }
-
   if (options.headers) {
     req.set(options.headers);
+  }
+
+  if (options.data) {
+    req.send(options.data);
   }
 
   req.end(function(err, response) {

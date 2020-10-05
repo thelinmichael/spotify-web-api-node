@@ -506,7 +506,6 @@ SpotifyWebApi.prototype = {
   /**
    * Unfollow a playlist.
    * @param {string} playlistId The playlist's ID
-   * @param {Object} [options] The possible options, currently only public.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
@@ -514,7 +513,6 @@ SpotifyWebApi.prototype = {
   unfollowPlaylist: function(playlistId, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/playlists/' + playlistId + '/followers')
-      .withHeaders({ 'Content-Type': 'application/json' })
       .build()
       .execute(HttpManager.del, callback);
   },
@@ -1125,7 +1123,6 @@ SpotifyWebApi.prototype = {
       .withQueryParameters(
         options && options.device_id ? { device_id: options.device_id } : null
       )
-      .withHeaders({ 'Content-Type': 'application/json' })
       .build()
       .execute(HttpManager.post, callback);
   },
@@ -1144,7 +1141,6 @@ SpotifyWebApi.prototype = {
       .withQueryParameters(
         options && options.device_id ? { device_id: options.device_id } : null
       )
-      .withHeaders({ 'Content-Type': 'application/json' })
       .build()
       .execute(HttpManager.post, callback);
   },
@@ -1353,7 +1349,6 @@ SpotifyWebApi.prototype = {
   getFollowedArtists: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/following')
-      .withHeaders({ 'Content-Type': 'application/json' })
       .withQueryParameters(
         {
           type: 'artist'
@@ -1420,7 +1415,6 @@ SpotifyWebApi.prototype = {
   getNewReleases: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/new-releases')
-      .withHeaders({ 'Content-Type': 'application/json' })
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback);
@@ -1436,7 +1430,6 @@ SpotifyWebApi.prototype = {
   getFeaturedPlaylists: function(options, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/browse/featured-playlists')
-      .withHeaders({ 'Content-Type': 'application/json' })
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback);

@@ -16,87 +16,86 @@ var request = Request.builder()
   .build();
 
 describe('Make requests', () => {
+
   afterEach(() => {
     superagent.__reset();
     jest.restoreAllMocks();
   });
 
-  describe('GET requests', () => {
-    test('Should make a successful GET request', done => {
-      superagent.__setMockResponse({
-        statusCode: 200,
-        headers: { 'Content-Type' : 'application/json' },
-        body: 'some data'
-      });
-
-      HttpManager.get(request, function(error, result) {
-        expect(result.body).toBe('some data');
-        expect(result.statusCode).toBe(200);
-        expect(result.headers['Content-Type']).toBe('application/json');
-
-        done(error);
-      });
+  test('Should make a successful GET request', done => {
+    superagent.__setMockResponse({
+      statusCode: 200,
+      headers: { 'Content-Type' : 'application/json' },
+      body: 'some data'
     });
 
-    test('Should process an error of unknown type', done => {
-      superagent.__setMockError({ 
+    HttpManager.get(request, function(error, result) {
+      expect(result.body).toBe('some data');
+      expect(result.statusCode).toBe(200);
+      expect(result.headers['Content-Type']).toBe('application/json');
+
+      done(error);
+    });
+  });
+
+  test('Should process an error of unknown type', done => {
+    superagent.__setMockError({ 
+      response : { 
+        body: 'GET request error', 
+        headers : {}, 
+        statusCode: 400 
+      } 
+    });
+
+    HttpManager.get(request, function(error, result) {
+      expect(error).toBeInstanceOf(WebapiError);
+      expect(error.message).toBe('GET request error');
+      done();
+    });
+  });
+
+  test('Should process an error of regular type', done => {
+    superagent.__setMockError({ 
         response : { 
-          body: 'GET request error', 
-          headers : {}, 
-          statusCode: 400 
-        } 
-      });
-
-      HttpManager.get(request, function(error, result) {
-        expect(error).toBeInstanceOf(WebapiError);
-        expect(error.message).toBe('GET request error');
-        done();
-      });
-    });
-
-    test('Should process an error of regular type', done => {
-      superagent.__setMockError({ 
-          response : { 
-            body : {
-              error: {
-                status : 400,
-                message : 'There is a problem in your request'
-              },
+          body : {
+            error: {
+              status : 400,
+              message : 'There is a problem in your request'
             },
-            headers : {},
-            statusCode : 400
-          }
-      });
-
-      HttpManager.get(request, function(error) {
-        expect(error).toBeInstanceOf(WebapiRegularError);
-        expect(error.message).toBe('An error occurred while communicating with Spotify\'s Web API.\nDetails: There is a problem in your request.');
-        done();
-      });
+          },
+          headers : {},
+          statusCode : 400
+        }
     });
 
-    test('Should process an error of player type', done => {
-      superagent.__setMockError({
-        response: {
-          body: {
-            error : {
-              message: 'Detailed Web API Error message',
-              status: 400,
-              reason: 'You messed up!'
-            }
-          },
-          statusCode : 400,
-          headers : []
-        }
-      });
+    HttpManager.get(request, function(error) {
+      expect(error).toBeInstanceOf(WebapiRegularError);
+      expect(error.message).toBe('An error occurred while communicating with Spotify\'s Web API.\nDetails: There is a problem in your request.');
+      done();
+    });
+  });
 
-      HttpManager.get(request, function(error) {
-        expect(error).toBeInstanceOf(WebapiPlayerError);
-        expect(error.message).toBe('An error occurred while communicating with Spotify\'s Web API.\nDetails: Detailed Web API Error message You messed up!.');
-        expect(error.body.error.reason).toBe('You messed up!');
-        expect(error.body.error.message).toBe('Detailed Web API Error message');
-        done();
-      });
+  test('Should process an error of player type', done => {
+    superagent.__setMockError({
+      response: {
+        body: {
+          error : {
+            message: 'Detailed Web API Error message',
+            status: 400,
+            reason: 'You messed up!'
+          }
+        },
+        statusCode : 400,
+        headers : []
+      }
+    });
+
+    HttpManager.get(request, function(error) {
+      expect(error).toBeInstanceOf(WebapiPlayerError);
+      expect(error.message).toBe('An error occurred while communicating with Spotify\'s Web API.\nDetails: Detailed Web API Error message You messed up!.');
+      expect(error.body.error.reason).toBe('You messed up!');
+      expect(error.body.error.message).toBe('Detailed Web API Error message');
+      done();
     });
   });
 
@@ -211,3 +210,4 @@ describe('Make requests', () => {
   });
 
 });
+

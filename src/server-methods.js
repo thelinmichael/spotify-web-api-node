@@ -22,7 +22,8 @@ module.exports = {
           'Basic ' +
           new Buffer(
             this.getClientId() + ':' + this.getClientSecret()
-          ).toString('base64')
+          ).toString('base64'),
+        'Content-Type' : 'application/x-www-form-urlencoded'        
       })
       .build()
       .execute(HttpManager.post, callback);
@@ -47,6 +48,7 @@ module.exports = {
         client_id: this.getClientId(),
         client_secret: this.getClientSecret()
       })
+      .withHeaders({ 'Content-Type' : 'application/x-www-form-urlencoded' })
       .build()
       .execute(HttpManager.post, callback);
   },
@@ -71,7 +73,8 @@ module.exports = {
           'Basic ' +
           new Buffer(
             this.getClientId() + ':' + this.getClientSecret()
-          ).toString('base64')
+          ).toString('base64'),
+          'Content-Type' : 'application/x-www-form-urlencoded'
       })
       .build()
       .execute(HttpManager.post, callback);
