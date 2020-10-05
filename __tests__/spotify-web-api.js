@@ -179,7 +179,7 @@ describe('Spotify Web API', () => {
     });
 
     var api = new SpotifyWebApi();
-    api.getTrack('3Qm86XLflmIXVm1wcwkgDK', function(err, data) {
+    api.getTrack('3Qm86XLflmIXVm1wcwkgDK', {}, function(err, data) {
       expect(err).toBeFalsy();
       done(err);
     });
@@ -287,7 +287,7 @@ describe('Spotify Web API', () => {
     });
 
     var api = new SpotifyWebApi();
-    api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', function(err, data) {
+    api.getAlbum('0sNOF9WDwhWunNAHPD3Baj', {}, function(err, data) {
       done(err);
     });
   });
@@ -346,6 +346,7 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi();
     api.getAlbums(
       ['41MnTivkwTO3UUJ8DrqEJJ', '6JWc4iAiJ9FjyK0B59ABb4'],
+      {},
       function(err, data) {
         done(err);
       }
@@ -1428,10 +1429,7 @@ describe('Spotify Web API', () => {
         public: false
       });
       expect(options.query).toBeFalsy();
-      callback(null, {
-        body: { name: 'My Cool Playlist', description: 'It\s really cool', public: false },
-        statusCode: 200
-      });
+      callback(null, {});
     });
 
     var api = new SpotifyWebApi();
@@ -1440,41 +1438,9 @@ describe('Spotify Web API', () => {
       'My Cool Playlist',
       { description: 'It\'s really cool', public: false },
       function(err, data) {
-        expect(data.body.name).toBe('My Cool Playlist');
-        expect(data.body.description).toBe('It\s really cool');
-        expect(data.body.public).toBe(false);
-        expect(data.statusCode).toBe(200);
-        done();
+        done(err);
       }
     );
-  });
-
-  test('should create a playlist using callback with user id (backward compatability)', done => {
-    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
-      method,
-      options,
-      uri,
-      callback
-    ) {
-      expect(method).toBe(superagent.post);
-      expect(uri).toBe(
-        'https://api.spotify.com/v1/me/playlists'
-      );
-      expect(JSON.parse(options.data)).toEqual({ name: 'My Cool Playlist', public : false });
-      callback(null, { body: { name: 'My Cool Playlist', public: false }, statusCode: 200 });
-      expect(options.query).toBeFalsy();
-    });
-
-    var api = new SpotifyWebApi();
-
-    api.createPlaylist('thelinmichael', 'My Cool Playlist', { 'public' : false }, 
-      function(err, data) {
-        expect(data.body.name).toBe('My Cool Playlist');
-        expect(data.body.description).toBeFalsy();
-        expect(data.body.public).toBe(false);
-        expect(data.statusCode).toBe(200);
-        done();
-      });
   });
 
   test('should change playlist details', done => {
@@ -2248,118 +2214,6 @@ describe('Spotify Web API', () => {
     var authorizeURL = api.createAuthorizeURL(scopes, state);
     expect(authorizeURL).toBe(
       'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'
-    );
-  });
-
-  test('should set, get and reset credentials successfully', () => {
-    var api = new SpotifyWebApi({
-      clientId: 'myClientId',
-      clientSecret: 'myClientSecret'
-    });
-
-    expect(api.getClientId()).toBe('myClientId');
-    expect(api.getClientSecret()).toBe('myClientSecret');
-
-    api.resetClientId();
-    expect(api.getClientId()).toBeFalsy();
-
-    api.setClientId('woopwoop');
-    expect(api.getClientId()).toBe('woopwoop');
-
-    api.resetClientSecret();
-    expect(api.getClientSecret()).toBeFalsy();
-
-    api.setClientSecret('aNewClientSecret');
-    expect(api.getClientSecret()).toBe('aNewClientSecret');
-  });
-
-  test.skip('should get tracks in a playlist', function(done) {
-    var accessToken = 'myAccessToken';
-
-    var api = new SpotifyWebApi({
-      accessToken: accessToken
-    });
-    api.getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn').then(
-      function(data) {
-        'https://api.spotify.com/v1/users/thelinmichael/playlists/3ktAYNcRHpazJ9qecm3ptn/tracks'.should.equal(
-          data.href
-        );
-        done();
-      },
-      function(err) {
-        console.log(err);
-        done(err);
-      }
-    );
-  });
-
-  test.skip('should get tracks in a playlist with fields option', function(done) {
-    var accessToken = 'myAccessToken';
-
-    var api = new SpotifyWebApi({
-      accessToken: accessToken
-    });
-    api
-      .getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn', {
-        fields: 'items'
-      })
-      .then(
-        function(data) {
-          expect(data.items).toBeTruthy();
-          expect(data.href).toBeFalsy();
-          done();
-        },
-        function(err) {
-          console.log(err);
-          done(err);
-        }
-      );
-  });
-
-  /* Run this test with a valid access token with the user-library-read scope */
-  test.skip('should get tracks in the users library', function(done) {
-    var accessToken = 'myAccessToken';
-
-    var api = new SpotifyWebApi({
-      accessToken: accessToken
-    });
-    api
-      .getMySavedTracks({
-        limit: 2,
-        offset: 1
-      })
-      .then(
-        function(data) {
-          data.href.should.equal(
-            'https://api.spotify.com/v1/me/tracks?offset=1&limit=2'
-          );
-          done();
-        },
-        function(err) {
-          console.log(err);
-          done(err);
-        }
-      );
-  });
-
-  /* Run this test with a valid access token with the user-library-read scope */
-  test.skip('should determine if a track is in the users library', function(done) {
-    var accessToken = 'myAccessToken';
-
-    var api = new SpotifyWebApi({
-      accessToken: accessToken
-    });
-    api.containsMySavedTracks(['5ybJm6GczjQOgTqmJ0BomP']).then(
-      function(data) {
-        expect(Object.prototype.toString.call(data)).toBe('[object Array]');
-        expect(data.length).toBe(1);
-        expect(data[0]).toBe(false);
-        done();
-      },
-      function(err) {
-        console.log(err);
-        done(err);
-      }
     );
   });
 
@@ -4308,6 +4162,18 @@ describe('Spotify Web API', () => {
 
     api.setRedirectURI('my-redirect-uri');
     expect(api.getRedirectURI()).toBe('my-redirect-uri');
+
+    api.resetClientId();
+    expect(api.getClientId()).toBeFalsy();
+
+    api.setClientId('woopwoop');
+    expect(api.getClientId()).toBe('woopwoop');
+
+    api.resetClientSecret();
+    expect(api.getClientSecret()).toBeFalsy();
+
+    api.setClientSecret('aNewClientSecret');
+    expect(api.getClientSecret()).toBe('aNewClientSecret');
 
     api.resetCredentials();
     expect(api.getRedirectURI()).toBeFalsy();

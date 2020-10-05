@@ -116,21 +116,11 @@ SpotifyWebApi.prototype = {
    *          about the track. Not returned if a callback is given.
    */
   getTrack: function(trackId, options, callback) {
-    // In case someone is using a version where options parameter did not exist.
-    var actualCallback, actualOptions;
-    if (typeof options === 'function' && !callback) {
-      actualCallback = options;
-      actualOptions = {};
-    } else {
-      actualCallback = callback;
-      actualOptions = options;
-    }
-
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/tracks/' + trackId)
-      .withQueryParameters(actualOptions)
+      .withQueryParameters(options)
       .build()
-      .execute(HttpManager.get, actualCallback);
+      .execute(HttpManager.get, callback);
   },
 
   /**
@@ -143,26 +133,16 @@ SpotifyWebApi.prototype = {
    *          about the artists. Not returned if a callback is given.
    */
   getTracks: function(trackIds, options, callback) {
-    // In case someone is using a version where options parameter did not exist.
-    var actualCallback, actualOptions;
-    if (typeof options === 'function' && !callback) {
-      actualCallback = options;
-      actualOptions = {};
-    } else {
-      actualCallback = callback;
-      actualOptions = options;
-    }
-
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/tracks')
       .withQueryParameters(
         {
           ids: trackIds.join(',')
         },
-        actualOptions
+        options
       )
       .build()
-      .execute(HttpManager.get, actualCallback);
+      .execute(HttpManager.get, callback);
   },
 
   /**
@@ -175,21 +155,11 @@ SpotifyWebApi.prototype = {
    *          about the album. Not returned if a callback is given.
    */
   getAlbum: function(albumId, options, callback) {
-    // In case someone is using a version where options parameter did not exist.
-    var actualCallback, actualOptions;
-    if (typeof options === 'function' && !callback) {
-      actualCallback = options;
-      actualOptions = {};
-    } else {
-      actualCallback = callback;
-      actualOptions = options;
-    }
-
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/albums/' + albumId)
-      .withQueryParameters(actualOptions)
+      .withQueryParameters(options)
       .build()
-      .execute(HttpManager.get, actualCallback);
+      .execute(HttpManager.get, callback);
   },
 
   /**
@@ -202,26 +172,16 @@ SpotifyWebApi.prototype = {
    *          about the albums. Not returned if a callback is given.
    */
   getAlbums: function(albumIds, options, callback) {
-    // In case someone is using a version where options parameter did not exist.
-    var actualCallback, actualOptions;
-    if (typeof options === 'function' && !callback) {
-      actualCallback = options;
-      actualOptions = {};
-    } else {
-      actualCallback = callback;
-      actualOptions = options;
-    }
-
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/albums')
       .withQueryParameters(
         {
           ids: albumIds.join(',')
         },
-        actualOptions
+        options
       )
       .build()
-      .execute(HttpManager.get, actualCallback);
+      .execute(HttpManager.get, callback);
   },
 
   /**
@@ -477,7 +437,7 @@ SpotifyWebApi.prototype = {
    * @param {string} playlistId The playlist's ID.
    * @param {Object} [options] The options supplied to this request.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example getPlaylist('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK').then(...)
+   * @example getPlaylist('3EsfV6XzCHU8SPNdbnFogK').then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves to an object containing
    *          the playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
@@ -494,7 +454,7 @@ SpotifyWebApi.prototype = {
    * @param {string} playlistId The playlist's ID.
    * @param {Object} [options] Optional options, such as fields.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example getPlaylistTracks('thelinmichael', '3ktAYNcRHpazJ9qecm3ptn').then(...)
+   * @example getPlaylistTracks('3ktAYNcRHpazJ9qecm3ptn').then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves to an object that containing
    * the tracks in the playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
@@ -516,25 +476,14 @@ SpotifyWebApi.prototype = {
    *          created playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
   createPlaylist: function(name, options, callback) {
-    // In case someone is using a version where user id was required
-    var actualOptions = {};
-    var actualCallback = null;
-    if (typeof options === 'string') {
-      actualOptions = callback || {};
-      actualOptions.name = options;
-      actualCallback = arguments[3];
-    } else {
-      actualOptions = options || {};
-      actualCallback = callback;
-      actualOptions.name = name;
-    }
-    
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/playlists')
       .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters(actualOptions)
+      .withBodyParameters({
+        name : name,
+      }, options)
       .build()
-      .execute(HttpManager.post, actualCallback);
+      .execute(HttpManager.post, callback);
   },
 
   /**
@@ -575,7 +524,7 @@ SpotifyWebApi.prototype = {
    * @param {string} playlistId The playlist's ID
    * @param {Object} [options] The possible options, e.g. name, public.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example changePlaylistDetails('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK', {name: 'New name', public: true}).then(...)
+   * @example changePlaylistDetails('3EsfV6XzCHU8SPNdbnFogK', {name: 'New name', public: true}).then(...)
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
@@ -593,7 +542,7 @@ SpotifyWebApi.prototype = {
    * @param {string} playlistId The playlist's ID
    * @param {string} base64URI Base64 encoded JPEG image data, maximum payload size is 256 KB
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
-   * @example uploadCustomPlaylistCoverImage('thelinmichael', '3EsfV6XzCHU8SPNdbnFogK', 'longbase64uri').then(...)
+   * @example uploadCustomPlaylistCoverImage('3EsfV6XzCHU8SPNdbnFogK', 'longbase64uri').then(...)
    * @returns {Promise|undefined} A promise that if successful, simply resolves to an empty object. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */

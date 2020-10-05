@@ -4,6 +4,7 @@
 
 * **BREAKING CHANGE**. Some methods controlling the player has changed. If a change has been made, a new primary argument has been added as the method's first argument. This is because the argument is required by Spotify's API and should therefore not be placed in `options`.
 - Client credentials, removed options.
+- Removed support for passing callback instead of options.
 * Bumped dependencies to resolve critical security issues. 
 * Added support for [Implicit Grant flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) - Thanks [@gaganza](https://github.com/gaganza), [@reblws](https://github.com/reblws) and [@noahp78](https://github.com/noahp78)!
 * `position_ms` added to `play` method. Thanks [@alqubo](https://github.com/alqubo), [@koflin](https://github.com/koflin), [@DoctorFishy](https://github.com/DoctorFishy). Thanks [@carmilso](https://github.com/carmilso) for general improvements to the Player API methods.
