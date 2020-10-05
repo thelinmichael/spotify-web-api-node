@@ -1,21 +1,35 @@
 ## Change log
 
-#### 5.0.0 (27 Sep 2020)
+#### 5.0.0 (Oct 2020)
 
-* **BREAKING CHANGE**. Some methods controlling the player has changed. If a change has been made, a new primary argument has been added as the method's first argument. This is because the argument is required by Spotify's API and should therefore not be placed in `options`.
-- Client credentials, removed options.
-- Removed support for passing callback instead of options.
-* Bumped dependencies to resolve critical security issues. 
+* **BREAKING CHANGES**. 
+  * Arguments for some API methods have changed, causing incorrect behaviour using argument order from version 4.x. See the `README.md` for examples of how the methods can be used.
+    * Create Playlist (`createPlaylist`) method no longer accepts a `userId` string as its first argument. 
+    * Transfer A User's Playback (`transferMyPlayback`) method takes a `deviceIds` array as its first argument. 
+    * Skip to Previous (`skipToPrevious`) method takes an `options` object as its first argument.
+    * Skip to Next (`skipToNext`) method takes an `options` object as its first argument.
+    * Set Repeat Mode on the Current User's Playback (`setRepeat`) method takes a `state` string as its first argument.
+    * Set Shuffle Mode on the Current User's Playback (`setShuffle`) method takes a `state string as its first argument.
+    
+    Cheers [@marinacrachi](https://github.com/marinacrachi) for the createPlaylist update.
+  * Removed legacy support for not passing an `options` object while providing a callback method. This was only supported on a few of the older endpoints, and could lead to tricky bugs. The affected endpoints are `getTrack`, `getTracks`, `getAlbum`, `getAlbums`, and  `createPlaylist`. Again, check the `README.md` for examples on how these methods can be used if needed.
+  * API errors come in five different flavours.
+    * WebapiRegularError - For errors returned by most API endpoints.
+    * WebapiPlayerError - For errors returned by the Player API. These contain a bit more information. 
+    * WebapiAuthenticationError - For errors related to authentication.
+    * WebapiError - For errors that come from the Web API that didn't fit into one of the above.
+    * TimeoutError - For network timeout errors.
+    
+    Much appreciated [@konstantinjdobler](https://github.com/konstantinjdobler) for updates to the Player API errors.
 * Added support for [Implicit Grant flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) - Thanks [@gaganza](https://github.com/gaganza), [@reblws](https://github.com/reblws) and [@noahp78](https://github.com/noahp78)!
-* `position_ms` added to `play` method. Thanks [@alqubo](https://github.com/alqubo), [@koflin](https://github.com/koflin), [@DoctorFishy](https://github.com/DoctorFishy). Thanks [@carmilso](https://github.com/carmilso) for general improvements to the Player API methods.
-* Documentation updates to keep up to date with ES6, thanks [@dandv](https://github.com/dandv)! Other documentation improvements by [@terensu-desu](https://github.com/terensu-desu), thanks.
-* `reason` added to error object, which is returned by the [Player API](https://developer.spotify.com/documentation/web-api/reference/player/). Much appreciated [@konstantinjdobler](https://github.com/konstantinjdobler)!
+* Starts or Resumes the Current User's Playback (`play`) method now supports the `position_ms` option. Thanks [@alqubo](https://github.com/alqubo), [@koflin](https://github.com/koflin), [@DoctorFishy](https://github.com/DoctorFishy). Thanks [@carmilso](https://github.com/carmilso) for general improvements to the Player API methods.
 * Binding for [Add an Item to the User's Playback Queue](https://developer.spotify.com/documentation/web-api/reference/player/add-to-queue/) endpoint added. Thanks [@thattomperson](https://github.com/thattomperson) and [@AriciducaZagaria](https://github.com/AriciducaZagaria)!
-* Update the Create Playlist endpoint to avoid using `user_id` as it's no longer necessary. Cheers [@marinacrachi](https://github.com/marinacrachi)!
-* Add all Shows and Episodes endpoints. Thanks a _lot_ [@andyruwruw](https://github.com/andyruwruw)! 
-* My hat is off to [@dersimn](https://github.com/dersimn). Thanks for collecting all of the lingering PRs and merging them into his own fork. You really stepped up.
+* Binding for all [Shows and Episodes endpoints](https://developer.spotify.com/console/shows/). Thanks a _lot_ [@andyruwruw](https://github.com/andyruwruw)! 
+* Documentation updates to keep up to date with ES6, thanks [@dandv](https://github.com/dandv)! Other documentation improvements by [@terensu-desu](https://github.com/terensu-desu), and examples by [@dersimn](https://github.com/dersimn). Thanks!
+* Bumped dependencies to resolve critical security issues. 
+* Finally, hat off to [@dersimn](https://github.com/dersimn). Thanks for collecting all of the lingering PRs and merging them into a  working and up-to-date fork. You really stepped up. 
 
-More coming before NPM release.
+Likely more changes coming before release to npm, which will happen shortly. 
 
 #### 4.0.0 (14 Sep 2018)
 
