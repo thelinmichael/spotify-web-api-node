@@ -21,6 +21,8 @@
     * WebapiError - For errors that come from the Web API that didn't fit into one of the above.
     * TimeoutError - For network timeout errors.
     
+    More importantly, errors now contain the response body, headers, and status code. One side-effect of this is that rate limited requests can be handled by checking the `Retry-After` header. Thanks for the PRs [@kauffecup](https://github.com/kauffecup), [@lantelyes](https://github.com/lantelyes), [@dkliemsch](https://github.com/dkliemsch), and [@erezny](https://github.com/erezny).
+    
     Much appreciated [@konstantinjdobler](https://github.com/konstantinjdobler) for updates to the Player API errors.
 * Added support for [Implicit Grant flow](https://developer.spotify.com/documentation/general/guides/authorization-guide/#implicit-grant-flow) - Thanks [@gaganza](https://github.com/gaganza), [@reblws](https://github.com/reblws) and [@noahp78](https://github.com/noahp78)!
 * Starts or Resumes the Current User's Playback (`play`) method now supports the `position_ms` option. Thanks [@alqubo](https://github.com/alqubo), [@koflin](https://github.com/koflin), [@DoctorFishy](https://github.com/DoctorFishy). Thanks [@carmilso](https://github.com/carmilso) for general improvements to the Player API methods.
