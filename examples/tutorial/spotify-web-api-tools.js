@@ -21,6 +21,49 @@ class SpotifyWebApiTools {
       next = page.next;
     }
   }
+
+  /**
+   * Recursively process paging object of Spotify's response up to at least `count` items.
+   * @param {Promise} initialPromise Initial promise to use, for e.g. `spotifyApi.getUserPlaylists()`
+   * @param {Array} pagingObjectSelector A selector where to find the [paging object](https://developer.spotify.com/documentation/web-api/reference/object-model/#paging-object) within the response. For playlists it is usually `body`, when searching for tracks it is usually `body.tracks`.
+   * @param {number} count Abort recursion if at least `count` results were found. Usually returns 1 page more. Set to `0` to process all `next` objects.
+   * @returns {Promise} Promise with an array, in which all gathered data was merged.
+   */
+  async getAtLeast(initialPromise, pagingObjectSelector, count) {
+    const tmp = [];
+    for await (let snippet of this.processNextGenerator(
+      initialPromise,
+      pagingObjectSelector
+    )) {
+      tmp.push(...snippet);
+      if (count && tmp.length > count) return tmp;
+    }
+    return tmp;
+  }
+
+  /**
+   * Recursively process paging object of Spotify's response, unitl reaching the end.
+   * @param {Promise} initialPromise Initial promise to use, for e.g. `spotifyApi.getUserPlaylists()`
+   * @param {Array} pagingObjectSelector A selector where to find the [paging object](https://developer.spotify.com/documentation/web-api/reference/object-model/#paging-object) within the response. For playlists it is usually `body`, when searching for tracks it is usually `body.tracks`.
+   * @returns {Promise} Promise with an array, in which all gathered data was merged.
+   */
+  async getAll(initialPromise, pagingObjectSelector) {
+    return this.getAtLeast(initialPromise, pagingObjectSelector, 0);
+  }
+
+  /**
+   * Get all user's playlists.
+   * @param {string} userId An optional id of the user. If you know the Spotify URI it is easy
+   * to find the id (e.g. spotify:user:<here_is_the_id>). If not provided, the id of the user that granted
+   * the permissions will be used.
+   * @param {Object} [options] The options supplied to this request.
+   * @example const playlistArray = await getAllUserPlaylists('thelinmichael')
+   * @returns {Promise} A promise that if successful, resolves to an object containing
+   *          a list of all playlists. If rejected, it contains an error object.
+   */
+  async getAllUserPlaylists(userId, options) {
+    return await this.getAll(this.webApi.getUserPlaylists(userId, options), ['body']);
+  }
 }
 
 function getNestedObject(nestedObj, pathArr) {
