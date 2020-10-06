@@ -18,7 +18,7 @@ spotifyApi.setAccessToken(process.env.SPOTIFY_ACCESS_TOKEN);
   }
 
   // Display data
-  let playlistNames = allItems.map(p => p.name);
+  const playlistNames = allItems.map(p => p.name);
   console.log(playlistNames);
 
 })().catch(e => {
