@@ -1670,6 +1670,19 @@ SpotifyWebApi.prototype = {
       .build()
       .execute(HttpManager.get, callback);
   },
+
+  /**
+   * Retrieve generic URL by a GET request. This can be used to process the body.next parameter of a response.
+   * @param {string} url URL from which information is to be retrieved.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined}
+   */
+  getGeneric: function(url, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath(url.replace(/^https:\/\/api.spotify.com/, ''))
+      .build()
+      .execute(HttpManager.get, callback);
+  },
 };
 
 
