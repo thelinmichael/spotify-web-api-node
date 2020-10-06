@@ -1,20 +1,27 @@
 /* Timeout */
-class TimeoutError extends Error {
-  constructor() {
-    const message = 'A timeout occurred while communicating with Spotify\'s Web API.\n';
-
-    super(message);
-  }
+class NamedError extends Error {
+  get name() {
+    return this.constructor.name;
+  }  
 }
 
-/* Web API Parent error */
-class WebapiError extends Error {
+class TimeoutError extends NamedError {
+  constructor() {
+    const message = 'A timeout occurred while communicating with Spotify\'s Web API.';
+    super(message);
+  }
+
+}
+
+/* Web API Parent and fallback error */
+class WebapiError extends NamedError {
   constructor(body, headers, statusCode, message) {
     super(message);
     this.body = body;
     this.headers = headers;
     this.statusCode = statusCode;
   }
+
 }
 
 /** 
