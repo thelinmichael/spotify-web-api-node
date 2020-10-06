@@ -64,6 +64,48 @@ class SpotifyWebApiTools {
   async getAllUserPlaylists(userId, options) {
     return await this.getAll(this.webApi.getUserPlaylists(userId, options), ['body']);
   }
+
+  /**
+   * Get all tracks in a playlist.
+   * @param {string} playlistId The playlist's ID.
+   * @param {Object} [options] Optional options, such as fields.
+   * @example const trackArray = await getAllPlaylistTracks('3ktAYNcRHpazJ9qecm3ptn')
+   * @returns {Promise} A promise that if successful, resolves to an object that containing
+   * all tracks in the playlist. If rejected, it contains an error object.
+   */
+  async getAllPlaylistTracks(playlistId, options) {
+    return await this.getAll(
+      this.webApi.getPlaylistTracks(playlistId, options),
+      ['body']
+    );
+  }
+
+  /**
+   * Find User's Playlist by Name.
+   * @param {string} playlistName
+   * @returns {Promise} A promise that if successful, resolves to one PlaylistObject. If rejected, it contains an error object.
+   */
+  async findUserPlaylistByName(playlistName) {
+    if (!playlistName) {
+      throw new Error('Invalid Playlist Name provided: '+playlistName);
+    }
+
+    // Get all of User's Playlists
+    const playlistArray = await this.getAllUserPlaylists();
+
+    // Find Playlist by Name
+    const playlistByName = playlistArray.filter(p => p.name == playlistName);
+    if (playlistByName.length > 1) {
+      throw new Error(
+        'Could not find unique Playlist with Name: ' + playlistName
+      );
+    }
+    if (playlistByName.length === 0) {
+      throw new Error('Could not Playlist with Name: ' + playlistName);
+    }
+
+    return playlistByName[0];
+  }
 }
 
 function getNestedObject(nestedObj, pathArr) {
