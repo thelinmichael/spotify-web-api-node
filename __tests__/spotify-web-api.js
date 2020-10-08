@@ -2998,21 +2998,24 @@ describe('Spotify Web API', () => {
   });
 
   test('should remove tracks from a playlist by position', done => {
-    sinon.stub(HttpManager, 'del').callsFake(function(request, callback) {
-      expect(request.getURI()).toBe(
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(uri).toBe(
         'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
       );
-      expect(request.getQueryParameters()).toBeFalsy();
-      var data = request.getBodyParameters();
-      expect(data.positions[0]).toBe(0);
-      expect(data.positions[1]).toBe(2);
-      expect(data['snapshot_id']).toBe(
+      expect(method).toBe(superagent.del);
+      expect(options.query).toBeFalsy();
+      var body = JSON.parse(options.data);
+      expect(body.positions[0]).toBe(0);
+      expect(body['snapshot_id']).toBe(
         '0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9'
       );
-      expect(request.getHeaders().Authorization).toBe(
-        'Bearer long-access-token'
-      );
-      expect(request.getHeaders()['Content-Type']).toBe('application/json');
+      expect(options.headers['Content-Type']).toBe('application/json');
+      expect(options.headers['Authorization']).toBe('Bearer long-access-token');
       callback();
     });
 
@@ -3029,6 +3032,43 @@ describe('Spotify Web API', () => {
         } else {
           done();
         }
+      }
+    );
+  });
+  
+  test('should remove tracks from a playlist by uri', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
+      );
+      expect(method).toBe(superagent.del);
+      expect(options.query).toBeFalsy();
+
+      var body = JSON.parse(options.data);
+      expect(body.tracks[0]).toStrictEqual({ uri : 'spotify:track:491rM2JN8KvmV6p0oDDuJT', positions : [3]});
+      expect(body['snapshot_id']).toBe(
+        '0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9'
+      );
+      expect(options.headers['Content-Type']).toBe('application/json');
+      expect(options.headers['Authorization']).toBe('Bearer long-access-token');
+      
+      callback();
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('long-access-token');
+
+    api.removeTracksFromPlaylist(
+      '5ieJqeLJjjI8iJWaxeBLuK',
+      [ { uri: 'spotify:track:491rM2JN8KvmV6p0oDDuJT', positions: [3] }],
+      { 'snapshot_id' : '0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9' },
+      function(err, data) {
+        done(err);
       }
     );
   });

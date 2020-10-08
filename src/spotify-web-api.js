@@ -580,7 +580,7 @@ SpotifyWebApi.prototype = {
    * Remove tracks from a playlist.
    * @param {string} playlistId The playlist's ID
    * @param {Object[]} tracks An array of objects containing a property called uri with the track URI (String), and
-   * a an optional property called positions (int[]), e.g. { uri : "spotify:track:491rM2JN8KvmV6p0oDDuJT", positions : [0, 15] }
+   * an optional property called positions (int[]), e.g. { uri : "spotify:track:491rM2JN8KvmV6p0oDDuJT", positions : [0, 15] }
    * @param {Object} options Options, snapshot_id being the only one.
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful returns an object containing a snapshot_id. If rejected,
@@ -593,7 +593,7 @@ SpotifyWebApi.prototype = {
       .withBodyParameters(
         {
           tracks: tracks
-        },
+        }, 
         options
       )
       .build()
