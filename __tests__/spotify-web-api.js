@@ -3073,6 +3073,40 @@ describe('Spotify Web API', () => {
     );
   });
 
+  test('should replace tracks from a playlist', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/playlists/5ieJqeLJjjI8iJWaxeBLuK/tracks'
+      );
+      expect(method).toBe(superagent.put);
+      expect(options.query).toBeFalsy();
+
+      var body = JSON.parse(options.data);
+      expect(body.uris[0]).toStrictEqual('spotify:track:491rM2JN8KvmV6p0oDDuJT');
+      expect(body.uris[1]).toStrictEqual('spotify:track:5erahPIwlq1PvuYRGtVIuG');
+      expect(options.headers['Content-Type']).toBe('application/json');
+      expect(options.headers['Authorization']).toBe('Bearer long-access-token');
+      
+      callback();
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('long-access-token');
+
+    api.replaceTracksInPlaylist(
+      '5ieJqeLJjjI8iJWaxeBLuK',
+      ['spotify:track:491rM2JN8KvmV6p0oDDuJT', 'spotify:track:5erahPIwlq1PvuYRGtVIuG'],
+      function(err, data) {
+        done(err);
+      }
+    );
+  });
+
   test('should reorder tracks from a playlist by position', done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
