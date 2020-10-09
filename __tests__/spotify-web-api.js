@@ -3601,6 +3601,37 @@ describe('Spotify Web API', () => {
     );
   });
 
+  test('should get the audio analysis for a track', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/audio-analysis/3Qm86XLflmIXVm1wcwkgDK'
+      );
+      expect(options.query).toBeFalsy();
+      expect(options.data).toBeFalsy();
+      callback(null, {
+        body: {
+        }
+      });
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getAudioAnalysisForTrack('3Qm86XLflmIXVm1wcwkgDK').then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
   test('should get the audio features for a track', done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
@@ -4080,6 +4111,44 @@ describe('Spotify Web API', () => {
       'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice'
     );
   });
+
+  test('should create authorization URL with code based authentication', () => {
+    var scopes = ['user-read-private', 'user-read-email'],
+      redirectUri = 'https://example.com/callback',
+      clientId = '5fe01282e44241328a84e7c5cc169165',
+      state = 'some-state-of-my-choice',
+      showDialog = true;
+
+    var api = new SpotifyWebApi({
+      clientId: clientId,
+      redirectUri: redirectUri
+    });
+
+    var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog);
+    expect(authorizeURL).toBe(
+      'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
+    );
+  });
+  
+  test('should create authorization URL with token based authentication', () => {
+    var scopes = ['user-read-private', 'user-read-email'],
+      redirectUri = 'https://example.com/callback',
+      clientId = '5fe01282e44241328a84e7c5cc169165',
+      state = 'some-state-of-my-choice',
+      showDialog = true,
+      responseType = 'token'
+
+    var api = new SpotifyWebApi({
+      clientId: clientId,
+      redirectUri: redirectUri
+    });
+
+    var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog, responseType);
+
+    expect(authorizeURL).toBe(
+      'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=token&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
+    );
+  });
   
   /* Client credentials */
   test('should retrieve an access token using the client credentials flow', function(done) {
@@ -4236,44 +4305,6 @@ describe('Spotify Web API', () => {
     api.refreshAccessToken().then(function(data) {
       done();
     });
-  });
-
-  test('should create authorization URL with code based authentication', () => {
-    var scopes = ['user-read-private', 'user-read-email'],
-      redirectUri = 'https://example.com/callback',
-      clientId = '5fe01282e44241328a84e7c5cc169165',
-      state = 'some-state-of-my-choice',
-      showDialog = true;
-
-    var api = new SpotifyWebApi({
-      clientId: clientId,
-      redirectUri: redirectUri
-    });
-
-    var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog);
-    expect(authorizeURL).toBe(
-      'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
-    );
-  });
-
-  test('should create authorization URL with token based authentication', () => {
-    var scopes = ['user-read-private', 'user-read-email'],
-      redirectUri = 'https://example.com/callback',
-      clientId = '5fe01282e44241328a84e7c5cc169165',
-      state = 'some-state-of-my-choice',
-      showDialog = true,
-      responseType = 'token'
-
-    var api = new SpotifyWebApi({
-      clientId: clientId,
-      redirectUri: redirectUri
-    });
-
-    var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog, responseType);
-
-    expect(authorizeURL).toBe(
-      'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=token&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
-    );
   });
 
   test('should set, get and reset credentials', function(done) {
