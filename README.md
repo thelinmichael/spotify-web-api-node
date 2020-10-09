@@ -8,6 +8,10 @@ This is a universal wrapper/client for the [Spotify Web API](https://developer.s
 
 Project owners are [thelinmichael](https://github.com/thelinmichael) and [JMPerez](https://github.com/JMPerez), with help from [a lot of awesome contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members).
 
+## Version 5
+
+> :warning: Since the last release (4.0.0, released over year ago) a lot of new functionality has been added by a lot of different contributors. **Thank you.** In order to implement some of the feature requests, some **breaking changes** had to be made. A list of them, along with a list of the new functionality, can be found in the [CHANGELOG](https://github.com/thelinmichael/spotify-web-api-node/blob/master/CHANGELOG.md). 
+
 ## Table of contents
 
 * [Features](#features)
