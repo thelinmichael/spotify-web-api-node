@@ -1666,6 +1666,29 @@ describe('Spotify Web API', () => {
     });
   });
 
+  test("should get user\'s currently playing track", done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/currently-playing');
+      expect(options.query).toStrictEqual({ market: 'NO' });
+      expect(options.headers).toEqual({ Authorization: 'Bearer someAccessToken' });
+      callback(null, {});
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken: 'someAccessToken'
+    });
+
+    api.getMyCurrentPlayingTrack({ market: 'NO' }).then(function(data, err) {
+      done(err);
+    });
+  });
+
   test("should get user's recently played tracks:", done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
@@ -2050,7 +2073,74 @@ describe('Spotify Web API', () => {
     );
   });
 
-  test("should set the user's playback shuffle mode", done => {
+  test("should set the user's playback repeat mode without given device", done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/repeat');
+      expect(options.query).toBeTruthy();
+      expect(options.query.state).toEqual('context');
+      expect(options.query.device_id).toBeFalsy();
+      expect(options.body).toBeFalsy();
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
+      expect(options.headers['Content-Type']).toBeFalsy();
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken: accessToken
+    });
+
+    api.setRepeat('context', {}).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        console.log(err);
+        done(err);
+      }
+    );
+  });
+
+  test("should set the user's playback shuffle mode with device", done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/shuffle');
+      expect(options.query).toBeTruthy();
+      expect(options.query.state).toEqual(true)
+      expect(options.query.device_id).toEqual('my-device');
+      expect(options.body).toBeFalsy();
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken: accessToken
+    });
+
+    api.setShuffle(true, { device_id : 'my-device' }).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+  test("should set the user's playback shuffle mode without device id", done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
       options,
@@ -2072,6 +2162,39 @@ describe('Spotify Web API', () => {
     });
 
     api.setShuffle(false).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        console.log(err);
+        done(err);
+      }
+    );
+  });
+
+  test("should set the user's playback volume without device id", done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/volume');
+      expect(options.query).toEqual({
+        volume_percent: 75
+      });
+      expect(options.body).toBeFalsy();
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken: accessToken
+    });
+
+    api.setVolume(75).then(
       function(data) {
         done();
       },
@@ -2205,6 +2328,76 @@ describe('Spotify Web API', () => {
     });
 
     api.removeFromMySavedTracks(['3VNWq8rTnQG6fM1eldSpZ0']).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        console.log(err);
+        done(err);
+      }
+    );
+  });
+
+  /* Get My Saved Tracks */
+  test('should get tracks in the user\' library', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(options.data).toBeFalsy();
+      expect(uri).toBe('https://api.spotify.com/v1/me/tracks');
+      expect(options.query.limit).toBe(1);
+      expect(options.query.offset).toBe(3);
+      expect(options.query.market).toBe('SE');
+      expect(options.headers['Content-Type']).toBeFalsy();
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken: accessToken
+    });
+
+    api.getMySavedTracks({ market : 'SE', limit: 1, offset: 3}).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        console.log(err);
+        done(err);
+      }
+    );
+  });
+
+  /* Check if Track is in User\'s Saved Tracks */
+  test('should check if track is in user\'s library', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/tracks/contains');
+      expect(options.data).toBeFalsy();
+      expect(options.query.ids).toBe('27cZdqrQiKt3IT00338dws,37cZdqrQiKt3IT00338dzs')
+      expect(options.headers['Content-Type']).toBeFalsy();
+      expect(options.headers.Authorization).toBe('Bearer myAccessToken');
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken: accessToken
+    });
+
+    api.containsMySavedTracks(['27cZdqrQiKt3IT00338dws', '37cZdqrQiKt3IT00338dzs']).then(
       function(data) {
         done();
       },
@@ -3925,6 +4118,105 @@ describe('Spotify Web API', () => {
       }
     );
   });
+
+  /* Remove from user\'s saved shows. */
+  test('should remove from user\'s saved shows', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.del);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/me/shows'
+      );
+      expect(JSON.parse(options.data)).toStrictEqual(["1","2","3"]);
+      expect(options.query).toBeFalsy();
+      expect(options.headers.Authorization).toEqual('Bearer longtoken');
+      expect(options.headers['Content-Type']).toEqual('application/json');
+      callback(null, {})
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('longtoken');
+
+    api.removeFromMySavedShows(['1', '2', '3']).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+   /* Add to user\'s saved shows. */
+   test('should remove from user\'s saved shows', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/me/shows'
+      );
+      expect(JSON.parse(options.data)).toStrictEqual(["1","2","3"]);
+      expect(options.query).toBeFalsy();
+      expect(options.headers.Authorization).toEqual('Bearer longtoken');
+      expect(options.headers['Content-Type']).toEqual('application/json');
+      callback(null, {})
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('longtoken');
+
+    api.addToMySavedShows(['1', '2', '3']).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+   /* Get user\'s saved shows. */
+   test('should remove from user\'s saved shows', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/me/shows'
+      );
+      expect(options.data).toBeFalsy();
+      expect(options.query.limit).toBe(1);
+      expect(options.query.offset).toBe(2);
+      expect(options.query.market).toBe('DK');
+      expect(options.headers.Authorization).toEqual('Bearer longtoken');
+      expect(options.headers['Content-Type']).toBeFalsy();
+      callback(null, {})
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('longtoken');
+
+    api.getMySavedShows({ market: 'DK', limit: 1, offset: 2}).then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
 
   /* Get the episodes of an show. */
   test('should retrieve the episodes of a show', done => {
