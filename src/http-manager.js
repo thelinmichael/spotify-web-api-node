@@ -67,8 +67,10 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
     if (err) {
       if (err.timeout) {
         return callback(new TimeoutError());
-      } else {
+      } else if (err.response) {
         return callback(_toError(err.response));
+      } else {
+        return callback(err);
       }
     }
 

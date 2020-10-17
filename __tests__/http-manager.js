@@ -209,5 +209,13 @@ describe('Make requests', () => {
     });
   });
 
+  test('Should handle arbitrary exceptions', done => {
+    superagent.__setMockError(new Error('ops'));
+
+    HttpManager.get(request, function(error) {
+      expect(error).toBeInstanceOf(Error);
+      done();
+    });
+  });
 });
 
