@@ -65,7 +65,7 @@ HttpManager._makeRequest = function(method, options, uri, callback) {
 
   req.end(function(err, response) {
     if (err) {
-      if (err.timeout) {
+      if (err.timeout || err.code === 'ETIMEDOUT') {
         return callback(new TimeoutError());
       } else {
         return callback(_toError(err.response));
