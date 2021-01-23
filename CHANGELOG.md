@@ -1,5 +1,9 @@
 ## Change log
 
+#### 5.0.1 (Jan 2021)
+
+* Fix error handling in the HTTP client. Thanks [@yamadapc](https://github.com/yamadapc)!  
+
 #### 5.0.0 (Oct 2020)
 
 * **BREAKING CHANGES**. 
