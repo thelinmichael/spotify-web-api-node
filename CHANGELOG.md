@@ -2,7 +2,8 @@
 
 #### 5.0.1 (Jan 2021)
 
-* Fix error handling in the HTTP client. Thanks [@yamadapc](https://github.com/yamadapc)!  
+* Fix error handling in the HTTP client. Thanks [@yamadapc](https://github.com/yamadapc)!
+* This package can currently not be built on **Node 15 on Linux**, due to a dependency not being available yet. Issue can be followed on the [node-canvas](https://github.com/Automattic/node-canvas/issues/1688) issue tracker. In the mean time, Travis CI will run on earlier versions of Node.   
 
 #### 5.0.0 (Oct 2020)
 
