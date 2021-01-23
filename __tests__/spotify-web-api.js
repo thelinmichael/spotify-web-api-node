@@ -1846,6 +1846,42 @@ describe('Spotify Web API', () => {
       );
   });
 
+  test("should transfer the user's playback without using options", done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+        method,
+        options,
+        uri,
+        callback
+    ) {
+      expect(method).toBe(superagent.put);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player');
+      expect(JSON.parse(options.data)).toEqual({
+        device_ids : ['my-device-id']
+      });
+      expect(options.query).toBeFalsy();
+      expect(options.headers['Content-Type']).toBe('application/json');
+      callback();
+    });
+
+    var accessToken = 'myAccessToken';
+
+    var api = new SpotifyWebApi({
+      accessToken: accessToken
+    });
+
+    api
+        .transferMyPlayback(['my-device-id'])
+        .then(
+            function(data) {
+              done();
+            },
+            function(err) {
+              console.log(err);
+              done(err);
+            }
+        );
+  });
+
   test("should resume the user's playback", done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,

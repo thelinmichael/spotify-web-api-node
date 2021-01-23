@@ -1027,10 +1027,12 @@ SpotifyWebApi.prototype = {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/me/player')
       .withHeaders({ 'Content-Type': 'application/json' })
-      .withBodyParameters({
-        device_ids: deviceIds,
-        play: !!options.play
-      })
+      .withBodyParameters(
+        {
+          device_ids: deviceIds,
+        },
+        options
+      )
       .build()
       .execute(HttpManager.put, callback);
   },
