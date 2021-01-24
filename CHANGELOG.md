@@ -1,5 +1,9 @@
 ## Change log
 
+#### 5.0.2 (Jan 2021)
+
+* Fix: Make `transferMyPlayback` not require the `options` object, since it should be optional. Thanks for the heads-up [@Simber1](https://github.com/Simber1)! 
+
 #### 5.0.1 (Jan 2021)
 
 * Fix error handling in the HTTP client. Thanks [@yamadapc](https://github.com/yamadapc)!
