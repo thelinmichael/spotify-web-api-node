@@ -1149,7 +1149,7 @@ spotifyApi.setCredentials({
   accessToken: 'myAccessToken',
   refreshToken: 'myRefreshToken',
   redirectUri: 'http://www.example.com/test-callback',
-  'clientId ': 'myClientId',
+  clientId: 'myClientId',
   clientSecret: 'myClientSecret'
 });
 
