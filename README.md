@@ -1220,7 +1220,7 @@ var spotifyApi = new SpotifyWebApi({
 });
 
 // Get tracks in a playlist
-api
+spotifyApi
   .getPlaylistTracks('3ktAYNcRHpazJ9qecm3ptn', {
     offset: 1,
     limit: 5,
