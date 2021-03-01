@@ -22,23 +22,21 @@ const spotifyApi = new SpotifyWebApi({
   redirectUri: '<insert redirect URI>'
 });
 
-spotifyApi
-  .authorizationCodeGrant(authorizationCode)
-  .then(function(data) {
-    console.log('Retrieved access token', data.body['access_token']);
-
+(async () => {
+  try {
     // Set the access token
-    spotifyApi.setAccessToken(data.body['access_token']);
+    const authData = await spotifyApi.authorizationCodeGrant(authorizationCode);
+    console.log('Retrieved access token', authData.body["access_token"]);
 
     // Use the access token to retrieve information about the user connected to it
-    return spotifyApi.searchTracks('Love');
-  })
-  .then(function(data) {
+    spotifyApi.setAccessToken(authData.body["access_token"]);
+    const searchData = await spotifyApi.searchTracks("Love");
+
     // Print some information about the results
-    console.log('I got ' + data.body.tracks.total + ' results!');
+    console.log('I got ' + searchData.body.tracks.total + ' results!');
 
     // Go through the first page of results
-    var firstPage = data.body.tracks.items;
+    let firstPage = searchData.body.tracks.items;
     console.log('The tracks in the first page are (popularity in parentheses):');
 
     /*
@@ -47,9 +45,10 @@ spotifyApi
      * 2: I Love This Life (78)
      * ...
      */
-    firstPage.forEach(function(track, index) {
+    firstPage.forEach((track, index) => {
       console.log(index + ': ' + track.name + ' (' + track.popularity + ')');
     });
-  }).catch(function(err) {
+  } catch (err) {
     console.log('Something went wrong:', err.message);
-  });
+  }
+})();
