@@ -44,7 +44,7 @@ module.exports = {
       .withHeaders({
         Authorization:
           'Basic ' +
-          new Buffer(
+          Buffer.from(
             this.getClientId() + ':' + this.getClientSecret()
           ).toString('base64'),
         'Content-Type' : 'application/x-www-form-urlencoded'        
@@ -95,7 +95,7 @@ module.exports = {
       .withHeaders({
         Authorization:
           'Basic ' +
-          new Buffer(
+          Buffer.from(
             this.getClientId() + ':' + this.getClientSecret()
           ).toString('base64'),
           'Content-Type' : 'application/x-www-form-urlencoded'
