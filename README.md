@@ -425,7 +425,7 @@ spotifyApi.getUserPlaylists('thelinmichael')
     console.log('Something went wrong!', err);
   });
 
-// Create a private playlist
+// Create a public playlist
 spotifyApi.createPlaylist('My playlist', { 'description': 'My description', 'public': true })
   .then(function(data) {
     console.log('Created playlist!');
