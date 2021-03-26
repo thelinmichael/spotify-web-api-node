@@ -500,7 +500,7 @@ spotifyApi.uploadCustomPlaylistCoverImage('5ieJqeLJjjI8iJWaxeBLuK','longbase64ur
   });
 
 // Follow a playlist (privately)
-spotifyApi.followPlaylist('5ieJqeLJjjI8iJWaxeBLuK',
+spotifyApi.followPlaylist('5ieJqeLJjjI8iJWaxeBLuK'),
   {
     'public' : false
   }).then(function(data) {
