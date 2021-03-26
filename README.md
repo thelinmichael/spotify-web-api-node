@@ -710,10 +710,9 @@ spotifyApi.addToMySavedAlbums(["1H8AHEB8VSE8irHViGOIrF"])
 spotifyApi.getNewReleases({ limit : 5, offset: 0, country: 'SE' })
   .then(function(data) {
     console.log(data.body);
-      done();
-    }, function(err) {
-       console.log("Something went wrong!", err);
-    });
+    done();
+  }, function(err) {
+     console.log("Something went wrong!", err);
   });
 
 //  Retrieve featured playlists
