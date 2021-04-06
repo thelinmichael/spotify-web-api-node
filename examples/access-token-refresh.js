@@ -21,9 +21,9 @@ const authorizationCode =
  * https://developer.spotify.com/dashboard/applications
  */
 const spotifyApi = new SpotifyWebApi({
-  clientId: '<insert client id>',
-  clientSecret: '<insert client secret>',
-  redirectUri: '<insert redirect URI>'
+  clientId: 'f5bb8a50533347d78dcb9dd447e5cc9c',
+  clientSecret: '09943abc12a54f2d8579d43bbff81ac2',
+  redirectUri: 'https://localhost:8888/callback'
 });
 
 // When our access token will expire
