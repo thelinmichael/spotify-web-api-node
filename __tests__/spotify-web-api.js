@@ -4427,10 +4427,12 @@ describe('Spotify Web API', () => {
     var scopes = ['user-read-private', 'user-read-email'],
       redirectUri = 'https://example.com/callback',
       clientId = '5fe01282e44241328a84e7c5cc169165',
+      clientSecret = 'some-secret',
       state = 'some-state-of-my-choice';
 
     var api = new SpotifyWebApi({
       clientId: clientId,
+      clientSecret: clientSecret,
       redirectUri: redirectUri
     });
 
@@ -4444,11 +4446,13 @@ describe('Spotify Web API', () => {
     var scopes = ['user-read-private', 'user-read-email'],
       redirectUri = 'https://example.com/callback',
       clientId = '5fe01282e44241328a84e7c5cc169165',
+      clientSecret = 'some-secret',
       state = 'some-state-of-my-choice',
       showDialog = true;
 
     var api = new SpotifyWebApi({
       clientId: clientId,
+      clientSecret: clientSecret,
       redirectUri: redirectUri
     });
 
@@ -4462,12 +4466,14 @@ describe('Spotify Web API', () => {
     var scopes = ['user-read-private', 'user-read-email'],
       redirectUri = 'https://example.com/callback',
       clientId = '5fe01282e44241328a84e7c5cc169165',
+      clientSecret = 'some-secret',
       state = 'some-state-of-my-choice',
       showDialog = true,
       responseType = 'token'
 
     var api = new SpotifyWebApi({
       clientId: clientId,
+      clientSecret: clientSecret,
       redirectUri: redirectUri
     });
 
@@ -4477,6 +4483,25 @@ describe('Spotify Web API', () => {
       'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=token&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true'
     );
   });
+
+  test('should create authorization URL with PKCE code based authentication', () => {
+    var scopes = ['user-read-private', 'user-read-email'],
+      redirectUri = 'https://example.com/callback',
+      clientId = '5fe01282e44241328a84e7c5cc169165',
+      state = 'some-state-of-my-choice',
+      showDialog = true;
+
+    var api = new SpotifyWebApi({
+      clientId: clientId,
+      redirectUri: redirectUri
+    });
+
+    var authorizeURL = api.createAuthorizeURL(scopes, state, showDialog);
+    expect(authorizeURL).toBe(
+      'https://accounts.spotify.com/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice&show_dialog=true&code_challenge=' + api.getClientChallenge() + '&code_challenge_method=S256'
+    );
+  });
+ 
   
   /* Client credentials */
   test('should retrieve an access token using the client credentials flow', function(done) {
@@ -4602,6 +4627,7 @@ describe('Spotify Web API', () => {
       expect(method).toBe(superagent.post);
       expect(uri).toBe('https://accounts.spotify.com/api/token');
       expect(options.data).toEqual({
+        client_id: 'someClientId',
         grant_type: 'refresh_token',
         refresh_token: 'someLongRefreshToken'
       });
