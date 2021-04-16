@@ -2,7 +2,9 @@
 
 var AuthenticationRequest = require('./authentication-request'),
   WebApiRequest = require('./webapi-request'),
-  HttpManager = require('./http-manager');
+  HttpManager = require('./http-manager'),
+  crypto = require('crypto'),
+  base64url = require('base64url');
 
 function SpotifyWebApi(credentials) {
   this._credentials = credentials || {};
@@ -31,6 +33,16 @@ SpotifyWebApi.prototype = {
 
   setClientSecret: function(clientSecret) {
     this._setCredential('clientSecret', clientSecret);
+  },
+
+  setClientVerifier: function(verifier) {
+    this._setCredential('verifier', verifier);
+  },
+
+  generateClientVerifier: function() {
+    const buf = Buffer.alloc(64);
+    this._setCredential('verifier',
+      crypto.randomFillSync(buf).toString('hex'));
   },
 
   setAccessToken: function(accessToken) {
@@ -63,6 +75,15 @@ SpotifyWebApi.prototype = {
 
   getRefreshToken: function() {
     return this._getCredential('refreshToken');
+  },
+
+  getClientVerifier: function() {
+    return this._getCredential('verifier');
+  },
+
+  getClientChallenge: function() {
+    return base64url(crypto.createHash('sha256').update(
+      this._getCredential('verifier')).digest());
   },
 
   resetClientId: function() {
