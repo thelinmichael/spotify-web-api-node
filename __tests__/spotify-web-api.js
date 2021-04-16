@@ -4584,6 +4584,47 @@ describe('Spotify Web API', () => {
     );
   });
 
+  test('should retrieve an access token using the PKCE authorization code flow', function(done) {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe(
+        'https://accounts.spotify.com/api/token'
+      );
+      expect(options.data.grant_type).toBe('authorization_code');
+      expect(options.data.redirect_uri).toBe('http://www.michaelthelin.se/test-callback');
+      expect(options.data.code).toBe('mySuperLongCode');
+      expect(options.data.client_id).toBe('someClientId');
+      expect(options.data.code_verifier).toBe('someVerifier');
+      expect(options.headers['Content-Type']).toBe('application/x-www-form-urlencoded');
+      callback(null, {
+        statusCode: 200
+      })
+    });
+
+    var credentials = {
+      clientId: 'someClientId',
+      redirectUri: 'http://www.michaelthelin.se/test-callback'
+    };
+
+    var api = new SpotifyWebApi(credentials);
+    api.setClientVerifier('someVerifier');
+
+    api.authorizationCodeGrant('mySuperLongCode').then(
+      function(data) {
+        done();
+      },
+      function(err) {
+        console.log(err);
+        done(err);
+      }
+    );
+  });
+
   test('should refresh token', function(done) {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,
