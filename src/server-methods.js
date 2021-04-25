@@ -14,16 +14,26 @@ module.exports = {
    * @returns {string} The URL where the user can give application permissions.
    */
   createAuthorizeURL: function(scopes, state, showDialog, responseType = 'code') {
+    let parameters = {
+      client_id: this.getClientId(),
+      response_type: responseType,
+      redirect_uri: this.getRedirectURI(),
+      scope: scopes.join('%20'),
+      state: state,
+      show_dialog: showDialog && !!showDialog
+    };
+    if (!this.getClientSecret()) {
+      // No client secret, use PKCE
+      if (!this.getClientVerifier()) {
+        // Generate verifier if we don't have one set
+        this.generateClientVerifier();
+      }
+      parameters.code_challenge = this.getClientChallenge();
+      parameters.code_challenge_method = 'S256';
+    }
     return AuthenticationRequest.builder()
       .withPath('/authorize')
-      .withQueryParameters({
-        client_id: this.getClientId(),
-        response_type: responseType,
-        redirect_uri: this.getRedirectURI(),
-        scope: scopes.join('%20'),
-        state: state,
-        show_dialog: showDialog && !!showDialog
-      })
+      .withQueryParameters(parameters)
       .build()
       .getURL();
   },
@@ -63,15 +73,21 @@ module.exports = {
    *          Not returned if a callback is given.
    */
   authorizationCodeGrant: function(code, callback) {
+    let parameters = {
+      grant_type: 'authorization_code',
+      redirect_uri: this.getRedirectURI(),
+      code: code,
+      client_id: this.getClientId(),
+    };
+    if (this.getClientSecret()) {
+      parameters.client_secret = this.getClientSecret();
+    } else {
+      // No secret, assume PKCE
+      parameters.code_verifier = this.getClientVerifier();
+    }
     return AuthenticationRequest.builder()
       .withPath('/api/token')
-      .withBodyParameters({
-        grant_type: 'authorization_code',
-        redirect_uri: this.getRedirectURI(),
-        code: code,
-        client_id: this.getClientId(),
-        client_secret: this.getClientSecret()
-      })
+      .withBodyParameters(parameters)
       .withHeaders({ 'Content-Type' : 'application/x-www-form-urlencoded' })
       .build()
       .execute(HttpManager.post, callback);
@@ -86,20 +102,25 @@ module.exports = {
    *          Not returned if a callback is given.
    */
   refreshAccessToken: function(callback) {
+    let headers = { 'Content-Type' : 'application/x-www-form-urlencoded' };
+    let parameters = {
+      grant_type: 'refresh_token',
+      refresh_token: this.getRefreshToken()
+    };
+
+    if (this.getClientSecret()) {
+      headers['Authorization'] = 'Basic ' +
+        new Buffer(
+          this.getClientId() + ':' + this.getClientSecret()
+        ).toString('base64');
+    } else {
+      parameters['client_id'] = this.getClientId();
+    }
+
     return AuthenticationRequest.builder()
       .withPath('/api/token')
-      .withBodyParameters({
-        grant_type: 'refresh_token',
-        refresh_token: this.getRefreshToken()
-      })
-      .withHeaders({
-        Authorization:
-          'Basic ' +
-          new Buffer(
-            this.getClientId() + ':' + this.getClientSecret()
-          ).toString('base64'),
-          'Content-Type' : 'application/x-www-form-urlencoded'
-      })
+      .withBodyParameters(parameters)
+      .withHeaders(headers)
       .build()
       .execute(HttpManager.post, callback);
   }
