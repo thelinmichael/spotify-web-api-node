@@ -102,21 +102,25 @@ module.exports = {
    *          Not returned if a callback is given.
    */
   refreshAccessToken: function(callback) {
+    let headers = { 'Content-Type' : 'application/x-www-form-urlencoded' };
+    let parameters = {
+      grant_type: 'refresh_token',
+      refresh_token: this.getRefreshToken()
+    };
+
+    if (this.getClientSecret()) {
+      headers['Authorization'] = 'Basic ' +
+        new Buffer(
+          this.getClientId() + ':' + this.getClientSecret()
+        ).toString('base64');
+    } else {
+      parameters['client_id'] = this.getClientId();
+    }
+
     return AuthenticationRequest.builder()
       .withPath('/api/token')
-      .withBodyParameters({
-        grant_type: 'refresh_token',
-        refresh_token: this.getRefreshToken(),
-        client_id: this.getClientId()
-      })
-      .withHeaders({
-        Authorization:
-          'Basic ' +
-          new Buffer(
-            this.getClientId() + ':' + this.getClientSecret()
-          ).toString('base64'),
-          'Content-Type' : 'application/x-www-form-urlencoded'
-      })
+      .withBodyParameters(parameters)
+      .withHeaders(headers)
       .build()
       .execute(HttpManager.post, callback);
   }

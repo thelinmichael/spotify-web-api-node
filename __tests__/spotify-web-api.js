@@ -4668,7 +4668,6 @@ describe('Spotify Web API', () => {
       expect(method).toBe(superagent.post);
       expect(uri).toBe('https://accounts.spotify.com/api/token');
       expect(options.data).toEqual({
-        client_id: 'someClientId',
         grant_type: 'refresh_token',
         refresh_token: 'someLongRefreshToken'
       });
@@ -4695,6 +4694,47 @@ describe('Spotify Web API', () => {
     var api = new SpotifyWebApi({
       clientId: clientId,
       clientSecret: clientSecret,
+      refreshToken: refreshToken
+    });
+    api.refreshAccessToken().then(function(data) {
+      done();
+    });
+  });
+
+  test('should refresh an access token (PKCE)', done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe('https://accounts.spotify.com/api/token');
+      expect(options.data).toEqual({
+        client_id: 'someClientId',
+        grant_type: 'refresh_token',
+        refresh_token: 'someLongRefreshToken'
+      });
+      expect(options.query).toBeFalsy();
+      expect(options.headers).toEqual({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      });
+      callback(null, {
+        body: {
+          access_token: 'NgCXRK...MzYjw',
+          token_type: 'Bearer',
+          expires_in: 3600,
+          refresh_token: 'NgAagA...Um_SHo'
+        },
+        statusCode: 200
+      });
+    });
+
+    var clientId = 'someClientId';
+    var refreshToken = 'someLongRefreshToken';
+
+    var api = new SpotifyWebApi({
+      clientId: clientId,
       refreshToken: refreshToken
     });
     api.refreshAccessToken().then(function(data) {
