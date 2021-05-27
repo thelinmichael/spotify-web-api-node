@@ -1,7 +1,7 @@
 const SpotifyWebApi = require('../');
 
 /**
- * This example refreshes an access token. Refreshing access tokens is only possible access tokens received using the
+ * This example refreshes an access token. Refreshing access tokens is only possible for access tokens received using the
  * Authorization Code flow, documented here: https://developer.spotify.com/spotify-web-api/authorization-guide/#authorization_code_flow
  */
 
