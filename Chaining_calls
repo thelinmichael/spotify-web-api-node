@@ -1,0 +1,32 @@
+// track detail information for album tracks
+spotifyApi
+  .getAlbum('5U4W9E5WsYb2jUQWePT8Xm')
+  .then(function(data) {
+    return data.body.tracks.map(function(t) {
+      return t.id;
+    });
+  })
+  .then(function(trackIds) {
+    return spotifyApi.getTracks(trackIds);
+  })
+  .then(function(data) {
+    console.log(data.body);
+  })
+  .catch(function(error) {
+    console.error(error);
+  });
+
+// album detail for the first 10 Elvis' albums
+spotifyApi
+  .getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', { limit: 10 })
+  .then(function(data) {
+    return data.body.albums.map(function(a) {
+      return a.id;
+    });
+  })
+  .then(function(albums) {
+    return spotifyApi.getAlbums(albums);
+  })
+  .then(function(data) {
+    console.log(data.body);
+  });
