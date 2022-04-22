@@ -976,7 +976,7 @@ Supplying an access token is required for all requests to the Spotify API. This 
 
 **Important: If you are writing a universal/isomorphic web app using this library, you will not be able to use  methods that send a client secret to the Spotify authorization service. Client secrets should be kept server-side and not exposed to client browsers. Never include your client secret in the public JS served to the browser.**
 
-The first thing you need to do is to [create an application](https://developer.spotify.com/my-applications/). A step-by-step tutorial is offered by Spotify in this [tutorial](https://developer.spotify.com/spotify-web-api/tutorial/).
+The first thing you need to do is to [create an application](https://developer.spotify.com/my-applications/). A step-by-step tutorial is offered by Spotify in this [tutorial](https://developer.spotify.com/documentation/web-api/quick-start/).
 
 #### Authorization code flow
 
