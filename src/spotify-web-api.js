@@ -773,6 +773,21 @@ SpotifyWebApi.prototype = {
       .execute(HttpManager.get, callback);
   },
 
+   /**
+   * Retrieve the episodes that are saved to the authenticated users Your Episodes library.
+   * @param {Object} [options] Options, being market, limit, and/or offset.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves to an object containing a paging object which in turn contains
+   *          playlist episode objects. Not returned if a callback is given.
+   */
+    getMySavedEpisodes: function(options, callback) {
+      return WebApiRequest.builder(this.getAccessToken())
+        .withPath('/v1/me/episodes')
+        .withQueryParameters(options)
+        .build()
+        .execute(HttpManager.get, callback);
+    },
+
   /**
    * Retrieve the tracks that are saved to the authenticated users Your Music library.
    * @param {Object} [options] Options, being market, limit, and/or offset.
