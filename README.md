@@ -357,7 +357,7 @@ spotifyApi.getArtistRelatedArtists('0qeei9KQnptjwb8MgkqEoy')
   .then(function(data) {
     console.log(data.body);
   }, function(err) {
-    done(err);
+    console.log(err);
   });
 
 /* Get Audio Features for a Track */
@@ -365,7 +365,7 @@ spotifyApi.getAudioFeaturesForTrack('3Qm86XLflmIXVm1wcwkgDK')
   .then(function(data) {
     console.log(data.body);
   }, function(err) {
-    done(err);
+    console.log(err);
   });
 
 /* Get Audio Analysis for a Track */
@@ -373,7 +373,7 @@ spotifyApi.getAudioAnalysisForTrack('3Qm86XLflmIXVm1wcwkgDK')
   .then(function(data) {
     console.log(data.body);
   }, function(err) {
-    done(err);
+    console.log(err);
   });
 
 /* Get Audio Features for several tracks */
@@ -381,7 +381,7 @@ spotifyApi.getAudioFeaturesForTracks(['4iV5W9uYEdYUVa79Axb7Rh', '3Qm86XLflmIXVm1
   .then(function(data) {
     console.log(data.body);
   }, function(err) {
-    done(err);
+    console.log(err);
   });
 
 
