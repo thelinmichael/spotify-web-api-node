@@ -949,6 +949,22 @@ SpotifyWebApi.prototype = {
       .execute(HttpManager.get, callback);
   },
 
+  /** 
+   * Get the Current User's Queue
+   * @param {Object} [options] Options, being type, after, limit, before.
+   * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
+   * @returns {Promise|undefined} A promise that if successful, resolves into a paging object of play history objects,
+   *          otherwise an error. Not returned if a callback is given. Note that the response will be empty
+   *          in case the user has enabled private session.
+  */
+  getMyQueue: function(options, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/player/queue')
+      .withQueryParameters(options)
+      .build()
+      .execute(HttpManager.get, callback)
+  },
+
   /**
    * Add track or episode to device queue
    * @param {string} [uri] uri of the track or episode to add
