@@ -1721,6 +1721,28 @@ describe('Spotify Web API', () => {
     });
   });
 
+  test("should get the user's queue:", done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe('https://api.spotify.com/v1/me/player/queue')
+      expect(options.query).toEqual(null)
+      expect(options.headers).toEqual({ Authorization: 'someAccessToken'  })
+    })
+
+    var api = new SpotifyWebApi({
+      accessToken: 'someAccessToken'
+    })
+
+    api.getMyQueue().then(function(data) {
+      done();
+    })
+  })
+
   test("should add songs to the user's queue:", done => {
     sinon.stub(HttpManager, '_makeRequest').callsFake(function(
       method,

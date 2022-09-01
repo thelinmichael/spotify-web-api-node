@@ -787,6 +787,16 @@ spotifyApi.getAvailableGenreSeeds()
 // Add an Item to the User's Playback Queue
 // TBD
 
+
+// Get a User's Queue
+spotifyApi.getMyQueue()
+  .then(function(data) {
+    let queue = data.body.queue;
+    console.log(queue);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  })
+
 // Get a User's Available Devices
 spotifyApi.getMyDevices()
   .then(function(data) {
