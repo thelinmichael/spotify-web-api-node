@@ -785,8 +785,12 @@ spotifyApi.getAvailableGenreSeeds()
 /* Player */
 
 // Add an Item to the User's Playback Queue
-// TBD
-
+spotifyApi.addToQueue('spotify:track:2LMloFiV7DHpBhITOaBSam')
+  .then(function(data) {
+    console.log('Song added to queue!')
+  }, function(err) {
+    console.log('Something went wrong!', err)
+  })
 
 // Get a User's Queue
 spotifyApi.getMyQueue()
