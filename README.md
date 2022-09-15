@@ -828,6 +828,15 @@ spotifyApi.getMyCurrentPlayingTrack()
     console.log('Something went wrong!', err);
   });
 
+// Get the User's Queue + Current Playing Track 
+spotifyApi.getMyQueue()
+  .then(function(data) {
+    console.log('Now playing: ' + data.body.currently_playing.name);
+    console.log('Queue length: ' + data.body.queue.length());
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
+
 // Pause a User's Playback
 spotifyApi.pause()
   .then(function() {
