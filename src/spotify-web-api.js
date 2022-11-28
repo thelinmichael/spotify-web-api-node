@@ -183,6 +183,17 @@ SpotifyWebApi.prototype = {
       .build()
       .execute(HttpManager.get, callback);
   },
+  
+  /**
+  * Get current Queue
+  */
+  
+    getQueue:function (callback){
+    return WebApiRequest.builder(this.getAccessToken())
+        .withPath('/v1/me/player/queue')
+        .build()
+        .execute(HttpManager.get,callback)
+  },
 
   /**
    * Look up an artist.
