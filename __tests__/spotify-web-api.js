@@ -4690,4 +4690,90 @@ describe('Spotify Web API', () => {
     done();
   });
 
+  test("testing adding to a user's playback queue", done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe("https://api.spotify.com/v1/me/player/queue");
+      expect(options.query).toEqual({
+        uri: "spotify:track:2ouFrmMwYik8nQX2n9SeZu"
+      });
+      expect(options.headers).toEqual({
+        Authorization: 'Bearer someAccessToken'
+      });
+      callback(null, null);
+    });
+
+    var api = new SpotifyWebApi({
+      accessToken: 'someAccessToken'
+    });
+
+    api.addToPlaybackQueue("spotify:track:2ouFrmMwYik8nQX2n9SeZu").then(done);
+  });
+
+
+  test("testing getting available markets", done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.post);
+      expect(uri).toBe("https://api.spotify.com/v1/markets");
+      expect(options.query).toBeFalsy();
+      expect(options.data).toBeFalsy();
+      callback(null, null);
+    });
+
+    var api = new SpotifyWebApi();
+
+    api.getAvailableMarkets().then(
+      function(data) {
+        expect(data.body).toBeTruthy()
+        done()
+      },
+      function(err) {
+        done(err);
+      }
+    );
+  });
+
+  test("testing getting a playlist cover image", done => {
+    sinon.stub(HttpManager, '_makeRequest').callsFake(function(
+      method,
+      options,
+      uri,
+      callback
+    ) {
+      expect(method).toBe(superagent.get);
+      expect(uri).toBe(
+        'https://api.spotify.com/v1/playlists/3cEYpjA9oz9GiPac4AsH4n/images'
+      );
+      expect(options.query).toBeFalsy();
+      callback(null, {
+        body: {
+          uri: 'spotify:playlist:3cEYpjA9oz9GiPac4AsH4n'
+        },
+        statusCode: 200
+      });
+    });
+
+    var api = new SpotifyWebApi();
+    api.setAccessToken('myVeryVeryLongAccessToken');
+
+    api.getPlaylistCoverImage("3cEYpjA9oz9GiPac4AsH4n", {}, function(err, data) {
+      expect(data.body.uri).toBe('spotify:playlist:3cEYpjA9oz9GiPac4AsH4n');
+      expect(data.statusCode).toBe(200);
+      expect(data.body).toBe(!null);
+      expect(data.body[0].url).toBe("https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228")
+      done();
+    });
+  });
+
+
 });

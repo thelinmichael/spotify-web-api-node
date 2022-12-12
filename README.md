@@ -499,6 +499,14 @@ spotifyApi.uploadCustomPlaylistCoverImage('5ieJqeLJjjI8iJWaxeBLuK','longbase64ur
     console.log('Something went wrong!', err);
   });
 
+// Retrieve a playlist cover image
+spotifyApi.getPlaylistCoverImage("3cEYpjA9oz9GiPac4AsH4n")
+  .then(function(data) {
+     console.log("Retrieved playlist cover of URL: ", data.body[0].url);
+  }, function(err) {
+    console.log("Error in retrieving playlist cover image", err);
+  });
+
 // Follow a playlist (privately)
 spotifyApi.followPlaylist('5ieJqeLJjjI8iJWaxeBLuK',
   {
@@ -782,10 +790,25 @@ spotifyApi.getAvailableGenreSeeds()
     console.log('Something went wrong!', err);
   });
 
+
+/* Markets */
+
+//Get the available markets 
+spotifyApi.getAvailableMarkets().then((function(data)) {
+  console.log("Got markets of size ", data.body.markets.length)
+}, function(err) {
+  console.log("Erorr when fetching available markets", err)
+})
+
 /* Player */
 
 // Add an Item to the User's Playback Queue
-// TBD
+spotfiyApi.addToPlaybackQueue(uri)
+  .then(function(data) {
+    console.log("Added ", data.body, " to playback queue.")
+  }, function(err) {
+    console.log("Error adding to playback queue", err);
+  })
 
 // Get a User's Available Devices
 spotifyApi.getMyDevices()
@@ -969,6 +992,7 @@ spotifyApi
   .then(function(data) {
     console.log(data.body);
   });
+  
 ```
 
 ### Authorization
