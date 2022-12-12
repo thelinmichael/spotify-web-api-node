@@ -107,6 +107,54 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+   * Returns an object containing the playlist cover image.
+   * @param {string} playlistId The ID of the associated playlist. 
+   * @param {requestCallback} callback Optional callback method to be called instead of the promise. 
+   * @returns {Promise|undefined} A promise that, if successful, returns an object containing the 
+   *          Playlist Cover image alongside its dimensions 
+  */
+   getPlaylistCoverImage: function(playlistId, callback) {
+    return WebApiRequest.builder(this.getAccessToken())
+    .withPath("/v1/playlists/" + playlistId + "/images")
+    .withHeaders({"Content-Type": 'application/json'})
+    .build()
+    .execute(HttpManager.get, callback);
+  },
+  
+
+ /**
+   * Adds an item to the users playback queue. 
+   * @param {string} uri The URI of the song you wish to add. 
+   * @param {requestCallback} callback Optional callback method to be called instead of the promise. 
+   * @returns {Promise|undefined} A promise that, if successful, returns a 204 response and adds
+   *          the associated song to the user's playback queue
+  */
+  addToPlaybackQueue: function(uri, callback) {
+    var baseUrl = "/v1/me"
+    var path = "/player/queue"
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath(baseUrl + path)
+      .withQueryParameters({ uri: JSON.stringify(uri) })
+      .build()
+      .execute(HttpManager.post, callback);
+  },
+
+ /**
+   * Gets the available markets  
+   * @param {requestCallback} callback Optional callback method to be called instead of the promise. 
+   * @returns {Promise|undefined} A promise that, if successful, returns an array of objects containing
+   *          Country abbreviations 
+  */
+  getAvailableMarkets: function(callback) {
+    var path = "/v1/markets"
+    return WebApiRequest.builder(this.getAccessToken())
+      .withPath(path)
+      .withHeaders({ 'Content-Type': 'application/json' })
+      .build()
+      .execute(HttpManager.get, callback);  
+  },
+
+  /**
    * Look up a track.
    * @param {string} trackId The track's ID.
    * @param {Object} [options] The possible options, currently only market.
@@ -971,6 +1019,8 @@ SpotifyWebApi.prototype = {
   },
 
 
+
+
   /** 
    * Get the Current User's Available Devices
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
@@ -984,6 +1034,7 @@ SpotifyWebApi.prototype = {
       .execute(HttpManager.get, callback);
   },
 
+  
   /**
    * Get the Current User's Currently Playing Track.
    * @param {Object} [options] Options, being market.
