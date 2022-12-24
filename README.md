@@ -254,6 +254,22 @@ var spotifyApi = new SpotifyWebApi();
 /**
  * Get metadata of tracks, albums, artists, shows, and episodes
  */
+ 
+// Get track
+spotifyApi.getTrack("28s5iRbX62GZG2ReZTLKDa")
+  .then(function (data) {
+    console.log("Track information", data.body);
+  }, function (err) {
+    console.error(err);
+  });
+
+// Get multiple tracks
+spotifyApi.getTracks(["6Rb4xFCy3Hh5MJ88ehLXdc", "5oOoQn1bhg6nbuvd54URPF"])
+  .then(function (data) {
+    console.log("Tracks information", track);
+  },function (err) {
+    console.error(err);
+  });
 
 // Get album
 spotifyApi.getAlbum('5U4W9E5WsYb2jUQWePT8Xm')
