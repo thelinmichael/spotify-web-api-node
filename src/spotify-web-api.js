@@ -453,19 +453,44 @@ SpotifyWebApi.prototype = {
    * Get tracks in a playlist.
    * @param {string} playlistId The playlist's ID.
    * @param {Object} [options] Optional options, such as fields.
+   * @param {boolean} all Return all tracks in playlist or not
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @example getPlaylistTracks('3ktAYNcRHpazJ9qecm3ptn').then(...)
    * @returns {Promise|undefined} A promise that if successful, resolves to an object that containing
    * the tracks in the playlist. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  getPlaylistTracks: function(playlistId, options, callback) {
-    return WebApiRequest.builder(this.getAccessToken())
+  getPlaylistTracks: function(playlistId, options, callback, all=false) {
+    if (!all) {
+      return WebApiRequest.builder(this.getAccessToken())
       .withPath('/v1/playlists/' + playlistId + '/tracks')
       .withQueryParameters(options)
       .build()
       .execute(HttpManager.get, callback);
-  },
+    }
 
+    var original = WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/playlists/' + playlistId + '/tracks')
+      .withQueryParameters({offset: 0, limit: 50})
+      .build()
+      .execute(HttpManager.get, callback);
+
+    if (original.body.items.length < 50) {
+      return original
+    }
+    var o = 50;
+    var cont = true;
+    while (cont) {
+      r = WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/playlists/' + playlistId + '/tracks')
+      .withQueryParameters({offset: o, limit: 50})
+      .build()
+      .execute(HttpManager.get, callback);
+      o += 50;
+      original.body.items.push(r.body.items);
+      cont = r.body.items.length == 50;
+    }
+    return original   
+  },
   /**
    * Create a playlist.
    * @param {string} [name] The name of the playlist.
