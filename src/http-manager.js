@@ -44,7 +44,7 @@ var _toError = function(response) {
   }
   
   /* Other type of error, or unhandled Web API error format */
-  return new WebapiError(response.body, response.headers, response.statusCode, response.body);
+  return new WebapiError(response.body, response.headers, response.statusCode, response.text || response.body);
 };
 
 /* Make the request to the Web API */
