@@ -1340,19 +1340,16 @@ SpotifyWebApi.prototype = {
 
   /**
    * Check if users are following a playlist.
-   * @param {string} userId The playlist's owner's user ID
    * @param {string} playlistId The playlist's ID
-   * @param {String[]} User IDs of the following users
+   * @param {String[]} followerIds IDs of the following users
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
    * @returns {Promise|undefined} A promise that if successful returns an array of booleans. If rejected,
    * it contains an error object. Not returned if a callback is given.
    */
-  areFollowingPlaylist: function(userId, playlistId, followerIds, callback) {
+  areFollowingPlaylist: function(playlistId, followerIds, callback) {
     return WebApiRequest.builder(this.getAccessToken())
       .withPath(
-        '/v1/users/' +
-          encodeURIComponent(userId) +
-          '/playlists/' +
+        '/v1/playlists/' +
           playlistId +
           '/followers/contains'
       )

@@ -3121,7 +3121,7 @@ describe('Spotify Web API', () => {
     ) {
       expect(method).toBe(superagent.get);
       expect(uri).toBe(
-        'https://api.spotify.com/v1/users/spotify_germany/playlists/2nKFnGNFvHX9hG5Kv7Bm3G/followers/contains'
+        'https://api.spotify.com/v1/playlists/2nKFnGNFvHX9hG5Kv7Bm3G/followers/contains'
       );
       expect(options.query).toEqual({
         ids: 'thelinmichael,ella'
@@ -3137,7 +3137,7 @@ describe('Spotify Web API', () => {
     });
 
     api
-      .areFollowingPlaylist('spotify_germany', '2nKFnGNFvHX9hG5Kv7Bm3G', [
+      .areFollowingPlaylist('2nKFnGNFvHX9hG5Kv7Bm3G', [
         'thelinmichael',
         'ella'
       ])
