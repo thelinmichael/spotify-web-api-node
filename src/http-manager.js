@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 
 var {
   TimeoutError,
   WebapiError,
   WebapiRegularError,
   WebapiAuthenticationError,
-  WebapiPlayerError,
-} = require("./response-error");
+  WebapiPlayerError
+} = require('./response-error');
 
 var HttpManager = {};
 
@@ -22,7 +22,7 @@ var _getParametersFromRequest = function (request) {
 
   if (
     request.getHeaders() &&
-    request.getHeaders()["Content-Type"] === "application/json"
+    request.getHeaders()['Content-Type'] === 'application/json'
   ) {
     options.data = JSON.stringify(request.getBodyParameters());
   } else if (request.getBodyParameters()) {
@@ -47,18 +47,18 @@ var _toError = async function (response) {
   const body = await response.json();
 
   if (
-    typeof body === "object" &&
-    typeof body.error === "object" &&
-    typeof body.error.reason === "string"
+    typeof body === 'object' &&
+    typeof body.error === 'object' &&
+    typeof body.error.reason === 'string'
   ) {
     return new WebapiPlayerError(body, response.headers, response.status);
   }
 
-  if (typeof body === "object" && typeof body.error === "object") {
+  if (typeof body === 'object' && typeof body.error === 'object') {
     return new WebapiRegularError(body, response.headers, response.status);
   }
 
-  if (typeof body === "object" && typeof body.error === "string") {
+  if (typeof body === 'object' && typeof body.error === 'string') {
     return new WebapiAuthenticationError(
       body,
       response.headers,
@@ -75,8 +75,8 @@ HttpManager._makeRequest = function (method, options, uri, callback) {
   const headers = new Headers(options.headers || {});
   let serializationMethod = JSON.stringify;
 
-  if (headers.get("Content-Type") === "application/x-www-form-urlencoded") {
-    serializationMethod = (d) => new URLSearchParams(d);
+  if (headers.get('Content-Type') === 'application/x-www-form-urlencoded') {
+    serializationMethod = d => new URLSearchParams(d);
   }
 
   const controller = new AbortController();
@@ -88,13 +88,13 @@ HttpManager._makeRequest = function (method, options, uri, callback) {
     }, options.timeout);
   }
 
-  fetch(uri + (options.query ? "?" + options.query : ""), {
+  fetch(uri + (options.query ? '?' + options.query : ''), {
     method,
     headers,
     body: options.data ? serializationMethod(options.data) : undefined,
-    signal: controller.signal,
+    signal: controller.signal
   })
-    .then(async (resp) => {
+    .then(async resp => {
       clearTimeout(timeoutId);
 
       if (!resp.ok) {
@@ -104,10 +104,10 @@ HttpManager._makeRequest = function (method, options, uri, callback) {
       return callback(null, {
         body: await resp.json().catch(() => null),
         headers: resp.headers,
-        statusCode: resp.status,
+        statusCode: resp.status
       });
     })
-    .catch((err) => {
+    .catch(err => {
       if (controller.signal.aborted) {
         return callback(
           new TimeoutError(`request took longer than ${options.timeout}ms`)
@@ -125,7 +125,7 @@ HttpManager._makeRequest = function (method, options, uri, callback) {
  */
 HttpManager.get = function (request, callback) {
   var options = _getParametersFromRequest(request);
-  var method = "GET";
+  var method = 'GET';
 
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
@@ -137,7 +137,7 @@ HttpManager.get = function (request, callback) {
  */
 HttpManager.post = function (request, callback) {
   var options = _getParametersFromRequest(request);
-  var method = "POST";
+  var method = 'POST';
 
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
@@ -149,7 +149,7 @@ HttpManager.post = function (request, callback) {
  */
 HttpManager.del = function (request, callback) {
   var options = _getParametersFromRequest(request);
-  var method = "DELETE";
+  var method = 'DELETE';
 
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };
@@ -161,7 +161,7 @@ HttpManager.del = function (request, callback) {
  */
 HttpManager.put = function (request, callback) {
   var options = _getParametersFromRequest(request);
-  var method = "PUT";
+  var method = 'PUT';
 
   HttpManager._makeRequest(method, options, request.getURI(), callback);
 };

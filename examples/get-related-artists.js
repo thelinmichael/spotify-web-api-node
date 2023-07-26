@@ -23,8 +23,8 @@ var spotifyApi = new SpotifyWebApi({
 var artistId = '0qeei9KQnptjwb8MgkqEoy';
 
 spotifyApi
-.authorizationCodeGrant(authorizationCode)
-  .then(function(data) {
+  .authorizationCodeGrant(authorizationCode)
+  .then(function (data) {
     console.log('Retrieved access token', data.body['access_token']);
 
     // Set the access token
@@ -33,17 +33,18 @@ spotifyApi
     // Use the access token to retrieve information about the user connected to it
     return spotifyApi.getArtistRelatedArtists(artistId);
   })
-  .then(function(data) {
-    if (data.body.artists.length) {
-      // Print the number of similar artists
-      console.log('I got ' + data.body.artists.length + ' similar artists!');
+  .then(
+    function (data) {
+      if (data.body.artists.length) {
+        // Print the number of similar artists
+        console.log('I got ' + data.body.artists.length + ' similar artists!');
 
-      console.log('The most similar one is ' + data.body.artists[0].name);
-    } else {
-      console.log("I didn't find any similar artists.. Sorry.");
+        console.log('The most similar one is ' + data.body.artists[0].name);
+      } else {
+        console.log("I didn't find any similar artists.. Sorry.");
+      }
+    },
+    function (err) {
+      console.log('Something went wrong:', err.message);
     }
-  },
-  function(err) {
-    console.log('Something went wrong:', err.message);
-  }
-);
+  );

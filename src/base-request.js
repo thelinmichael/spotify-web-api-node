@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 var Request = function (builder) {
   if (!builder) {
-    throw new Error("No builder supplied to constructor");
+    throw new Error('No builder supplied to constructor');
   }
 
   this.host = builder.host;
@@ -21,36 +21,36 @@ Request.prototype._getter = function (key) {
   };
 };
 
-Request.prototype.getHost = Request.prototype._getter("host");
+Request.prototype.getHost = Request.prototype._getter('host');
 
-Request.prototype.getPort = Request.prototype._getter("port");
+Request.prototype.getPort = Request.prototype._getter('port');
 
-Request.prototype.getScheme = Request.prototype._getter("scheme");
+Request.prototype.getScheme = Request.prototype._getter('scheme');
 
-Request.prototype.getPath = Request.prototype._getter("path");
+Request.prototype.getPath = Request.prototype._getter('path');
 
 Request.prototype.getQueryParameters = Request.prototype._getter(
-  "queryParameters"
+  'queryParameters'
 );
 
 Request.prototype.getBodyParameters = Request.prototype._getter(
-  "bodyParameters"
+  'bodyParameters'
 );
 
-Request.prototype.getHeaders = Request.prototype._getter("headers");
+Request.prototype.getHeaders = Request.prototype._getter('headers');
 
-Request.prototype.getTimeout = Request.prototype._getter("timeout");
+Request.prototype.getTimeout = Request.prototype._getter('timeout');
 
 Request.prototype.getURI = function () {
   if (!this.scheme || !this.host || !this.port) {
-    throw new Error("Missing components necessary to construct URI");
+    throw new Error('Missing components necessary to construct URI');
   }
-  var uri = this.scheme + "://" + this.host;
+  var uri = this.scheme + '://' + this.host;
   if (
-    (this.scheme === "http" && this.port !== 80) ||
-    (this.scheme === "https" && this.port !== 443)
+    (this.scheme === 'http' && this.port !== 80) ||
+    (this.scheme === 'https' && this.port !== 443)
   ) {
-    uri += ":" + this.port;
+    uri += ':' + this.port;
   }
   if (this.path) {
     uri += this.path;
@@ -71,15 +71,15 @@ Request.prototype.getQueryParameterString = function () {
   var queryParameters = this.getQueryParameters();
   if (queryParameters) {
     return (
-      "?" +
+      '?' +
       Object.keys(queryParameters)
         .filter(function (key) {
           return queryParameters[key] !== undefined;
         })
         .map(function (key) {
-          return key + "=" + queryParameters[key];
+          return key + '=' + queryParameters[key];
         })
-        .join("&")
+        .join('&')
     );
   }
 };
@@ -111,13 +111,13 @@ Builder.prototype._setter = function (key) {
   };
 };
 
-Builder.prototype.withHost = Builder.prototype._setter("host");
+Builder.prototype.withHost = Builder.prototype._setter('host');
 
-Builder.prototype.withPort = Builder.prototype._setter("port");
+Builder.prototype.withPort = Builder.prototype._setter('port');
 
-Builder.prototype.withScheme = Builder.prototype._setter("scheme");
+Builder.prototype.withScheme = Builder.prototype._setter('scheme');
 
-Builder.prototype.withPath = Builder.prototype._setter("path");
+Builder.prototype.withPath = Builder.prototype._setter('path');
 
 Builder.prototype._assigner = function (key) {
   return function () {
@@ -130,20 +130,20 @@ Builder.prototype._assigner = function (key) {
 };
 
 Builder.prototype.withQueryParameters = Builder.prototype._assigner(
-  "queryParameters"
+  'queryParameters'
 );
 
 Builder.prototype.withBodyParameters = Builder.prototype._assigner(
-  "bodyParameters"
+  'bodyParameters'
 );
 
-Builder.prototype.withHeaders = Builder.prototype._assigner("headers");
+Builder.prototype.withHeaders = Builder.prototype._assigner('headers');
 
-Builder.prototype.withTimeout = Builder.prototype._setter("timeout");
+Builder.prototype.withTimeout = Builder.prototype._setter('timeout');
 
 Builder.prototype.withAuth = function (accessToken) {
   if (accessToken) {
-    this.withHeaders({ Authorization: "Bearer " + accessToken });
+    this.withHeaders({ Authorization: 'Bearer ' + accessToken });
   }
   return this;
 };
@@ -152,7 +152,7 @@ Builder.prototype._assign = function (src, obj) {
   if (obj && Array.isArray(obj)) {
     return obj;
   }
-  if (obj && typeof obj === "string") {
+  if (obj && typeof obj === 'string') {
     return obj;
   }
   if (obj && Object.keys(obj).length > 0) {

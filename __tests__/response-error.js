@@ -3,34 +3,34 @@ const {
   WebapiError,
   WebapiRegularError,
   WebapiAuthenticationError,
-  WebapiPlayerError,
-} = require("../src/response-error");
+  WebapiPlayerError
+} = require('../src/response-error');
 
-describe("Test error classes", () => {
-  test("Timeout", (done) => {
+describe('Test error classes', () => {
+  test('Timeout', done => {
     let error = new TimeoutError();
 
-    expect(error.name).toBe("TimeoutError");
+    expect(error.name).toBe('TimeoutError');
     expect(error.message).toBe(
       "A timeout occurred while communicating with Spotify's Web API."
     );
     done();
   });
 
-  test("WebapiError", (done) => {
+  test('WebapiError', done => {
     const body = {
-        success: false,
+        success: false
       },
       headers = {
-        "Content-Type": "application/json",
-        "X-Experimental": false,
+        'Content-Type': 'application/json',
+        'X-Experimental': false
       },
       statusCode = 400,
-      message = "An unfortunate error occurred.";
+      message = 'An unfortunate error occurred.';
 
     let error = new WebapiError(body, headers, statusCode, message);
 
-    expect(error.name).toBe("WebapiError");
+    expect(error.name).toBe('WebapiError');
     expect(error.body).toBe(body);
     expect(error.headers).toBe(headers);
     expect(error.statusCode).toBe(statusCode);
@@ -39,16 +39,16 @@ describe("Test error classes", () => {
     done();
   });
 
-  test("WebapiRegularError", (done) => {
+  test('WebapiRegularError', done => {
     const body = {
         error: {
-          message: "Not found",
-          status: 404,
-        },
+          message: 'Not found',
+          status: 404
+        }
       },
       headers = {
-        "Content-Type": "application/json",
-        "X-Experimental": true,
+        'Content-Type': 'application/json',
+        'X-Experimental': true
       },
       statusCode = 404,
       message =
@@ -56,7 +56,7 @@ describe("Test error classes", () => {
 
     let error = new WebapiRegularError(body, headers, statusCode, message);
 
-    expect(error.name).toBe("WebapiRegularError");
+    expect(error.name).toBe('WebapiRegularError');
     expect(error.body).toBe(body);
     expect(error.headers).toBe(headers);
     expect(error.statusCode).toBe(statusCode);
@@ -65,13 +65,13 @@ describe("Test error classes", () => {
     done();
   });
 
-  test("WebapiAuthenticationError", (done) => {
+  test('WebapiAuthenticationError', done => {
     const body = {
-        error: "invalid client id",
-        error_description: "Invalid Client ID",
+        error: 'invalid client id',
+        error_description: 'Invalid Client ID'
       },
       headers = {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       statusCode = 400,
       message =
@@ -84,7 +84,7 @@ describe("Test error classes", () => {
       message
     );
 
-    expect(error.name).toBe("WebapiAuthenticationError");
+    expect(error.name).toBe('WebapiAuthenticationError');
     expect(error.body).toBe(body);
     expect(error.headers).toBe(headers);
     expect(error.statusCode).toBe(statusCode);
@@ -93,16 +93,16 @@ describe("Test error classes", () => {
     done();
   });
 
-  test("WebapiPlayerError", (done) => {
+  test('WebapiPlayerError', done => {
     const body = {
         error: {
-          message: "Not allowed to shuffle",
+          message: 'Not allowed to shuffle',
           status: 403,
-          reason: "Not premium",
-        },
+          reason: 'Not premium'
+        }
       },
       headers = {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
       statusCode = 403,
       message =
@@ -110,7 +110,7 @@ describe("Test error classes", () => {
 
     let error = new WebapiPlayerError(body, headers, statusCode, message);
 
-    expect(error.name).toBe("WebapiPlayerError");
+    expect(error.name).toBe('WebapiPlayerError');
     expect(error.body).toBe(body);
     expect(error.headers).toBe(headers);
     expect(error.statusCode).toBe(statusCode);

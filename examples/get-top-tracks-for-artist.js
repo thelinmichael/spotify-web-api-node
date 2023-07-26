@@ -21,14 +21,14 @@ const spotifyApi = new SpotifyWebApi({
 // Retrieve an access token
 spotifyApi
   .clientCredentialsGrant()
-  .then(function(data) {
+  .then(function (data) {
     // Set the access token on the API object so that it's used in all future requests
     spotifyApi.setAccessToken(data.body['access_token']);
 
     // Get the most popular tracks by David Bowie in Great Britain
     return spotifyApi.getArtistTopTracks('0oSGxfWSnnOXhD2fKuz2Gy', 'GB');
   })
-  .then(function(data) {
+  .then(function (data) {
     console.log('The most popular tracks for David Bowie is..');
     console.log('Drum roll..');
     console.log('...');
@@ -38,8 +38,8 @@ spotifyApi
      * 2. Heroes - 1999 Digital Remaster (popularity is 33)
      * 3. Let's Dance - 1999 Digital Remaster (popularity is 20)
      * 4. ...
-    */
-    data.body.tracks.forEach(function(track, index) {
+     */
+    data.body.tracks.forEach(function (track, index) {
       console.log(
         index +
           1 +
@@ -51,6 +51,6 @@ spotifyApi
       );
     });
   })
-  .catch(function(err) {
+  .catch(function (err) {
     console.log('Unfortunately, something has gone wrong.', err.message);
   });

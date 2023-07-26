@@ -1,1 +1,1 @@
-module.exports = require("./spotify-web-api");
+module.exports = require('./spotify-web-api');
