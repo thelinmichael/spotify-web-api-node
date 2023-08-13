@@ -32,7 +32,7 @@ let playlistId;
 // First retrieve an access token
 spotifyApi
   .authorizationCodeGrant(authorizationCode)
-  .then(function(data) {
+  .then(function (data) {
     // Save the access token so that it's used in future requests
     spotifyApi.setAccessToken(data['access_token']);
 
@@ -42,7 +42,7 @@ spotifyApi
       'My New Awesome Playlist'
     );
   })
-  .then(function(data) {
+  .then(function (data) {
     console.log('Ok. Playlist created!');
     playlistId = data.body['id'];
 
@@ -53,7 +53,7 @@ spotifyApi
       'spotify:track:4iV5W9uYEdYUVa79Axb7Rh'
     ]);
   })
-  .then(function(data) {
+  .then(function (data) {
     console.log('Ok. Tracks added!');
 
     // Woops! Made a duplicate. Remove one of the duplicates from the playlist
@@ -64,7 +64,7 @@ spotifyApi
       }
     ]);
   })
-  .then(function(data) {
+  .then(function (data) {
     console.log('Ok. Tracks removed!');
 
     // Actually, lets just replace all tracks in the playlist with something completely different
@@ -76,9 +76,9 @@ spotifyApi
       'spotify:track:6hDH3YWFdcUNQjubYztIsG'
     ]);
   })
-  .then(function(data) {
+  .then(function (data) {
     console.log('Ok. Tracks replaced!');
   })
-  .catch(function(err) {
+  .catch(function (err) {
     console.log('Something went wrong:', err.message);
   });

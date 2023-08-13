@@ -137,9 +137,7 @@ describe('Create Requests', () => {
   });
 
   test('Should construct empty query paramaters string', () => {
-    var request = Request.builder()
-      .withQueryParameters({})
-      .build();
+    var request = Request.builder().withQueryParameters({}).build();
 
     expect(request.getQueryParameterString()).toBeFalsy();
   });

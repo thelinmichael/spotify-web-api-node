@@ -4,7 +4,6 @@ var AuthenticationRequest = require('./authentication-request');
 var HttpManager = require('./http-manager');
 
 module.exports = {
-
   /**
    * Retrieve a URL where the user can give the application permissions.
    * @param {string[]} scopes The scopes corresponding to the permissions the application needs.
@@ -13,7 +12,12 @@ module.exports = {
    * @param {string} responseType An optional parameter that you can use to specify the code response based on the authentication type - can be set to 'code' or 'token'. Default 'code' to ensure backwards compatability.
    * @returns {string} The URL where the user can give application permissions.
    */
-  createAuthorizeURL: function(scopes, state, showDialog, responseType = 'code') {
+  createAuthorizeURL: function (
+    scopes,
+    state,
+    showDialog,
+    responseType = 'code'
+  ) {
     return AuthenticationRequest.builder()
       .withPath('/authorize')
       .withQueryParameters({
@@ -35,7 +39,7 @@ module.exports = {
    * @returns {Promise|undefined} A promise that if successful, resolves into an object containing the access token,
    *          token type and time to expiration. If rejected, it contains an error object. Not returned if a callback is given.
    */
-  clientCredentialsGrant: function(callback) {
+  clientCredentialsGrant: function (callback) {
     return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
@@ -47,7 +51,7 @@ module.exports = {
           new Buffer(
             this.getClientId() + ':' + this.getClientSecret()
           ).toString('base64'),
-        'Content-Type' : 'application/x-www-form-urlencoded'        
+        'Content-Type': 'application/x-www-form-urlencoded'
       })
       .build()
       .execute(HttpManager.post, callback);
@@ -62,7 +66,7 @@ module.exports = {
    *          refresh token, token type and time to expiration. If rejected, it contains an error object.
    *          Not returned if a callback is given.
    */
-  authorizationCodeGrant: function(code, callback) {
+  authorizationCodeGrant: function (code, callback) {
     return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
@@ -72,7 +76,7 @@ module.exports = {
         client_id: this.getClientId(),
         client_secret: this.getClientSecret()
       })
-      .withHeaders({ 'Content-Type' : 'application/x-www-form-urlencoded' })
+      .withHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
       .build()
       .execute(HttpManager.post, callback);
   },
@@ -85,7 +89,7 @@ module.exports = {
    *          access token, time to expiration and token type. If rejected, it contains an error object.
    *          Not returned if a callback is given.
    */
-  refreshAccessToken: function(callback) {
+  refreshAccessToken: function (callback) {
     return AuthenticationRequest.builder()
       .withPath('/api/token')
       .withBodyParameters({
@@ -98,7 +102,7 @@ module.exports = {
           new Buffer(
             this.getClientId() + ':' + this.getClientSecret()
           ).toString('base64'),
-          'Content-Type' : 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded'
       })
       .build()
       .execute(HttpManager.post, callback);

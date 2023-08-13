@@ -24,7 +24,7 @@ const spotifyApi = new SpotifyWebApi({
 
 spotifyApi
   .authorizationCodeGrant(authorizationCode)
-  .then(function(data) {
+  .then(function (data) {
     console.log('Retrieved access token', data.body['access_token']);
 
     // Set the access token
@@ -33,13 +33,15 @@ spotifyApi
     // Use the access token to retrieve information about the user connected to it
     return spotifyApi.searchTracks('Love');
   })
-  .then(function(data) {
+  .then(function (data) {
     // Print some information about the results
     console.log('I got ' + data.body.tracks.total + ' results!');
 
     // Go through the first page of results
     var firstPage = data.body.tracks.items;
-    console.log('The tracks in the first page are (popularity in parentheses):');
+    console.log(
+      'The tracks in the first page are (popularity in parentheses):'
+    );
 
     /*
      * 0: All of Me (97)
@@ -47,9 +49,10 @@ spotifyApi
      * 2: I Love This Life (78)
      * ...
      */
-    firstPage.forEach(function(track, index) {
+    firstPage.forEach(function (track, index) {
       console.log(index + ': ' + track.name + ' (' + track.popularity + ')');
     });
-  }).catch(function(err) {
+  })
+  .catch(function (err) {
     console.log('Something went wrong:', err.message);
   });

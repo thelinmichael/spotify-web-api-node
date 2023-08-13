@@ -27,7 +27,7 @@ const spotifyApi = new SpotifyWebApi({
 // First retrieve an access token
 spotifyApi
   .authorizationCodeGrant(authorizationCode)
-  .then(function(data) {
+  .then(function (data) {
     console.log('Retrieved access token', data.body['access_token']);
 
     // Set the access token
@@ -36,7 +36,7 @@ spotifyApi
     // Use the access token to retrieve information about the user connected to it
     return spotifyApi.getMe();
   })
-  .then(function(data) {
+  .then(function (data) {
     // "Retrieved data for Faruk Sahin"
     console.log('Retrieved data for ' + data.body['display_name']);
 
@@ -49,6 +49,6 @@ spotifyApi
     // "This user has a premium account"
     console.log('This user has a ' + data.body.product + ' account');
   })
-  .catch(function(err) {
+  .catch(function (err) {
     console.log('Something went wrong:', err.message);
   });

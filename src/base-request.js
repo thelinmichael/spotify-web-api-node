@@ -1,6 +1,6 @@
 'use strict';
 
-var Request = function(builder) {
+var Request = function (builder) {
   if (!builder) {
     throw new Error('No builder supplied to constructor');
   }
@@ -12,10 +12,11 @@ var Request = function(builder) {
   this.bodyParameters = builder.bodyParameters;
   this.headers = builder.headers;
   this.path = builder.path;
+  this.timeout = builder.timeout;
 };
 
-Request.prototype._getter = function(key) {
-  return function() {
+Request.prototype._getter = function (key) {
+  return function () {
     return this[key];
   };
 };
@@ -38,7 +39,9 @@ Request.prototype.getBodyParameters = Request.prototype._getter(
 
 Request.prototype.getHeaders = Request.prototype._getter('headers');
 
-Request.prototype.getURI = function() {
+Request.prototype.getTimeout = Request.prototype._getter('timeout');
+
+Request.prototype.getURI = function () {
   if (!this.scheme || !this.host || !this.port) {
     throw new Error('Missing components necessary to construct URI');
   }
@@ -55,7 +58,7 @@ Request.prototype.getURI = function() {
   return uri;
 };
 
-Request.prototype.getURL = function() {
+Request.prototype.getURL = function () {
   var uri = this.getURI();
   if (this.getQueryParameters()) {
     return uri + this.getQueryParameterString(this.getQueryParameters());
@@ -64,16 +67,16 @@ Request.prototype.getURL = function() {
   }
 };
 
-Request.prototype.getQueryParameterString = function() {
+Request.prototype.getQueryParameterString = function () {
   var queryParameters = this.getQueryParameters();
   if (queryParameters) {
     return (
       '?' +
       Object.keys(queryParameters)
-        .filter(function(key) {
+        .filter(function (key) {
           return queryParameters[key] !== undefined;
         })
-        .map(function(key) {
+        .map(function (key) {
           return key + '=' + queryParameters[key];
         })
         .join('&')
@@ -81,15 +84,15 @@ Request.prototype.getQueryParameterString = function() {
   }
 };
 
-Request.prototype.execute = function(method, callback) {
+Request.prototype.execute = function (method, callback) {
   if (callback) {
     method(this, callback);
     return;
   }
   var _self = this;
 
-  return new Promise(function(resolve, reject) {
-    method(_self, function(error, result) {
+  return new Promise(function (resolve, reject) {
+    method(_self, function (error, result) {
       if (error) {
         reject(error);
       } else {
@@ -99,10 +102,10 @@ Request.prototype.execute = function(method, callback) {
   });
 };
 
-var Builder = function() {};
+var Builder = function () {};
 
-Builder.prototype._setter = function(key) {
-  return function(value) {
+Builder.prototype._setter = function (key) {
+  return function (value) {
     this[key] = value;
     return this;
   };
@@ -116,12 +119,12 @@ Builder.prototype.withScheme = Builder.prototype._setter('scheme');
 
 Builder.prototype.withPath = Builder.prototype._setter('path');
 
-Builder.prototype._assigner = function(key) {
-  return function() {
+Builder.prototype._assigner = function (key) {
+  return function () {
     for (var i = 0; i < arguments.length; i++) {
       this[key] = this._assign(this[key], arguments[i]);
     }
-    
+
     return this;
   };
 };
@@ -136,14 +139,16 @@ Builder.prototype.withBodyParameters = Builder.prototype._assigner(
 
 Builder.prototype.withHeaders = Builder.prototype._assigner('headers');
 
-Builder.prototype.withAuth = function(accessToken) {
+Builder.prototype.withTimeout = Builder.prototype._setter('timeout');
+
+Builder.prototype.withAuth = function (accessToken) {
   if (accessToken) {
     this.withHeaders({ Authorization: 'Bearer ' + accessToken });
   }
   return this;
 };
 
-Builder.prototype._assign = function(src, obj) {
+Builder.prototype._assign = function (src, obj) {
   if (obj && Array.isArray(obj)) {
     return obj;
   }
@@ -156,10 +161,10 @@ Builder.prototype._assign = function(src, obj) {
   return src;
 };
 
-Builder.prototype.build = function() {
+Builder.prototype.build = function () {
   return new Request(this);
 };
 
-module.exports.builder = function() {
+module.exports.builder = function () {
   return new Builder();
 };

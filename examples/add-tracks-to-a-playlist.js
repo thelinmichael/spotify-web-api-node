@@ -28,7 +28,7 @@ const spotifyApi = new SpotifyWebApi({
 // First retrieve an access token
 spotifyApi
   .authorizationCodeGrant(authorizationCode)
-  .then(function(data) {
+  .then(function (data) {
     spotifyApi.setAccessToken(data.body['access_token']);
     return spotifyApi.addTracksToPlaylist(
       '5ieJqeLJjjI8iJWaxeBLuK',
@@ -41,9 +41,9 @@ spotifyApi
       }
     );
   })
-  .then(function(data) {
+  .then(function (data) {
     console.log('Added tracks to the playlist!');
   })
-  .catch(function(err) {
+  .catch(function (err) {
     console.log('Something went wrong:', err.message);
   });
