@@ -88,10 +88,16 @@ HttpManager._makeRequest = function (method, options, uri, callback) {
     }, options.timeout);
   }
 
+  let body = options.data;
+
+  if (body && typeof body !== 'string') {
+    body = serializationMethod(body);
+  }
+
   fetch(uri + (options.query ? '?' + options.query : ''), {
     method,
     headers,
-    body: options.data ? serializationMethod(options.data) : undefined,
+    body,
     signal: controller.signal
   })
     .then(async resp => {
