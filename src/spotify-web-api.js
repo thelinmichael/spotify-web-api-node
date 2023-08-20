@@ -789,6 +789,16 @@ SpotifyWebApi.prototype = {
   },
 
   /**
+  * Get current Queue
+  */
+
+    getQueue:function (callback){
+    return WebApiRequest.builder(this.getAccessToken())
+        .withPath('/v1/me/player/queue')
+        .build()
+        .execute(HttpManager.get,callback)
+  },
+  /**
    * Check if one or more tracks is already saved in the current Spotify user’s “Your Music” library.
    * @param {string[]} trackIds The track IDs
    * @param {requestCallback} [callback] Optional callback method to be called instead of the promise.
