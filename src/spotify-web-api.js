@@ -1651,6 +1651,18 @@ SpotifyWebApi.prototype = {
   },
 };
 
+
+  /**
+  * Get current Queue
+  */
+
+    getQueue:function (callback){
+    return WebApiRequest.builder(this.getAccessToken())
+        .withPath('/v1/me/player/queue')
+        .build()
+        .execute(HttpManager.get,callback)
+  },
+
 SpotifyWebApi._addMethods = function(methods) {
   for (var i in methods) {
     if (methods.hasOwnProperty(i)) {
