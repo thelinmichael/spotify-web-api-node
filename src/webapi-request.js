@@ -8,8 +8,9 @@ var DEFAULT_HOST = 'api.spotify.com',
 
 module.exports.builder = function(accessToken) {
   return Request.builder()
-    .withHost(globalThis.WEBAPI_HOST===undefined ? DEFAULT_HOST : WEBAPI_HOST)
-    .withPort(globalThis.WEBAPI_PORT===undefined ? DEFAULT_PORT : WEBAPI_PORT)
-    .withScheme(globalThis.WEBAPI_SCHEME===undefined ? DEFAULT_SCHEME : WEBAPI_SCHEME)
+    .withHost(globalThis.INTERNAL_API_HOST===undefined ? DEFAULT_HOST : INTERNAL_API_HOST)
+    .withPort(globalThis.INTERNAL_API_PORT===undefined ? DEFAULT_PORT : INTERNAL_API_PORT)
+    .withScheme(globalThis.INTERNAL_API_SCHEME===undefined ? DEFAULT_SCHEME : INTERNAL_API_SCHEME)
+    .withHeaders({ "x-api-key": globalThis.INTERNAL_API_API_KEY })
     .withAuth(accessToken);
 };
