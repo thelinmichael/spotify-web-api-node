@@ -130,12 +130,13 @@ Builder.prototype.withInternalApi = function(config) {
     var url = new URL(config.apiBase);
     var host = url.hostname;
     var port = url.port;
+    var path = url.pathname;
     var scheme = url.protocol.replace(':', '');
 
     var that = that.withHost(host);
     that = that.withPort(port);
     that = that.withScheme(scheme);
-    that = that.withPathPrefix(config.apiPathPrefix);
+    that = that.withPathPrefix(path + config.apiPathPrefix);
     that = that.withHeaders({ "x-api-key": config.apiKey });
 
     if (typeof config.waitFor == 'number')  {
